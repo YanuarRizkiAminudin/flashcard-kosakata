@@ -5,7 +5,7 @@
   position: relative;
 }
 
-.back-btn {
+.voice-page .back-btn {
   position: fixed;
   top: 20px;
   left: 20px;
@@ -22,7 +22,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.back-btn:hover {
+.voice-page .back-btn:hover {
   background: #f0f4f8;
   border-color: #3d3dcc;
   color: #3d3dcc;
