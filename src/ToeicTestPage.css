@@ -15,6 +15,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  flex-wrap: nowrap;
 }
 
 .back-btn {
@@ -28,6 +29,9 @@
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 .back-btn:hover { background: #e5e7eb; }
 
