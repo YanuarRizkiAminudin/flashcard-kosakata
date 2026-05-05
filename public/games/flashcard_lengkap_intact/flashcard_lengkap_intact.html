@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcard Lengkap — Mandarin INTACT</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:480px;}
+h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:12px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;}
+.fb{padding:5px 11px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.fb:hover{border-color:#2d7a4f;color:#2d7a4f;}
+.fb.on{background:#2d7a4f;color:#fff;border-color:#2d7a4f;}
+.fb.all-btn.on{background:#1a1814;border-color:#1a1814;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;}
+.badge{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#e8e4dc;color:#8a8478;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#2d7a4f,#52c48a);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.8rem;}
+.pills{display:flex;gap:6px;margin-bottom:.9rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#2d7a4f;}.dh{background:#a05c00;}.db{background:#b83232;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 2px 14px rgba(0,0,0,.07);min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.2rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f5c97a,#52c48a,#85b7eb);opacity:.6;}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,.1);}
+.ctag{font-size:10px;font-weight:600;letter-spacing:.8px;padding:3px 9px;border-radius:99px;background:#e8e4dc;color:#8a8478;margin-bottom:.7rem;}
+.zh{font-family:'Noto Serif TC',serif;font-weight:700;color:#1a1814;line-height:1.1;text-align:center;}
+.zh.big{font-size:78px;}.zh.med{font-size:52px;}.zh.sm{font-size:34px;}.zh.xs{font-size:24px;}
+.hint{font-size:13px;color:#8a8478;margin-top:.8rem;display:flex;align-items:center;gap:6px;}
+.hint-ico{width:26px;height:26px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+.divline{width:36px;height:1px;background:#e8e4dc;margin:0 auto .6rem;}
+.py{font-size:18px;font-weight:600;color:#2d7a4f;margin-bottom:3px;}
+.id-txt{font-size:13px;color:#8a8478;line-height:1.5;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:16px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}.cb-p:hover{background:#d5f0e2;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}.cb-b:hover{background:#f9d8d8;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:50px;margin-bottom:.7rem;}
+.res-title{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sbox .sn{font-size:21px;font-weight:700;}.sbox .sl{font-size:10px;margin-top:2px;}
+.sbp{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid #e8e4dc;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;min-width:44px;text-align:center;}
+.ri-py{font-size:11px;font-weight:600;color:#2d7a4f;}
+.ri-cat{font-size:10px;color:#8a8478;}
+.ri-id{font-size:11px;color:#8a8478;margin-left:auto;text-align:right;max-width:140px;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-green{background:linear-gradient(135deg,#2d7a4f,#3da866);color:#fff;box-shadow:0 3px 10px rgba(45,122,79,.25);}
+.btn-green:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc !important;color:#8a8478;}
+.btn-ghost:hover{background:#e8e4dc;}
+.final{text-align:center;padding:2rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>閃卡完整版 — INTACT Mandarin</h1>
+  <div class="sub" id="tsub">Semua pelajaran</div>
+  <div class="filters">
+    <button class="fb all-btn on" onclick="setL('ALL')">Semua</button>
+    <button class="fb" onclick="setL('L1')">L1 新同學</button>
+    <button class="fb" onclick="setL('L2')">L2 幾點</button>
+    <button class="fb" onclick="setL('L3')">L3 禮物</button>
+    <button class="fb" onclick="setL('L4')">L4 咖啡</button>
+    <button class="fb" onclick="setL('L5')">L5 錢包</button>
+    <button class="fb" onclick="setL('L6')">L6 網球</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/–</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">– kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="ctag" id="ctag"></div>
+      <div class="zh" id="zh"></div>
+      <div class="hint" id="hint"><div class="hint-ico">👆</div>Ketuk untuk lihat jawaban</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="divline"></div>
+        <div class="py" id="py"></div>
+        <div class="id-txt" id="idt"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum paham</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir paham</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">✓</span><span>Paham</span><span class="cb-sub">Tidak muncul lagi</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir paham</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum paham</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-green" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv" style="display:none">
+    <div class="final">
+      <div style="font-size:60px;margin-bottom:.8rem">🏆</div>
+      <div class="res-title">Semua dikuasai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.3rem;">Kamu hafal semua kosakata!</div>
+      <button class="btnbig btn-green" onclick="fullRestart()">Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+// ═══════════════════════════════════════════
+// LESSON 1 — 新同學
+// ═══════════════════════════════════════════
+{z:'大家',p:'dàjiā',i:'semuanya / semua orang',l:'L1'},
+{z:'好',p:'hǎo',i:'baik',l:'L1'},
+{z:'我',p:'wǒ',i:'saya / aku',l:'L1'},
+{z:'姓',p:'xìng',i:'bermarga',l:'L1'},
+{z:'叫',p:'jiào',i:'bernama / dipanggil',l:'L1'},
+{z:'是',p:'shì',i:'adalah',l:'L1'},
+{z:'日本',p:'Rìběn',i:'Jepang',l:'L1'},
+{z:'台灣',p:'Táiwān',i:'Taiwan',l:'L1'},
+{z:'朋友',p:'péngyǒu',i:'teman',l:'L1'},
+{z:'愛',p:'ài',i:'mencintai / menyukai',l:'L1'},
+{z:'吃',p:'chī',i:'makan',l:'L1'},
+{z:'水果',p:'shuǐguǒ',i:'buah',l:'L1'},
+{z:'水',p:'shuǐ',i:'air',l:'L1'},
+{z:'喝',p:'hē',i:'minum',l:'L1'},
+{z:'茶',p:'chá',i:'teh',l:'L1'},
+{z:'珍珠奶茶',p:'zhēnzhū nǎichá',i:'teh susu mutiara (bubble tea)',l:'L1'},
+{z:'奶茶',p:'nǎichá',i:'teh susu',l:'L1'},
+{z:'謝謝',p:'xièxie',i:'terima kasih',l:'L1'},
+{z:'不客氣',p:'bú kèqì',i:'sama-sama / kembali kasih',l:'L1'},
+{z:'哪國人',p:'nǎ guó rén',i:'orang dari negara mana?',l:'L1'},
+{z:'喜歡',p:'xǐhuān',i:'suka',l:'L1'},
+{z:'忙',p:'máng',i:'sibuk',l:'L1'},
+{z:'累',p:'lèi',i:'lelah',l:'L1'},
+{z:'他',p:'tā',i:'dia (laki-laki)',l:'L1'},
+{z:'她',p:'tā',i:'dia (perempuan)',l:'L1'},
+{z:'你',p:'nǐ',i:'kamu',l:'L1'},
+{z:'你呢',p:'nǐ ne',i:'kalau kamu? / bagaimana denganmu?',l:'L1'},
+// ═══════════════════════════════════════════
+// LESSON 2 — 你幾點去學校?
+// ═══════════════════════════════════════════
+{z:'起床',p:'qǐchuáng',i:'bangun tidur',l:'L2'},
+{z:'睡覺',p:'shuìjiào',i:'tidur',l:'L2'},
+{z:'上課',p:'shàngkè',i:'masuk kelas / mengikuti pelajaran',l:'L2'},
+{z:'下課',p:'xiàkè',i:'selesai kelas / selesai pelajaran',l:'L2'},
+{z:'上班',p:'shàngbān',i:'berangkat kerja',l:'L2'},
+{z:'下班',p:'xiàbān',i:'pulang kerja / selesai kerja',l:'L2'},
+{z:'回家',p:'huíjiā',i:'pulang ke rumah',l:'L2'},
+{z:'煮飯',p:'zhǔfàn',i:'masak (nasi/makanan)',l:'L2'},
+{z:'吃飯',p:'chīfàn',i:'makan (secara umum)',l:'L2'},
+{z:'吃早餐',p:'chī zǎocān',i:'makan sarapan',l:'L2'},
+{z:'吃午餐',p:'chī wǔcān',i:'makan siang',l:'L2'},
+{z:'吃晚餐',p:'chī wǎncān',i:'makan malam',l:'L2'},
+{z:'出去玩',p:'chūqù wán',i:'pergi bermain / jalan-jalan',l:'L2'},
+{z:'看電影',p:'kàn diànyǐng',i:'menonton film',l:'L2'},
+{z:'打電動',p:'dǎ diàndòng',i:'bermain video game',l:'L2'},
+{z:'明天',p:'míngtiān',i:'besok',l:'L2'},
+{z:'昨天',p:'zuótiān',i:'kemarin',l:'L2'},
+{z:'週末',p:'zhōumò',i:'akhir pekan',l:'L2'},
+{z:'要',p:'yào',i:'ingin; mau (melakukan sesuatu)',l:'L2'},
+{z:'來',p:'lái',i:'datang',l:'L2'},
+{z:'啊',p:'ā',i:'ah — kata seru keterkejutan',l:'L2'},
+{z:'的',p:'de',i:'partikel kepemilikan',l:'L2'},
+{z:'生日',p:'shēngrì',i:'ulang tahun',l:'L2'},
+{z:'快樂',p:'kuàilè',i:'bahagia; selamat',l:'L2'},
+{z:'晚上',p:'wǎnshàng',i:'malam hari',l:'L2'},
+{z:'問題',p:'wèntí',i:'pertanyaan; masalah',l:'L2'},
+{z:'沒問題',p:'méi wèntí',i:'tidak masalah',l:'L2'},
+{z:'明天見',p:'míngtiān jiàn',i:'sampai jumpa besok',l:'L2'},
+{z:'再見',p:'zàijiàn',i:'selamat tinggal',l:'L2'},
+{z:'幾',p:'jǐ',i:'berapa banyak',l:'L2'},
+{z:'點/點鐘',p:'diǎn / diǎnzhōng',i:'pukul / jam',l:'L2'},
+{z:'現在',p:'xiànzài',i:'sekarang',l:'L2'},
+{z:'去',p:'qù',i:'pergi',l:'L2'},
+{z:'學校',p:'xuéxiào',i:'sekolah',l:'L2'},
+{z:'媽媽',p:'māma',i:'ibu',l:'L2'},
+{z:'爸爸',p:'bàba',i:'ayah',l:'L2'},
+{z:'孩子',p:'háizi',i:'anak',l:'L2'},
+{z:'今天',p:'jīntiān',i:'hari ini',l:'L2'},
+{z:'星期',p:'xīngqí',i:'minggu (hari dalam seminggu)',l:'L2'},
+{z:'月',p:'yuè',i:'bulan',l:'L2'},
+{z:'號',p:'hào',i:'kata pengukur untuk tanggal dan nomor',l:'L2'},
+{z:'日',p:'rì',i:'hari',l:'L2'},
+{z:'星期天',p:'xīngqítiān',i:'hari Minggu',l:'L2'},
+{z:'早上',p:'zǎoshàng',i:'pagi hari',l:'L2'},
+{z:'有',p:'yǒu',i:'memiliki / ada',l:'L2'},
+{z:'沒',p:'méi',i:'tidak (untuk kepemilikan)',l:'L2'},
+{z:'課',p:'kè',i:'pelajaran; kelas',l:'L2'},
+{z:'圖書館',p:'túshūguǎn',i:'perpustakaan',l:'L2'},
+{z:'中午',p:'zhōngwǔ',i:'siang hari',l:'L2'},
+{z:'回',p:'huí',i:'kembali; pulang',l:'L2'},
+{z:'家',p:'jiā',i:'rumah',l:'L2'},
+{z:'家人',p:'jiārén',i:'anggota keluarga',l:'L2'},
+{z:'下午',p:'xiàwǔ',i:'sore hari',l:'L2'},
+{z:'上午',p:'shàngwǔ',i:'pagi hari (formal)',l:'L2'},
+{z:'分',p:'fēn',i:'menit',l:'L2'},
+{z:'做',p:'zuò',i:'membuat; melakukan',l:'L2'},
+{z:'歲',p:'suì',i:'kata satuan umur',l:'L2'},
+{z:'午飯',p:'wǔfàn',i:'makan siang',l:'L2'},
+{z:'早飯',p:'zǎofàn',i:'sarapan',l:'L2'},
+{z:'晚飯',p:'wǎnfàn',i:'makan malam',l:'L2'},
+{z:'飯',p:'fàn',i:'nasi; makanan',l:'L2'},
+{z:'做飯',p:'zuòfàn',i:'memasak',l:'L2'},
+// ═══════════════════════════════════════════
+// LESSON 3 — 買生日禮物?
+// ═══════════════════════════════════════════
+{z:'買',p:'mǎi',i:'membeli',l:'L3'},
+{z:'禮物',p:'lǐwù',i:'hadiah / kado',l:'L3'},
+{z:'想',p:'xiǎng',i:'ingin; mau; berpikir',l:'L3'},
+{z:'送',p:'sòng',i:'memberi (sebagai hadiah)',l:'L3'},
+{z:'個',p:'gè',i:'kata satuan umum (measure word)',l:'L3'},
+{z:'看',p:'kàn',i:'membaca; melihat; menonton',l:'L3'},
+{z:'書',p:'shū',i:'buku',l:'L3'},
+{z:'兩',p:'liǎng',i:'dua (untuk jumlah/barang)',l:'L3'},
+{z:'本',p:'běn',i:'pengukur untuk buku',l:'L3'},
+{z:'中文',p:'zhōngwén',i:'bahasa Tionghoa / Mandarin',l:'L3'},
+{z:'英文',p:'yīngwén',i:'bahasa Inggris',l:'L3'},
+{z:'一些',p:'yìxiē',i:'beberapa',l:'L3'},
+{z:'花',p:'huā',i:'bunga',l:'L3'},
+{z:'朵',p:'duǒ',i:'pengukur untuk bunga',l:'L3'},
+{z:'和',p:'hé',i:'dan',l:'L3'},
+{z:'大',p:'dà',i:'besar',l:'L3'},
+{z:'小',p:'xiǎo',i:'kecil',l:'L3'},
+{z:'蛋糕',p:'dàngāo',i:'kue',l:'L3'},
+{z:'蛋',p:'dàn',i:'telur',l:'L3'},
+{z:'一起',p:'yìqǐ',i:'bersama',l:'L3'},
+{z:'這/這個',p:'zhè / zhèi',i:'ini',l:'L3'},
+{z:'那/那個',p:'nà / nèi',i:'itu',l:'L3'},
+{z:'種',p:'zhǒng',i:'jenis; macam',l:'L3'},
+{z:'鉛筆',p:'qiānbǐ',i:'pensil',l:'L3'},
+{z:'筆',p:'bǐ',i:'pena',l:'L3'},
+{z:'怎麼樣',p:'zěnmeyàng',i:'bagaimana? / bagaimana pendapatmu?',l:'L3'},
+{z:'東西',p:'dōngxi',i:'barang; benda',l:'L3'},
+{z:'支',p:'zhī',i:'batang — kata ukur untuk pena/pensil',l:'L3'},
+{z:'塊',p:'kuài',i:'potong; kata ukur untuk uang',l:'L3'},
+{z:'錢',p:'qián',i:'uang',l:'L3'},
+{z:'元',p:'yuán',i:'unit uang (mata uang resmi)',l:'L3'},
+{z:'便宜',p:'piányí',i:'murah',l:'L3'},
+{z:'貴',p:'guì',i:'mahal',l:'L3'},
+{z:'顏色',p:'yánsè',i:'warna',l:'L3'},
+{z:'紅色',p:'hóngsè',i:'warna merah',l:'L3'},
+{z:'白色',p:'báisè',i:'warna putih',l:'L3'},
+{z:'白',p:'bái',i:'putih',l:'L3'},
+{z:'都',p:'dōu',i:'semua; keduanya',l:'L3'},
+{z:'好看',p:'hǎokàn',i:'bagus; cantik; tampan',l:'L3'},
+{z:'常',p:'cháng',i:'sering',l:'L3'},
+{z:'穿',p:'chuān',i:'memakai (pakaian)',l:'L3'},
+{z:'衣服',p:'yīfu',i:'pakaian',l:'L3'},
+{z:'件',p:'jiàn',i:'kata pengukur untuk pakaian',l:'L3'},
+{z:'請',p:'qǐng',i:'mengundang; mentraktir; tolong',l:'L3'},
+{z:'玩',p:'wán',i:'bermain',l:'L3'},
+{z:'這些',p:'zhèxiē',i:'ini (banyak/beberapa)',l:'L3'},
+{z:'那些',p:'nàxiē',i:'itu (banyak/beberapa)',l:'L3'},
+{z:'點心',p:'diǎnxīn',i:'makanan ringan; snack',l:'L3'},
+{z:'甜點',p:'tiándiǎn',i:'hidangan penutup; dessert',l:'L3'},
+{z:'甜',p:'tián',i:'manis',l:'L3'},
+{z:'開心',p:'kāixīn',i:'bahagia; senang',l:'L3'},
+// ═══════════════════════════════════════════
+// LESSON 4 — 你要咖啡還是茶?
+// ═══════════════════════════════════════════
+{z:'咖啡',p:'kāfēi',i:'kopi',l:'L4'},
+{z:'還是',p:'háishi',i:'atau (untuk pertanyaan)',l:'L4'},
+{z:'天氣',p:'tiānqì',i:'cuaca',l:'L4'},
+{z:'熱',p:'rè',i:'panas',l:'L4'},
+{z:'冷',p:'lěng',i:'dingin',l:'L4'},
+{z:'飲料',p:'yǐnliào',i:'minuman',l:'L4'},
+{z:'也',p:'yě',i:'juga',l:'L4'},
+{z:'餓',p:'è',i:'lapar',l:'L4'},
+{z:'渴',p:'kě',i:'haus',l:'L4'},
+{z:'一點兒',p:'yīdiǎnr',i:'sedikit',l:'L4'},
+{z:'餐廳',p:'cāntīng',i:'restoran',l:'L4'},
+{z:'飯館',p:'fànguǎn',i:'restoran / warung makan',l:'L4'},
+{z:'點',p:'diǎn',i:'memesan (dari menu)',l:'L4'},
+{z:'碗',p:'wǎn',i:'mangkuk',l:'L4'},
+{z:'杯',p:'bēi',i:'gelas/cangkir (kata satuan)',l:'L4'},
+{z:'杯子',p:'bēizi',i:'gelas/cangkir',l:'L4'},
+{z:'瓶子',p:'píngzi',i:'botol',l:'L4'},
+{z:'瓶',p:'píng',i:'kata satuan untuk botol',l:'L4'},
+{z:'女',p:'nǚ',i:'perempuan',l:'L4'},
+{z:'男',p:'nán',i:'laki-laki',l:'L4'},
+{z:'位',p:'wèi',i:'kata satuan hormat untuk orang',l:'L4'},
+{z:'紅茶',p:'hóngchá',i:'teh hitam',l:'L4'},
+{z:'綠茶',p:'lǜchá',i:'teh hijau',l:'L4'},
+{z:'綠色',p:'lǜsè',i:'warna hijau',l:'L4'},
+{z:'綠',p:'lǜ',i:'hijau',l:'L4'},
+{z:'給',p:'gěi',i:'memberi',l:'L4'},
+{z:'一共',p:'yígòng',i:'semuanya; total',l:'L4'},
+{z:'多少',p:'duōshǎo',i:'berapa banyak / berapa',l:'L4'},
+{z:'百',p:'bǎi',i:'seratus',l:'L4'},
+{z:'千',p:'qiān',i:'seribu',l:'L4'},
+{z:'萬',p:'wàn',i:'sepuluh ribu',l:'L4'},
+{z:'零',p:'líng',i:'nol',l:'L4'},
+{z:'找',p:'zhǎo',i:'mencari; memberi kembalian (uang)',l:'L4'},
+{z:'找錢',p:'zhǎoqián',i:'memberi kembalian',l:'L4'},
+{z:'您',p:'nín',i:'Anda (bentuk hormat)',l:'L4'},
+{z:'多',p:'duō',i:'banyak; lebih',l:'L4'},
+{z:'夏天',p:'xiàtiān',i:'musim panas',l:'L4'},
+{z:'春天',p:'chūntiān',i:'musim semi',l:'L4'},
+{z:'秋天',p:'qiūtiān',i:'musim gugur',l:'L4'},
+{z:'冬天',p:'dōngtiān',i:'musim dingin',l:'L4'},
+{z:'店/商店',p:'diàn / shāngdiàn',i:'toko',l:'L4'},
+{z:'果汁',p:'guǒzhī',i:'jus',l:'L4'},
+{z:'牛奶',p:'niúnǎi',i:'susu',l:'L4'},
+{z:'有的',p:'yǒude',i:'ada yang / beberapa',l:'L4'},
+{z:'每',p:'měi',i:'setiap',l:'L4'},
+{z:'天',p:'tiān',i:'hari',l:'L4'},
+// ═══════════════════════════════════════════
+// LESSON 5 — 我的錢包在哪裡?
+// ═══════════════════════════════════════════
+{z:'錢包',p:'qiánbāo',i:'dompet',l:'L5'},
+{z:'在',p:'zài',i:'berada; di',l:'L5'},
+{z:'哪裡/哪兒',p:'nǎlǐ / nǎr',i:'di mana',l:'L5'},
+{z:'聽',p:'tīng',i:'mendengar',l:'L5'},
+{z:'音樂',p:'yīnyuè',i:'musik',l:'L5'},
+{z:'下午茶',p:'xiàwǔchá',i:'teh sore (afternoon tea)',l:'L5'},
+{z:'不錯',p:'bùcuò',i:'lumayan; tidak jelek',l:'L5'},
+{z:'咖啡廳',p:'kāfēitīng',i:'kafe',l:'L5'},
+{z:'那裡/那兒',p:'nàlǐ / nàr',i:'di sana',l:'L5'},
+{z:'這裡/這兒',p:'zhèlǐ / zhèr',i:'di sini',l:'L5'},
+{z:'冰淇淋',p:'bīngqílín',i:'es krim',l:'L5'},
+{z:'巧克力',p:'qiǎokèlì',i:'cokelat',l:'L5'},
+{z:'半',p:'bàn',i:'setengah',l:'L5'},
+{z:'吧',p:'ba',i:'partikel akhir (saran/usulan)',l:'L5'},
+{z:'有空',p:'yǒukòng',i:'ada waktu; senggang',l:'L5'},
+{z:'沒有空',p:'méiyǒukòng',i:'tidak ada waktu; sibuk',l:'L5'},
+{z:'跟',p:'gēn',i:'dan / bersama',l:'L5'},
+{z:'可是',p:'kěshì',i:'tetapi',l:'L5'},
+{z:'房間',p:'fángjiān',i:'kamar',l:'L5'},
+{z:'間',p:'jiān',i:'kata satuan untuk kamar',l:'L5'},
+{z:'房子',p:'fángzi',i:'rumah / gedung',l:'L5'},
+{z:'棟',p:'dòng',i:'kata satuan untuk gedung',l:'L5'},
+{z:'裡面',p:'lǐmiàn',i:'di dalam',l:'L5'},
+{z:'外面',p:'wàimiàn',i:'di luar',l:'L5'},
+{z:'客廳',p:'kètīng',i:'ruang tamu',l:'L5'},
+{z:'桌子',p:'zhuōzi',i:'meja',l:'L5'},
+{z:'椅子',p:'yǐzi',i:'kursi',l:'L5'},
+{z:'張',p:'zhāng',i:'kata satuan untuk meja/kursi/kertas',l:'L5'},
+{z:'上面',p:'shàngmiàn',i:'di atas',l:'L5'},
+{z:'哥哥',p:'gēge',i:'kakak laki-laki',l:'L5'},
+{z:'姐姐',p:'jiějie',i:'kakak perempuan',l:'L5'},
+{z:'弟弟',p:'dìdi',i:'adik laki-laki',l:'L5'},
+{z:'妹妹',p:'mèimei',i:'adik perempuan',l:'L5'},
+{z:'沙發',p:'shāfā',i:'sofa',l:'L5'},
+{z:'下面',p:'xiàmiàn',i:'di bawah',l:'L5'},
+{z:'旁邊',p:'pángbiān',i:'di samping',l:'L5'},
+{z:'前面',p:'qiánmiàn',i:'di depan',l:'L5'},
+{z:'後面',p:'hòumiàn',i:'di belakang',l:'L5'},
+{z:'幫',p:'bāng',i:'membantu',l:'L5'},
+{z:'廚房',p:'chúfáng',i:'dapur',l:'L5'},
+{z:'再',p:'zài',i:'lagi',l:'L5'},
+{z:'床',p:'chuáng',i:'tempat tidur',l:'L5'},
+{z:'家具',p:'jiājù',i:'perabotan; furnitur',l:'L5'},
+{z:'電視',p:'diànshì',i:'televisi (TV)',l:'L5'},
+{z:'台',p:'tái',i:'kata satuan untuk TV / komputer / mesin',l:'L5'},
+{z:'窗戶',p:'chuānghù',i:'jendela',l:'L5'},
+{z:'門',p:'mén',i:'pintu',l:'L5'},
+{z:'貓',p:'māo',i:'kucing',l:'L5'},
+{z:'狗',p:'gǒu',i:'anjing',l:'L5'},
+{z:'鳥',p:'niǎo',i:'burung',l:'L5'},
+{z:'隻',p:'zhī',i:'kata satuan untuk hewan',l:'L5'},
+// ═══════════════════════════════════════════
+// LESSON 6 — 周末去打網球吧！
+// ═══════════════════════════════════════════
+{z:'唱歌',p:'chànggē',i:'bernyanyi',l:'L6'},
+{z:'學',p:'xué',i:'belajar',l:'L6'},
+{z:'學習',p:'xuéxí',i:'belajar (mempelajari)',l:'L6'},
+{z:'平常',p:'píngcháng',i:'biasanya',l:'L6'},
+{z:'有的時候',p:'yǒu de shíhòu',i:'kadang-kadang',l:'L6'},
+{z:'歌',p:'gē',i:'lagu',l:'L6'},
+{z:'比賽',p:'bǐsài',i:'pertandingan; kompetisi',l:'L6'},
+{z:'畫',p:'huà',i:'lukisan',l:'L6'},
+{z:'畫畫',p:'huàhuà',i:'menggambar; melukis',l:'L6'},
+{z:'真的',p:'zhēn de',i:'sungguh; benar-benar',l:'L6'},
+{z:'興趣',p:'xìngqù',i:'hobi; minat',l:'L6'},
+{z:'跳舞',p:'tiàowǔ',i:'menari',l:'L6'},
+{z:'上網',p:'shàngwǎng',i:'berselancar di internet',l:'L6'},
+{z:'不要',p:'bùyào',i:'jangan',l:'L6'},
+{z:'休息',p:'xiūxi',i:'beristirahat',l:'L6'},
+{z:'前天',p:'qiántiān',i:'kemarin dulu',l:'L6'},
+{z:'只',p:'zhǐ',i:'hanya',l:'L6'},
+{z:'可以',p:'kěyǐ',i:'boleh / bisa',l:'L6'},
+{z:'後天',p:'hòutiān',i:'lusa',l:'L6'},
+{z:'應該',p:'yīnggāi',i:'seharusnya',l:'L6'},
+{z:'手機',p:'shǒujī',i:'ponsel',l:'L6'},
+{z:'有一點兒',p:'yǒu yī diǎnr',i:'sedikit / agak',l:'L6'},
+{z:'有趣',p:'yǒuqù',i:'menarik',l:'L6'},
+{z:'聽說',p:'tīngshuō',i:'mendengar (kata orang)',l:'L6'},
+{z:'首',p:'shǒu',i:'kata penggolong untuk lagu',l:'L6'},
+{z:'高興',p:'gāoxìng',i:'senang; bahagia',l:'L6'},
+{z:'腳踏車/自行車',p:'jiǎotàchē / zìxíngchē',i:'sepeda',l:'L6'},
+{z:'覺得',p:'juéde',i:'merasa / berpikir',l:'L6'},
+{z:'輛',p:'liàng',i:'satuan untuk kendaraan',l:'L6'},
+{z:'運動',p:'yùndòng',i:'berolahraga',l:'L6'},
+{z:'部',p:'bù',i:'satuan untuk film',l:'L6'},
+{z:'電影',p:'diànyǐng',i:'film',l:'L6'},
+{z:'電影院',p:'diànyǐngyuàn',i:'bioskop',l:'L6'},
+{z:'電腦',p:'diànnǎo',i:'komputer',l:'L6'},
+{z:'騎',p:'qí',i:'mengendarai (sepeda, motor, kuda)',l:'L6'},
+{z:'山',p:'shān',i:'gunung',l:'L6'},
+{z:'得',p:'de',i:'partikel pelengkap (komplemen derajat)',l:'L6'},
+{z:'快',p:'kuài',i:'cepat',l:'L6'},
+{z:'慢',p:'màn',i:'lambat',l:'L6'},
+{z:'打',p:'dǎ',i:'bermain / memukul',l:'L6'},
+{z:'會',p:'huì',i:'bisa / mampu',l:'L6'},
+{z:'棒球',p:'bàngqiú',i:'bisbol / baseball',l:'L6'},
+{z:'海',p:'hǎi',i:'laut / samudra',l:'L6'},
+{z:'海邊',p:'hǎibiān',i:'pantai',l:'L6'},
+{z:'游泳',p:'yóuyǒng',i:'berenang',l:'L6'},
+{z:'球',p:'qiú',i:'bola',l:'L6'},
+{z:'籃球',p:'lánqiú',i:'bola basket',l:'L6'},
+{z:'網球',p:'wǎngqiú',i:'tenis',l:'L6'},
+{z:'說',p:'shuō',i:'berkata / berbicara',l:'L6'},
+{z:'說話',p:'shuōhuà',i:'berbicara / bicara',l:'L6'},
+{z:'足球',p:'zúqiú',i:'sepak bola',l:'L6'},
+{z:'跑',p:'pǎo',i:'berlari',l:'L6'},
+{z:'跑步',p:'pǎobù',i:'lari / berlari',l:'L6'},
+{z:'踢',p:'tī',i:'menendang',l:'L6'},
+{z:'風景',p:'fēngjǐng',i:'pemandangan',l:'L6'},
+];
+
+var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',ALL:'Semua'};
+function sh(a){return a.slice().sort(function(){return Math.random()-.5;});}
+var deck,idx,ronde,cp,ch,cbv,rev,toRev,curL='ALL';
+
+function setL(l){
+  curL=l;
+  document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('on');});
+  document.querySelectorAll('.fb').forEach(function(b){
+    if(b.getAttribute('onclick')==="setL('"+l+"')") b.classList.add('on');
+  });
+  ronde=1; fullRestart();
+}
+
+function fullRestart(){
+  var src=curL==='ALL'?V:V.filter(function(v){return v.l===curL;});
+  deck=sh(src);
+  var total=deck.length;
+  document.getElementById('tsub').textContent=
+    (curL==='ALL'?'Semua pelajaran — '+total+' kosakata':LABELS[curL]+' — '+total+' kosakata');
+  go();
+}
+
+function go(){
+  idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
+  show('qv');hide('rv');hide('fv');
+  document.getElementById('rb').textContent='Ronde '+ronde;
+  upStats();showCard();
+}
+
+function nextRonde(){ronde++;deck=sh(toRev);go();}
+
+function showCard(){
+  rev=false;
+  var q=deck[idx];
+  var el=document.getElementById('zh');
+  el.textContent=q.z;
+  var l=q.z.length;
+  el.className='zh '+(l<=2?'big':l<=4?'med':l<=6?'sm':'xs');
+  document.getElementById('ctag').textContent=LABELS[q.l]||q.l;
+  document.getElementById('py').textContent=q.p;
+  document.getElementById('idt').textContent=q.i;
+  document.getElementById('ans').style.display='none';
+  document.getElementById('hint').style.display='flex';
+  document.getElementById('ba').style.display='none';
+  document.getElementById('card').className='card';
+  document.getElementById('ctr').textContent=(idx+1)+'/'+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById('pb').style.width=pct+'%';
+  document.getElementById('pl').textContent=idx+' selesai';
+  document.getElementById('pr').textContent=deck.length+' kartu';
+}
+
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById('ans').style.display='block';
+  document.getElementById('hint').style.display='none';
+  document.getElementById('ba').style.display='flex';
+  document.getElementById('card').className='card done';
+}
+
+function rate(r){
+  var q=deck[idx];
+  if(r==='p') cp++;
+  else if(r==='h'){ch++;toRev.push(q);}
+  else{cbv++;toRev.push(q);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+
+function upStats(){
+  document.getElementById('sp').textContent=cp;
+  document.getElementById('sh').textContent=ch;
+  document.getElementById('sb').textContent=cbv;
+}
+
+function showResult(){
+  document.getElementById('pb').style.width='100%';
+  hide('qv');
+  if(toRev.length===0){show('fv');return;}
+  show('rv');
+  document.getElementById('rp').textContent=cp;
+  document.getElementById('rh').textContent=ch;
+  document.getElementById('rbb').textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById('ri').textContent=pct>=90?'🌟':pct>=70?'😊':pct>=50?'💪':'😤';
+  document.getElementById('rt').textContent='Ronde '+ronde+' selesai!';
+  document.getElementById('rs').textContent=
+    pct>=90?'Hampir sempurna! '+toRev.length+' kartu tersisa.':
+    pct>=70?'Bagus! '+toRev.length+' kartu perlu diulang.':
+    pct>=50?'Lumayan! Ulangi '+toRev.length+' kartu.':
+    'Semangat! '+toRev.length+' kartu menunggumu.';
+  document.getElementById('nb').textContent='Lanjut Ronde '+(ronde+1)+' → '+toRev.length+' kartu';
+  var rl=document.getElementById('rl');
+  rl.innerHTML='';
+  toRev.forEach(function(v){
+    var d=document.createElement('div');d.className='ri';
+    d.innerHTML='<span class="ri-zh">'+v.z+'</span><div><div class="ri-py">'+v.p+'</div><div class="ri-cat">'+v.l+'</div></div><span class="ri-id">'+v.i+'</span>';
+    rl.appendChild(d);
+  });
+  document.getElementById('rlw').style.display='';
+}
+
+function show(id){document.getElementById(id).style.display='';}
+function hide(id){document.getElementById(id).style.display='none';}
+
+setL('ALL');
+</script>
+</body>
+</html>
