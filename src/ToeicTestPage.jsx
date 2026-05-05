@@ -90,23 +90,19 @@ export default function ToeicTestPage() {
 
   return (
     <div className="test-page">
-      {/* TOPBAR */}
-      <div className="test-topbar">
-        <button className="back-btn" onClick={() => navigate('/')}>← Back</button>
-        <div className="test-title-wrap">
-          <h1 className="test-title">TOEIC Reading Test</h1>
-          <span className="test-sub">{current + 1} / {totalQ}</span>
-        </div>
-        <div className="progress-info">{Object.keys(answers).length}/{totalQ} answered</div>
-      </div>
-
-      {/* PROGRESS BAR */}
-      <div className="progress-strip">
-        <div className="progress-fill" style={{ width: `${pct}%` }} />
-      </div>
-
       {/* BODY */}
       <div className="test-body single">
+
+        {/* Header row */}
+        <div className="test-header-row">
+          <button className="toeic-back-btn" onClick={() => navigate('/')}>← Back</button>
+          <div className="test-counter">{current + 1} / {totalQ}</div>
+          <div className="progress-info-inline">{Object.keys(answers).length}/{totalQ} answered</div>
+        </div>
+
+        <div className="progress-strip">
+          <div className="progress-fill" style={{ width: `${pct}%` }} />
+        </div>
 
         {/* Part label */}
         <div className="part-chip">{partLabel}</div>
