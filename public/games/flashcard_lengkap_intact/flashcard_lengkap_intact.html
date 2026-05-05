@@ -87,6 +87,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
     <button class="fb" onclick="setL('L4')">L4 咖啡</button>
     <button class="fb" onclick="setL('L5')">L5 錢包</button>
     <button class="fb" onclick="setL('L6')">L6 網球</button>
+    <button class="fb" onclick="setL('L7')">L7 交通</button>
   </div>
   <div id="qv">
     <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/–</span></div>
@@ -454,9 +455,71 @@ var V=[
 {z:'跑步',p:'pǎobù',i:'lari / berlari',l:'L6'},
 {z:'踢',p:'tī',i:'menendang',l:'L6'},
 {z:'風景',p:'fēngjǐng',i:'pemandangan',l:'L6'},
+// ═══════════════════════════════════════════
+// LESSON 7 — 交通與地點
+// ═══════════════════════════════════════════
+{z:'超級市場',p:'chāojí shìchǎng',i:'supermarket',l:'L7'},
+{z:'超市',p:'chāoshì',i:'supermarket (singkat)',l:'L7'},
+{z:'市場',p:'shìchǎng',i:'pasar',l:'L7'},
+{z:'一定',p:'yídìng',i:'pasti / tentu',l:'L7'},
+{z:'又',p:'yòu',i:'juga / sekaligus ("baik… maupun…")',l:'L7'},
+{z:'方便',p:'fāngbiàn',i:'praktis / mudah / nyaman',l:'L7'},
+{z:'舒服',p:'shūfu',i:'nyaman / enak (perasaan atau kondisi)',l:'L7'},
+{z:'巧克力',p:'qiǎokèlì',i:'cokelat',l:'L7'},
+{z:'線',p:'xiàn',i:'jalur / line',l:'L7'},
+{z:'藍',p:'lán',i:'biru',l:'L7'},
+{z:'藍色',p:'lánsè',i:'warna biru',l:'L7'},
+{z:'機場',p:'jīchǎng',i:'bandara / airport',l:'L7'},
+{z:'飛機場',p:'fēijīchǎng',i:'bandara / airport',l:'L7'},
+{z:'開車',p:'kāichē',i:'mengemudi / menyetir mobil',l:'L7'},
+{z:'司機',p:'sījī',i:'sopir / pengemudi',l:'L7'},
+{z:'汽車',p:'qìchē',i:'mobil',l:'L7'},
+{z:'計程車',p:'jìchéngchē',i:'taksi',l:'L7'},
+{z:'火車',p:'huǒchē',i:'kereta api',l:'L7'},
+{z:'上車',p:'shàngchē',i:'naik kendaraan',l:'L7'},
+{z:'遠',p:'yuǎn',i:'jauh',l:'L7'},
+{z:'近',p:'jìn',i:'dekat',l:'L7'},
+{z:'從',p:'cóng',i:'dari',l:'L7'},
+{z:'走路',p:'zǒulù',i:'berjalan kaki',l:'L7'},
+{z:'走',p:'zǒu',i:'berjalan',l:'L7'},
+{z:'先',p:'xiān',i:'dulu / terlebih dahulu',l:'L7'},
+{z:'地圖',p:'dìtú',i:'peta',l:'L7'},
+{z:'錶',p:'biǎo',i:'jam tangan',l:'L7'},
+{z:'手錶',p:'shǒubiǎo',i:'jam tangan',l:'L7'},
+{z:'怎麼',p:'zěnme',i:'bagaimana',l:'L7'},
+{z:'到',p:'dào',i:'ke / tiba',l:'L7'},
+{z:'飯店',p:'fàndiàn',i:'hotel',l:'L7'},
+{z:'旅館',p:'lǚguǎn',i:'penginapan / hotel',l:'L7'},
+{z:'找',p:'zhǎo',i:'mencari / mengunjungi',l:'L7'},
+{z:'韓國',p:'Hánguó',i:'Korea',l:'L7'},
+{z:'等',p:'děng',i:'menunggu',l:'L7'},
+{z:'坐',p:'zuò',i:'naik (kendaraan)',l:'L7'},
+{z:'捷運',p:'jiéyùn',i:'MRT / metro',l:'L7'},
+{z:'地鐵',p:'dìtiě',i:'kereta bawah tanah / subway',l:'L7'},
+{z:'公共汽車',p:'gōnggòng qìchē',i:'bus umum',l:'L7'},
+{z:'公車',p:'gōngchē',i:'bus',l:'L7'},
+{z:'車',p:'chē',i:'kendaraan / mobil',l:'L7'},
+{z:'車站',p:'chēzhàn',i:'stasiun / terminal kendaraan',l:'L7'},
+{z:'站',p:'zhàn',i:'stasiun / halte',l:'L7'},
+{z:'飛機',p:'fēijī',i:'pesawat terbang',l:'L7'},
+{z:'架',p:'jià',i:'kata penggolong untuk pesawat',l:'L7'},
+{z:'飛',p:'fēi',i:'terbang',l:'L7'},
+{z:'起飛',p:'qǐfēi',i:'lepas landas',l:'L7'},
+{z:'了',p:'le',i:'partikel penanda perubahan keadaan',l:'L7'},
+{z:'路',p:'lù',i:'jalan',l:'L7'},
+{z:'馬路',p:'mǎlù',i:'jalan raya',l:'L7'},
+{z:'條',p:'tiáo',i:'kata penggolong (untuk jalan, sungai, ikan, dll.)',l:'L7'},
+{z:'街',p:'jiē',i:'jalan kecil / jalan raya / street',l:'L7'},
+{z:'地方',p:'dìfāng',i:'tempat',l:'L7'},
+{z:'附近',p:'fùjìn',i:'sekitar / di dekat',l:'L7'},
+{z:'郵局',p:'yóujú',i:'kantor pos',l:'L7'},
+{z:'寄',p:'jì',i:'mengirim',l:'L7'},
+{z:'信',p:'xìn',i:'surat',l:'L7'},
+{z:'封',p:'fēng',i:'kata penggolong untuk surat',l:'L7'},
+{z:'信封',p:'xìnfēng',i:'amplop',l:'L7'},
 ];
 
-var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',ALL:'Semua'};
+var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',L7:'L7 交通',ALL:'Semua'};
 function sh(a){return a.slice().sort(function(){return Math.random()-.5;});}
 var deck,idx,ronde,cp,ch,cbv,rev,toRev,curL='ALL';
 
