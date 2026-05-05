@@ -70,7 +70,7 @@ function FlashcardCard({ card }) {
       </div>
 
       <button className="belajar-btn" onClick={() => navigate(card.route)}>
-        Belajar Sekarang →
+        Start Learning →
       </button>
     </div>
   )
