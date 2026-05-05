@@ -1,7 +1,17 @@
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import './ToeicTestPage.css'
 import { questions } from './toeicData'
+
+// Shuffle array (Fisher-Yates)
+function shuffle(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
 
 export default function ToeicTestPage() {
   const navigate = useNavigate()
@@ -10,10 +20,12 @@ export default function ToeicTestPage() {
   const [submitted, setSubmitted] = useState(false)
 
   const totalQ = questions.length
-  const q = questions[current]
+  // Shuffle once on mount, stays consistent for the whole session
+  const shuffled = useMemo(() => shuffle(questions), [])
+  const q = shuffled[current]
   const isLast = current === totalQ - 1
   const score = submitted
-    ? questions.filter(q => answers[q.id] === q.answer).length
+    ? shuffled.filter(q => answers[q.id] === q.answer).length
     : 0
 
   const handleAnswer = (opt) => {
@@ -60,7 +72,7 @@ export default function ToeicTestPage() {
           <div className="result-score">{score}/{totalQ}</div>
           <div className="result-pct">{Math.round(score / totalQ * 100)}% correct</div>
           <div className="result-review">
-            {questions.map((qq, i) => (
+            {shuffled.map((qq) => (
               <div key={qq.id} className={`review-item ${answers[qq.id] === qq.answer ? 'r-correct' : 'r-wrong'}`}>
                 <span className="r-num">{qq.id}.</span>
                 <span className="r-your">Your answer: {answers[qq.id] || '—'}</span>
@@ -133,9 +145,17 @@ export default function ToeicTestPage() {
           </button>
 
           {isLast ? (
-            <button className="submit-btn-big nav-submit" onClick={() => setSubmitted(true)}>
-              Submit All Answers
-            </button>
+            <>
+              <div className="source-info">
+                📄 Soal bersumber dari materi latihan pribadi.{' '}
+                <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" className="source-link">
+                  Lihat sumber →
+                </a>
+              </div>
+              <button className="submit-btn-big nav-submit" onClick={() => setSubmitted(true)}>
+                Submit All Answers
+              </button>
+            </>
           ) : (
             <button
               className="nav-btn next"
@@ -149,7 +169,7 @@ export default function ToeicTestPage() {
 
         {/* Question dots navigator */}
         <div className="dots-nav">
-          {questions.map((qq, i) => (
+          {shuffled.map((qq, i) => (
             <button
               key={qq.id}
               className={`dot-btn ${i === current ? 'dot-active' : ''} ${answers[qq.id] ? 'dot-answered' : ''}`}

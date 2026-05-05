@@ -369,3 +369,18 @@
 .r-your { flex: 1; color: #374151; }
 .r-correct-ans { color: #16a34a; font-weight: 600; }
 .r-wrong .r-correct-ans { color: #dc2626; }
+
+/* ── SOURCE INFO ── */
+.source-info {
+  font-size: 12px;
+  color: #9ca3af;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.source-link {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+}
+.source-link:hover { text-decoration: underline; }
