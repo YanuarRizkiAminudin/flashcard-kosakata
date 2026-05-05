@@ -384,3 +384,22 @@
   font-weight: 600;
 }
 .source-link:hover { text-decoration: underline; }
+
+/* ── SOURCE BANNER ── */
+.source-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4f46e5;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.source-banner:hover {
+  background: #e0e7ff;
+}

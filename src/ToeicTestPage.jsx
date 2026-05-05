@@ -111,6 +111,16 @@ export default function ToeicTestPage() {
         {/* Part label */}
         <div className="part-chip">{partLabel}</div>
 
+        {/* Source banner */}
+        <a
+          href="https://drive.google.com/drive/folders/1V5Lh4mVPpP9cAhMT-KQGLZo38AQB4T0g"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="source-banner"
+        >
+          📂 Materi latihan — Lihat di Google Drive →
+        </a>
+
         {/* Passage for Part 6 & 7 */}
         {q.passageText && (
           <div className="passage-block">
@@ -148,7 +158,7 @@ export default function ToeicTestPage() {
             <>
               <div className="source-info">
                 📄 Soal bersumber dari materi latihan pribadi.{' '}
-                <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" className="source-link">
+                <a href="https://drive.google.com/drive/folders/1V5Lh4mVPpP9cAhMT-KQGLZo38AQB4T0g" target="_blank" rel="noopener noreferrer" className="source-link">
                   Lihat sumber →
                 </a>
               </div>
