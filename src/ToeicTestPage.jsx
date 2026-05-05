@@ -25,7 +25,9 @@ export default function ToeicTestPage() {
     : 0
 
   const getOptClass = (qid, opt) => {
-    if (!submitted) return answers[qid] === opt ? 'opt selected' : 'opt'
+    if (!submitted) {
+      return answers[qid] === opt ? 'opt selected' : 'opt'
+    }
     const correct = questions.find(q => q.id === qid)?.answer
     if (opt === correct) return 'opt correct'
     if (answers[qid] === opt && opt !== correct) return 'opt wrong'
@@ -82,10 +84,6 @@ export default function ToeicTestPage() {
         </div>
         <div className="topbar-right">
           <div className="progress-info">{answered}/{totalQ} answered</div>
-          {!submitted
-            ? <button className="submit-btn" onClick={() => setSubmitted(true)}>Submit</button>
-            : <div className="score-box">Score: {score}/{totalQ} ({Math.round(score/totalQ*100)}%)</div>
-          }
         </div>
       </div>
 
@@ -152,6 +150,14 @@ export default function ToeicTestPage() {
                 {group.questions.map(renderQuestion)}
               </div>
             ))}
+            {!submitted && (
+              <div className="submit-section">
+                <div className="submit-info">{answered}/{totalQ} questions answered</div>
+                <button className="submit-btn-big" onClick={() => setSubmitted(true)}>
+                  Submit All Answers
+                </button>
+              </div>
+            )}
           </div>
         )}
 
