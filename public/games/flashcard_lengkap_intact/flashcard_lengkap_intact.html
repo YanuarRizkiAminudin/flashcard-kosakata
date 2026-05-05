@@ -88,6 +88,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
     <button class="fb" onclick="setL('L5')">L5 錢包</button>
     <button class="fb" onclick="setL('L6')">L6 網球</button>
     <button class="fb" onclick="setL('L7')">L7 交通</button>
+    <button class="fb" onclick="setL('L8')">L8 百貨公司</button>
   </div>
   <div id="qv">
     <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/–</span></div>
@@ -517,9 +518,53 @@ var V=[
 {z:'信',p:'xìn',i:'surat',l:'L7'},
 {z:'封',p:'fēng',i:'kata penggolong untuk surat',l:'L7'},
 {z:'信封',p:'xìnfēng',i:'amplop',l:'L7'},
+// ═══════════════════════════════════════════
+// LESSON 8 — 在百貨公司
+// ═══════════════════════════════════════════
+{z:'百貨公司',p:'bǎihuò gōngsī',i:'department store / pusat perbelanjaan',l:'L8'},
+{z:'黃色',p:'huángsè',i:'warna kuning',l:'L8'},
+{z:'黃',p:'huáng',i:'kuning',l:'L8'},
+{z:'褲子',p:'kùzi',i:'celana (M: 條)',l:'L8'},
+{z:'條',p:'tiáo',i:'kata penggolong untuk celana, jalan, ikan, dll.',l:'L8'},
+{z:'藍色',p:'lánsè',i:'warna biru',l:'L8'},
+{z:'藍',p:'lán',i:'biru',l:'L8'},
+{z:'漂亮',p:'piàoliang',i:'cantik; indah',l:'L8'},
+{z:'流行',p:'liúxíng',i:'populer; trendi; sedang tren',l:'L8'},
+{z:'顏色',p:'yánsè',i:'warna',l:'L8'},
+{z:'穿穿看',p:'chuān chuān kàn',i:'coba pakai dulu (V V 看)',l:'L8'},
+{z:'短',p:'duǎn',i:'pendek',l:'L8'},
+{z:'週末',p:'zhōumò',i:'akhir pekan',l:'L8'},
+{z:'鞋子',p:'xiézi',i:'sepatu (M: 雙)',l:'L8'},
+{z:'雙',p:'shuāng',i:'kata penggolong untuk pasangan (sepatu, kaus kaki)',l:'L8'},
+{z:'黑色',p:'hēisè',i:'warna hitam',l:'L8'},
+{z:'黑',p:'hēi',i:'hitam',l:'L8'},
+{z:'一樓',p:'yī lóu',i:'lantai satu / lantai dasar',l:'L8'},
+{z:'樓下',p:'lóuxià',i:'lantai bawah',l:'L8'},
+{z:'樓上',p:'lóushàng',i:'lantai atas',l:'L8'},
+{z:'樓',p:'lóu',i:'lantai; gedung bertingkat',l:'L8'},
+{z:'電梯',p:'diàntī',i:'lift; elevator',l:'L8'},
+{z:'快要',p:'kuàiyào',i:'hampir; akan segera (快要…了)',l:'L8'},
+{z:'關',p:'guān',i:'tutup; menutup',l:'L8'},
+{z:'年輕',p:'niánqīng',i:'muda',l:'L8'},
+{z:'老',p:'lǎo',i:'tua',l:'L8'},
+{z:'皮包',p:'píbāo',i:'tas; dompet (M: 個)',l:'L8'},
+{z:'女生',p:'nǚshēng',i:'perempuan; cewek',l:'L8'},
+{z:'男生',p:'nánshēng',i:'laki-laki; cowok',l:'L8'},
+{z:'雜誌',p:'zázhì',i:'majalah (M: 本)',l:'L8'},
+{z:'舊',p:'jiù',i:'lama; bekas; usang',l:'L8'},
+{z:'最新',p:'zuìxīn',i:'terbaru; paling baru',l:'L8'},
+{z:'新',p:'xīn',i:'baru',l:'L8'},
+{z:'汽車',p:'qìchē',i:'mobil',l:'L8'},
+{z:'書店',p:'shūdiàn',i:'toko buku',l:'L8'},
+{z:'有趣',p:'yǒuqù',i:'menarik; seru',l:'L8'},
+{z:'因為',p:'yīnwèi',i:'karena (因為…所以…)',l:'L8'},
+{z:'所以',p:'suǒyǐ',i:'oleh karena itu; jadi (因為…所以…)',l:'L8'},
+{z:'不一定',p:'bù yídìng',i:'belum tentu; tidak pasti',l:'L8'},
+{z:'下個週末',p:'xià gè zhōumò',i:'akhir pekan depan',l:'L8'},
+{z:'對了',p:'duì le',i:'oh ya; ngomong-ngomong',l:'L8'},
 ];
 
-var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',L7:'L7 交通',ALL:'Semua'};
+var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',L7:'L7 交通',L8:'L8 百貨公司',ALL:'Semua'};
 function sh(a){return a.slice().sort(function(){return Math.random()-.5;});}
 var deck,idx,ronde,cp,ch,cbv,rev,toRev,curL='ALL';
 

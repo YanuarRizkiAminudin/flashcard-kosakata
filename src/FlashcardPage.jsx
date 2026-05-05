@@ -12,15 +12,6 @@ const flashcards = [
     route: '/game/flashcard-mandarin',
   },
   {
-    id: 5,
-    category: 'Mandarin',
-    icon: '🏬',
-    title: '第八課 · 在百貨公司',
-    kartu: 7,
-    level: 'Ke 8 · Beginner',
-    route: '/lesson/ke8',
-  },
-  {
     id: 3,
     category: 'Audio',
     icon: '🎙️',
