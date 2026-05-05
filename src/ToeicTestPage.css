@@ -249,3 +249,118 @@
   background: #4338ca;
   transform: scale(1.01);
 }
+
+/* ── SINGLE QUESTION MODE ── */
+.test-body.single {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.part-chip {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #4f46e5;
+  background: #eef2ff;
+  border-radius: 99px;
+  padding: 5px 14px;
+  align-self: flex-start;
+}
+
+.single-card {
+  min-height: unset;
+}
+
+/* NAV */
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.nav-btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn:hover:not(:disabled) { border-color: #4f46e5; color: #4f46e5; }
+.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.nav-btn.next { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+.nav-btn.next:hover:not(:disabled) { background: #4338ca; }
+
+.nav-submit { max-width: unset; width: auto; padding: 12px 28px; font-size: 14px; }
+
+/* DOTS */
+.dots-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.dot-btn {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+  transition: all 0.15s;
+  padding: 0;
+}
+.dot-btn.dot-answered { background: #a5b4fc; }
+.dot-btn.dot-active { background: #4f46e5; transform: scale(1.3); }
+
+/* RESULT PAGE */
+.result-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.result-emoji { font-size: 64px; }
+.result-score { font-size: 48px; font-weight: 800; color: #111827; }
+.result-pct { font-size: 18px; color: #6b7280; margin-bottom: 16px; }
+
+.result-review {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.review-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+.r-correct { background: #f0fdf4; border: 1px solid #86efac; }
+.r-wrong { background: #fef2f2; border: 1px solid #fca5a5; }
+.r-num { font-weight: 700; min-width: 36px; color: #374151; }
+.r-your { flex: 1; color: #374151; }
+.r-correct-ans { color: #16a34a; font-weight: 600; }
+.r-wrong .r-correct-ans { color: #dc2626; }

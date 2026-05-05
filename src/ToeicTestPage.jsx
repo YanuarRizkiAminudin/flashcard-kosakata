@@ -5,52 +5,76 @@ import { questions } from './toeicData'
 
 export default function ToeicTestPage() {
   const navigate = useNavigate()
+  const [current, setCurrent] = useState(0)
   const [answers, setAnswers] = useState({})
   const [submitted, setSubmitted] = useState(false)
 
-  const handleAnswer = (qid, opt) => {
-    if (submitted) return
-    setAnswers(prev => ({ ...prev, [qid]: opt }))
-  }
-
   const totalQ = questions.length
-  const answered = Object.keys(answers).length
+  const q = questions[current]
+  const isLast = current === totalQ - 1
   const score = submitted
     ? questions.filter(q => answers[q.id] === q.answer).length
     : 0
 
-  const getOptClass = (qid, opt) => {
-    if (!submitted) return answers[qid] === opt ? 'opt selected' : 'opt'
-    const correct = questions.find(q => q.id === qid)?.answer
-    if (opt === correct) return 'opt correct'
-    if (answers[qid] === opt && opt !== correct) return 'opt wrong'
+  const handleAnswer = (opt) => {
+    if (submitted) return
+    setAnswers(prev => ({ ...prev, [q.id]: opt }))
+  }
+
+  const handleNext = () => {
+    if (isLast) return
+    setCurrent(prev => prev + 1)
+  }
+
+  const handlePrev = () => {
+    if (current === 0) return
+    setCurrent(prev => prev - 1)
+  }
+
+  const getOptClass = (opt) => {
+    if (!submitted) return answers[q.id] === opt ? 'opt selected' : 'opt'
+    if (opt === q.answer) return 'opt correct'
+    if (answers[q.id] === opt && opt !== q.answer) return 'opt wrong'
     return 'opt'
   }
 
-  // Group passages for Part 6 & 7
-  const rendered = []
-  let lastPassageId = null
+  const partLabel = q?.part === 5
+    ? 'Part 5 — Incomplete Sentences'
+    : q?.part === 6
+    ? 'Part 6 — Text Completion'
+    : 'Part 7 — Reading Comprehension'
 
-  questions.forEach((q) => {
-    // Part divider
-    if (q.part === 5 && !rendered.find(r => r.type === 'divider5')) {
-      rendered.push({ type: 'divider5' })
-    }
-    if (q.part === 6 && !rendered.find(r => r.type === 'divider6')) {
-      rendered.push({ type: 'divider6' })
-    }
-    if (q.part === 7 && !rendered.find(r => r.type === 'divider7')) {
-      rendered.push({ type: 'divider7' })
-    }
+  const pct = Math.round((current + 1) / totalQ * 100)
 
-    // Passage header for Part 6 & 7
-    if ((q.part === 6 || q.part === 7) && q.passageId && q.passageId !== lastPassageId) {
-      rendered.push({ type: 'passage', passageId: q.passageId, title: q.groupTitle, text: q.passageText })
-      lastPassageId = q.passageId
-    }
-
-    rendered.push({ type: 'question', q })
-  })
+  if (submitted) {
+    return (
+      <div className="test-page">
+        <div className="test-topbar">
+          <button className="back-btn" onClick={() => navigate('/')}>← Back</button>
+          <div className="test-title-wrap">
+            <h1 className="test-title">TOEIC Reading Test</h1>
+          </div>
+        </div>
+        <div className="result-page">
+          <div className="result-emoji">🎉</div>
+          <div className="result-score">{score}/{totalQ}</div>
+          <div className="result-pct">{Math.round(score / totalQ * 100)}% correct</div>
+          <div className="result-review">
+            {questions.map((qq, i) => (
+              <div key={qq.id} className={`review-item ${answers[qq.id] === qq.answer ? 'r-correct' : 'r-wrong'}`}>
+                <span className="r-num">{qq.id}.</span>
+                <span className="r-your">Your answer: {answers[qq.id] || '—'}</span>
+                <span className="r-correct-ans">Correct: {qq.answer}</span>
+              </div>
+            ))}
+          </div>
+          <button className="submit-btn-big" onClick={() => { setAnswers({}); setCurrent(0); setSubmitted(false) }}>
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="test-page">
@@ -59,87 +83,82 @@ export default function ToeicTestPage() {
         <button className="back-btn" onClick={() => navigate('/')}>← Back</button>
         <div className="test-title-wrap">
           <h1 className="test-title">TOEIC Reading Test</h1>
-          <span className="test-sub">100 Questions · Part 5 · Part 6 · Part 7</span>
+          <span className="test-sub">{current + 1} / {totalQ}</span>
         </div>
-        <div className="progress-info">{answered}/{totalQ} answered</div>
+        <div className="progress-info">{Object.keys(answers).length}/{totalQ} answered</div>
       </div>
 
       {/* PROGRESS BAR */}
       <div className="progress-strip">
-        <div className="progress-fill" style={{ width: `${Math.round(answered / totalQ * 100)}%` }} />
+        <div className="progress-fill" style={{ width: `${pct}%` }} />
       </div>
 
       {/* BODY */}
-      <div className="test-body">
-        {rendered.map((item, i) => {
-          if (item.type === 'divider5') return (
-            <div key="d5" className="part-header">
-              <span className="part-label">PART 5 — Incomplete Sentences</span>
-              <p className="part-desc">A word or phrase is missing in each sentence. Select the best answer (A), (B), (C), or (D).</p>
-            </div>
-          )
-          if (item.type === 'divider6') return (
-            <div key="d6" className="part-header">
-              <span className="part-label">PART 6 — Text Completion</span>
-              <p className="part-desc">A word, phrase, or sentence is missing. Select the best answer to complete the text.</p>
-            </div>
-          )
-          if (item.type === 'divider7') return (
-            <div key="d7" className="part-header">
-              <span className="part-label">PART 7 — Reading Comprehension</span>
-              <p className="part-desc">Read the texts and select the best answer for each question.</p>
-            </div>
-          )
-          if (item.type === 'passage') return (
-            <div key={`passage-${item.passageId}`} className="passage-block">
-              {item.title && <div className="passage-title">{item.title}</div>}
-              <div className="passage-text">{item.text}</div>
-            </div>
-          )
-          if (item.type === 'question') {
-            const q = item.q
-            return (
-              <div key={q.id} className="question-card">
-                <div className="q-num">{q.id}.</div>
-                <div className="q-content">
-                  {q.text && <p className="q-sentence">{q.text}</p>}
-                  <div className="opts">
-                    {q.options.map(opt => (
-                      <button
-                        key={opt}
-                        className={getOptClass(q.id, opt)}
-                        onClick={() => handleAnswer(q.id, opt)}
-                      >
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )
-          }
-          return null
-        })}
+      <div className="test-body single">
 
-        {/* SUBMIT */}
-        {!submitted ? (
-          <div className="submit-section">
-            <div className="submit-info">{answered}/{totalQ} questions answered</div>
-            <button className="submit-btn-big" onClick={() => setSubmitted(true)}>
-              Submit All Answers
-            </button>
-          </div>
-        ) : (
-          <div className="result-bar">
-            <div>
-              <div className="result-score">🎉 {score}/{totalQ}</div>
-              <div className="result-pct">{Math.round(score / totalQ * 100)}% correct</div>
-            </div>
-            <button className="retry-btn" onClick={() => { setAnswers({}); setSubmitted(false); window.scrollTo(0, 0) }}>
-              Try Again
-            </button>
+        {/* Part label */}
+        <div className="part-chip">{partLabel}</div>
+
+        {/* Passage for Part 6 & 7 */}
+        {q.passageText && (
+          <div className="passage-block">
+            {q.groupTitle && <div className="passage-title">{q.groupTitle}</div>}
+            <div className="passage-text">{q.passageText}</div>
           </div>
         )}
+
+        {/* Question */}
+        <div className="question-card single-card">
+          <div className="q-num">{q.id}.</div>
+          <div className="q-content">
+            {q.text && <p className="q-sentence">{q.text}</p>}
+            <div className="opts">
+              {q.options.map(opt => (
+                <button
+                  key={opt}
+                  className={getOptClass(opt)}
+                  onClick={() => handleAnswer(opt)}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* NAV BUTTONS */}
+        <div className="nav-row">
+          <button className="nav-btn prev" onClick={handlePrev} disabled={current === 0}>
+            ← Prev
+          </button>
+
+          {isLast ? (
+            <button className="submit-btn-big nav-submit" onClick={() => setSubmitted(true)}>
+              Submit All Answers
+            </button>
+          ) : (
+            <button
+              className="nav-btn next"
+              onClick={handleNext}
+              disabled={!answers[q.id]}
+            >
+              Next →
+            </button>
+          )}
+        </div>
+
+        {/* Question dots navigator */}
+        <div className="dots-nav">
+          {questions.map((qq, i) => (
+            <button
+              key={qq.id}
+              className={`dot-btn ${i === current ? 'dot-active' : ''} ${answers[qq.id] ? 'dot-answered' : ''}`}
+              onClick={() => setCurrent(i)}
+              title={`Q${qq.id}`}
+            />
+          ))}
+        </div>
+
       </div>
     </div>
   )
