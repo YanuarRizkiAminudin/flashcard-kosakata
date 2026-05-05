@@ -29,6 +29,15 @@ const flashcards = [
     level: 'B1–B2',
     route: '/game/toeic-vocabulary',
   },
+  {
+    id: 4,
+    category: 'TOEIC',
+    icon: '📝',
+    title: 'TOEIC Reading Test',
+    kartu: 100,
+    level: 'Part 5 · 6 · 7',
+    route: '/toeic-test',
+  },
 ]
 
 function FlashcardCard({ card }) {
