@@ -46,9 +46,9 @@ export default function FeedbackPage() {
       {/* Hero */}
       <div className="fb-hero">
         <div className="fb-hero-icon">📬</div>
-        <h1 className="fb-hero-title">Sampaikan Pendapatmu</h1>
+        <h1 className="fb-hero-title">Share Your Thoughts</h1>
         <p className="fb-hero-sub">
-          Saran dan pengaduan kamu sangat berarti untuk pengembangan aplikasi ini.
+          Your suggestions and reports help us improve this app.
         </p>
       </div>
 
@@ -64,8 +64,8 @@ export default function FeedbackPage() {
             >
               <span className="fb-tab-icon">💬</span>
               <span>
-                <div className="fb-tab-label">Saran</div>
-                <div className="fb-tab-desc">Ide fitur atau konten baru</div>
+                <div className="fb-tab-label">Suggestion</div>
+                <div className="fb-tab-desc">Ideas for new features or content</div>
               </span>
             </button>
             <button
@@ -74,8 +74,8 @@ export default function FeedbackPage() {
             >
               <span className="fb-tab-icon">🚨</span>
               <span>
-                <div className="fb-tab-label">Pengaduan</div>
-                <div className="fb-tab-desc">Laporkan bug atau masalah</div>
+                <div className="fb-tab-label">Report</div>
+                <div className="fb-tab-desc">Report a bug or issue</div>
               </span>
             </button>
           </div>
@@ -84,25 +84,25 @@ export default function FeedbackPage() {
           {status === 'sent' ? (
             <div className="fb-success">
               <div className="fb-success-icon">✅</div>
-              <div className="fb-success-title">Terima kasih!</div>
+              <div className="fb-success-title">Thank you!</div>
               <div className="fb-success-sub">
                 {tab === 'saran'
-                  ? 'Saran kamu sudah kami terima dan akan kami pertimbangkan.'
-                  : 'Pengaduan kamu sudah kami catat dan akan segera ditindaklanjuti.'}
+                  ? 'Your suggestion has been received. We will take it into consideration.'
+                  : 'Your report has been noted and will be addressed soon.'}
               </div>
               <div className="fb-success-actions">
-                <button className="fb-again" onClick={() => setStatus('idle')}>Kirim lagi</button>
-                <button className="fb-home" onClick={() => navigate('/')}>Kembali ke Home</button>
+                <button className="fb-again" onClick={() => setStatus('idle')}>Send another</button>
+                <button className="fb-home" onClick={() => navigate('/')}>Back to Home</button>
               </div>
             </div>
           ) : (
             <form className="fb-form" onSubmit={handleSubmit}>
               <div className="fb-field">
-                <label className="fb-label">Nama</label>
+                <label className="fb-label">Name</label>
                 <input
                   className="fb-input"
                   type="text"
-                  placeholder="Nama kamu (opsional)"
+                  placeholder="Your name (optional)"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   maxLength={60}
@@ -111,15 +111,15 @@ export default function FeedbackPage() {
 
               <div className="fb-field">
                 <label className="fb-label">
-                  {tab === 'saran' ? 'Saran' : 'Pengaduan'}
+                  {tab === 'saran' ? 'Suggestion' : 'Report'}
                   <span className="fb-required"> *</span>
                 </label>
                 <textarea
                   className="fb-textarea"
                   placeholder={
                     tab === 'saran'
-                      ? 'Tulis saranmu di sini...\nContoh: "Tambahkan lesson 9", "Perbaiki tampilan quiz", dll.'
-                      : 'Ceritakan masalah yang kamu temukan...\nContoh: "Tombol X tidak berfungsi di halaman Y"'
+                      ? 'Write your suggestion here...\nE.g. "Add lesson 9", "Improve quiz layout", etc.'
+                      : 'Describe the issue you found...\nE.g. "Button X doesn\'t work on page Y"'
                   }
                   value={msg}
                   onChange={(e) => setMsg(e.target.value)}
@@ -132,7 +132,7 @@ export default function FeedbackPage() {
 
               {status === 'error' && (
                 <div className="fb-error">
-                  ⚠️ Gagal mengirim. Periksa koneksi internet kamu dan coba lagi.
+                  ⚠️ Failed to send. Check your internet connection and try again.
                 </div>
               )}
 
@@ -142,10 +142,10 @@ export default function FeedbackPage() {
                 disabled={status === 'sending' || !msg.trim()}
               >
                 {status === 'sending'
-                  ? '⏳ Mengirim...'
+                  ? '⏳ Sending...'
                   : tab === 'saran'
-                  ? '💬 Kirim Saran'
-                  : '🚨 Kirim Pengaduan'}
+                  ? '💬 Send Suggestion'
+                  : '🚨 Send Report'}
               </button>
             </form>
           )}

@@ -136,9 +136,9 @@ export default function FlashcardPage() {
       </div>
 
       <div className="feedback-footer">
-        <p className="feedback-footer-text">Ada saran atau menemukan masalah?</p>
+        <p className="feedback-footer-text">Have suggestions or found an issue?</p>
         <button className="feedback-footer-btn" onClick={() => navigate('/feedback')}>
-          📬 Kirim Feedback
+          📬 Send Feedback
         </button>
       </div>
     </div>
