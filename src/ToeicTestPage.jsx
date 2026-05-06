@@ -134,11 +134,8 @@ export default function ToeicTestPage() {
         <div className="question-card single-card">
           <div className="q-content">
             {q.text && <p className="q-sentence">
-              {/* If text already starts with a number (e.g. "173. ..."), show as-is.
-                  Otherwise prepend the sequential position number. */}
-              {/^\d+\./.test(q.text.trim())
-                ? q.text
-                : `${current + 1}. ${q.text}`}
+              {/* Always show sequential number 1-100, strip original number if present */}
+              {`${current + 1}. ${q.text.replace(/^\d+\.\s*/, '')}`}
             </p>}
             <div className="opts">
               {q.options.map(opt => (
