@@ -3,76 +3,13 @@ import './FlashcardPage.css'
 
 const flashcards = [
   {
-    id: 'L1',
+    id: 'MC1',
     category: 'Mandarin',
     icon: '📗',
-    title: '第1課 新同學 · The New Classmate',
-    kartu: 42,
-    level: 'BAB 1 · A1',
-    route: '/lesson/1',
-  },
-  {
-    id: 'L2',
-    category: 'Mandarin',
-    icon: '📗',
-    title: '第2課 你幾點去學校？',
-    kartu: 50,
-    level: 'BAB 2 · A1',
-    route: '/lesson/2',
-  },
-  {
-    id: 'L3',
-    category: 'Mandarin',
-    icon: '📗',
-    title: '第3課 買生日禮物',
-    kartu: 50,
-    level: 'BAB 3 · A1',
-    route: '/lesson/3',
-  },
-  {
-    id: 'L4',
-    category: 'Mandarin',
-    icon: '📗',
-    title: '第4課 你要咖啡還是茶？',
-    kartu: 53,
-    level: 'BAB 4 · A1',
-    route: '/lesson/4',
-  },
-  {
-    id: 'L5',
-    category: 'Mandarin',
-    icon: '📗',
-    title: '第5課 我的錢包在哪裡？',
-    kartu: 52,
-    level: 'BAB 5 · A1',
-    route: '/lesson/5',
-  },
-  {
-    id: 'L6',
-    category: 'Mandarin',
-    icon: '📗',
-    title: '第6課 週末去打網球吧！',
-    kartu: 40,
-    level: 'BAB 6 · A1',
-    route: '/lesson/6',
-  },
-  {
-    id: 'L7',
-    category: 'Mandarin',
-    icon: '📗',
-    title: '第7課 怎麼到飯店去？',
-    kartu: 45,
-    level: 'BAB 7 · A1',
-    route: '/lesson/7',
-  },
-  {
-    id: 'L8',
-    category: 'Mandarin',
-    icon: '📗',
-    title: '第8課 你為什麼不想走路？',
-    kartu: 45,
-    level: 'BAB 8 · A1',
-    route: '/lesson/8',
+    title: '時代華語 Modern Chinese 1',
+    kartu: 8,
+    level: 'BAB 1–8 · A1',
+    route: '/lessons',
   },
   {
     id: 1,
@@ -138,7 +75,7 @@ function FlashcardCard({ card }) {
 
       <div>
         <h2 className="card-title">{card.title}</h2>
-        <p className="card-meta">{card.kartu} Cards &bull; {card.level}</p>
+        <p className="card-meta">{card.kartu} {card.id === 'MC1' ? 'Lessons' : 'Cards'} &bull; {card.level}</p>
       </div>
 
       <button className="belajar-btn" onClick={() => navigate(card.route)}>
