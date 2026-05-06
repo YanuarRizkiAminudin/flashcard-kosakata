@@ -6,7 +6,7 @@ const flashcards = [
     id: 'MC1',
     category: 'Mandarin',
     icon: '📗',
-    title: '時代華語 Modern Chinese 1',
+    title: '時代華語 Modern Chinese',
     kartu: 8,
     level: 'BAB 1–8 · A1',
     route: '/lessons',
