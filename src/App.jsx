@@ -6,6 +6,7 @@ import ToeicTestPage from './ToeicTestPage'
 import LessonPage from './LessonPage'
 import LessonListPage from './LessonListPage'
 import FeedbackPage from './FeedbackPage'
+import MyFlashcardPage from './MyFlashcardPage'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/lessons" element={<LessonListPage />} />
       <Route path="/lesson/:id" element={<LessonPage />} />
       <Route path="/feedback" element={<FeedbackPage />} />
+      <Route path="/my-flashcards" element={<MyFlashcardPage />} />
     </Routes>
   )
 }

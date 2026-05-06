@@ -12,6 +12,15 @@ const flashcards = [
     route: '/lessons',
   },
   {
+    id: 5,
+    category: 'Personal',
+    icon: '🗂️',
+    title: 'My Flashcards',
+    kartu: 0,
+    level: 'Custom · Self-study',
+    route: '/my-flashcards',
+  },
+  {
     id: 1,
     category: 'Mandarin',
     icon: '🀄',
@@ -65,7 +74,7 @@ function FlashcardCard({ card }) {
       <div className="card-icon">{card.icon}</div>
       <div>
         <h2 className="card-title">{card.title}</h2>
-        <p className="card-meta">{card.kartu} {card.id === 'MC1' ? 'Lessons' : 'Cards'} &bull; {card.level}</p>
+        <p className="card-meta">{card.kartu} {card.id === 'MC1' ? 'Lessons' : card.id === 5 ? 'Cards saved' : 'Cards'} &bull; {card.level}</p>
       </div>
       <button className="belajar-btn" onClick={() => navigate(card.route)}>
         Start Learning →
