@@ -120,14 +120,22 @@ export default function ToeicTestPage() {
         {/* Passage for Part 6 & 7 */}
         {q.passageText && (
           <div className="passage-block">
-            {q.groupTitle && <div className="passage-title">{q.groupTitle}</div>}
+            {q.groupTitle && (
+              <div className="passage-title">
+                {/* Strip leading "Questions NNN-NNN " to avoid repeating the number range */}
+                {q.groupTitle.replace(/^Questions\s+[\d\-]+\s+/i, '')}
+              </div>
+            )}
             <div className="passage-text">{q.passageText}</div>
           </div>
         )}
 
         {/* Question */}
         <div className="question-card single-card">
-          <div className="q-num">{q.id}.</div>
+          {/* Only show the running number if the question text doesn't already start with a number */}
+          {q.text && !/^\d+\./.test(q.text.trim()) && (
+            <div className="q-num">{current + 1}.</div>
+          )}
           <div className="q-content">
             {q.text && <p className="q-sentence">{q.text}</p>}
             <div className="opts">
