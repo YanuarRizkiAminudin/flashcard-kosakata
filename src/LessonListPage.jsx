@@ -17,7 +17,7 @@ export default function LessonListPage() {
 
       {/* Hero */}
       <div className="ll-hero">
-        <div className="ll-hero-badge">A1 · TOCFL · HSK 1–2</div>
+        <div className="ll-hero-badge">A1 · TOCFL · A 1–2</div>
         <div className="ll-hero-title">時代華語</div>
         <div className="ll-hero-sub">Modern Chinese</div>
         <div className="ll-hero-desc">
