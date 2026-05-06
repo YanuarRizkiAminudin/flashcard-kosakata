@@ -5,6 +5,7 @@ import VoicePage from './VoicePage'
 import ToeicTestPage from './ToeicTestPage'
 import LessonPage from './LessonPage'
 import LessonListPage from './LessonListPage'
+import FeedbackPage from './FeedbackPage'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/toeic-test" element={<ToeicTestPage />} />
       <Route path="/lessons" element={<LessonListPage />} />
       <Route path="/lesson/:id" element={<LessonPage />} />
+      <Route path="/feedback" element={<FeedbackPage />} />
     </Routes>
   )
 }

@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
 import './FlashcardPage.css'
 
 const flashcards = [
@@ -75,111 +74,9 @@ function FlashcardCard({ card }) {
   )
 }
 
-// ── Feedback Section ──────────────────────────────────────────────────────────
-function FeedbackSection() {
-  const [tab, setTab] = useState('saran')
-  const [name, setName] = useState('')
-  const [msg, setMsg] = useState('')
-  const [status, setStatus] = useState('idle') // idle | sending | sent | error
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!msg.trim()) return
-    setStatus('sending')
-    try {
-      const res = await fetch('https://formspree.io/f/xpwzgvqk', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          type: tab === 'saran' ? '💬 Saran' : '🚨 Pengaduan',
-          name: name || 'Anonim',
-          message: msg,
-        }),
-      })
-      if (res.ok) {
-        setStatus('sent')
-        setName('')
-        setMsg('')
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
-    }
-  }
-
-  return (
-    <div className="feedback-section">
-      <div className="feedback-header">
-        <span className="feedback-label">📬 Feedback</span>
-        <p className="feedback-sub">Ada saran atau menemukan masalah? Sampaikan di sini.</p>
-      </div>
-
-      <div className="feedback-tabs">
-        <button
-          className={`feedback-tab ${tab === 'saran' ? 'active' : ''}`}
-          onClick={() => { setTab('saran'); setStatus('idle') }}
-        >
-          💬 Saran
-        </button>
-        <button
-          className={`feedback-tab ${tab === 'pengaduan' ? 'active' : ''}`}
-          onClick={() => { setTab('pengaduan'); setStatus('idle') }}
-        >
-          🚨 Pengaduan
-        </button>
-      </div>
-
-      {status === 'sent' ? (
-        <div className="feedback-success">
-          <div className="feedback-success-icon">✅</div>
-          <div className="feedback-success-title">Terima kasih!</div>
-          <div className="feedback-success-sub">
-            {tab === 'saran' ? 'Saran kamu sudah kami terima.' : 'Pengaduan kamu sudah kami catat.'}
-          </div>
-          <button className="feedback-again" onClick={() => setStatus('idle')}>Kirim lagi</button>
-        </div>
-      ) : (
-        <form className="feedback-form" onSubmit={handleSubmit}>
-          <input
-            className="feedback-input"
-            type="text"
-            placeholder="Nama (opsional)"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            maxLength={60}
-          />
-          <textarea
-            className="feedback-textarea"
-            placeholder={
-              tab === 'saran'
-                ? 'Tulis saranmu di sini... (fitur baru, konten, dll.)'
-                : 'Ceritakan masalah yang kamu temukan...'
-            }
-            value={msg}
-            onChange={(e) => setMsg(e.target.value)}
-            rows={4}
-            maxLength={1000}
-            required
-          />
-          {status === 'error' && (
-            <p className="feedback-error">Gagal mengirim. Coba lagi.</p>
-          )}
-          <button
-            className="feedback-submit"
-            type="submit"
-            disabled={status === 'sending' || !msg.trim()}
-          >
-            {status === 'sending' ? 'Mengirim...' : tab === 'saran' ? 'Kirim Saran →' : 'Kirim Pengaduan →'}
-          </button>
-        </form>
-      )}
-    </div>
-  )
-}
-
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function FlashcardPage() {
+  const navigate = useNavigate()
   return (
     <div className="page">
       <div className="watermark" aria-hidden="true">
@@ -238,7 +135,12 @@ export default function FlashcardPage() {
         </div>
       </div>
 
-      <FeedbackSection />
+      <div className="feedback-footer">
+        <p className="feedback-footer-text">Ada saran atau menemukan masalah?</p>
+        <button className="feedback-footer-btn" onClick={() => navigate('/feedback')}>
+          📬 Kirim Feedback
+        </button>
+      </div>
     </div>
   )
 }
