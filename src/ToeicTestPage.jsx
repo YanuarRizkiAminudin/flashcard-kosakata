@@ -132,12 +132,14 @@ export default function ToeicTestPage() {
 
         {/* Question */}
         <div className="question-card single-card">
-          {/* Only show the running number if the question text doesn't already start with a number */}
-          {q.text && !/^\d+\./.test(q.text.trim()) && (
-            <div className="q-num">{current + 1}.</div>
-          )}
           <div className="q-content">
-            {q.text && <p className="q-sentence">{q.text}</p>}
+            {q.text && <p className="q-sentence">
+              {/* If text already starts with a number (e.g. "173. ..."), show as-is.
+                  Otherwise prepend the sequential position number. */}
+              {/^\d+\./.test(q.text.trim())
+                ? q.text
+                : `${current + 1}. ${q.text}`}
+            </p>}
             <div className="opts">
               {q.options.map(opt => (
                 <button
