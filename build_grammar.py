@@ -1,0 +1,207 @@
+﻿with open('public/games/flashcard_lengkap_intact/toeic_grammar_v1v2v3.html','w',encoding='utf-8') as f:
+    f.write('''<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEIC Grammar V1 V2 V3 Ving</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px}#app{width:100%;max-width:500px}h1{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:3px}.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:12px}.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}.fb{padding:5px 11px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}.fb:hover{border-color:#3b5bdb;color:#3b5bdb}.fb.on{background:#3b5bdb;color:#fff;border-color:#3b5bdb}.fb.all-btn.on{background:#1a1814;border-color:#1a1814}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}.badge{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#e8e4dc;color:#8a8478}.ctr{font-size:13px;color:#8a8478}.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem}.pbar{height:4px;background:linear-gradient(90deg,#3b5bdb,#74c0fc);border-radius:99px;transition:width .4s}.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.8rem}.pills{display:flex;gap:6px;margin-bottom:.9rem}.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500}.pl-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f}.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00}.pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232}.dot{width:6px;height:6px;border-radius:50%;display:inline-block}.dp{background:#2d7a4f}.dh{background:#a05c00}.db{background:#b83232}.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 2px 14px rgba(0,0,0,.07);min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1.2rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#74c0fc,#3b5bdb,#9775fa);opacity:.7}.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,.1)}.ctag{font-size:10px;font-weight:600;letter-spacing:.8px;padding:3px 9px;border-radius:99px;background:#e8f0ff;color:#3b5bdb;margin-bottom:.5rem}.qlabel{font-size:11px;color:#8a8478;margin-bottom:.4rem;font-weight:600}.word{font-family:"Lora",serif;font-weight:700;color:#1a1814;font-size:38px;line-height:1.1;text-align:center}.word.sm{font-size:26px}.word.xs{font-size:20px}.mid{font-size:14px;color:#8a8478;margin-top:.4rem;font-style:italic}.hint{font-size:13px;color:#8a8478;margin-top:.9rem;display:flex;align-items:center;gap:6px}.hint-ico{width:26px;height:26px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:12px}.ans{margin-top:.8rem;width:100%;animation:fup .25s ease}@keyframes fup{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}.divline{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem}.vtable{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid #dde3ff}.vtable th{background:#eef2ff;color:#3b5bdb;font-size:11px;font-weight:700;padding:7px 4px;text-align:center;letter-spacing:.5px}.vtable td{padding:9px 4px;text-align:center;border-top:1px solid #e8e4dc;font-family:"Lora",serif;font-weight:700;font-size:14px}.vtable tr:nth-child(even) td{background:#f8f9ff}.v1{color:#3b5bdb}.v2{color:#e67700}.v3{color:#2d7a4f}.ving{color:#9775fa}.exbox{margin-top:.7rem;background:#f8f9ff;border:1px solid #d0d9ff;border-radius:10px;padding:.6rem .8rem;text-align:left}.exlabel{font-size:10px;font-weight:700;color:#3b5bdb;letter-spacing:.5px;margin-bottom:3px}.extext{font-size:12px;color:#444;line-height:1.6;font-style:italic}.notebox{margin-top:.5rem;background:#fff8e1;border:1px solid #ffe08a;border-radius:10px;padding:.5rem .8rem;text-align:left}.notelabel{font-size:10px;font-weight:700;color:#a05c00;letter-spacing:.5px;margin-bottom:2px}.notetext{font-size:11px;color:#7a4800;line-height:1.5}.btnrow{display:flex;gap:7px;margin-bottom:.7rem}.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s}.cb-ico{font-size:16px}.cb-sub{font-size:9px;font-weight:500;opacity:.7}.cb-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f}.cb-p:hover{background:#d5f0e2}.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00}.cb-h:hover{background:#fde8c2}.cb-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232}.cb-b:hover{background:#f9d8d8}.res{text-align:center;padding:.8rem 0}.res-ico{font-size:50px;margin-bottom:.7rem}.res-title{font-family:"Lora",serif;font-size:18px;font-weight:700;color:#1a1814;margin-bottom:.3rem}.res-sub{font-size:13px;color:#8a8478;margin-bottom:1rem;line-height:1.6}.srow{display:flex;gap:7px;margin-bottom:1rem}.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center}.sbox .sn{font-size:21px;font-weight:700}.sbox .sl{font-size:10px;margin-top:2px}.sbp{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f}.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00}.sbb{background:#fdf0f0;border-color:#f5a8a8;color:#b83232}.rlist-wrap{text-align:left;margin-bottom:1rem}.rlist-ttl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px}.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto}.ri{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid #e8e4dc;background:#fff}.ri:last-child{border-bottom:none}.ri-word{font-family:"Lora",serif;font-size:13px;font-weight:700;color:#1a1814;min-width:70px}.ri-forms{font-size:11px;color:#3b5bdb;margin-left:auto}.btnbig{width:100%;padding:13px;border-radius:13px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none}.btn-blue{background:linear-gradient(135deg,#3b5bdb,#4c6ef5);color:#fff;box-shadow:0 3px 10px rgba(59,91,219,.25)}.btn-blue:hover{opacity:.9}.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478}.btn-ghost:hover{background:#e8e4dc}.final{text-align:center;padding:2rem 0}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>&#128218; Grammar: V1 / V2 / V3 / V-ing</h1>
+<div class="sub" id="tsub">92 kata kerja dari soal TOEIC 101-200</div>
+<div class="filters">
+  <button class="fb all-btn on" onclick="setCat(\'ALL\')">Semua (92)</button>
+  <button class="fb" onclick="setCat(\'REG\')">Regular &#10003;</button>
+  <button class="fb" onclick="setCat(\'IRR\')">Irregular &#9889;</button>
+</div>
+<div id="qv">
+  <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+  <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+  <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+  <div class="pills">
+    <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+    <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+    <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+  </div>
+  <div class="card" id="card" onclick="reveal()">
+    <div class="ctag" id="ctag"></div>
+    <div class="qlabel">Apa bentuk V1 / V2 / V3 / V-ing dari:</div>
+    <div class="word" id="word"></div>
+    <div class="mid" id="mid"></div>
+    <div class="hint" id="hint"><div class="hint-ico">&#128070;</div>Ketuk untuk lihat jawaban</div>
+    <div class="ans" id="ans" style="display:none">
+      <div class="divline"></div>
+      <table class="vtable">
+        <thead><tr><th>V1 (Base)</th><th>V2 (Past)</th><th>V3 (Past Part.)</th><th>V-ing</th></tr></thead>
+        <tbody><tr>
+          <td class="v1" id="av1"></td><td class="v2" id="av2"></td>
+          <td class="v3" id="av3"></td><td class="ving" id="aving"></td>
+        </tr></tbody>
+      </table>
+      <div class="exbox"><div class="exlabel">&#128218; CONTOH KALIMAT</div><div class="extext" id="extext"></div></div>
+      <div class="notebox" id="notebox" style="display:none"><div class="notelabel">&#9888; CATATAN</div><div class="notetext" id="notetext"></div></div>
+    </div>
+  </div>
+  <div class="btnrow" id="ba" style="display:none">
+    <button class="cb cb-b" onclick="rate(\'b\')"><span class="cb-ico">&#128533;</span><span>Belum</span><span class="cb-sub">Muncul lagi</span></button>
+    <button class="cb cb-h" onclick="rate(\'h\')"><span class="cb-ico">&#129300;</span><span>Hampir</span><span class="cb-sub">Muncul lagi</span></button>
+    <button class="cb cb-p" onclick="rate(\'p\')"><span class="cb-ico">&#10003;</span><span>Paham</span><span class="cb-sub">Tidak lagi</span></button>
+  </div>
+</div>
+<div id="rv" style="display:none">
+  <div class="res">
+    <div class="res-ico" id="ri"></div><div class="res-title" id="rt"></div><div class="res-sub" id="rs"></div>
+    <div class="srow">
+      <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+      <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+      <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+    </div>
+    <div id="rlw" style="display:none">
+      <div class="rlist-wrap"><div class="rlist-ttl">Kartu untuk ronde berikutnya</div><div class="rlist" id="rl"></div></div>
+    </div>
+    <button class="btnbig btn-blue" id="nb" onclick="nextRonde()"></button>
+    <button class="btnbig btn-ghost" onclick="fullRestart()">Mulai dari awal</button>
+  </div>
+</div>
+<div id="fv" style="display:none">
+  <div class="final">
+    <div style="font-size:60px;margin-bottom:.8rem">&#127942;</div>
+    <div class="res-title">Grammar dikuasai!</div>
+    <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.3rem">V1/V2/V3/V-ing kamu sudah kuat!</div>
+    <button class="btnbig btn-blue" onclick="fullRestart()">Ulangi dari awal</button>
+  </div>
+</div>
+</div>
+<script>
+''')
+
+    # read verb data
+    verbs = []
+    with open('verb_data.csv', encoding='utf-8') as csv:
+        for line in csv:
+            line = line.strip().lstrip('\\ufeff')
+            if not line: continue
+            p = line.split(',', 8)
+            if len(p) < 7: continue
+            verbs.append({'v1':p[0].strip(),'v2':p[1].strip(),'v3':p[2].strip(),'ving':p[3].strip(),'m':p[4].strip(),'cat':p[5].strip(),'e':p[6].strip(),'n':p[7].strip() if len(p)>7 else ''})
+
+    f.write('var V=[\n')
+    for v in verbs:
+        e = v['e'].replace('"','\\"')
+        n = v['n'].replace('"','\\"')
+        f.write('  {v1:"'+v['v1']+'",v2:"'+v['v2']+'",v3:"'+v['v3']+'",ving:"'+v['ving']+'",m:"'+v['m']+'",cat:"'+v['cat']+'",e:"'+e+'",n:"'+n+'"},\n')
+    f.write('''];
+
+var LABELS={REG:"Regular",IRR:"Irregular",ALL:"Semua"};
+function sh(a){return a.slice().sort(function(){return Math.random()-.5})}
+var deck,idx,ronde=1,cp,ch,cbv,rev,toRev,curCat="ALL";
+
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on")});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat(\'"+c+"\')") b.classList.add("on")});
+  ronde=1;fullRestart();
+}
+
+function fullRestart(){
+  var src=curCat==="ALL"?V:V.filter(function(v){return v.cat===curCat});
+  deck=sh(src);
+  document.getElementById("tsub").textContent=(curCat==="ALL"?"Semua -- "+deck.length+" kata kerja":LABELS[curCat]+" -- "+deck.length+" kata");
+  go();
+}
+
+function go(){
+  idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
+  show("qv");hide("rv");hide("fv");
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+
+function nextRonde(){ronde++;deck=sh(toRev);go()}
+
+function showCard(){
+  rev=false;
+  var q=deck[idx];
+  var el=document.getElementById("word");
+  el.textContent=q.v1;
+  var l=q.v1.length;
+  el.className="word "+(l<=8?"":"l<=14?"sm":"xs");
+  document.getElementById("ctag").textContent=q.cat==="IRR"?"Irregular ⚡":"Regular ✓";
+  document.getElementById("mid").textContent=q.m;
+  document.getElementById("av1").textContent=q.v1;
+  document.getElementById("av2").textContent=q.v2;
+  document.getElementById("av3").textContent=q.v3;
+  document.getElementById("aving").textContent=q.ving;
+  document.getElementById("extext").textContent=q.e;
+  var nb=document.getElementById("notebox");
+  if(q.n){document.getElementById("notetext").textContent=q.n;nb.style.display=""}
+  else nb.style.display="none";
+  document.getElementById("ans").style.display="none";
+  document.getElementById("hint").style.display="flex";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  document.getElementById("pb").style.width=Math.round(idx/deck.length*100)+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="block";
+  document.getElementById("hint").style.display="none";
+  document.getElementById("ba").style.display="flex";
+  document.getElementById("card").className="card done";
+}
+
+function rate(r){
+  if(r==="p") cp++;
+  else if(r==="h"){ch++;toRev.push(deck[idx]);}
+  else{cbv++;toRev.push(deck[idx]);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+
+function upStats(){
+  document.getElementById("sp").textContent=cp;
+  document.getElementById("sh").textContent=ch;
+  document.getElementById("sb").textContent=cbv;
+}
+
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  hide("qv");
+  if(toRev.length===0){show("fv");return;}
+  show("rv");
+  document.getElementById("rp").textContent=cp;
+  document.getElementById("rh").textContent=ch;
+  document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri").textContent=pct>=90?"🌟":pct>=70?"😊":pct>=50?"💪":"😤";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":pct>=50?"Lumayan! Ulangi "+toRev.length+" kartu.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" -> "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  toRev.forEach(function(v){
+    var d=document.createElement("div");d.className="ri";
+    d.innerHTML="<span class=\'ri-word\'>"+v.v1+"</span><span class=\'ri-forms\'>"+v.v2+" / "+v.v3+" / "+v.ving+"</span>";
+    rl.appendChild(d);
+  });
+  document.getElementById("rlw").style.display="";
+}
+
+function show(id){document.getElementById(id).style.display=""}
+function hide(id){document.getElementById(id).style.display="none"}
+
+setCat("ALL");
+</script>
+</body>
+</html>
+''')
+    print("DONE")
