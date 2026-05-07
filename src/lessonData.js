@@ -4774,6 +4774,265 @@ const lesson8 = {
       "example": "你為什麼想學中文？",
       "examplePinyin": "Nǐ wèishénme xiǎng xué Zhōngwén?",
       "exampleEn": "Why do you want to learn Chinese?"
+    },
+    {
+      "id": 46,
+      "char": "裙子",
+      "pinyin": "qúnzi",
+      "pos": "N",
+      "en": "skirt; dress (M:條)",
+      "id_": "rok",
+      "example": "她今天穿了一條漂亮的裙子。",
+      "examplePinyin": "Tā jīntiān chuān le yī tiáo piàoliàng de qúnzi.",
+      "exampleEn": "She wore a beautiful skirt today."
+    },
+    {
+      "id": 47,
+      "char": "去年",
+      "pinyin": "qùnián",
+      "pos": "N",
+      "en": "last year",
+      "id_": "tahun lalu",
+      "example": "去年我去了日本。",
+      "examplePinyin": "Qùnián wǒ qù le Rìběn.",
+      "exampleEn": "I went to Japan last year."
+    },
+    {
+      "id": 48,
+      "char": "年",
+      "pinyin": "nián",
+      "pos": "N",
+      "en": "year",
+      "id_": "tahun"
+    },
+    {
+      "id": 49,
+      "char": "明年",
+      "pinyin": "míngnián",
+      "pos": "N",
+      "en": "next year",
+      "id_": "tahun depan",
+      "example": "明年我想去歐洲旅行。",
+      "examplePinyin": "Míngnián wǒ xiǎng qù Ōuzhōu lǚxíng.",
+      "exampleEn": "Next year I want to travel to Europe."
+    },
+    {
+      "id": 50,
+      "char": "牌子",
+      "pinyin": "páizi",
+      "pos": "N",
+      "en": "brand; label (M:個)",
+      "id_": "merek",
+      "example": "這個牌子的鞋子很有名。",
+      "examplePinyin": "Zhège páizi de xiézi hěn yǒumíng.",
+      "exampleEn": "This brand of shoes is very famous."
+    },
+    {
+      "id": 51,
+      "char": "有名",
+      "pinyin": "yǒumíng",
+      "pos": "Vs",
+      "en": "famous; well-known",
+      "id_": "terkenal",
+      "example": "這家餐廳很有名。",
+      "examplePinyin": "Zhè jiā cāntīng hěn yǒumíng.",
+      "exampleEn": "This restaurant is very famous."
+    },
+    {
+      "id": 52,
+      "char": "難",
+      "pinyin": "nán",
+      "pos": "Vs",
+      "en": "difficult; hard",
+      "id_": "sulit",
+      "example": "中文很難，可是很有趣。",
+      "examplePinyin": "Zhōngwén hěn nán, kěshì hěn yǒuqù.",
+      "exampleEn": "Chinese is difficult, but very interesting."
+    },
+    {
+      "id": 53,
+      "char": "容易",
+      "pinyin": "róngyì",
+      "pos": "Vs",
+      "en": "easy",
+      "id_": "mudah",
+      "example": "這個問題不容易回答。",
+      "examplePinyin": "Zhège wèntí bù róngyì huídá.",
+      "exampleEn": "This question is not easy to answer."
+    },
+    {
+      "id": 54,
+      "char": "最近",
+      "pinyin": "zuìjìn",
+      "pos": "N",
+      "en": "recently; lately",
+      "id_": "akhir-akhir ini",
+      "example": "你最近好嗎？",
+      "examplePinyin": "Nǐ zuìjìn hǎo ma?",
+      "exampleEn": "How have you been lately?"
+    },
+    {
+      "id": 55,
+      "char": "胖",
+      "pinyin": "pàng",
+      "pos": "Vs",
+      "en": "fat; chubby",
+      "id_": "gemuk"
+    },
+    {
+      "id": 56,
+      "char": "瘦",
+      "pinyin": "shòu",
+      "pos": "Vs",
+      "en": "thin; slim",
+      "id_": "kurus"
+    },
+    {
+      "id": 57,
+      "char": "高",
+      "pinyin": "gāo",
+      "pos": "Vs",
+      "en": "tall; high",
+      "id_": "tinggi"
+    },
+    {
+      "id": 58,
+      "char": "矮",
+      "pinyin": "ǎi",
+      "pos": "Vs",
+      "en": "short (height)",
+      "id_": "pendek (tinggi badan)"
+    },
+    {
+      "id": 59,
+      "char": "公斤",
+      "pinyin": "gōngjīn",
+      "pos": "M",
+      "en": "kilogram",
+      "id_": "kilogram",
+      "example": "他的體重是七十公斤。",
+      "examplePinyin": "Tā de tǐzhòng shì qīshí gōngjīn.",
+      "exampleEn": "His weight is 70 kilograms."
+    },
+    {
+      "id": 60,
+      "char": "斤",
+      "pinyin": "jīn",
+      "pos": "M",
+      "en": "jin (0.5 kg; Chinese unit of weight)",
+      "id_": "setengah kilogram (0,5 kg)"
+    },
+    {
+      "id": 61,
+      "char": "怕",
+      "pinyin": "pà",
+      "pos": "Vst",
+      "en": "to be afraid of; to fear",
+      "id_": "takut",
+      "example": "我怕走夜路。",
+      "examplePinyin": "Wǒ pà zǒu yè lù.",
+      "exampleEn": "I am afraid of walking at night."
+    },
+    {
+      "id": 62,
+      "char": "跟",
+      "pinyin": "gēn",
+      "pos": "Prep",
+      "en": "with; together with",
+      "id_": "dengan; bersama",
+      "example": "你要不要跟我一起去？",
+      "examplePinyin": "Nǐ yào bú yào gēn wǒ yīqǐ qù?",
+      "exampleEn": "Do you want to go together with me?"
+    },
+    {
+      "id": 63,
+      "char": "時間",
+      "pinyin": "shíjiān",
+      "pos": "N",
+      "en": "time",
+      "id_": "waktu",
+      "example": "你有時間嗎？",
+      "examplePinyin": "Nǐ yǒu shíjiān ma?",
+      "exampleEn": "Do you have time?"
+    },
+    {
+      "id": 64,
+      "char": "吧",
+      "pinyin": "ba",
+      "pos": "Ptc",
+      "en": "particle (suggestion / soft question)",
+      "id_": "partikel (saran / pertanyaan ringan)",
+      "example": "我們走吧！",
+      "examplePinyin": "Wǒmen zǒu ba!",
+      "exampleEn": "Let's go!"
+    },
+    {
+      "id": 65,
+      "char": "襪子",
+      "pinyin": "wàzi",
+      "pos": "N",
+      "en": "socks (M:雙)",
+      "id_": "kaus kaki"
+    },
+    {
+      "id": 66,
+      "char": "樓梯",
+      "pinyin": "lóutī",
+      "pos": "N",
+      "en": "stairs; staircase",
+      "id_": "tangga"
+    },
+    {
+      "id": 67,
+      "char": "快",
+      "pinyin": "kuài",
+      "pos": "Vs",
+      "en": "fast; quick; soon",
+      "id_": "cepat; sebentar lagi"
+    },
+    {
+      "id": 68,
+      "char": "請",
+      "pinyin": "qǐng",
+      "pos": "V",
+      "en": "please; to invite; to treat",
+      "id_": "tolong; silakan",
+      "example": "請進！",
+      "examplePinyin": "Qǐng jìn!",
+      "exampleEn": "Please come in!"
+    },
+    {
+      "id": 69,
+      "char": "抱歉",
+      "pinyin": "bàoqiàn",
+      "pos": "Vs",
+      "en": "sorry; to feel apologetic",
+      "id_": "mohon maaf; meminta maaf",
+      "example": "很抱歉，我來晚了。",
+      "examplePinyin": "Hěn bàoqiàn, wǒ lái wǎn le.",
+      "exampleEn": "I am very sorry, I came late."
+    },
+    {
+      "id": 70,
+      "char": "對不起",
+      "pinyin": "duìbuqǐ",
+      "pos": "Phr",
+      "en": "sorry; I am sorry",
+      "id_": "maaf",
+      "example": "對不起，我不知道。",
+      "examplePinyin": "Duìbuqǐ, wǒ bù zhīdào.",
+      "exampleEn": "Sorry, I didn't know."
+    },
+    {
+      "id": 71,
+      "char": "不好意思",
+      "pinyin": "bù hǎoyìsi",
+      "pos": "Phr",
+      "en": "excuse me; I'm embarrassed; sorry to bother you",
+      "id_": "maaf; tidak enak hati; permisi",
+      "example": "不好意思，請問廁所在哪裡？",
+      "examplePinyin": "Bù hǎoyìsi, qǐngwèn cèsuǒ zài nǎlǐ?",
+      "exampleEn": "Excuse me, where is the restroom?"
     }
   ],
   "phrases": [
@@ -4800,6 +5059,24 @@ const lesson8 = {
       "pinyin": "bù yīdìng",
       "en": "not necessarily",
       "id_": "belum tentu"
+    },
+    {
+      "zh": "對不起",
+      "pinyin": "duìbuqǐ",
+      "en": "Sorry; I am sorry",
+      "id_": "maaf"
+    },
+    {
+      "zh": "不好意思",
+      "pinyin": "bù hǎoyìsi",
+      "en": "Excuse me; Sorry to bother you",
+      "id_": "maaf; permisi; tidak enak hati"
+    },
+    {
+      "zh": "抱歉",
+      "pinyin": "bàoqiàn",
+      "en": "I'm sorry; I apologize",
+      "id_": "mohon maaf"
     }
   ],
   "grammar": [
