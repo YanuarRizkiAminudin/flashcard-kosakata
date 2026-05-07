@@ -562,6 +562,37 @@ var V=[
 {z:'不一定',p:'bù yídìng',i:'belum tentu; tidak pasti',l:'L8'},
 {z:'下個週末',p:'xià gè zhōumò',i:'akhir pekan depan',l:'L8'},
 {z:'對了',p:'duì le',i:'oh ya; ngomong-ngomong',l:'L8'},
+{z:'為什麼',p:'wèishénme',i:'kenapa; mengapa',l:'L8'},
+{z:'裙子',p:'qúnzi',i:'rok; gaun (M: 條)',l:'L8'},
+{z:'去年',p:'qùnián',i:'tahun lalu',l:'L8'},
+{z:'年',p:'nián',i:'tahun',l:'L8'},
+{z:'今年',p:'jīnnián',i:'tahun ini',l:'L8'},
+{z:'明年',p:'míngnián',i:'tahun depan',l:'L8'},
+{z:'牌子',p:'páizi',i:'merek; label (M: 個)',l:'L8'},
+{z:'有名',p:'yǒumíng',i:'terkenal; famous',l:'L8'},
+{z:'難',p:'nán',i:'sulit; susah',l:'L8'},
+{z:'容易',p:'róngyì',i:'mudah; gampang',l:'L8'},
+{z:'最近',p:'zuìjìn',i:'akhir-akhir ini; belakangan ini',l:'L8'},
+{z:'胖',p:'pàng',i:'gemuk',l:'L8'},
+{z:'瘦',p:'shòu',i:'kurus; langsing',l:'L8'},
+{z:'高',p:'gāo',i:'tinggi',l:'L8'},
+{z:'矮',p:'ǎi',i:'pendek (tinggi badan)',l:'L8'},
+{z:'公斤',p:'gōngjīn',i:'kilogram (kg)',l:'L8'},
+{z:'斤',p:'jīn',i:'jin = 0,5 kg (satuan berat Tionghoa)',l:'L8'},
+{z:'怕',p:'pà',i:'takut; khawatir',l:'L8'},
+{z:'跟',p:'gēn',i:'dengan; bersama',l:'L8'},
+{z:'時間',p:'shíjiān',i:'waktu',l:'L8'},
+{z:'吧',p:'ba',i:'partikel saran / pertanyaan ringan',l:'L8'},
+{z:'襪子',p:'wàzi',i:'kaus kaki (M: 雙)',l:'L8'},
+{z:'樓梯',p:'lóutī',i:'tangga',l:'L8'},
+{z:'快',p:'kuài',i:'cepat; sebentar lagi',l:'L8'},
+{z:'長',p:'cháng',i:'panjang',l:'L8'},
+{z:'開',p:'kāi',i:'buka; membuka',l:'L8'},
+{z:'沒關係',p:'méi guānxi',i:'tidak apa-apa; tidak masalah',l:'L8'},
+{z:'請',p:'qǐng',i:'tolong; silakan; mengundang',l:'L8'},
+{z:'抱歉',p:'bàoqiàn',i:'mohon maaf; meminta maaf',l:'L8'},
+{z:'對不起',p:'duìbuqǐ',i:'maaf; minta maaf',l:'L8'},
+{z:'不好意思',p:'bù hǎoyìsi',i:'maaf; tidak enak hati; permisi',l:'L8'},
 ];
 
 var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',L7:'L7 交通',L8:'L8 百貨公司',ALL:'Semua'};
@@ -625,42 +656,7 @@ function reveal(){
 }
 
 function rate(r){
-  var q=deck[idx
-// ═══════════════════════════════════════════
-// LESSON 8 — additional vocabulary
-// ═══════════════════════════════════════════
-{z:'為什麼',p:'wèishénme',i:'kenapa; mengapa',l:'L8'},
-{z:'裙子',p:'qúnzi',i:'rok; gaun (M: 條)',l:'L8'},
-{z:'去年',p:'qùnián',i:'tahun lalu',l:'L8'},
-{z:'年',p:'nián',i:'tahun',l:'L8'},
-{z:'今年',p:'jīnnián',i:'tahun ini',l:'L8'},
-{z:'明年',p:'míngnián',i:'tahun depan',l:'L8'},
-{z:'牌子',p:'páizi',i:'merek; label (M: 個)',l:'L8'},
-{z:'有名',p:'yǒumíng',i:'terkenal; famous',l:'L8'},
-{z:'難',p:'nán',i:'sulit; susah',l:'L8'},
-{z:'容易',p:'róngyì',i:'mudah; gampang',l:'L8'},
-{z:'最近',p:'zuìjìn',i:'akhir-akhir ini; belakangan ini',l:'L8'},
-{z:'胖',p:'pàng',i:'gemuk',l:'L8'},
-{z:'瘦',p:'shòu',i:'kurus; langsing',l:'L8'},
-{z:'高',p:'gāo',i:'tinggi',l:'L8'},
-{z:'矮',p:'ǎi',i:'pendek (tinggi badan)',l:'L8'},
-{z:'公斤',p:'gōngjīn',i:'kilogram (kg)',l:'L8'},
-{z:'斤',p:'jīn',i:'jin = 0,5 kg (satuan berat Tionghoa)',l:'L8'},
-{z:'怕',p:'pà',i:'takut; khawatir',l:'L8'},
-{z:'跟',p:'gēn',i:'dengan; bersama',l:'L8'},
-{z:'時間',p:'shíjiān',i:'waktu',l:'L8'},
-{z:'吧',p:'ba',i:'partikel saran / pertanyaan ringan',l:'L8'},
-{z:'襪子',p:'wàzi',i:'kaus kaki (M: 雙)',l:'L8'},
-{z:'樓梯',p:'lóutī',i:'tangga',l:'L8'},
-{z:'快',p:'kuài',i:'cepat; sebentar lagi',l:'L8'},
-{z:'長',p:'cháng',i:'panjang',l:'L8'},
-{z:'開',p:'kāi',i:'buka; membuka',l:'L8'},
-{z:'沒關係',p:'méi guānxi',i:'tidak apa-apa; tidak masalah',l:'L8'},
-{z:'請',p:'qǐng',i:'tolong; silakan; mengundang',l:'L8'},
-{z:'抱歉',p:'bàoqiàn',i:'mohon maaf; meminta maaf',l:'L8'},
-{z:'對不起',p:'duìbuqǐ',i:'maaf; minta maaf',l:'L8'},
-{z:'不好意思',p:'bù hǎoyìsi',i:'maaf; tidak enak hati; permisi',l:'L8'},
-];
+  var q=deck[idx];
   if(r==='p') cp++;
   else if(r==='h'){ch++;toRev.push(q);}
   else{cbv++;toRev.push(q);}
