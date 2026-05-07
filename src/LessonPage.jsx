@@ -413,11 +413,15 @@ export default function LessonPage() {
     }
   }
 
+  const currentIndex = lessons.findIndex((l) => l.id === lesson.id)
+  const prevLesson = currentIndex > 0 ? lessons[currentIndex - 1] : null
+  const nextLesson = currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : null
+
   return (
     <div className="lesson-page">
       {/* Nav */}
       <nav className="lesson-nav">
-        <button className="lesson-nav-back" onClick={() => navigate('/')}>
+        <button className="lesson-nav-back" onClick={() => navigate('/lessons')}>
           ← Back
         </button>
         <span className="lesson-nav-title">
@@ -453,6 +457,34 @@ export default function LessonPage() {
 
       {/* Content */}
       <div className="lesson-content">{renderTab()}</div>
+
+      {/* Prev / Next navigation */}
+      <div className="lesson-nav-footer">
+        {prevLesson ? (
+          <button
+            className="lesson-nav-prev"
+            onClick={() => { navigate(`/lesson/${prevLesson.id}`); setActiveTab('dialogue') }}
+          >
+            ← {prevLesson.icon} 第{prevLesson.id}課 {prevLesson.title}
+          </button>
+        ) : (
+          <button className="lesson-nav-prev lesson-nav-disabled" onClick={() => navigate('/lessons')}>
+            ← All Lessons
+          </button>
+        )}
+        {nextLesson ? (
+          <button
+            className="lesson-nav-next"
+            onClick={() => { navigate(`/lesson/${nextLesson.id}`); setActiveTab('dialogue') }}
+          >
+            第{nextLesson.id}課 {nextLesson.title} {nextLesson.icon} →
+          </button>
+        ) : (
+          <button className="lesson-nav-next lesson-nav-disabled" onClick={() => navigate('/lessons')}>
+            All Lessons →
+          </button>
+        )}
+      </div>
     </div>
   )
 }
