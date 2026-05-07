@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -29,20 +29,21 @@ h1{font-family:'Lora',serif;font-size:16px;color:#1a1814;text-align:center;margi
 .pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
 .dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
 .dp{background:#2d7a4f;}.dh{background:#a05c00;}.db{background:#b83232;}
-.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 2px 14px rgba(0,0,0,.07);min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.2rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 2px 14px rgba(0,0,0,.07);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.2rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f5c97a,#52c48a,#85b7eb);opacity:.6;}
 .card:hover:not(.done){transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,.1);}
 .ctag{font-size:10px;font-weight:600;letter-spacing:.8px;padding:3px 9px;border-radius:99px;background:#e8e4dc;color:#8a8478;margin-bottom:.7rem;}
-.word{font-family:'Lora',serif;font-weight:700;color:#1a1814;line-height:1.1;text-align:center;}
-.word.big{font-size:48px;}.word.med{font-size:36px;}.word.sm{font-size:28px;}.word.xs{font-size:22px;}
+.word{font-family:'Lora',serif;font-weight:700;color:#1a1814;line-height:1.2;text-align:center;}
+.word.big{font-size:44px;}.word.med{font-size:34px;}.word.sm{font-size:26px;}.word.xs{font-size:20px;}.word.xxs{font-size:15px;}
 .hint{font-size:13px;color:#8a8478;margin-top:.8rem;display:flex;align-items:center;gap:6px;}
 .hint-ico{width:26px;height:26px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:12px;}
 .ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
 @keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
 .divline{width:36px;height:1px;background:#e8e4dc;margin:0 auto .6rem;}
 .pos{font-size:11px;font-weight:600;color:#8a8478;margin-bottom:4px;}
-.meaning{font-size:18px;font-weight:600;color:#2d7a4f;margin-bottom:4px;}
+.meaning{font-size:17px;font-weight:600;color:#2d7a4f;margin-bottom:4px;}
 .id-txt{font-size:13px;color:#8a8478;line-height:1.5;}
+.ex-txt{font-size:11px;color:#5a7a6a;font-style:italic;margin-top:7px;line-height:1.6;border-left:2px solid #a8d9bc;padding-left:8px;text-align:left;width:100%;}
 .syns{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:8px;}
 .syn{font-size:11px;background:#edf7f1;border:1px solid #a8d9bc;color:#2d7a4f;border-radius:99px;padding:3px 10px;font-weight:500;}
 .btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
@@ -87,11 +88,12 @@ h1{font-family:'Lora',serif;font-size:16px;color:#1a1814;text-align:center;margi
     <button class="fb" onclick="setCat('NOUN')">Kata Benda</button>
     <button class="fb" onclick="setCat('ADJ')">Kata Sifat</button>
     <button class="fb" onclick="setCat('ADV')">Kata Keterangan</button>
+    <button class="fb" onclick="setCat('PHRASE')">Frasa</button>
   </div>
   <div id="qv">
-    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/–</span></div>
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
     <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
-    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">– kartu</span></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
     <div class="pills">
       <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
       <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
@@ -100,19 +102,20 @@ h1{font-family:'Lora',serif;font-size:16px;color:#1a1814;text-align:center;margi
     <div class="card" id="card" onclick="reveal()">
       <div class="ctag" id="ctag"></div>
       <div class="word" id="word"></div>
-      <div class="hint" id="hint"><div class="hint-ico">👆</div>Ketuk untuk lihat jawaban</div>
+      <div class="hint" id="hint"><div class="hint-ico">&#128070;</div>Ketuk untuk lihat jawaban</div>
       <div class="ans" id="ans" style="display:none">
         <div class="divline"></div>
         <div class="pos" id="pos"></div>
         <div class="meaning" id="meaning"></div>
         <div class="id-txt" id="idt"></div>
+        <div class="ex-txt" id="ext" style="display:none"></div>
         <div class="syns" id="syns"></div>
       </div>
     </div>
     <div class="btnrow" id="ba" style="display:none">
-      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum paham</span><span class="cb-sub">Muncul lagi</span></button>
-      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir paham</span><span class="cb-sub">Muncul lagi</span></button>
-      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">✓</span><span>Paham</span><span class="cb-sub">Tidak muncul lagi</span></button>
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">&#128533;</span><span>Belum paham</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">&#129300;</span><span>Hampir paham</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">&#10003;</span><span>Paham</span><span class="cb-sub">Tidak muncul lagi</span></button>
     </div>
   </div>
   <div id="rv" style="display:none">
@@ -137,79 +140,288 @@ h1{font-family:'Lora',serif;font-size:16px;color:#1a1814;text-align:center;margi
   </div>
   <div id="fv" style="display:none">
     <div class="final">
-      <div style="font-size:60px;margin-bottom:.8rem">🏆</div>
+      <div style="font-size:60px;margin-bottom:.8rem">&#127942;</div>
       <div class="res-title">Semua dikuasai!</div>
       <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.3rem;">Vocab TOEIC kamu sudah siap!</div>
       <button class="btnbig btn-green" onclick="fullRestart()">Ulangi dari awal</button>
     </div>
   </div>
 </div>
+
 <script>
 var V=[
-// ── KATA KERJA ──
-{w:'implement',pos:'verb',cat:'VERB',m:'menerapkan',i:'melaksanakan rencana atau sistem',s:['execute','apply','carry out']},
-{w:'facilitate',pos:'verb',cat:'VERB',m:'memudahkan',i:'membuat proses menjadi lebih lancar',s:['enable','support','streamline']},
-{w:'allocate',pos:'verb',cat:'VERB',m:'mengalokasikan',i:'membagikan sumber daya atau dana',s:['assign','distribute','designate']},
-{w:'reimburse',pos:'verb',cat:'VERB',m:'mengganti biaya',i:'membayar kembali pengeluaran seseorang',s:['repay','refund','compensate']},
-{w:'expedite',pos:'verb',cat:'VERB',m:'mempercepat',i:'memperlancar agar selesai lebih cepat',s:['speed up','accelerate','rush']},
-{w:'comply',pos:'verb',cat:'VERB',m:'mematuhi',i:'mengikuti peraturan atau kebijakan',s:['obey','adhere to','conform to']},
-{w:'postpone',pos:'verb',cat:'VERB',m:'menunda',i:'memindahkan ke waktu yang lebih lambat',s:['delay','defer','reschedule']},
-{w:'verify',pos:'verb',cat:'VERB',m:'memverifikasi',i:'memastikan kebenaran suatu informasi',s:['confirm','validate','authenticate']},
-{w:'negotiate',pos:'verb',cat:'VERB',m:'bernegosiasi',i:'berdiskusi untuk mencapai kesepakatan',s:['discuss','bargain','mediate']},
-{w:'submit',pos:'verb',cat:'VERB',m:'mengajukan',i:'menyerahkan dokumen atau laporan',s:['hand in','present','file']},
-{w:'coordinate',pos:'verb',cat:'VERB',m:'mengoordinasikan',i:'mengatur agar semua bagian bekerja bersama',s:['organize','manage','arrange']},
-{w:'evaluate',pos:'verb',cat:'VERB',m:'mengevaluasi',i:'menilai kualitas atau hasil sesuatu',s:['assess','review','appraise']},
-// ── KATA BENDA ──
-{w:'initiative',pos:'noun',cat:'NOUN',m:'inisiatif',i:'program atau langkah baru untuk tujuan tertentu',s:['program','project','effort']},
-{w:'procedure',pos:'noun',cat:'NOUN',m:'prosedur',i:'langkah-langkah standar yang harus diikuti',s:['process','protocol','guidelines']},
-{w:'collaboration',pos:'noun',cat:'NOUN',m:'kolaborasi',i:'kerja sama antar tim atau departemen',s:['cooperation','teamwork','partnership']},
-{w:'inquiry',pos:'noun',cat:'NOUN',m:'pertanyaan / permintaan info',i:'permintaan informasi secara formal',s:['question','query','request']},
-{w:'deadline',pos:'noun',cat:'NOUN',m:'batas waktu',i:'waktu terakhir untuk menyelesaikan sesuatu',s:['due date','cutoff','time limit']},
-{w:'agenda',pos:'noun',cat:'NOUN',m:'agenda',i:'daftar topik yang akan dibahas dalam rapat',s:['schedule','plan','itinerary']},
-{w:'invoice',pos:'noun',cat:'NOUN',m:'faktur',i:'tagihan resmi untuk barang atau jasa',s:['bill','receipt','statement']},
-{w:'contract',pos:'noun',cat:'NOUN',m:'kontrak',i:'perjanjian resmi yang mengikat secara hukum',s:['agreement','deal','document']},
-{w:'revenue',pos:'noun',cat:'NOUN',m:'pendapatan',i:'uang yang diterima dari kegiatan bisnis',s:['income','earnings','profit']},
-{w:'workforce',pos:'noun',cat:'NOUN',m:'tenaga kerja',i:'seluruh karyawan dalam suatu organisasi',s:['staff','employees','personnel']},
-// ── KATA SIFAT ──
-{w:'mandatory',pos:'adjective',cat:'ADJ',m:'wajib',i:'harus dilakukan, tidak bisa dihindari',s:['required','compulsory','obligatory']},
-{w:'eligible',pos:'adjective',cat:'ADJ',m:'memenuhi syarat',i:'berhak atau layak untuk sesuatu',s:['qualified','entitled','suitable']},
-{w:'comprehensive',pos:'adjective',cat:'ADJ',m:'menyeluruh',i:'mencakup semua aspek secara lengkap',s:['thorough','complete','extensive']},
-{w:'confidential',pos:'adjective',cat:'ADJ',m:'rahasia',i:'tidak boleh diketahui oleh umum',s:['private','classified','sensitive']},
-{w:'efficient',pos:'adjective',cat:'ADJ',m:'efisien',i:'menghasilkan hasil maksimal dengan usaha minimal',s:['productive','effective','streamlined']},
-{w:'outstanding',pos:'adjective',cat:'ADJ',m:'luar biasa / belum diselesaikan',i:'sangat baik, atau belum dibayar/diselesaikan',s:['excellent','unpaid','pending']},
-// ── KATA KETERANGAN ──
-{w:'promptly',pos:'adverb',cat:'ADV',m:'segera / tepat waktu',i:'dilakukan tanpa penundaan',s:['immediately','quickly','without delay']},
-{w:'accordingly',pos:'adverb',cat:'ADV',m:'sesuai dengan itu',i:'bertindak berdasarkan situasi yang ada',s:['therefore','consequently','as a result']},
-{w:'thoroughly',pos:'adverb',cat:'ADV',m:'secara menyeluruh',i:'dilakukan dengan sangat teliti dan lengkap',s:['completely','carefully','in detail']},
-{w:'mutually',pos:'adverb',cat:'ADV',m:'secara bersama-sama',i:'berlaku untuk kedua belah pihak',s:['jointly','collectively','reciprocally']},
+// ── KATA KERJA (VERB) ──
+{w:"implement",pos:"verb",cat:"VERB",m:"menerapkan",i:"melaksanakan rencana atau sistem",e:"The company will implement a new policy next month.",s:["execute","apply","carry out"]},
+{w:"facilitate",pos:"verb",cat:"VERB",m:"memudahkan",i:"membuat proses menjadi lebih lancar",e:"The manager will facilitate the meeting.",s:["enable","support","streamline"]},
+{w:"allocate",pos:"verb",cat:"VERB",m:"mengalokasikan",i:"membagikan sumber daya atau dana",e:"The budget was allocated to each department.",s:["assign","distribute","designate"]},
+{w:"reimburse",pos:"verb",cat:"VERB",m:"mengganti biaya",i:"membayar kembali pengeluaran seseorang",e:"The company will reimburse your travel expenses.",s:["repay","refund","compensate"]},
+{w:"expedite",pos:"verb",cat:"VERB",m:"mempercepat",i:"memperlancar agar selesai lebih cepat",e:"Please contact Matt Harven and remind him to expedite a summary to us.",s:["speed up","accelerate","rush"]},
+{w:"comply",pos:"verb",cat:"VERB",m:"mematuhi",i:"mengikuti peraturan atau kebijakan",e:"All employees must comply with the safety regulations.",s:["obey","adhere to","conform to"]},
+{w:"postpone",pos:"verb",cat:"VERB",m:"menunda",i:"memindahkan ke waktu yang lebih lambat",e:"The board meeting will be postponed to a later date.",s:["delay","defer","reschedule"]},
+{w:"verify",pos:"verb",cat:"VERB",m:"memverifikasi",i:"memastikan kebenaran suatu informasi",e:"Please verify that all components are included.",s:["confirm","validate","authenticate"]},
+{w:"negotiate",pos:"verb",cat:"VERB",m:"bernegosiasi",i:"berdiskusi untuk mencapai kesepakatan",e:"Both parties agreed to negotiate the contract terms.",s:["discuss","bargain","mediate"]},
+{w:"submit",pos:"verb",cat:"VERB",m:"mengajukan / menyerahkan",i:"menyerahkan dokumen atau laporan",e:"Please review the attached order form and return it to me.",s:["hand in","present","file"]},
+{w:"coordinate",pos:"verb",cat:"VERB",m:"mengoordinasikan",i:"mengatur agar semua bagian bekerja bersama",e:"She coordinated the annual company retreat in Tokyo.",s:["organize","manage","arrange"]},
+{w:"evaluate",pos:"verb",cat:"VERB",m:"mengevaluasi",i:"menilai kualitas atau hasil sesuatu",e:"The team will evaluate the new software before launch.",s:["assess","review","appraise"]},
+{w:"prohibit",pos:"verb",cat:"VERB",m:"melarang",i:"tidak mengizinkan sesuatu secara resmi",e:"The Marlton City Council does not have the authority to prohibit parking on city streets.",s:["ban","forbid","restrict"]},
+{w:"require",pos:"verb",cat:"VERB",m:"memerlukan / mengharuskan",i:"sesuatu yang wajib ada atau dilakukan",e:"The project required the collaboration of several teams across the company.",s:["need","demand","necessitate"]},
+{w:"accommodate",pos:"verb",cat:"VERB",m:"menampung / mengakomodasi",i:"menyediakan ruang atau memenuhi kebutuhan",e:"The space can accommodate up to 200 guests.",s:["house","hold","cater for"]},
+{w:"register",pos:"verb",cat:"VERB",m:"mendaftar",i:"mencatat nama secara resmi untuk suatu kegiatan",e:"Registration for the Marketing Coalition Conference is now open until September 30.",s:["sign up","enroll","record"]},
+{w:"donate",pos:"verb",cat:"VERB",m:"menyumbangkan",i:"memberikan sesuatu secara sukarela",e:"Those wishing to donate surplus produce can visit the Web site.",s:["contribute","give","offer"]},
+{w:"distribute",pos:"verb",cat:"VERB",m:"mendistribusikan",i:"menyebarkan atau membagikan ke banyak pihak",e:"We will distribute your food donations to vetted groups.",s:["deliver","spread","hand out"]},
+{w:"renovate",pos:"verb",cat:"VERB",m:"merenovasi",i:"memperbaiki atau memperbarui bangunan",e:"The Bryant Foyer was renovated just over a year ago.",s:["restore","refurbish","remodel"]},
+{w:"revolutionize",pos:"verb",cat:"VERB",m:"merevolusi",i:"mengubah sesuatu secara mendasar dan besar",e:"This farm-to-table restaurant has revolutionized the local food scene.",s:["transform","overhaul","reinvent"]},
+{w:"assemble",pos:"verb",cat:"VERB",m:"merakit",i:"menyatukan bagian-bagian menjadi satu",e:"Assemble the item on a soft surface or on the flattened empty box.",s:["build","put together","construct"]},
+{w:"overtighten",pos:"verb",cat:"VERB",m:"mengencangkan terlalu kuat",i:"memutar sekrup atau baut melebihi batas yang aman",e:"Never overtighten any screws or bolts, or you may damage the wood.",s:["over-fasten","force","over-torque"]},
+{w:"incorporate",pos:"verb",cat:"VERB",m:"memasukkan / menggabungkan",i:"menyertakan sesuatu ke dalam sesuatu yang lebih besar",e:"Assuming we receive that summary soon enough to incorporate its findings into the slides.",s:["include","integrate","embed"]},
+{w:"highlight",pos:"verb",cat:"VERB",m:"menonjolkan",i:"membuat sesuatu lebih terlihat atau penting",e:"Our photos allow us to highlight the best features of a property.",s:["emphasize","showcase","feature"]},
+{w:"overlook",pos:"verb",cat:"VERB",m:"mengabaikan / melewatkan",i:"tidak memperhatikan sesuatu yang penting",e:"Let us not overlook the information from the user studies.",s:["miss","ignore","neglect"]},
+{w:"adhere",pos:"verb",cat:"VERB",m:"mematuhi / menempel",i:"mengikuti aturan atau menempel pada permukaan",e:"We ask that you adhere to the following guidelines.",s:["follow","comply with","stick to"]},
+{w:"refrain",pos:"verb",cat:"VERB",m:"menahan diri",i:"tidak melakukan sesuatu secara sengaja",e:"Please refrain from making phone calls or texting at all times.",s:["abstain","avoid","hold back"]},
+{w:"cater",pos:"verb",cat:"VERB",m:"menyediakan makanan / melayani",i:"menyediakan makanan untuk acara atau memenuhi kebutuhan",e:"The on-site restaurant caters our events.",s:["serve","provide","supply"]},
+{w:"yield",pos:"verb",cat:"VERB",m:"menghasilkan",i:"memproduksi atau memberikan hasil",e:"This season's excellent weather has yielded a substantial harvest.",s:["produce","generate","deliver"]},
+{w:"transport",pos:"verb",cat:"VERB",m:"mengangkut",i:"membawa barang atau orang dari satu tempat ke tempat lain",e:"Truck drivers have volunteered to transport your food donations.",s:["carry","ship","convey"]},
+{w:"prove",pos:"verb",cat:"VERB",m:"membuktikan / terbukti",i:"menunjukkan bahwa sesuatu benar atau nyata",e:"Project manager Hannah Chung has proved to be very helpful.",s:["demonstrate","show","establish"]},
+{w:"transform",pos:"verb",cat:"VERB",m:"mengubah / mentransformasi",i:"mengubah sesuatu secara signifikan",e:"Emerging technologies have already begun to transform the shipping industry.",s:["change","convert","alter"]},
+{w:"predict",pos:"verb",cat:"VERB",m:"memprediksi",i:"memperkirakan apa yang akan terjadi",e:"The magazine predicts that the price of corn will rise 5 percent.",s:["forecast","project","anticipate"]},
+{w:"recreate",pos:"verb",cat:"VERB",m:"membuat ulang",i:"menciptakan kembali sesuatu yang hilang atau rusak",e:"Mr. Hahm was able to recreate the meeting notes from memory.",s:["reproduce","rebuild","reconstruct"]},
+{w:"handle",pos:"verb",cat:"VERB",m:"menangani",i:"mengurus atau mengelola sesuatu",e:"Airline representatives must handle a wide range of passenger issues.",s:["manage","deal with","address"]},
+{w:"excel",pos:"verb",cat:"VERB",m:"unggul / berprestasi",i:"melakukan sesuatu dengan sangat baik",e:"Mr. Wu would excel in the role of event organizer.",s:["shine","stand out","surpass"]},
+{w:"marinate",pos:"verb",cat:"VERB",m:"merendam dalam bumbu",i:"merendam makanan dalam bumbu sebelum dimasak",e:"The jerk chicken is marinated for 24 hours prior to grilling.",s:["soak","season","infuse"]},
+{w:"investigate",pos:"verb",cat:"VERB",m:"menyelidiki",i:"memeriksa secara mendalam untuk menemukan fakta",e:"I would appreciate it if you could investigate the problem without delay.",s:["examine","probe","look into"]},
+{w:"generate",pos:"verb",cat:"VERB",m:"menghasilkan / membuat",i:"memproduksi atau menciptakan sesuatu",e:"Invoices will be generated automatically each month.",s:["produce","create","issue"]},
+{w:"equip",pos:"verb",cat:"VERB",m:"membekali / melengkapi",i:"memberikan alat atau kemampuan yang diperlukan",e:"The class equips you with the know-how to promote your business online.",s:["provide","furnish","prepare"]},
+{w:"hone",pos:"verb",cat:"VERB",m:"mengasah / menyempurnakan",i:"meningkatkan keterampilan secara bertahap",e:"The class gives you expert guidance on how to hone your writing skills.",s:["sharpen","refine","improve"]},
+{w:"appeal",pos:"verb",cat:"VERB",m:"menarik perhatian",i:"membuat sesuatu menarik bagi kelompok tertentu",e:"The class shows you how to appeal to your target market.",s:["attract","draw","engage"]},
+{w:"acquire",pos:"verb",cat:"VERB",m:"memperoleh",i:"mendapatkan sesuatu melalui usaha atau pembelian",e:"The class helps you acquire the basic skills needed to start a business.",s:["gain","obtain","get"]},
+{w:"accommodate",pos:"verb",cat:"VERB",m:"mengakomodasi",i:"menyesuaikan diri dengan kebutuhan atau permintaan",e:"Your ability to accommodate our last-minute requests was truly appreciated.",s:["adjust to","cater to","adapt to"]},
+{w:"showcase",pos:"verb",cat:"VERB",m:"memamerkan",i:"menampilkan sesuatu agar terlihat terbaik",e:"We specialize in creating high-quality images that showcase properties.",s:["display","present","highlight"]},
+{w:"customize",pos:"verb",cat:"VERB",m:"menyesuaikan",i:"mengubah sesuatu sesuai kebutuhan spesifik",e:"We are happy to work with you to customize orders.",s:["tailor","personalize","adapt"]},
+{w:"compose",pos:"verb",cat:"VERB",m:"menyusun / mengomposisi",i:"membuat atau menciptakan sesuatu dengan hati-hati",e:"We take pride in composing interior and exterior shots.",s:["create","craft","produce"]},
+{w:"spare",pos:"verb",cat:"VERB",m:"tidak segan / meluangkan",i:"tidak menahan usaha atau sumber daya",e:"Droplight Studio spares no effort in creating superior digital images.",s:["hold back","save","withhold"]},
+];
+// ── KATA BENDA (NOUN) ──
+{w:"initiative",pos:"noun",cat:"NOUN",m:"inisiatif",i:"program atau langkah baru untuk tujuan tertentu",e:"The company launched a new initiative to reduce emissions.",s:["program","project","effort"]},
+{w:"procedure",pos:"noun",cat:"NOUN",m:"prosedur",i:"langkah-langkah standar yang harus diikuti",e:"Please follow the standard procedure for filing reports.",s:["process","protocol","guidelines"]},
+{w:"collaboration",pos:"noun",cat:"NOUN",m:"kolaborasi",i:"kerja sama antar tim atau departemen",e:"The project required the collaboration of several teams across the company.",s:["cooperation","teamwork","partnership"]},
+{w:"inquiry",pos:"noun",cat:"NOUN",m:"pertanyaan / permintaan info",i:"permintaan informasi secara formal",e:"Our studio handles inquiries Monday through Saturday.",s:["question","query","request"]},
+{w:"deadline",pos:"noun",cat:"NOUN",m:"batas waktu",i:"waktu terakhir untuk menyelesaikan sesuatu",e:"Please submit the report before the deadline.",s:["due date","cutoff","time limit"]},
+{w:"agenda",pos:"noun",cat:"NOUN",m:"agenda",i:"daftar topik yang akan dibahas dalam rapat",e:"The agenda for today's meeting has been distributed.",s:["schedule","plan","itinerary"]},
+{w:"invoice",pos:"noun",cat:"NOUN",m:"faktur",i:"tagihan resmi untuk barang atau jasa",e:"His monthly invoice for August never arrived.",s:["bill","receipt","statement"]},
+{w:"contract",pos:"noun",cat:"NOUN",m:"kontrak",i:"perjanjian resmi yang mengikat secara hukum",e:"Both parties signed the contract last week.",s:["agreement","deal","document"]},
+{w:"revenue",pos:"noun",cat:"NOUN",m:"pendapatan",i:"uang yang diterima dari kegiatan bisnis",e:"Growth in the home entertainment industry has been limited this quarter.",s:["income","earnings","profit"]},
+{w:"workforce",pos:"noun",cat:"NOUN",m:"tenaga kerja",i:"seluruh karyawan dalam suatu organisasi",e:"Skyler Airlines employs more than 20,000 people from all over the world.",s:["staff","employees","personnel"]},
+{w:"inspection",pos:"noun",cat:"NOUN",m:"pemeriksaan",i:"pengecekan resmi terhadap kondisi sesuatu",e:"Wheel alignments and brake system inspections are part of our vehicle service plan.",s:["check","examination","review"]},
+{w:"delivery",pos:"noun",cat:"NOUN",m:"pengiriman",i:"proses mengantar barang ke tujuan",e:"Hawson Furniture will be making deliveries on the east side of town on Thursday.",s:["shipment","dispatch","distribution"]},
+{w:"organizer",pos:"noun",cat:"NOUN",m:"penyelenggara",i:"orang yang mengatur dan mengelola suatu acara",e:"Mr. Wu would excel in the role of event organizer.",s:["coordinator","planner","arranger"]},
+{w:"standard",pos:"noun",cat:"NOUN",m:"standar",i:"tingkat kualitas atau perilaku yang diharapkan",e:"The company handbook outlines the high standards that employees are expected to meet.",s:["benchmark","criterion","level"]},
+{w:"harvest",pos:"noun",cat:"NOUN",m:"panen",i:"hasil pengumpulan tanaman dari ladang",e:"This season's excellent weather has yielded a substantial harvest of fruits and vegetables.",s:["crop","yield","produce"]},
+{w:"surplus",pos:"noun",cat:"NOUN",m:"kelebihan / surplus",i:"jumlah yang melebihi kebutuhan",e:"Those wishing to donate surplus produce to community organizations can do so.",s:["excess","extra","remainder"]},
+{w:"venue",pos:"noun",cat:"NOUN",m:"tempat acara",i:"lokasi di mana suatu acara diadakan",e:"The Bryant Foyer is one of the premier event spaces in our area.",s:["location","site","facility"]},
+{w:"renovation",pos:"noun",cat:"NOUN",m:"renovasi",i:"perbaikan atau pembaruan bangunan",e:"The Bryant Foyer was the home of the Francona Charitable Trust until its renovation.",s:["restoration","refurbishment","remodeling"]},
+{w:"warranty",pos:"noun",cat:"NOUN",m:"garansi",i:"jaminan resmi dari produsen untuk produk",e:"Please visit our Web site to register your product for warranty coverage.",s:["guarantee","assurance","coverage"]},
+{w:"maintenance",pos:"noun",cat:"NOUN",m:"perawatan",i:"kegiatan menjaga agar sesuatu tetap berfungsi baik",e:"Please visit our Web site to obtain maintenance tips.",s:["upkeep","servicing","care"]},
+{w:"component",pos:"noun",cat:"NOUN",m:"komponen",i:"bagian dari suatu produk atau sistem",e:"Please verify that all components are included.",s:["part","element","piece"]},
+{w:"assembly",pos:"noun",cat:"NOUN",m:"perakitan",i:"proses menyatukan bagian-bagian menjadi satu produk",e:"Begin the assembly by placing the main part on its side.",s:["construction","installation","setup"]},
+{w:"emission",pos:"noun",cat:"NOUN",m:"emisi",i:"gas atau zat yang dilepaskan ke udara",e:"Project Earth Group is looking for ways to reduce transport-related greenhouse gas emissions.",s:["discharge","release","output"]},
+{w:"reinforcement",pos:"noun",cat:"NOUN",m:"penguatan",i:"proses memperkuat struktur atau sistem",e:"The northbound lane will be closed because of the city's bridge reinforcement project.",s:["strengthening","support","fortification"]},
+{w:"publicist",pos:"noun",cat:"NOUN",m:"publisis",i:"orang yang mengelola hubungan masyarakat",e:"As a former publicist for several renowned orchestras, Mr. Wu would excel.",s:["PR manager","promoter","spokesperson"]},
+{w:"rehearsal",pos:"noun",cat:"NOUN",m:"latihan / gladi",i:"latihan sebelum pertunjukan resmi",e:"The costumes were not received soon enough to be used in the first dress rehearsal.",s:["practice","run-through","preparation"]},
+{w:"costume",pos:"noun",cat:"NOUN",m:"kostum",i:"pakaian yang dikenakan untuk pertunjukan",e:"The costumes were not received soon enough.",s:["outfit","attire","dress"]},
+{w:"connection",pos:"noun",cat:"NOUN",m:"koneksi / hubungan",i:"hubungan antara dua hal atau orang",e:"Airline representatives must handle issues from missed connections to lost luggage.",s:["link","relation","contact"]},
+{w:"luggage",pos:"noun",cat:"NOUN",m:"bagasi",i:"tas atau koper yang dibawa saat bepergian",e:"Airline representatives must handle issues from missed connections to lost luggage.",s:["baggage","suitcase","bags"]},
+{w:"handbook",pos:"noun",cat:"NOUN",m:"buku panduan",i:"buku yang berisi aturan atau petunjuk resmi",e:"The company handbook outlines the high standards that employees are expected to meet.",s:["manual","guide","rulebook"]},
+{w:"conflict",pos:"noun",cat:"NOUN",m:"konflik / benturan jadwal",i:"situasi di mana dua hal tidak bisa dilakukan bersamaan",e:"Because some of the board members have scheduling conflicts, the board meeting will be moved.",s:["clash","dispute","disagreement"]},
+{w:"specification",pos:"noun",cat:"NOUN",m:"spesifikasi",i:"detail teknis atau persyaratan yang harus dipenuhi",e:"Our head pastry chef will produce it according to your earlier specifications.",s:["requirement","detail","description"]},
+{w:"certificate",pos:"noun",cat:"NOUN",m:"sertifikat",i:"dokumen resmi yang membuktikan pencapaian",e:"Upon successful completion of a class, you will receive an official Certificate of Training.",s:["credential","diploma","document"]},
+{w:"résumé",pos:"noun",cat:"NOUN",m:"resume / CV",i:"dokumen ringkasan pengalaman dan kualifikasi kerja",e:"A Certificate of Training is a valuable addition to any résumé.",s:["CV","curriculum vitae","profile"]},
+{w:"incentive",pos:"noun",cat:"NOUN",m:"insentif",i:"sesuatu yang mendorong seseorang untuk bertindak",e:"Our long-standing incentives remain in place.",s:["reward","benefit","motivation"]},
+{w:"discount",pos:"noun",cat:"NOUN",m:"diskon",i:"pengurangan harga dari harga normal",e:"A 10% discount for orders of more than $4,000.",s:["reduction","deduction","markdown"]},
+{w:"membership",pos:"noun",cat:"NOUN",m:"keanggotaan",i:"status sebagai anggota suatu organisasi",e:"Please be advised that your library card will expire one month from today.",s:["enrollment","subscription","affiliation"]},
+{w:"privilege",pos:"noun",cat:"NOUN",m:"hak istimewa",i:"keuntungan atau hak yang diberikan kepada anggota",e:"Failure to complete your renewal will result in the expiration of your library privileges.",s:["benefit","right","advantage"]},
+{w:"expiration",pos:"noun",cat:"NOUN",m:"kedaluwarsa / berakhirnya masa berlaku",i:"saat ketika sesuatu tidak lagi berlaku",e:"Failure to complete your renewal by the specified date will result in the expiration of your library privileges.",s:["expiry","end","termination"]},
+{w:"coordination",pos:"noun",cat:"NOUN",m:"koordinasi",i:"pengaturan agar semua bagian bekerja bersama",e:"Thank you for your amazing job coordinating our annual company retreat.",s:["organization","management","arrangement"]},
+{w:"flexibility",pos:"noun",cat:"NOUN",m:"fleksibilitas",i:"kemampuan untuk menyesuaikan diri dengan perubahan",e:"Thank you also for your flexibility in planning the event.",s:["adaptability","versatility","agility"]},
+{w:"malfunction",pos:"noun",cat:"NOUN",m:"kerusakan / gangguan",i:"kegagalan suatu alat untuk bekerja dengan benar",e:"Our band had an equipment malfunction, which led to the last-minute cancellation.",s:["failure","breakdown","fault"]},
+{w:"cancellation",pos:"noun",cat:"NOUN",m:"pembatalan",i:"keputusan untuk tidak melanjutkan sesuatu yang sudah direncanakan",e:"The band's performance that night had been cancelled.",s:["termination","withdrawal","calling off"]},
+{w:"collaboration",pos:"noun",cat:"NOUN",m:"kolaborasi",i:"kerja sama antara dua pihak atau lebih",e:"Kitchen Swifts and Chef Darius Cordero are joining together.",s:["partnership","cooperation","joint effort"]},
+{w:"heritage",pos:"noun",cat:"NOUN",m:"warisan budaya",i:"tradisi atau nilai yang diwariskan dari generasi sebelumnya",e:"His cooking reflects his Filipino heritage, which is a blend of many cultures.",s:["tradition","culture","legacy"]},
+{w:"ingredient",pos:"noun",cat:"NOUN",m:"bahan",i:"bahan yang digunakan dalam memasak atau membuat sesuatu",e:"Kitchen Swifts supplies menus, recipes, and ingredients for two people.",s:["component","element","material"]},
+{w:"destination",pos:"noun",cat:"NOUN",m:"tujuan / destinasi",i:"tempat yang ingin dituju",e:"Our discount program enables employees to fly to any of our destinations.",s:["location","place","spot"]},
+{w:"mobility",pos:"noun",cat:"NOUN",m:"mobilitas",i:"kemampuan untuk berpindah atau berkembang",e:"We offer upward and global mobility.",s:["movement","advancement","flexibility"]},
+{w:"reimbursement",pos:"noun",cat:"NOUN",m:"penggantian biaya",i:"pembayaran kembali atas pengeluaran yang telah dilakukan",e:"We offer tuition reimbursement.",s:["refund","repayment","compensation"]},
+{w:"mentorship",pos:"noun",cat:"NOUN",m:"bimbingan / mentoring",i:"hubungan di mana seseorang yang berpengalaman membimbing yang lain",e:"We offer a mentorship program.",s:["guidance","coaching","tutoring"]},
+{w:"compensation",pos:"noun",cat:"NOUN",m:"kompensasi",i:"pembayaran atau imbalan atas pekerjaan",e:"We offer a generous compensation package.",s:["pay","salary","remuneration"]},
+{w:"courier",pos:"noun",cat:"NOUN",m:"kurir",i:"orang atau layanan yang mengantarkan paket",e:"My policy is to hire a ground- or sea-based courier service I trust.",s:["messenger","delivery service","carrier"]},
+{w:"merchandise",pos:"noun",cat:"NOUN",m:"barang dagangan",i:"produk yang dijual atau diperdagangkan",e:"My merchandise is 100 percent handcrafted.",s:["goods","products","items"]},
+{w:"ordeal",pos:"noun",cat:"NOUN",m:"cobaan berat / pengalaman sulit",i:"pengalaman yang sangat sulit atau menyakitkan",e:"If any damage occurs in transit, the repair turns into an expensive, time-consuming ordeal.",s:["trial","hardship","difficulty"]},
+{w:"transit",pos:"noun",cat:"NOUN",m:"pengiriman / perjalanan",i:"proses memindahkan barang dari satu tempat ke tempat lain",e:"If any damage occurs in transit, the repair turns into an expensive ordeal.",s:["transport","shipment","passage"]},
+{w:"auction",pos:"noun",cat:"NOUN",m:"lelang",i:"penjualan di mana barang dijual kepada penawar tertinggi",e:"The auction for our Young Designers Award program is coming up soon.",s:["bidding","sale","tender"]},
+{w:"gala",pos:"noun",cat:"NOUN",m:"gala / pesta besar",i:"acara perayaan yang mewah dan formal",e:"Thank you for your amazing support in helping me to plan the opening gala.",s:["celebration","event","ceremony"]},
+{w:"attendee",pos:"noun",cat:"NOUN",m:"peserta / hadirin",i:"orang yang hadir dalam suatu acara",e:"Our attendees follow your work closely.",s:["participant","guest","visitor"]},
+{w:"feedback",pos:"noun",cat:"NOUN",m:"umpan balik",i:"respons atau komentar tentang suatu pekerjaan",e:"Thank you for visiting Orange Bay Kitchen and leaving a review.",s:["response","comment","review"]},
+{w:"portion",pos:"noun",cat:"NOUN",m:"porsi",i:"jumlah makanan yang disajikan",e:"The portion size was smaller than we had anticipated.",s:["serving","amount","quantity"]},
+{w:"atmosphere",pos:"noun",cat:"NOUN",m:"suasana",i:"nuansa atau perasaan di suatu tempat",e:"BayKitchen has been serving up an infusion of Jamaican flavours in a laid-back Caribbean atmosphere.",s:["ambiance","mood","environment"]},
+{w:"infusion",pos:"noun",cat:"NOUN",m:"perpaduan / infusi",i:"penggabungan elemen dari berbagai sumber",e:"BayKitchen has been serving up an infusion of Jamaican flavours.",s:["blend","mix","combination"]},
+{w:"transition",pos:"noun",cat:"NOUN",m:"transisi / peralihan",i:"proses perubahan dari satu keadaan ke keadaan lain",e:"More information about our transition to electronic invoicing is available on our Web site.",s:["change","shift","conversion"]},
+{w:"rollout",pos:"noun",cat:"NOUN",m:"peluncuran / penerapan bertahap",i:"proses memperkenalkan sistem atau produk baru",e:"The rollout of our electronic invoicing system did not go as smoothly as we had hoped.",s:["launch","deployment","introduction"]},
+{w:"summary",pos:"noun",cat:"NOUN",m:"ringkasan",i:"versi singkat dari informasi yang lebih panjang",e:"Please contact Matt Harven and remind him to expedite a summary to us.",s:["overview","brief","synopsis"]},
+{w:"findings",pos:"noun",cat:"NOUN",m:"temuan",i:"hasil dari penelitian atau penyelidikan",e:"Assuming we receive that summary soon enough to incorporate its findings into the slides.",s:["results","conclusions","data"]},
+{w:"coordinates",pos:"noun",cat:"NOUN",m:"koordinat",i:"angka yang menunjukkan lokasi di peta",e:"I need someone to send me the updated coordinates.",s:["location","position","data"]},
+{w:"measurement",pos:"noun",cat:"NOUN",m:"pengukuran",i:"proses menentukan ukuran atau jumlah sesuatu",e:"I will start taking measurements from here.",s:["dimension","reading","calculation"]},
+{w:"brochure",pos:"noun",cat:"NOUN",m:"brosur",i:"pamflet yang berisi informasi tentang produk atau layanan",e:"The detailed information provided by Uniss Bank's brochure helps applicants.",s:["pamphlet","leaflet","flyer"]},
+{w:"applicant",pos:"noun",cat:"NOUN",m:"pelamar",i:"orang yang mengajukan permohonan untuk sesuatu",e:"The brochure helps applicants understand the terms of their loans.",s:["candidate","petitioner","claimant"]},
+{w:"loan",pos:"noun",cat:"NOUN",m:"pinjaman",i:"uang yang dipinjam dan harus dikembalikan",e:"The brochure helps applicants understand the terms of their loans.",s:["credit","borrowing","advance"]},
+{w:"closure",pos:"noun",cat:"NOUN",m:"penutupan",i:"tindakan menutup atau mengakhiri operasi",e:"In light of the closure of Verdigold Transport Services, we are looking for a new shipping company.",s:["shutdown","termination","end"]},
+{w:"authority",pos:"noun",cat:"NOUN",m:"wewenang / otoritas",i:"hak resmi untuk membuat keputusan",e:"The Marlton City Council does not have the authority to prohibit parking.",s:["power","jurisdiction","right"]},
+{w:"selection",pos:"noun",cat:"NOUN",m:"pilihan / seleksi",i:"kumpulan barang yang tersedia untuk dipilih",e:"Zahn Flooring has the widest selection of tiles in the United Kingdom.",s:["range","variety","assortment"]},
+{w:"responsibility",pos:"noun",cat:"NOUN",m:"tanggung jawab",i:"kewajiban untuk melakukan atau mengurus sesuatu",e:"One responsibility of the IT department is to ensure that the company is using updated software.",s:["duty","obligation","task"]},
+{w:"alignment",pos:"noun",cat:"NOUN",m:"penyelarasan",i:"pengaturan agar sesuatu berada dalam posisi yang benar",e:"Wheel alignments and brake system inspections are part of our vehicle service plan.",s:["adjustment","calibration","positioning"]},
+];
+// ── KATA SIFAT (ADJ) ──
+{w:"mandatory",pos:"adjective",cat:"ADJ",m:"wajib",i:"harus dilakukan, tidak bisa dihindari",e:"Attendance at the safety training is mandatory.",s:["required","compulsory","obligatory"]},
+{w:"eligible",pos:"adjective",cat:"ADJ",m:"memenuhi syarat",i:"berhak atau layak untuk sesuatu",e:"Members who are eligible for the discount should apply.",s:["qualified","entitled","suitable"]},
+{w:"comprehensive",pos:"adjective",cat:"ADJ",m:"menyeluruh",i:"mencakup semua aspek secara lengkap",e:"The report provides a comprehensive overview of the project.",s:["thorough","complete","extensive"]},
+{w:"confidential",pos:"adjective",cat:"ADJ",m:"rahasia",i:"tidak boleh diketahui oleh umum",e:"Please keep this information confidential.",s:["private","classified","sensitive"]},
+{w:"efficient",pos:"adjective",cat:"ADJ",m:"efisien",i:"menghasilkan hasil maksimal dengan usaha minimal",e:"The machine is designed to use water efficiently.",s:["productive","effective","streamlined"]},
+{w:"outstanding",pos:"adjective",cat:"ADJ",m:"luar biasa / belum diselesaikan",i:"sangat baik, atau belum dibayar/diselesaikan",e:"The chicken's smoky flavour was outstanding.",s:["excellent","unpaid","pending"]},
+{w:"updated",pos:"adjective",cat:"ADJ",m:"terbaru / diperbarui",i:"sudah diperbarui dengan informasi terkini",e:"One responsibility of the IT department is to ensure that the company is using updated software.",s:["current","revised","latest"]},
+{w:"connecting",pos:"adjective",cat:"ADJ",m:"penghubung / transit",i:"penerbangan yang memerlukan transit di bandara lain",e:"Passengers who will be taking a connecting domestic flight should go to Terminal A.",s:["transit","linking","intermediate"]},
+{w:"tasty",pos:"adjective",cat:"ADJ",m:"lezat",i:"memiliki rasa yang enak",e:"Fresh and tasty apple-cider donuts are available at Oakcrest Orchard.",s:["delicious","flavorful","appetizing"]},
+{w:"limited",pos:"adjective",cat:"ADJ",m:"terbatas",i:"tidak banyak atau dibatasi",e:"Growth in the home entertainment industry has been limited this quarter.",s:["restricted","scarce","finite"]},
+{w:"helpful",pos:"adjective",cat:"ADJ",m:"membantu / berguna",i:"memberikan bantuan atau manfaat",e:"Project manager Hannah Chung has proved to be very helpful.",s:["useful","supportive","beneficial"]},
+{w:"enthusiastic",pos:"adjective",cat:"ADJ",m:"antusias",i:"menunjukkan semangat dan minat yang besar",e:"The management team expects that employees will enthusiastically support any new hires.",s:["eager","passionate","keen"]},
+{w:"supplemental",pos:"adjective",cat:"ADJ",m:"tambahan / pelengkap",i:"memberikan informasi atau dukungan ekstra",e:"The supplemental information provided by Uniss Bank's brochure helps applicants.",s:["additional","extra","complementary"]},
+{w:"domestic",pos:"adjective",cat:"ADJ",m:"domestik / dalam negeri",i:"berkaitan dengan dalam negeri, bukan internasional",e:"Passengers who will be taking a connecting domestic flight should go to Terminal A.",s:["local","national","internal"]},
+{w:"renowned",pos:"adjective",cat:"ADJ",m:"terkenal / ternama",i:"dikenal luas karena prestasi atau kualitas",e:"As a former publicist for several renowned orchestras, Mr. Wu would excel.",s:["famous","celebrated","distinguished"]},
+{w:"premier",pos:"adjective",cat:"ADJ",m:"terkemuka / terbaik",i:"yang paling penting atau berkualitas tinggi",e:"The Bryant Foyer is one of the premier event spaces in our area.",s:["leading","top","foremost"]},
+{w:"adjacent",pos:"adjective",cat:"ADJ",m:"berdekatan / bersebelahan",i:"berada di sebelah atau dekat dengan sesuatu",e:"The Bryant Foyer has expansive windows that provide sweeping views of the adjacent botanical gardens.",s:["neighboring","nearby","adjoining"]},
+{w:"expansive",pos:"adjective",cat:"ADJ",m:"luas / lapang",i:"mencakup area yang besar",e:"The Bryant Foyer has expansive windows that provide sweeping views.",s:["wide","broad","spacious"]},
+{w:"stunning",pos:"adjective",cat:"ADJ",m:"memukau",i:"sangat indah atau mengesankan",e:"With its marble floors, cathedral ceiling, and stunning artwork, the Bryant Foyer is ideal.",s:["breathtaking","magnificent","impressive"]},
+{w:"ideal",pos:"adjective",cat:"ADJ",m:"ideal / sempurna",i:"paling sesuai atau terbaik untuk tujuan tertentu",e:"The space is ideal for wedding receptions, office parties, and panel presentations.",s:["perfect","optimal","suitable"]},
+{w:"innovative",pos:"adjective",cat:"ADJ",m:"inovatif",i:"memperkenalkan ide atau metode baru",e:"Train to Achieve is one of the most innovative training providers in West Africa.",s:["creative","original","pioneering"]},
+{w:"individualized",pos:"adjective",cat:"ADJ",m:"individual / personal",i:"disesuaikan untuk setiap orang secara khusus",e:"All classes include individualized instruction.",s:["personalized","customized","tailored"]},
+{w:"handcrafted",pos:"adjective",cat:"ADJ",m:"buatan tangan",i:"dibuat dengan tangan, bukan mesin",e:"My merchandise is 100 percent handcrafted.",s:["handmade","artisanal","crafted"]},
+{w:"inattentive",pos:"adjective",cat:"ADJ",m:"tidak teliti / lalai",i:"tidak memberikan perhatian yang cukup",e:"I have seen too much damage done by inattentive baggage handlers.",s:["careless","negligent","distracted"]},
+{w:"feasible",pos:"adjective",cat:"ADJ",m:"layak / memungkinkan",i:"dapat dilakukan atau dicapai",e:"My policy is to deliver items personally whenever feasible.",s:["possible","practical","viable"]},
+{w:"vetted",pos:"adjective",cat:"ADJ",m:"terverifikasi / terpercaya",i:"sudah diperiksa dan disetujui secara resmi",e:"We will distribute your food donations to vetted groups that need it.",s:["approved","verified","screened"]},
+{w:"substantial",pos:"adjective",cat:"ADJ",m:"besar / signifikan",i:"dalam jumlah atau ukuran yang cukup besar",e:"This season's excellent weather has yielded a substantial harvest.",s:["significant","considerable","large"]},
+{w:"surplus",pos:"adjective",cat:"ADJ",m:"berlebih / surplus",i:"melebihi jumlah yang dibutuhkan",e:"Those wishing to donate surplus produce to community organizations.",s:["excess","extra","leftover"]},
+{w:"distracting",pos:"adjective",cat:"ADJ",m:"mengganggu konsentrasi",i:"menyebabkan seseorang kehilangan fokus",e:"Ringtones and lit screens are very distracting to both the performers and your fellow audience members.",s:["disruptive","disturbing","bothersome"]},
+{w:"worthwhile",pos:"adjective",cat:"ADJ",m:"berharga / sepadan",i:"layak dilakukan karena memberikan manfaat",e:"It was a worthwhile treat before I flew back to Hong Kong.",s:["valuable","rewarding","beneficial"]},
+{w:"delectable",pos:"adjective",cat:"ADJ",m:"sangat lezat",i:"memiliki rasa yang sangat enak",e:"We have judged it to be a delectable treat.",s:["delicious","scrumptious","mouth-watering"]},
+{w:"aromatic",pos:"adjective",cat:"ADJ",m:"harum / beraroma",i:"memiliki aroma yang kuat dan menyenangkan",e:"BayKitchen is an aromatic jewel amid the bustling shops.",s:["fragrant","scented","flavorful"]},
+{w:"bustling",pos:"adjective",cat:"ADJ",m:"ramai / sibuk",i:"penuh dengan aktivitas dan keramaian",e:"BayKitchen is an aromatic jewel amid the bustling shops and eateries.",s:["busy","lively","hectic"]},
+{w:"extensive",pos:"adjective",cat:"ADJ",m:"luas / ekstensif",i:"mencakup banyak hal atau area yang besar",e:"The servers are always happy to help diners select from the variety of delights on the extensive menu.",s:["wide","broad","comprehensive"]},
+{w:"laid-back",pos:"adjective",cat:"ADJ",m:"santai / rileks",i:"suasana yang tenang dan tidak formal",e:"BayKitchen has been serving up an infusion of Jamaican flavours in a laid-back Caribbean atmosphere.",s:["relaxed","casual","easygoing"]},
+{w:"glowing",pos:"adjective",cat:"ADJ",m:"sangat positif / memuji",i:"penuh dengan pujian dan komentar positif",e:"After reading a glowing article about Orange Bay Kitchen, I was eager to give this place a try.",s:["enthusiastic","praising","flattering"]},
+{w:"competitive",pos:"adjective",cat:"ADJ",m:"kompetitif / bersaing",i:"harga atau kondisi yang menguntungkan dibanding pesaing",e:"Our pricing is competitive, and we offer flexible scheduling.",s:["affordable","reasonable","attractive"]},
+{w:"flexible",pos:"adjective",cat:"ADJ",m:"fleksibel",i:"dapat disesuaikan dengan kebutuhan yang berbeda",e:"We offer flexible scheduling to meet your needs.",s:["adaptable","adjustable","versatile"]},
+{w:"professional",pos:"adjective",cat:"ADJ",m:"profesional",i:"berkaitan dengan standar tinggi dalam pekerjaan",e:"Your professionalism consistently exceeds our expectations.",s:["expert","skilled","qualified"]},
+{w:"simplified",pos:"adjective",cat:"ADJ",m:"disederhanakan",i:"dibuat lebih mudah dipahami atau dilakukan",e:"I have designed these simplified recipes for Kitchen Swifts.",s:["easy","straightforward","accessible"]},
+{w:"vegetarian",pos:"adjective",cat:"ADJ",m:"vegetarian",i:"tidak mengandung daging",e:"Kitchen Swifts includes a range of vegetarian selections.",s:["plant-based","meat-free","vegan-friendly"]},
+{w:"eco-friendly",pos:"adjective",cat:"ADJ",m:"ramah lingkungan",i:"tidak merusak atau berbahaya bagi lingkungan",e:"Learn how to create a beautiful, eco-friendly garden for your home or business.",s:["sustainable","green","environmentally friendly"]},
+{w:"native",pos:"adjective",cat:"ADJ",m:"asli / lokal",i:"berasal dari atau tumbuh secara alami di suatu daerah",e:"These gardens can be landscaped with native plants and flowers.",s:["local","indigenous","natural"]},
+{w:"beneficial",pos:"adjective",cat:"ADJ",m:"bermanfaat",i:"memberikan keuntungan atau manfaat",e:"Rain gardens are always beneficial to the local environment.",s:["helpful","advantageous","useful"]},
+{w:"valued",pos:"adjective",cat:"ADJ",m:"dihargai / berharga",i:"dianggap penting dan dihormati",e:"Thank you for being a valued member of our library community.",s:["appreciated","respected","important"]},
+{w:"specified",pos:"adjective",cat:"ADJ",m:"yang ditentukan / yang ditetapkan",i:"sudah dinyatakan atau ditetapkan secara jelas",e:"Failure to complete your renewal by the specified date will result in expiration.",s:["stated","designated","set"]},
+{w:"sincere",pos:"adjective",cat:"ADJ",m:"tulus / ikhlas",i:"benar-benar dirasakan atau dimaksudkan",e:"I am writing to express my sincere gratitude.",s:["genuine","heartfelt","earnest"]},
+{w:"thorough",pos:"adjective",cat:"ADJ",m:"teliti / menyeluruh",i:"dilakukan dengan sangat hati-hati dan lengkap",e:"Our employees were thoroughly impressed by the venue selection.",s:["careful","complete","meticulous"]},
+{w:"last-minute",pos:"adjective",cat:"ADJ",m:"menit terakhir / mendadak",i:"dilakukan atau terjadi pada saat terakhir",e:"Your ability to accommodate our last-minute requests was truly appreciated.",s:["urgent","sudden","impromptu"]},
+{w:"compact",pos:"adjective",cat:"ADJ",m:"kompak / kecil",i:"berukuran kecil namun fungsional",e:"After remodeling my kitchen, I finally had room for a compact dishwasher.",s:["small","space-saving","portable"]},
+{w:"pricey",pos:"adjective",cat:"ADJ",m:"mahal",i:"memiliki harga yang tinggi",e:"It was pricier than other models, but all of the reviews were excellent.",s:["expensive","costly","high-priced"]},
+{w:"sparkling",pos:"adjective",cat:"ADJ",m:"bersih berkilau",i:"sangat bersih hingga tampak berkilau",e:"The dishes come out sparkling clean, no matter how dirty they were going in.",s:["gleaming","shining","spotless"]},
+{w:"pleased",pos:"adjective",cat:"ADJ",m:"puas / senang",i:"merasa puas atau bahagia dengan sesuatu",e:"Overall, I am very pleased with this dishwasher.",s:["satisfied","happy","content"]},
+{w:"available",pos:"adjective",cat:"ADJ",m:"tersedia",i:"dapat diperoleh atau digunakan",e:"Fresh and tasty apple-cider donuts are available at Oakcrest Orchard.",s:["accessible","obtainable","on offer"]},
+{w:"participating",pos:"adjective",cat:"ADJ",m:"yang berpartisipasi",i:"ikut serta dalam suatu program atau kegiatan",e:"Lehua Vacation Club members will receive double points at participating hotels.",s:["involved","enrolled","taking part"]},
+];
+// ── KATA KETERANGAN (ADV) ──
+{w:"promptly",pos:"adverb",cat:"ADV",m:"segera / tepat waktu",i:"dilakukan tanpa penundaan",e:"Please respond to the inquiry promptly.",s:["immediately","quickly","without delay"]},
+{w:"accordingly",pos:"adverb",cat:"ADV",m:"sesuai dengan itu",i:"bertindak berdasarkan situasi yang ada",e:"Please review the situation and act accordingly.",s:["therefore","consequently","as a result"]},
+{w:"thoroughly",pos:"adverb",cat:"ADV",m:"secara menyeluruh",i:"dilakukan dengan sangat teliti dan lengkap",e:"Our employees were thoroughly impressed by the venue selection.",s:["completely","carefully","in detail"]},
+{w:"mutually",pos:"adverb",cat:"ADV",m:"secara bersama-sama",i:"berlaku untuk kedua belah pihak",e:"The agreement was mutually beneficial.",s:["jointly","collectively","reciprocally"]},
+{w:"enthusiastically",pos:"adverb",cat:"ADV",m:"dengan antusias",i:"dengan semangat dan minat yang besar",e:"The management team expects that employees will enthusiastically support any new hires.",s:["eagerly","passionately","keenly"]},
+{w:"temporarily",pos:"adverb",cat:"ADV",m:"sementara",i:"hanya untuk waktu yang terbatas",e:"The northbound lane on Davis Street will be temporarily closed.",s:["briefly","for now","provisionally"]},
+{w:"accidentally",pos:"adverb",cat:"ADV",m:"secara tidak sengaja",i:"terjadi tanpa disengaja",e:"The meeting notes were accidentally deleted.",s:["unintentionally","by mistake","inadvertently"]},
+{w:"already",pos:"adverb",cat:"ADV",m:"sudah / telah",i:"sebelum waktu yang diharapkan atau lebih awal",e:"Emerging technologies have already begun to transform the shipping industry.",s:["by now","previously","before"]},
+{w:"perfectly",pos:"adverb",cat:"ADV",m:"dengan sempurna",i:"dengan cara yang sempurna atau ideal",e:"Our skilled tailors are happy to design a custom-made suit that fits your style and budget perfectly.",s:["flawlessly","ideally","exactly"]},
+{w:"helpfully",pos:"adverb",cat:"ADV",m:"dengan cara yang membantu",i:"dengan memberikan bantuan yang berguna",e:"She helpfully provided all the information needed.",s:["usefully","supportively","constructively"]},
+{w:"soon",pos:"adverb",cat:"ADV",m:"segera / tidak lama lagi",i:"dalam waktu yang tidak lama",e:"The costumes were not received soon enough to be used in the first dress rehearsal.",s:["shortly","quickly","before long"]},
+{w:"consistently",pos:"adverb",cat:"ADV",m:"secara konsisten",i:"selalu dengan cara yang sama dan dapat diandalkan",e:"Your professionalism consistently exceeds our expectations.",s:["regularly","reliably","steadily"]},
+{w:"personally",pos:"adverb",cat:"ADV",m:"secara pribadi",i:"dilakukan sendiri, bukan melalui orang lain",e:"My policy is to deliver items personally whenever feasible.",s:["directly","in person","individually"]},
+{w:"smoothly",pos:"adverb",cat:"ADV",m:"dengan lancar",i:"tanpa hambatan atau masalah",e:"The rollout of our electronic invoicing system did not go as smoothly as we had hoped.",s:["easily","without problems","effortlessly"]},
+{w:"closely",pos:"adverb",cat:"ADV",m:"dengan seksama / dekat",i:"dengan perhatian penuh atau dalam jarak dekat",e:"Our attendees follow your work closely.",s:["carefully","attentively","nearly"]},
+{w:"far",pos:"adverb",cat:"ADV",m:"jauh",i:"dalam jarak atau tingkat yang besar",e:"The costumes were not received far enough in advance.",s:["much","greatly","considerably"]},
+{w:"prior",pos:"adverb",cat:"ADV",m:"sebelumnya",i:"terjadi sebelum waktu atau peristiwa tertentu",e:"The jerk chicken is marinated for 24 hours prior to grilling.",s:["before","previously","earlier"]},
+{w:"in advance",pos:"adverb",cat:"ADV",m:"jauh sebelumnya",i:"dilakukan sebelum waktu yang diperlukan",e:"Area residents know to plan far in advance to get a seat.",s:["beforehand","ahead of time","early"]},
+{w:"without delay",pos:"adverb",cat:"ADV",m:"tanpa penundaan",i:"segera, tidak menunggu",e:"I would appreciate it if you could investigate the problem without delay.",s:["immediately","promptly","at once"]},
+{w:"in person",pos:"adverb",cat:"ADV",m:"secara langsung",i:"hadir atau melakukan sesuatu secara fisik",e:"You may renew your card in person at any branch location.",s:["personally","face-to-face","directly"]},
+];
+// ── FRASA PENTING (PHRASE) ──
+{w:"in light of",pos:"phrase",cat:"PHRASE",m:"mengingat / sehubungan dengan",i:"digunakan untuk menunjukkan alasan berdasarkan situasi",e:"In light of the closure of Verdigold Transport Services, we are looking for a new shipping company.",s:["because of","due to","given"]},
+{w:"in spite of",pos:"phrase",cat:"PHRASE",m:"meskipun / walaupun",i:"digunakan untuk menunjukkan kontras atau pengecualian",e:"In spite of the challenges, the project was completed on time.",s:["despite","regardless of","notwithstanding"]},
+{w:"according to",pos:"phrase",cat:"PHRASE",m:"menurut",i:"berdasarkan informasi dari sumber tertentu",e:"According to the report, sales increased by 10 percent.",s:["based on","as stated by","per"]},
+{w:"just as",pos:"phrase",cat:"PHRASE",m:"tepat ketika / sama seperti",i:"pada saat yang sama atau dengan cara yang sama",e:"Just as the meeting started, the power went out.",s:["at the same time as","even as","while"]},
+{w:"as a matter of fact",pos:"phrase",cat:"PHRASE",m:"sebenarnya / faktanya",i:"digunakan untuk menekankan kebenaran suatu pernyataan",e:"As a matter of fact, rain gardens are always beneficial to the local environment.",s:["in fact","actually","indeed"]},
+{w:"best of all",pos:"phrase",cat:"PHRASE",m:"yang terbaik dari semuanya",i:"digunakan untuk memperkenalkan keuntungan terbesar",e:"Best of all, the workshop is completely free and open to all skill levels.",s:["most importantly","above all","most notably"]},
+{w:"for example",pos:"phrase",cat:"PHRASE",m:"misalnya / contohnya",i:"digunakan untuk memberikan contoh spesifik",e:"For example, our discount program enables employees to fly to any of our destinations.",s:["for instance","such as","to illustrate"]},
+{w:"in any event",pos:"phrase",cat:"PHRASE",m:"bagaimanapun juga",i:"digunakan untuk menunjukkan sesuatu yang benar dalam semua situasi",e:"In any event, please make sure to register before the deadline.",s:["regardless","in any case","either way"]},
+{w:"in advance",pos:"phrase",cat:"PHRASE",m:"jauh sebelumnya / di muka",i:"dilakukan atau disiapkan sebelum waktu yang diperlukan",e:"Please arrive 30 minutes prior to departure.",s:["beforehand","ahead of time","early"]},
+{w:"on track",pos:"phrase",cat:"PHRASE",m:"sesuai rencana / tepat jalur",i:"berjalan sesuai dengan rencana atau jadwal",e:"We are on track to send the presentation slides out next Monday.",s:["on schedule","as planned","proceeding well"]},
+{w:"far in advance",pos:"phrase",cat:"PHRASE",m:"jauh sebelumnya",i:"dilakukan atau direncanakan jauh sebelum waktu yang diperlukan",e:"Area residents know to plan far in advance to get a seat at Andito's.",s:["well ahead","long before","early on"]},
+{w:"no later than",pos:"phrase",cat:"PHRASE",m:"paling lambat",i:"tidak melewati batas waktu yang ditentukan",e:"I expect to arrive at your house no later than 5 p.m.",s:["by","at the latest","before"]},
+{w:"at least",pos:"phrase",cat:"PHRASE",m:"setidaknya / paling tidak",i:"tidak kurang dari jumlah atau waktu yang disebutkan",e:"Renewal must be completed at least one week before your card expires.",s:["minimum","no less than","a minimum of"]},
+{w:"as always",pos:"phrase",cat:"PHRASE",m:"seperti biasa",i:"digunakan untuk menunjukkan sesuatu yang konsisten",e:"As always, we value your business.",s:["as usual","as ever","consistently"]},
+{w:"on a regular basis",pos:"phrase",cat:"PHRASE",m:"secara rutin / teratur",i:"dilakukan secara konsisten dalam interval tertentu",e:"Since we first opened for business, he has made purchases from us on a regular basis.",s:["regularly","routinely","consistently"]},
+{w:"in a row",pos:"phrase",cat:"PHRASE",m:"berturut-turut",i:"terjadi beberapa kali secara berurutan tanpa jeda",e:"Skyler Airlines was named Best Airline to Work For three years in a row.",s:["consecutively","in succession","running"]},
+{w:"a fraction of",pos:"phrase",cat:"PHRASE",m:"sebagian kecil dari",i:"jumlah yang jauh lebih kecil dari keseluruhan",e:"Our discount program enables employees to fly to any of our destinations for a fraction of the average ticket price.",s:["a small part of","a portion of","much less than"]},
+{w:"take pride in",pos:"phrase",cat:"PHRASE",m:"bangga dengan",i:"merasa bangga atas sesuatu yang dilakukan",e:"We take pride in composing interior and exterior shots that make a property look its best.",s:["be proud of","value","cherish"]},
+{w:"look forward to",pos:"phrase",cat:"PHRASE",m:"menantikan dengan antusias",i:"merasa senang dan menunggu sesuatu yang akan datang",e:"I look forward to working with you on that as well.",s:["anticipate","await eagerly","be excited about"]},
+{w:"reach out",pos:"phrase",cat:"PHRASE",m:"menghubungi",i:"berusaha untuk berkomunikasi dengan seseorang",e:"We will reach out to one of the many independent truck drivers.",s:["contact","get in touch","communicate"]},
+{w:"rest assured",pos:"phrase",cat:"PHRASE",m:"yakinlah / tenang saja",i:"digunakan untuk meyakinkan seseorang bahwa sesuatu tidak perlu dikhawatirkan",e:"Rest assured that our long-standing incentives remain in place.",s:["be confident","don't worry","you can be sure"]},
+{w:"in place",pos:"phrase",cat:"PHRASE",m:"sudah ada / berlaku",i:"sudah diterapkan atau tersedia",e:"Rest assured that our long-standing incentives remain in place.",s:["active","in effect","operational"]},
+{w:"on the map",pos:"phrase",cat:"PHRASE",m:"dikenal luas / terkenal",i:"diakui atau dikenal oleh banyak orang",e:"Shows like this will keep Tokyo on the map as a premier fashion centre.",s:["recognized","prominent","well-known"]},
+{w:"give a try",pos:"phrase",cat:"PHRASE",m:"mencoba",i:"berusaha melakukan sesuatu untuk pertama kali",e:"After reading a glowing article, I was eager to give this place a try.",s:["attempt","try out","test"]},
+{w:"no wonder",pos:"phrase",cat:"PHRASE",m:"tidak heran / wajar saja",i:"digunakan untuk menunjukkan bahwa sesuatu dapat dipahami",e:"It is no wonder that Skyler Airlines was named Best Airline to Work For.",s:["understandably","it makes sense","naturally"]},
+{w:"in transit",pos:"phrase",cat:"PHRASE",m:"dalam perjalanan pengiriman",i:"sedang dalam proses pengiriman dari satu tempat ke tempat lain",e:"If any damage occurs in transit, the repair turns into an expensive ordeal.",s:["en route","being shipped","in delivery"]},
+{w:"hand deliver",pos:"phrase",cat:"PHRASE",m:"mengantarkan langsung",i:"menyerahkan sesuatu secara langsung kepada penerimanya",e:"I will drive my rental car to your house and hand deliver the items to you.",s:["deliver personally","bring directly","drop off"]},
+{w:"from ... to",pos:"phrase",cat:"PHRASE",m:"dari ... hingga",i:"menunjukkan rentang atau cakupan dari satu hal ke hal lain",e:"Airline representatives must handle a wide range of passenger issues, from missed connections to lost luggage.",s:["ranging from","spanning","covering"]},
+{w:"in many cases",pos:"phrase",cat:"PHRASE",m:"dalam banyak kasus",i:"sering terjadi atau berlaku untuk banyak situasi",e:"This season's excellent weather has yielded a substantial harvest, in many cases more than growers may find buyers for.",s:["often","frequently","in numerous instances"]},
+{w:"no action is necessary",pos:"phrase",cat:"PHRASE",m:"tidak perlu melakukan apa-apa",i:"tidak ada tindakan yang diperlukan",e:"If you decide to close your account, no action is necessary.",s:["nothing required","no steps needed","do nothing"]},
+{w:"at all times",pos:"phrase",cat:"PHRASE",m:"setiap saat / selalu",i:"terus-menerus, tanpa pengecualian",e:"Please refrain from making phone calls or texting at all times.",s:["always","constantly","continuously"]},
+{w:"in advance",pos:"phrase",cat:"PHRASE",m:"sebelumnya / di muka",i:"sebelum waktu atau kejadian tertentu",e:"Space is limited, so please register in advance at our front desk.",s:["beforehand","ahead of time","prior"]},
+{w:"on-site",pos:"phrase",cat:"PHRASE",m:"di tempat / di lokasi",i:"berada atau terjadi di lokasi yang sama",e:"The on-site restaurant, Andito's, caters our events.",s:["on location","in-house","on the premises"]},
+{w:"farm-to-table",pos:"phrase",cat:"PHRASE",m:"langsung dari ladang ke meja makan",i:"makanan yang berasal langsung dari petani tanpa perantara",e:"This farm-to-table restaurant meets all dietary needs.",s:["locally sourced","fresh","direct from farm"]},
+{w:"a year in a row",pos:"phrase",cat:"PHRASE",m:"setahun berturut-turut",i:"terjadi selama beberapa tahun secara berurutan",e:"We are honored that you chose us for a fourth year in a row.",s:["consecutive years","running","in succession"]},
+{w:"in the aisles",pos:"phrase",cat:"PHRASE",m:"di lorong",i:"di jalur antara barisan kursi",e:"Bags and other items in the aisles pose a safety concern.",s:["in the passageway","in the walkway","in the corridor"]},
 ];
 
-var LABELS={VERB:'Kata Kerja',NOUN:'Kata Benda',ADJ:'Kata Sifat',ADV:'Kata Keterangan',ALL:'Semua'};
+var LABELS={VERB:"Kata Kerja",NOUN:"Kata Benda",ADJ:"Kata Sifat",ADV:"Kata Keterangan",PHRASE:"Frasa",ALL:"Semua"};
 function sh(a){return a.slice().sort(function(){return Math.random()-.5;});}
-var deck,idx,ronde,cp,ch,cbv,rev,toRev,curCat='ALL';
+var deck,idx,ronde,cp,ch,cbv,rev,toRev,curCat="ALL";
 
 function setCat(c){
   curCat=c;
-  document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('on');});
-  document.querySelectorAll('.fb').forEach(function(b){
-    if(b.getAttribute('onclick')==="setCat('"+c+"')") b.classList.add('on');
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){
+    if(b.getAttribute("onclick")==="setCat('"+c+"')") b.classList.add("on");
   });
   ronde=1; fullRestart();
 }
 
 function fullRestart(){
-  var src=curCat==='ALL'?V:V.filter(function(v){return v.cat===curCat;});
+  var src=curCat==="ALL"?V:V.filter(function(v){return v.cat===curCat;});
   deck=sh(src);
   var total=deck.length;
-  document.getElementById('tsub').textContent=
-    (curCat==='ALL'?'Semua kategori — '+total+' kata':LABELS[curCat]+' — '+total+' kata');
+  document.getElementById("tsub").textContent=
+    (curCat==="ALL"?"Semua kategori -- "+total+" kata":LABELS[curCat]+" -- "+total+" kata");
   go();
 }
 
 function go(){
   idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
-  show('qv');hide('rv');hide('fv');
-  document.getElementById('rb').textContent='Ronde '+ronde;
+  show("qv");hide("rv");hide("fv");
+  document.getElementById("rb").textContent="Ronde "+ronde;
   upStats();showCard();
 }
 
@@ -218,44 +430,47 @@ function nextRonde(){ronde++;deck=sh(toRev);go();}
 function showCard(){
   rev=false;
   var q=deck[idx];
-  var el=document.getElementById('word');
+  var el=document.getElementById("word");
   el.textContent=q.w;
   var l=q.w.length;
-  el.className='word '+(l<=6?'big':l<=10?'med':l<=14?'sm':'xs');
-  document.getElementById('ctag').textContent=LABELS[q.cat]||q.cat;
-  document.getElementById('pos').textContent=q.pos;
-  document.getElementById('meaning').textContent=q.m;
-  document.getElementById('idt').textContent=q.i;
-  var synsEl=document.getElementById('syns');
-  synsEl.innerHTML='';
-  q.s.forEach(function(s){
-    var span=document.createElement('span');
-    span.className='syn';span.textContent=s;
+  el.className="word "+(l<=6?"big":l<=10?"med":l<=16?"sm":l<=24?"xs":"xxs");
+  document.getElementById("ctag").textContent=LABELS[q.cat]||q.cat;
+  document.getElementById("pos").textContent=q.pos;
+  document.getElementById("meaning").textContent=q.m;
+  document.getElementById("idt").textContent=q.i;
+  var extEl=document.getElementById("ext");
+  if(q.e){extEl.textContent='"'+q.e+'"';extEl.style.display="block";}
+  else{extEl.style.display="none";}
+  var synsEl=document.getElementById("syns");
+  synsEl.innerHTML="";
+  if(q.s){q.s.forEach(function(s){
+    var span=document.createElement("span");
+    span.className="syn";span.textContent=s;
     synsEl.appendChild(span);
-  });
-  document.getElementById('ans').style.display='none';
-  document.getElementById('hint').style.display='flex';
-  document.getElementById('ba').style.display='none';
-  document.getElementById('card').className='card';
-  document.getElementById('ctr').textContent=(idx+1)+'/'+deck.length;
+  });}
+  document.getElementById("ans").style.display="none";
+  document.getElementById("hint").style.display="flex";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
   var pct=Math.round(idx/deck.length*100);
-  document.getElementById('pb').style.width=pct+'%';
-  document.getElementById('pl').textContent=idx+' selesai';
-  document.getElementById('pr').textContent=deck.length+' kartu';
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
 }
 
 function reveal(){
   if(rev)return;rev=true;
-  document.getElementById('ans').style.display='block';
-  document.getElementById('hint').style.display='none';
-  document.getElementById('ba').style.display='flex';
-  document.getElementById('card').className='card done';
+  document.getElementById("ans").style.display="block";
+  document.getElementById("hint").style.display="none";
+  document.getElementById("ba").style.display="flex";
+  document.getElementById("card").className="card done";
 }
 
 function rate(r){
   var q=deck[idx];
-  if(r==='p') cp++;
-  else if(r==='h'){ch++;toRev.push(q);}
+  if(r==="p") cp++;
+  else if(r==="h"){ch++;toRev.push(q);}
   else{cbv++;toRev.push(q);}
   upStats();idx++;
   if(idx>=deck.length){showResult();return;}
@@ -263,42 +478,42 @@ function rate(r){
 }
 
 function upStats(){
-  document.getElementById('sp').textContent=cp;
-  document.getElementById('sh').textContent=ch;
-  document.getElementById('sb').textContent=cbv;
+  document.getElementById("sp").textContent=cp;
+  document.getElementById("sh").textContent=ch;
+  document.getElementById("sb").textContent=cbv;
 }
 
 function showResult(){
-  document.getElementById('pb').style.width='100%';
-  hide('qv');
-  if(toRev.length===0){show('fv');return;}
-  show('rv');
-  document.getElementById('rp').textContent=cp;
-  document.getElementById('rh').textContent=ch;
-  document.getElementById('rbb').textContent=cbv;
+  document.getElementById("pb").style.width="100%";
+  hide("qv");
+  if(toRev.length===0){show("fv");return;}
+  show("rv");
+  document.getElementById("rp").textContent=cp;
+  document.getElementById("rh").textContent=ch;
+  document.getElementById("rbb").textContent=cbv;
   var pct=Math.round(cp/deck.length*100);
-  document.getElementById('ri').textContent=pct>=90?'🌟':pct>=70?'😊':pct>=50?'💪':'😤';
-  document.getElementById('rt').textContent='Ronde '+ronde+' selesai!';
-  document.getElementById('rs').textContent=
-    pct>=90?'Hampir sempurna! '+toRev.length+' kartu tersisa.':
-    pct>=70?'Bagus! '+toRev.length+' kartu perlu diulang.':
-    pct>=50?'Lumayan! Ulangi '+toRev.length+' kartu.':
-    'Semangat! '+toRev.length+' kartu menunggumu.';
-  document.getElementById('nb').textContent='Lanjut Ronde '+(ronde+1)+' → '+toRev.length+' kartu';
-  var rl=document.getElementById('rl');
-  rl.innerHTML='';
+  document.getElementById("ri").textContent=pct>=90?"&#127775;":pct>=70?"&#128522;":pct>=50?"&#128170;":"&#128548;";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=
+    pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":
+    pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":
+    pct>=50?"Lumayan! Ulangi "+toRev.length+" kartu.":
+    "Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" -> "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");
+  rl.innerHTML="";
   toRev.forEach(function(v){
-    var d=document.createElement('div');d.className='ri';
-    d.innerHTML='<span class="ri-word">'+v.w+'</span><div><div class="ri-pos">'+v.pos+'</div></div><span class="ri-id">'+v.m+'</span>';
+    var d=document.createElement("div");d.className="ri";
+    d.innerHTML="<span class='ri-word'>"+v.w+"</span><div><div class='ri-pos'>"+v.pos+"</div></div><span class='ri-id'>"+v.m+"</span>";
     rl.appendChild(d);
   });
-  document.getElementById('rlw').style.display='';
+  document.getElementById("rlw").style.display="";
 }
 
-function show(id){document.getElementById(id).style.display='';}
-function hide(id){document.getElementById(id).style.display='none';}
+function show(id){document.getElementById(id).style.display="";}
+function hide(id){document.getElementById(id).style.display="none";}
 
-setCat('ALL');
+setCat("ALL");
 </script>
 </body>
 </html>

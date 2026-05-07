@@ -43,7 +43,7 @@ const flashcards = [
     category: 'English',
     icon: '📖',
     title: 'Flashcard TOEIC',
-    kartu: 30,
+    kartu: 235,
     level: 'B1–B2',
     route: '/game/toeic-vocabulary',
   },
