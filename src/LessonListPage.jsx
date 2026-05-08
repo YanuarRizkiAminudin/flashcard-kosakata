@@ -21,7 +21,7 @@ export default function LessonListPage() {
         <div className="ll-hero-title">時代華語</div>
         <div className="ll-hero-sub">Modern Chinese</div>
         <div className="ll-hero-desc">
-          8 lessons · {lessons.reduce((s, l) => s + l.vocabulary.length, 0)} vocabulary words · dialogues, grammar, reading &amp; quiz
+          9 lessons · {lessons.reduce((s, l) => s + l.vocabulary.length, 0)} vocabulary words · dialogues, grammar, reading &amp; quiz
         </div>
       </div>
 

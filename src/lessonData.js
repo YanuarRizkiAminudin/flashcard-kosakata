@@ -5339,7 +5339,107 @@ const lesson8 = {
 }
 
 // =============================================================================
+// ─── LESSON 9 ─────────────────────────────────────────────────────────────────
+// =============================================================================
+const lesson9 = {
+  id: 9,
+  title: '我的中文課',
+  titlePinyin: 'Wǒ de Zhōngwén Kè',
+  titleEn: 'My Chinese Class',
+  titleId: 'Kelas Bahasa Mandarin Saya',
+  level: 'BAB 9',
+  icon: '📚',
+
+  dialogues: [
+    {
+      id: 'D1',
+      title: '對話一 Dialogue 1',
+      setting: '在學校 At school',
+      lines: [
+        { speaker: '國安', pinyin: 'Guó\'ān', text: '友美，這幾個句子的意思我不太懂，妳可以教我嗎？', textPinyin: 'Yǒuměi, zhè jǐ gè jùzi de yìsi wǒ bú tài dǒng, nǐ kěyǐ jiāo wǒ ma?', textEn: 'Youmei, I don\'t quite understand the meaning of these sentences. Can you teach me?' },
+        { speaker: '友美', pinyin: 'Yǒuměi', text: '我覺得有點兒難，我也不太懂。', textPinyin: 'Wǒ juéde yǒudiǎnr nán, wǒ yě bú tài dǒng.', textEn: 'I think it\'s a bit difficult. I don\'t quite understand either.' },
+        { speaker: '國安', pinyin: 'Guó\'ān', text: '這些句子真的不好學。', textPinyin: 'Zhèxiē jùzi zhēn de bù hǎo xué.', textEn: 'These sentences are really hard to learn.' },
+        { speaker: '友美', pinyin: 'Yǒuměi', text: '我們可以去問家樂，他非常聰明，我想他懂。', textPinyin: 'Wǒmen kěyǐ qù wèn Jiālè, tā fēicháng cōngmíng, wǒ xiǎng tā dǒng.', textEn: 'We can go ask Jiale. He is very smart; I think he understands.' },
+        { speaker: '國安', pinyin: 'Guó\'ān', text: '那麼我們現在去找他。', textPinyin: 'Nàme wǒmen xiànzài qù zhǎo tā.', textEn: 'Then let\'s go find him now.' },
+        { speaker: '友美', pinyin: 'Yǒuměi', text: '現在他在上書法課，我們四點去吧。', textPinyin: 'Xiànzài tā zài shàng shūfǎ kè, wǒmen sì diǎn qù ba.', textEn: 'He is in calligraphy class right now. Let\'s go at 4 o\'clock.' },
+        { speaker: '國安', pinyin: 'Guó\'ān', text: '可是從四點到五點半我要上英文課，六點去，怎麼樣？', textPinyin: 'Kěshì cóng sì diǎn dào wǔ diǎn bàn wǒ yào shàng Yīngwén kè, liù diǎn qù, zěnmeyàng?', textEn: 'But I have English class from 4 to 5:30. How about going at 6?' },
+        { speaker: '友美', pinyin: 'Yǒuměi', text: '好。我先回宿舍做功課，再跟你一起去找他。', textPinyin: 'Hǎo. Wǒ xiān huí sùshè zuò gōngkè, zài gēn nǐ yīqǐ qù zhǎo tā.', textEn: 'OK. I\'ll go back to the dorm to do homework first, then go find him with you.' },
+      ],
+    },
+  ],
+
+  vocabulary: [
+    { id: 1,  char: '句子',   pinyin: 'jùzi',       pos: 'N',    en: 'sentence (M:個)',          id_: 'kalimat' },
+    { id: 2,  char: '意思',   pinyin: 'yìsi',       pos: 'N',    en: 'meaning',                  id_: 'arti; makna' },
+    { id: 3,  char: '懂',     pinyin: 'dǒng',       pos: 'V',    en: 'to understand',            id_: 'mengerti; paham' },
+    { id: 4,  char: '教',     pinyin: 'jiāo',       pos: 'V',    en: 'to teach',                 id_: 'mengajar; mengajari' },
+    { id: 5,  char: '覺得',   pinyin: 'juéde',      pos: 'Vst',  en: 'to feel; to think',        id_: 'merasa; berpikir' },
+    { id: 6,  char: '有點兒', pinyin: 'yǒudiǎnr',   pos: 'Adv',  en: 'a little; somewhat',       id_: 'sedikit; agak' },
+    { id: 7,  char: '難',     pinyin: 'nán',        pos: 'Vs',   en: 'difficult; hard',          id_: 'sulit; susah' },
+    { id: 8,  char: '這些',   pinyin: 'zhèxiē',     pos: 'Det',  en: 'these',                    id_: 'ini (jamak)' },
+    { id: 9,  char: '真的',   pinyin: 'zhēn de',    pos: 'Adv',  en: 'really; truly',            id_: 'sungguh; benar-benar' },
+    { id: 10, char: '好學',   pinyin: 'hǎo xué',    pos: 'Vs',   en: 'easy to learn',            id_: 'mudah dipelajari' },
+    { id: 11, char: '問',     pinyin: 'wèn',        pos: 'V',    en: 'to ask',                   id_: 'bertanya' },
+    { id: 12, char: '非常',   pinyin: 'fēicháng',   pos: 'Adv',  en: 'very; extremely',          id_: 'sangat; luar biasa' },
+    { id: 13, char: '聰明',   pinyin: 'cōngmíng',   pos: 'Vs',   en: 'smart; clever',            id_: 'pintar; cerdas' },
+    { id: 14, char: '想',     pinyin: 'xiǎng',      pos: 'Vaux', en: 'to think; to want to',     id_: 'berpikir; ingin' },
+    { id: 15, char: '那麼',   pinyin: 'nàme',       pos: 'Conj', en: 'then; in that case',       id_: 'kalau begitu; maka' },
+    { id: 16, char: '找',     pinyin: 'zhǎo',       pos: 'V',    en: 'to look for; to visit',    id_: 'mencari; menemui' },
+    { id: 17, char: '書法',   pinyin: 'shūfǎ',      pos: 'N',    en: 'calligraphy',              id_: 'kaligrafi' },
+    { id: 18, char: '可是',   pinyin: 'kěshì',      pos: 'Conj', en: 'but; however',             id_: 'tapi; namun' },
+    { id: 19, char: '從',     pinyin: 'cóng',       pos: 'Prep', en: 'from',                     id_: 'dari' },
+    { id: 20, char: '到',     pinyin: 'dào',        pos: 'Prep', en: 'to; until',                id_: 'ke; sampai' },
+    { id: 21, char: '半',     pinyin: 'bàn',        pos: 'N',    en: 'half',                     id_: 'setengah' },
+    { id: 22, char: '英文',   pinyin: 'Yīngwén',    pos: 'N',    en: 'English (language)',       id_: 'bahasa Inggris' },
+    { id: 23, char: '怎麼樣', pinyin: 'zěnmeyàng',  pos: 'Phr',  en: 'how about it? what do you think?', id_: 'bagaimana? apa pendapatmu?' },
+    { id: 24, char: '先',     pinyin: 'xiān',       pos: 'Adv',  en: 'first; before',            id_: 'dulu; pertama-tama' },
+    { id: 25, char: '宿舍',   pinyin: 'sùshè',      pos: 'N',    en: 'dormitory (M:棟)',         id_: 'asrama; kos' },
+    { id: 26, char: '功課',   pinyin: 'gōngkè',     pos: 'N',    en: 'homework',                 id_: 'pekerjaan rumah; PR' },
+    { id: 27, char: '再',     pinyin: 'zài',        pos: 'Adv',  en: 'then; again; afterwards',  id_: 'lalu; kemudian; lagi' },
+    { id: 28, char: '一起',   pinyin: 'yīqǐ',       pos: 'Adv',  en: 'together',                 id_: 'bersama-sama' },
+  ],
+
+  phrases: [
+    { zh: '有點兒', pinyin: 'yǒudiǎnr', en: 'a little; somewhat', id_: 'sedikit; agak' },
+    { zh: '怎麼樣', pinyin: 'zěnmeyàng', en: 'How about it? What do you think?', id_: 'bagaimana? apa pendapatmu?' },
+    { zh: '那麼', pinyin: 'nàme', en: 'Then; In that case', id_: 'kalau begitu' },
+  ],
+
+  grammar: [
+    {
+      id: 'G1',
+      title: 'I. — (coming soon)',
+      explanation: 'Grammar untuk BAB 9 akan ditambahkan.',
+      pattern: '—',
+      examples: [
+        { zh: '—', pinyin: '—', en: '—' },
+      ],
+    },
+  ],
+
+  reading: {
+    title: '我的中文課',
+    titlePinyin: 'Wǒ de Zhōngwén Kè',
+    titleEn: 'My Chinese Class',
+    zh: '（coming soon）',
+    pinyin: '（coming soon）',
+    en: '（coming soon）',
+  },
+
+  quiz: [
+    { id: 'Q1', question: '這幾個句子的___我不太懂。', questionEn: 'I don\'t quite understand the ___ of these sentences.', options: ['意思', '句子', '功課', '書法'], answer: 0 },
+    { id: 'Q2', question: '我___有點兒難，我也不太懂。', questionEn: 'I ___ it\'s a bit difficult. I don\'t understand either.', options: ['想', '覺得', '懂', '教'], answer: 1 },
+    { id: 'Q3', question: '他___聰明，我想他懂。', questionEn: 'He is ___ smart; I think he understands.', options: ['很', '有點兒', '非常', '真的'], answer: 2 },
+    { id: 'Q4', question: '___我們現在去找他。', questionEn: '___ let\'s go find him now.', options: ['可是', '那麼', '從', '再'], answer: 1 },
+    { id: 'Q5', question: '從四點___五點半我要上英文課。', questionEn: 'I have English class from 4 ___ 5:30.', options: ['和', '跟', '到', '在'], answer: 2 },
+    { id: 'Q6', question: '我___回宿舍做功課，再去找他。', questionEn: 'I\'ll ___ go back to the dorm to do homework, then go find him.', options: ['再', '先', '也', '都'], answer: 1 },
+    { id: 'Q7', question: '現在他在上___課。', questionEn: 'He is in ___ class right now.', options: ['英文', '書法', '中文', '數學'], answer: 1 },
+    { id: 'Q8', question: '六點去，___？', questionEn: 'How about going at 6, ___?', options: ['好嗎', '怎麼樣', '對不對', '可以嗎'], answer: 1 },
+  ],
+}
+
+// =============================================================================
 // Export
 // =============================================================================
-export const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8]
+export const lessons = [lesson1, lesson2, lesson3, lesson4, lesson5, lesson6, lesson7, lesson8, lesson9]
 export default lessons
