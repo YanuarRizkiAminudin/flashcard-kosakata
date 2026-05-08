@@ -1,4 +1,23 @@
-<!DOCTYPE html>
+﻿import json
+
+cards = [
+  {"q":"will / can / should / must + ___","signal":"Setelah modal: will, can, should, must, may, might","form":"V1 (Bentuk Dasar)","formula":"modal + V1","ex_en":"The company will implement a new policy.","ex_id":"Perusahaan akan menerapkan kebijakan baru.","tip":"Modal selalu diikuti V1. Tidak pernah +s, +ed, atau +ing.","color":"#3b5bdb"},
+  {"q":"to + ___","signal":"Ada kata to sebelum blank (infinitive)","form":"V1 (Bentuk Dasar)","formula":"to + V1","ex_en":"You need to check the report.","ex_id":"Kamu perlu memeriksa laporan itu.","tip":"to + V1 = infinitive. Contoh: to go, to check, to implement.","color":"#3b5bdb"},
+  {"q":"yesterday / last / ago + ___","signal":"Ada kata waktu lampau: yesterday, last week, 2 days ago","form":"V2 (Past Tense)","formula":"V2 (regular: +ed, irregular: hafal)","ex_en":"The CEO spoke about his career yesterday.","ex_id":"CEO berbicara tentang kariernya kemarin.","tip":"Cari sinyal waktu lampau dulu. Regular: +ed. Irregular: go-went, take-took, speak-spoke.","color":"#e67700"},
+  {"q":"have / has + ___","signal":"Ada have atau has sebelum blank","form":"V3 (Past Participle)","formula":"have / has + V3","ex_en":"Technologies have already begun to transform the industry.","ex_id":"Teknologi sudah mulai mengubah industri.","tip":"have/has + V3 = Present Perfect. Artinya: sudah pernah atau baru saja terjadi.","color":"#2d7a4f"},
+  {"q":"had + ___","signal":"Ada had sebelum blank","form":"V3 (Past Participle)","formula":"had + V3","ex_en":"She had left before I arrived.","ex_id":"Dia sudah pergi sebelum saya tiba.","tip":"had + V3 = Past Perfect. Kejadian A selesai sebelum kejadian B di masa lalu.","color":"#2d7a4f"},
+  {"q":"is / am / are / was / were + ___ (pasif)","signal":"Subjek dikenai aksi, bukan melakukan aksi","form":"V3 (Passive Voice)","formula":"be + V3","ex_en":"The meeting notes were accidentally deleted.","ex_id":"Catatan rapat secara tidak sengaja terhapus.","tip":"Passive = be + V3. Tanya: siapa yang melakukan? Kalau subjek = yang kena aksi -> passive.","color":"#c92a2a"},
+  {"q":"is / am / are / was / were + ___ (aktif)","signal":"Aksi sedang berlangsung saat itu","form":"V-ing (Continuous)","formula":"be + V-ing","ex_en":"Project Earth Group is looking for ways to reduce emissions.","ex_id":"Project Earth Group sedang mencari cara mengurangi emisi.","tip":"be + V-ing = sedang berlangsung. Bedakan dengan passive (be + V3): looking (aktif) vs deleted (pasif).","color":"#9775fa"},
+  {"q":"enjoy / avoid / keep / finish / from + ___","signal":"Setelah kata kerja tertentu atau preposisi","form":"V-ing (Gerund)","formula":"enjoy/avoid/keep/finish/from + V-ing","ex_en":"Please refrain from making phone calls.","ex_id":"Harap menahan diri dari menelepon.","tip":"Setelah preposisi (from, of, by) dan kata kerja ini selalu V-ing: enjoy, avoid, keep, finish, consider, suggest.","color":"#9775fa"},
+  {"q":"He / She / It / Nama + ___ (fakta/rutinitas)","signal":"Subjek tunggal, kalimat fakta atau kebiasaan","form":"V1 + s/es","formula":"He/She/It + V1+s/es","ex_en":"The magazine predicts that the price will rise.","ex_id":"Majalah itu memprediksi bahwa harga akan naik.","tip":"Subjek tunggal (he/she/it/nama) + present -> tambah -s atau -es. Pengecualian: have->has, do->does, go->goes.","color":"#1971c2"},
+  {"q":"will be + ___","signal":"Future passive: akan di-/ter-","form":"V3 (Future Passive)","formula":"will be + V3","ex_en":"Invoices will be generated automatically each month.","ex_id":"Faktur akan dibuat secara otomatis setiap bulan.","tip":"will be + V3 = future passive. Subjek akan dikenai aksi di masa depan.","color":"#c92a2a"},
+  {"q":"has been / have been + ___","signal":"Perfect passive: sudah di-/ter-","form":"V3 (Perfect Passive)","formula":"has/have been + V3","ex_en":"The foyer has been renovated just over a year ago.","ex_id":"Foyer sudah direnovasi lebih dari setahun yang lalu.","tip":"has/have been + V3 = present perfect passive. Sudah selesai dilakukan.","color":"#2d7a4f"},
+  {"q":"Lihat kata SEBELUM blank!","signal":"will/can/must/to -> V1 | yesterday/last/ago -> V2 | have/has/had -> V3 | be+aktif -> V-ing | be+pasif -> V3","form":"Strategi Cepat TOEIC","formula":"Sinyal -> Bentuk Verb","ex_en":"Step 1: Lihat kata sebelum blank. Step 2: Cocokkan sinyal. Step 3: Pilih bentuk.","ex_id":"Jangan langsung lihat pilihan jawaban - cari sinyalnya dulu!","tip":"Latihan terus sampai pola ini otomatis terbaca di otak tanpa harus berpikir lama.","color":"#f59f00"}
+]
+
+js_cards = json.dumps(cards, ensure_ascii=False, indent=2)
+
+html = """<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -148,135 +167,14 @@ h1{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;margi
 </div>
 </div>
 <script>
-var V=[
-  {
-    "q": "will / can / should / must + ___",
-    "signal": "Setelah modal: will, can, should, must, may, might",
-    "form": "V1 (Bentuk Dasar)",
-    "formula": "modal + V1",
-    "ex_en": "The company will implement a new policy.",
-    "ex_id": "Perusahaan akan menerapkan kebijakan baru.",
-    "tip": "Modal selalu diikuti V1. Tidak pernah +s, +ed, atau +ing.",
-    "color": "#3b5bdb"
-  },
-  {
-    "q": "to + ___",
-    "signal": "Ada kata to sebelum blank (infinitive)",
-    "form": "V1 (Bentuk Dasar)",
-    "formula": "to + V1",
-    "ex_en": "You need to check the report.",
-    "ex_id": "Kamu perlu memeriksa laporan itu.",
-    "tip": "to + V1 = infinitive. Contoh: to go, to check, to implement.",
-    "color": "#3b5bdb"
-  },
-  {
-    "q": "yesterday / last / ago + ___",
-    "signal": "Ada kata waktu lampau: yesterday, last week, 2 days ago",
-    "form": "V2 (Past Tense)",
-    "formula": "V2 (regular: +ed, irregular: hafal)",
-    "ex_en": "The CEO spoke about his career yesterday.",
-    "ex_id": "CEO berbicara tentang kariernya kemarin.",
-    "tip": "Cari sinyal waktu lampau dulu. Regular: +ed. Irregular: go-went, take-took, speak-spoke.",
-    "color": "#e67700"
-  },
-  {
-    "q": "have / has + ___",
-    "signal": "Ada have atau has sebelum blank",
-    "form": "V3 (Past Participle)",
-    "formula": "have / has + V3",
-    "ex_en": "Technologies have already begun to transform the industry.",
-    "ex_id": "Teknologi sudah mulai mengubah industri.",
-    "tip": "have/has + V3 = Present Perfect. Artinya: sudah pernah atau baru saja terjadi.",
-    "color": "#2d7a4f"
-  },
-  {
-    "q": "had + ___",
-    "signal": "Ada had sebelum blank",
-    "form": "V3 (Past Participle)",
-    "formula": "had + V3",
-    "ex_en": "She had left before I arrived.",
-    "ex_id": "Dia sudah pergi sebelum saya tiba.",
-    "tip": "had + V3 = Past Perfect. Kejadian A selesai sebelum kejadian B di masa lalu.",
-    "color": "#2d7a4f"
-  },
-  {
-    "q": "is / am / are / was / were + ___ (pasif)",
-    "signal": "Subjek dikenai aksi, bukan melakukan aksi",
-    "form": "V3 (Passive Voice)",
-    "formula": "be + V3",
-    "ex_en": "The meeting notes were accidentally deleted.",
-    "ex_id": "Catatan rapat secara tidak sengaja terhapus.",
-    "tip": "Passive = be + V3. Tanya: siapa yang melakukan? Kalau subjek = yang kena aksi -> passive.",
-    "color": "#c92a2a"
-  },
-  {
-    "q": "is / am / are / was / were + ___ (aktif)",
-    "signal": "Aksi sedang berlangsung saat itu",
-    "form": "V-ing (Continuous)",
-    "formula": "be + V-ing",
-    "ex_en": "Project Earth Group is looking for ways to reduce emissions.",
-    "ex_id": "Project Earth Group sedang mencari cara mengurangi emisi.",
-    "tip": "be + V-ing = sedang berlangsung. Bedakan dengan passive (be + V3): looking (aktif) vs deleted (pasif).",
-    "color": "#9775fa"
-  },
-  {
-    "q": "enjoy / avoid / keep / finish / from + ___",
-    "signal": "Setelah kata kerja tertentu atau preposisi",
-    "form": "V-ing (Gerund)",
-    "formula": "enjoy/avoid/keep/finish/from + V-ing",
-    "ex_en": "Please refrain from making phone calls.",
-    "ex_id": "Harap menahan diri dari menelepon.",
-    "tip": "Setelah preposisi (from, of, by) dan kata kerja ini selalu V-ing: enjoy, avoid, keep, finish, consider, suggest.",
-    "color": "#9775fa"
-  },
-  {
-    "q": "He / She / It / Nama + ___ (fakta/rutinitas)",
-    "signal": "Subjek tunggal, kalimat fakta atau kebiasaan",
-    "form": "V1 + s/es",
-    "formula": "He/She/It + V1+s/es",
-    "ex_en": "The magazine predicts that the price will rise.",
-    "ex_id": "Majalah itu memprediksi bahwa harga akan naik.",
-    "tip": "Subjek tunggal (he/she/it/nama) + present -> tambah -s atau -es. Pengecualian: have->has, do->does, go->goes.",
-    "color": "#1971c2"
-  },
-  {
-    "q": "will be + ___",
-    "signal": "Future passive: akan di-/ter-",
-    "form": "V3 (Future Passive)",
-    "formula": "will be + V3",
-    "ex_en": "Invoices will be generated automatically each month.",
-    "ex_id": "Faktur akan dibuat secara otomatis setiap bulan.",
-    "tip": "will be + V3 = future passive. Subjek akan dikenai aksi di masa depan.",
-    "color": "#c92a2a"
-  },
-  {
-    "q": "has been / have been + ___",
-    "signal": "Perfect passive: sudah di-/ter-",
-    "form": "V3 (Perfect Passive)",
-    "formula": "has/have been + V3",
-    "ex_en": "The foyer has been renovated just over a year ago.",
-    "ex_id": "Foyer sudah direnovasi lebih dari setahun yang lalu.",
-    "tip": "has/have been + V3 = present perfect passive. Sudah selesai dilakukan.",
-    "color": "#2d7a4f"
-  },
-  {
-    "q": "Lihat kata SEBELUM blank!",
-    "signal": "will/can/must/to -> V1 | yesterday/last/ago -> V2 | have/has/had -> V3 | be+aktif -> V-ing | be+pasif -> V3",
-    "form": "Strategi Cepat TOEIC",
-    "formula": "Sinyal -> Bentuk Verb",
-    "ex_en": "Step 1: Lihat kata sebelum blank. Step 2: Cocokkan sinyal. Step 3: Pilih bentuk.",
-    "ex_id": "Jangan langsung lihat pilihan jawaban - cari sinyalnya dulu!",
-    "tip": "Latihan terus sampai pola ini otomatis terbaca di otak tanpa harus berpikir lama.",
-    "color": "#f59f00"
-  }
-];
+""" + "var V=" + js_cards + """;
 
 function sh(a){return a.slice().sort(function(){return Math.random()-.5})}
 var deck,idx,ronde=1,cp,ch,cbv,rev,toRev;
 
 function fullRestart(){
   deck=sh(V);
-  document.getElementById("tsub").textContent=deck.length+" pola penting • Pemula • Bahasa Indonesia";
+  document.getElementById("tsub").textContent=deck.length+" pola penting \u2022 Pemula \u2022 Bahasa Indonesia";
   go();
 }
 
@@ -347,7 +245,7 @@ function showResult(){
   document.getElementById("ri").textContent=pct>=90?"&#127775;":pct>=70?"&#128522;":pct>=50?"&#128170;":"&#128548;";
   document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
   document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
-  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" \u2192 "+toRev.length+" kartu";
   var rl=document.getElementById("rl");rl.innerHTML="";
   toRev.forEach(function(v){
     var d=document.createElement("div");d.className="ri";
@@ -363,4 +261,9 @@ function hide(id){document.getElementById(id).style.display="none"}
 fullRestart();
 </script>
 </body>
-</html>
+</html>"""
+
+with open("public/games/flashcard_lengkap_intact/toeic_verb_pattern.html","w",encoding="utf-8") as f:
+    f.write(html)
+print("DONE", len(V := cards), "cards")
+
