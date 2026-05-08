@@ -30,6 +30,15 @@ const flashcards = [
     route: '/voice',
   },
   {
+    id: 8,
+    category: 'Music',
+    icon: '🎵',
+    title: '我是真的真的真的很愛你',
+    kartu: 32,
+    level: 'Jerry Yan · 言承旭 · Lirik + Terjemahan',
+    route: '/game/wo-shi-zhen-de',
+  },
+  {
     id: 2,
     category: 'English',
     icon: '📖',

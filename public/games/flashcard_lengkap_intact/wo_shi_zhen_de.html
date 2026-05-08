@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我是真的真的真的很愛你 — Jerry Yan</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:linear-gradient(135deg,#1a0533 0%,#2d0a4e 40%,#0a1a3e 100%);min-height:100vh;font-family:"DM Sans",sans-serif;color:#fff;padding:20px 16px 60px;display:flex;flex-direction:column;align-items:center}
+#app{width:100%;max-width:480px}
+
+/* HEADER */
+.song-header{text-align:center;margin-bottom:28px;padding-top:12px}
+.song-cover{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#e040fb,#7c4dff,#40c4ff);display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 16px;box-shadow:0 8px 32px rgba(224,64,251,.4);animation:spin 12s linear infinite;animation-play-state:paused}
+.song-cover.playing{animation-play-state:running}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.song-title{font-family:"Lora",serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;line-height:1.3}
+.song-artist{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:4px}
+.song-pinyin{font-size:12px;color:rgba(255,255,255,.4);font-style:italic}
+
+/* PLAYER */
+.player{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:16px 20px;margin-bottom:20px}
+.progress-wrap{margin-bottom:12px}
+.progress-bar{width:100%;height:4px;background:rgba(255,255,255,.2);border-radius:99px;cursor:pointer;position:relative;margin-bottom:6px}
+.progress-fill{height:4px;background:linear-gradient(90deg,#e040fb,#7c4dff);border-radius:99px;transition:width .1s linear;pointer-events:none}
+.time-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.5)}
+.controls{display:flex;align-items:center;justify-content:center;gap:20px}
+.ctrl-btn{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:20px;padding:6px;border-radius:50%;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.ctrl-btn:hover{color:#fff;background:rgba(255,255,255,.1)}
+.play-btn{width:52px;height:52px;background:linear-gradient(135deg,#e040fb,#7c4dff);border:none;border-radius:50%;color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(224,64,251,.4);transition:all .15s}
+.play-btn:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(224,64,251,.5)}
+.volume-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+.vol-icon{font-size:14px;color:rgba(255,255,255,.5)}
+.vol-slider{flex:1;height:3px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.2);border-radius:99px;outline:none;cursor:pointer}
+.vol-slider::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#e040fb;cursor:pointer}
+
+/* LYRICS */
+.lyrics-section{background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px 16px}
+.lyrics-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;text-align:center}
+.lyric-line{padding:10px 12px;border-radius:12px;margin-bottom:4px;cursor:pointer;transition:all .2s;border:1px solid transparent}
+.lyric-line:hover{background:rgba(255,255,255,.06)}
+.lyric-line.active{background:rgba(224,64,251,.15);border-color:rgba(224,64,251,.3)}
+.lyric-zh{font-family:"Lora",serif;font-size:16px;color:rgba(255,255,255,.9);line-height:1.5;margin-bottom:2px;transition:all .2s}
+.lyric-line.active .lyric-zh{color:#fff;font-size:17px}
+.lyric-id{font-size:12px;color:rgba(255,255,255,.45);line-height:1.4;font-style:italic}
+.lyric-line.active .lyric-id{color:rgba(255,255,255,.65)}
+.lyric-break{height:12px}
+.lyric-chorus{font-size:10px;font-weight:700;letter-spacing:1px;color:#e040fb;text-transform:uppercase;margin:8px 0 4px;padding-left:12px}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Header -->
+  <div class="song-header">
+    <div class="song-cover" id="cover">🎵</div>
+    <div class="song-title">我是真的真的真的很愛你</div>
+    <div class="song-artist">Jerry Yan (言承旭)</div>
+    <div class="song-pinyin">Wǒ Shì Zhēn De Zhēn De Hěn Ài Nǐ</div>
+  </div>
+
+  <!-- Player -->
+  <div class="player">
+    <div class="progress-wrap">
+      <div class="progress-bar" id="prog-bar" onclick="seek(event)">
+        <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+      <div class="time-row">
+        <span id="cur-time">0:00</span>
+        <span id="dur-time">0:00</span>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn" onclick="skip(-10)" title="Mundur 10s">⏪</button>
+      <button class="play-btn" id="play-btn" onclick="togglePlay()">▶</button>
+      <button class="ctrl-btn" onclick="skip(10)" title="Maju 10s">⏩</button>
+    </div>
+    <div class="volume-row">
+      <span class="vol-icon">🔈</span>
+      <input type="range" class="vol-slider" id="vol" min="0" max="1" step="0.05" value="0.8" oninput="setVol(this.value)">
+      <span class="vol-icon">🔊</span>
+    </div>
+  </div>
+
+  <!-- Lyrics -->
+  <div class="lyrics-section">
+    <div class="lyrics-title">歌詞 · Lirik</div>
+    <div id="lyrics-container"></div>
+  </div>
+
+</div>
+
+<audio id="audio" src="SpotiDown.App - Wo Shi Zhen De Zhen De Hen Ai Ni - Jerry Yan.mp3" preload="auto"></audio>
+
+<script>
+// Lyrics data: [time_in_seconds, zh, id]
+// Time = approximate, adjust as needed
+var lyrics = [
+  [0,   '聽說感情要慢慢累積', 'Katanya perasaan harus dibangun perlahan'],
+  [5,   '由不得讓我放肆任性', 'Tidak bisa membiarkanku bertindak sesuka hati'],
+  [10,  '怎麼我循規蹈矩', 'Mengapa aku sudah mengikuti semua aturan'],
+  [14,  '拼了命付出', 'Berjuang sekuat tenaga untuk memberi'],
+  [17,  '你沒有回應', 'Tapi kamu tidak memberikan respons'],
+  [22,  '聽說感情難免力不從心', 'Katanya perasaan kadang tak bisa dipaksakan'],
+  [27,  '你故意拒絕 卻不見蹤影', 'Kamu sengaja menolak, lalu menghilang begitu saja'],
+  [33,  '你給的眼神好比', 'Tatapan yang kamu berikan bagaikan'],
+  [37,  '大熱天裡 一道冷空氣', 'Hembusan udara dingin di tengah hari yang terik'],
+  [43,  '我是真的真的真的很愛你', 'Aku sungguh-sungguh sungguh-sungguh sangat mencintaimu'],
+  [50,  '以為付出了一切就非得有意義', 'Kukira memberikan segalanya pasti punya makna'],
+  [57,  '你給的難題 我不曾逃避', 'Tantangan yang kamu berikan, tak pernah kuhindari'],
+  [63,  '誰叫我已愛你成性', 'Siapa suruh aku sudah terlanjur mencintaimu'],
+  [69,  '總有一天可以用力緊緊抱住你', 'Suatu hari nanti aku pasti bisa memelukmu erat-erat'],
+  [76,  '畢竟繼續的呼吸也要有點目的', 'Bagaimanapun, napas yang terus berjalan pun butuh tujuan'],
+  [83,  '一身的傷痛 委屈的痕跡', 'Seluruh tubuh penuh luka, bekas rasa sakit hati'],
+  [89,  '在妳防備的眼睛裡 都是零', 'Di matamu yang selalu berjaga, semuanya nol'],
+  [97,  '聽說感情難免力不從心', 'Katanya perasaan kadang tak bisa dipaksakan'],
+  [102, '你故意拒絕 卻不見蹤影', 'Kamu sengaja menolak, lalu menghilang begitu saja'],
+  [108, '你給的眼神好比', 'Tatapan yang kamu berikan bagaikan'],
+  [112, '大熱天裡 一道冷空氣', 'Hembusan udara dingin di tengah hari yang terik'],
+  [118, '我是真的真的真的很愛你', 'Aku sungguh-sungguh sungguh-sungguh sangat mencintaimu'],
+  [125, '以為付出了一切就非得有意義', 'Kukira memberikan segalanya pasti punya makna'],
+  [132, '總有一天可以用力緊緊抱住你', 'Suatu hari nanti aku pasti bisa memelukmu erat-erat'],
+  [139, '畢竟繼續的呼吸也要有點目的', 'Bagaimanapun, napas yang terus berjalan pun butuh tujuan'],
+  [146, '一身的傷痛 委屈的痕跡', 'Seluruh tubuh penuh luka, bekas rasa sakit hati'],
+  [152, '在你想防備的眼睛裡 都是零', 'Di matamu yang selalu berjaga, semuanya nol'],
+  [162, '我是真的真的真的很愛你', 'Aku sungguh-sungguh sungguh-sungguh sangat mencintaimu'],
+  [169, '以為付出了一切就非得有意義', 'Kukira memberikan segalanya pasti punya makna'],
+  [176, '一身的傷痛 委屈的痕跡', 'Seluruh tubuh penuh luka, bekas rasa sakit hati'],
+  [182, '在你想防備的眼睛裡 都是零', 'Di matamu yang selalu berjaga, semuanya nol'],
+];
+
+var audio = document.getElementById('audio');
+var cover = document.getElementById('cover');
+var playBtn = document.getElementById('play-btn');
+var progFill = document.getElementById('prog-fill');
+var curTime = document.getElementById('cur-time');
+var durTime = document.getElementById('dur-time');
+var container = document.getElementById('lyrics-container');
+var curIdx = -1;
+
+// Build lyrics DOM
+lyrics.forEach(function(l, i) {
+  var div = document.createElement('div');
+  div.className = 'lyric-line';
+  div.id = 'l' + i;
+  div.innerHTML = '<div class="lyric-zh">' + l[1] + '</div><div class="lyric-id">' + l[2] + '</div>';
+  div.onclick = function() { audio.currentTime = l[0]; audio.play(); };
+  container.appendChild(div);
+});
+
+function fmt(s) {
+  var m = Math.floor(s / 60);
+  var sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+audio.addEventListener('loadedmetadata', function() {
+  durTime.textContent = fmt(audio.duration);
+});
+
+audio.addEventListener('timeupdate', function() {
+  var t = audio.currentTime;
+  var d = audio.duration || 1;
+  progFill.style.width = (t / d * 100) + '%';
+  curTime.textContent = fmt(t);
+
+  // Find active lyric
+  var idx = -1;
+  for (var i = 0; i < lyrics.length; i++) {
+    if (t >= lyrics[i][0]) idx = i;
+    else break;
+  }
+  if (idx !== curIdx) {
+    if (curIdx >= 0) document.getElementById('l' + curIdx).classList.remove('active');
+    if (idx >= 0) {
+      var el = document.getElementById('l' + idx);
+      el.classList.add('active');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    curIdx = idx;
+  }
+});
+
+audio.addEventListener('play', function() {
+  playBtn.textContent = '⏸';
+  cover.classList.add('playing');
+});
+audio.addEventListener('pause', function() {
+  playBtn.textContent = '▶';
+  cover.classList.remove('playing');
+});
+audio.addEventListener('ended', function() {
+  playBtn.textContent = '▶';
+  cover.classList.remove('playing');
+  curIdx = -1;
+});
+
+function togglePlay() {
+  if (audio.paused) audio.play();
+  else audio.pause();
+}
+
+function skip(s) {
+  audio.currentTime = Math.max(0, Math.min(audio.duration, audio.currentTime + s));
+}
+
+function seek(e) {
+  var bar = document.getElementById('prog-bar');
+  var rect = bar.getBoundingClientRect();
+  var ratio = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = ratio * audio.duration;
+}
+
+function setVol(v) {
+  audio.volume = v;
+}
+
+audio.volume = 0.8;
+</script>
+</body>
+</html>
