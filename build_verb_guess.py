@@ -60,13 +60,56 @@ def make_card(v):
     pattern = r'\b' + re.escape(found_word) + r'\b'
     blanked = re.sub(pattern, '___', ex, count=1, flags=re.IGNORECASE)
 
+    # Auto-generate reason based on answer_form and context
+    reason = make_reason(found_label, blanked, v['v1'])
+
     return {
         'v1': v['v1'], 'v2': v['v2'], 'v3': v['v3'], 'ving': v['ving'],
         'meaning': v['meaning'], 'cat': v['cat'],
         'example': ex, 'blanked': blanked,
         'answer_form': found_label, 'answer_word': found_word,
-        'note': v['note'], 'translation': v['translation']
+        'note': v['note'], 'translation': v['translation'],
+        'reason': reason
     }
+
+def make_reason(label, blanked, v1):
+    b = blanked.lower()
+    if label == 'V3':
+        if re.search(r'\b(have|has|had)\b', b):
+            kw = re.search(r'\b(have|has|had)\b', b).group()
+            return f'Ada <b>{kw}</b> sebelum blank → have/has/had + V3'
+        elif re.search(r'\b(is|am|are|was|were|be|been)\b', b):
+            kw = re.search(r'\b(is|am|are|was|were|be|been)\b', b).group()
+            return f'Ada <b>{kw}</b> sebelum blank → kalimat pasif (be + V3)'
+        else:
+            return 'Bentuk V3 digunakan di sini (perfect atau passive)'
+    elif label == 'V2':
+        if re.search(r'\b(yesterday|last|ago|previously|formerly|once)\b', b):
+            kw = re.search(r'\b(yesterday|last|ago|previously|formerly|once)\b', b).group()
+            return f'Ada kata waktu lampau <b>{kw}</b> → kejadian sudah selesai → V2'
+        else:
+            return 'Kalimat menceritakan kejadian di masa lalu → V2'
+    elif label == 'V-ing':
+        if re.search(r'\b(is|am|are|was|were)\b', b):
+            kw = re.search(r'\b(is|am|are|was|were)\b', b).group()
+            return f'Ada <b>{kw}</b> sebelum blank → sedang berlangsung (be + V-ing)'
+        elif re.search(r'\b(from|enjoy|keep|avoid|finish|consider|by|of)\b', b):
+            kw = re.search(r'\b(from|enjoy|keep|avoid|finish|consider|by|of)\b', b).group()
+            return f'Setelah preposisi <b>{kw}</b> → harus pakai V-ing'
+        else:
+            return 'Bentuk V-ing digunakan di sini (sedang berlangsung atau gerund)'
+    elif label == 'V1':
+        if re.search(r'\b(will|would|can|could|should|must|may|might|shall)\b', b):
+            kw = re.search(r'\b(will|would|can|could|should|must|may|might|shall)\b', b).group()
+            return f'Ada modal <b>{kw}</b> sebelum blank → modal + V1 (bentuk dasar)'
+        elif re.search(r'\bto\s+___', b):
+            return 'Ada <b>to</b> sebelum blank → to + V1 (infinitive)'
+        elif re.search(r'\b(to)\b', b):
+            return 'Ada <b>to</b> sebelum blank → to + V1 (infinitive)'
+        else:
+            return f'Subjek jamak / present tense → V1 (bentuk dasar tanpa -s/-ed)'
+    else:
+        return ''
 
 cards = [make_card(v) for v in verbs]
 
@@ -75,7 +118,7 @@ js_lines = []
 for c in cards:
     def esc(s): return s.replace('\\', '\\\\').replace('"', '\\"')
     js_lines.append(
-        f'  {{v1:"{esc(c["v1"])}",v2:"{esc(c["v2"])}",v3:"{esc(c["v3"])}",ving:"{esc(c["ving"])}",m:"{esc(c["meaning"])}",cat:"{c["cat"]}",e:"{esc(c["example"])}",b:"{esc(c["blanked"])}",af:"{c["answer_form"]}",aw:"{esc(c["answer_word"])}",n:"{esc(c["note"])}",t:"{esc(c["translation"])}"}}'
+        f'  {{v1:"{esc(c["v1"])}",v2:"{esc(c["v2"])}",v3:"{esc(c["v3"])}",ving:"{esc(c["ving"])}",m:"{esc(c["meaning"])}",cat:"{c["cat"]}",e:"{esc(c["example"])}",b:"{esc(c["blanked"])}",af:"{c["answer_form"]}",aw:"{esc(c["answer_word"])}",n:"{esc(c["note"])}",t:"{esc(c["translation"])}",r:"{esc(c["reason"])}"}}'
     )
 
 js_array = 'var V=[\n' + ',\n'.join(js_lines) + '\n];'
@@ -142,6 +185,9 @@ h1{{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;marg
 .transbox{{margin-top:.5rem;background:#f0f7ff;border:1px solid #bdd7f5;border-radius:10px;padding:.5rem .8rem;text-align:left}}
 .translabel{{font-size:10px;font-weight:700;color:#1971c2;letter-spacing:.5px;margin-bottom:2px}}
 .transtext{{font-size:12px;color:#1864ab;line-height:1.5;font-style:italic}}
+.reasonbox{{margin-top:.5rem;background:#f3f0ff;border:1px solid #c5b4f5;border-radius:10px;padding:.5rem .8rem;text-align:left}}
+.reasonlabel{{font-size:10px;font-weight:700;color:#6741d9;letter-spacing:.5px;margin-bottom:2px}}
+.reasontext{{font-size:12px;color:#4c2d9c;line-height:1.5}}
 .btnrow{{display:flex;gap:7px;margin-bottom:.7rem}}
 .cb{{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s}}
 .cb-ico{{font-size:16px}}.cb-sub{{font-size:9px;font-weight:500;opacity:.7}}
@@ -218,6 +264,10 @@ h1{{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;marg
       <div class="transbox" id="transbox" style="display:none">
         <div class="translabel">&#127760; TERJEMAHAN</div>
         <div class="transtext" id="transtext"></div>
+      </div>
+      <div class="reasonbox" id="reasonbox" style="display:none">
+        <div class="reasonlabel">&#128161; KENAPA?</div>
+        <div class="reasontext" id="reasontext"></div>
       </div>
     </div>
   </div>
@@ -306,6 +356,9 @@ function showCard(){{
   var tb=document.getElementById("transbox");
   if(q.t){{document.getElementById("transtext").textContent=q.t;tb.style.display=""}}
   else tb.style.display="none";
+  var rb=document.getElementById("reasonbox");
+  if(q.r){{document.getElementById("reasontext").innerHTML=q.r;rb.style.display=""}}
+  else rb.style.display="none";
   document.getElementById("ans").style.display="none";
   document.getElementById("hint").style.display="flex";
   document.getElementById("ba").style.display="none";
