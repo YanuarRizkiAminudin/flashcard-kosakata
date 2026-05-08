@@ -5409,6 +5409,10 @@ const lesson9 = {
     { id: 38, char: '春天',   pinyin: 'chūntiān',   pos: 'N',    en: 'spring (season)',                  id_: 'musim semi', example: '這裡的春天是從二月到四月。', examplePinyin: 'Zhèlǐ de chūntiān shì cóng èr yuè dào sì yuè.', exampleEn: 'Spring here is from February to April.' },
     { id: 39, char: '後天',   pinyin: 'hòutiān',    pos: 'N',    en: 'the day after tomorrow',           id_: 'lusa', example: '後天可以嗎？', examplePinyin: 'Hòutiān kěyǐ ma?', exampleEn: 'How about the day after tomorrow?' },
     { id: 40, char: '有空',   pinyin: 'yǒu kòng',   pos: 'V',    en: 'to be free; to have time',         id_: 'ada waktu; tidak sibuk', example: '我明天從早上到晚上都沒有空。', examplePinyin: 'Wǒ míngtiān cóng zǎoshàng dào wǎnshàng dōu méi yǒu kòng.', exampleEn: 'I am not free from morning to night tomorrow.' },
+    { id: 41, char: '餐廳',   pinyin: 'cāntīng',    pos: 'N',    en: 'restaurant (M:家)',                 id_: 'restoran', example: '這家餐廳從二月五號到二月二十號休息。', examplePinyin: 'Zhè jiā cāntīng cóng èr yuè wǔ hào dào èr yuè èrshí hào xiūxi.', exampleEn: 'This restaurant is closed from Feb 5 to Feb 20.' },
+    { id: 42, char: '休息',   pinyin: 'xiūxi',      pos: 'V',    en: 'to rest; to take a break; closed',  id_: 'istirahat; tutup (toko/restoran)', example: '這家餐廳今天休息。', examplePinyin: 'Zhè jiā cāntīng jīntiān xiūxi.', exampleEn: 'This restaurant is closed today.' },
+    { id: 43, char: '棒球',   pinyin: 'bàngqiú',    pos: 'N',    en: 'baseball',                         id_: 'bisbol', example: '棒球比賽的時間是從幾點到幾點？', examplePinyin: 'Bàngqiú bǐsài de shíjiān shì cóng jǐ diǎn dào jǐ diǎn?', exampleEn: 'What time is the baseball game from?' },
+    { id: 44, char: '法國',   pinyin: 'Fǎguó',      pos: 'N',    en: 'France',                           id_: 'Prancis', example: '他從2013年到2017年都在法國學畫畫。', examplePinyin: 'Tā cóng 2013 nián dào 2017 nián dōu zài Fǎguó xué huàhuà.', exampleEn: 'He studied painting in France from 2013 to 2017.' },
   ],
 
   phrases: [
@@ -5441,6 +5445,9 @@ const lesson9 = {
         { zh: '今天我從上午九點到下午五點都有課。', pinyin: 'Jīntiān wǒ cóng shàngwǔ jiǔ diǎn dào xiàwǔ wǔ diǎn dōu yǒu kè.', en: 'Today I have class from 9 a.m. to 5 p.m.' },
         { zh: '我明天從早上到晚上都沒有空，後天可以嗎？', pinyin: 'Wǒ míngtiān cóng zǎoshàng dào wǎnshàng dōu méi yǒu kòng, hòutiān kěyǐ ma?', en: 'I am not free from morning to night tomorrow. How about the day after tomorrow?' },
         { zh: '可是從四點到五點半我要上英文課。', pinyin: 'Kěshì cóng sì diǎn dào wǔ diǎn bàn wǒ yào shàng Yīngwén kè.', en: 'But I have English class from 4 to 5:30.' },
+        { zh: '這家餐廳從二月五號到二月二十號休息。', pinyin: 'Zhè jiā cāntīng cóng èr yuè wǔ hào dào èr yuè èrshí hào xiūxi.', en: 'This restaurant is closed from February 5th to February 20th.' },
+        { zh: '棒球比賽的時間是從幾點到幾點？從一點到四點。', pinyin: 'Bàngqiú bǐsài de shíjiān shì cóng jǐ diǎn dào jǐ diǎn? Cóng yī diǎn dào sì diǎn.', en: 'What time is the baseball game from? From 1 to 4 o\'clock.' },
+        { zh: '他從2013年到2017年都在法國學畫畫嗎？', pinyin: 'Tā cóng 2013 nián dào 2017 nián dōu zài Fǎguó xué huàhuà ma?', en: 'Was he studying painting in France from 2013 to 2017?' },
       ],
     },
   ],
