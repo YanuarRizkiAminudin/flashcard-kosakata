@@ -5406,6 +5406,9 @@ const lesson9 = {
     { id: 35, char: '打籃球', pinyin: 'dǎ lánqiú',  pos: 'V-sep',en: 'to play basketball',               id_: 'bermain basket', example: '他們在打籃球。', examplePinyin: 'Tāmen zài dǎ lánqiú.', exampleEn: 'They are playing basketball.' },
     { id: 36, char: '跳日本舞', pinyin: 'tiào Rìběn wǔ', pos: 'V', en: 'to dance Japanese dance',       id_: 'menari tari Jepang', example: '他們在跳日本舞。', examplePinyin: 'Tāmen zài tiào Rìběn wǔ.', exampleEn: 'They are dancing Japanese dance.' },
     { id: 37, char: '畫畫',   pinyin: 'huàhuà',     pos: 'V-sep',en: 'to draw; to paint',               id_: 'menggambar; melukis', example: '這個孩子在畫畫。', examplePinyin: 'Zhège háizi zài huàhuà.', exampleEn: 'This child is drawing.' },
+    { id: 38, char: '春天',   pinyin: 'chūntiān',   pos: 'N',    en: 'spring (season)',                  id_: 'musim semi', example: '這裡的春天是從二月到四月。', examplePinyin: 'Zhèlǐ de chūntiān shì cóng èr yuè dào sì yuè.', exampleEn: 'Spring here is from February to April.' },
+    { id: 39, char: '後天',   pinyin: 'hòutiān',    pos: 'N',    en: 'the day after tomorrow',           id_: 'lusa', example: '後天可以嗎？', examplePinyin: 'Hòutiān kěyǐ ma?', exampleEn: 'How about the day after tomorrow?' },
+    { id: 40, char: '有空',   pinyin: 'yǒu kòng',   pos: 'V',    en: 'to be free; to have time',         id_: 'ada waktu; tidak sibuk', example: '我明天從早上到晚上都沒有空。', examplePinyin: 'Wǒ míngtiān cóng zǎoshàng dào wǎnshàng dōu méi yǒu kòng.', exampleEn: 'I am not free from morning to night tomorrow.' },
   ],
 
   phrases: [
@@ -5426,6 +5429,18 @@ const lesson9 = {
         { zh: '他們在做什麼？他們在騎腳踏車。', pinyin: 'Tāmen zài zuò shénme? Tāmen zài qí jiǎotàchē.', en: 'What are they doing? They are riding bicycles.' },
         { zh: '你哥哥在做什麼？他在運動。', pinyin: 'Nǐ gēgē zài zuò shénme? Tā zài yùndòng.', en: 'What is your older brother doing? He is exercising.' },
         { zh: '現在他在上書法課。', pinyin: 'Xiànzài tā zài shàng shūfǎ kè.', en: 'He is in calligraphy class right now.' },
+      ],
+    },
+    {
+      id: 'G2',
+      title: 'II. 從……到…… (時間) — Indicating Duration of Time',
+      explanation: '從……到…… can be used for a temporal duration of time, meaning "from... to...". It indicates the start and end point of a time period.',
+      pattern: '從  Time1  到  Time2',
+      examples: [
+        { zh: '這裡的春天是從二月到四月。', pinyin: 'Zhèlǐ de chūntiān shì cóng èr yuè dào sì yuè.', en: 'Spring here is from February to April.' },
+        { zh: '今天我從上午九點到下午五點都有課。', pinyin: 'Jīntiān wǒ cóng shàngwǔ jiǔ diǎn dào xiàwǔ wǔ diǎn dōu yǒu kè.', en: 'Today I have class from 9 a.m. to 5 p.m.' },
+        { zh: '我明天從早上到晚上都沒有空，後天可以嗎？', pinyin: 'Wǒ míngtiān cóng zǎoshàng dào wǎnshàng dōu méi yǒu kòng, hòutiān kěyǐ ma?', en: 'I am not free from morning to night tomorrow. How about the day after tomorrow?' },
+        { zh: '可是從四點到五點半我要上英文課。', pinyin: 'Kěshì cóng sì diǎn dào wǔ diǎn bàn wǒ yào shàng Yīngwén kè.', en: 'But I have English class from 4 to 5:30.' },
       ],
     },
   ],
