@@ -5397,6 +5397,7 @@ const lesson9 = {
     { id: 26, char: '功課',   pinyin: 'gōngkè',     pos: 'N',    en: 'homework',                 id_: 'pekerjaan rumah; PR' },
     { id: 27, char: '再',     pinyin: 'zài',        pos: 'Adv',  en: 'then; again; afterwards',  id_: 'lalu; kemudian; lagi' },
     { id: 28, char: '一起',   pinyin: 'yīqǐ',       pos: 'Adv',  en: 'together',                 id_: 'bersama-sama' },
+    { id: 29, char: '擺脫',   pinyin: 'bǎituō',     pos: 'V',    en: 'to get rid of; to break free from', id_: 'terbebas dari; melepaskan diri', example: '我想擺脫這個壞習慣。', examplePinyin: 'Wǒ xiǎng bǎituō zhège huài xíguàn.', exampleEn: 'I want to get rid of this bad habit.' },
   ],
 
   phrases: [
