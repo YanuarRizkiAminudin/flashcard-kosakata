@@ -12,15 +12,6 @@ const flashcards = [
     route: '/lessons',
   },
   {
-    id: 5,
-    category: 'Personal',
-    icon: '🗂️',
-    title: 'My Flashcards',
-    kartu: 0,
-    level: 'Custom · Self-study',
-    route: '/my-flashcards',
-  },
-  {
     id: 1,
     category: 'Mandarin',
     icon: '🀄',
@@ -73,6 +64,15 @@ const flashcards = [
     kartu: 8,
     level: 'Pemula · V1 V2 V3 Ving · Bahasa Indonesia',
     route: '/game/toeic-verb-pattern',
+  },
+  {
+    id: 5,
+    category: 'Personal',
+    icon: '🗂️',
+    title: 'My Flashcards',
+    kartu: 0,
+    level: 'Custom · Self-study',
+    route: '/my-flashcards',
   },
 ]
 
