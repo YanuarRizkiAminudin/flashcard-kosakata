@@ -6,7 +6,7 @@ const flashcards = [
     id: 'MC1',
     category: 'Mandarin',
     icon: '📗',
-    title: '時代華語 Tradisional Chinese',
+    title: '時代華語 TradisionalZ Chinese',
     kartu: 8,
     level: 'BAB 1–8 · A1',
     route: '/lessons',
@@ -55,6 +55,15 @@ const flashcards = [
     kartu: 100,
     level: 'Part 5 · 6 · 7',
     route: '/toeic-test',
+  },
+  {
+    id: 6,
+    category: 'English',
+    icon: '🔤',
+    title: 'TOEIC Verb V1/V2/V3/Ving',
+    kartu: 92,
+    level: 'Tebak bentuk verb · TOEIC 101–200',
+    route: '/game/toeic-verb-guess',
   },
 ]
 

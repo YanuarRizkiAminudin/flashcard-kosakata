@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEIC Verb Guess V1/V2/V3/Ving</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px}
+#app{width:100%;max-width:500px}
+h1{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:3px}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:12px}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.fb{padding:5px 11px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
+.fb:hover{border-color:#e67700;color:#e67700}
+.fb.on{background:#e67700;color:#fff;border-color:#e67700}
+.fb.all-btn.on{background:#1a1814;border-color:#1a1814}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.badge{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#e8e4dc;color:#8a8478}
+.ctr{font-size:13px;color:#8a8478}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem}
+.pbar{height:4px;background:linear-gradient(90deg,#e67700,#ffa94d);border-radius:99px;transition:width .4s}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.8rem}
+.pills{display:flex;gap:6px;margin-bottom:.9rem}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500}
+.pl-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00}
+.pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.dp{background:#2d7a4f}.dh{background:#a05c00}.db{background:#b83232}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 2px 14px rgba(0,0,0,.07);min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1.2rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ffa94d,#e67700,#ff6b6b);opacity:.8}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,.1)}
+.ctag{font-size:10px;font-weight:600;letter-spacing:.8px;padding:3px 9px;border-radius:99px;background:#fff3e0;color:#e67700;margin-bottom:.6rem}
+.qlabel{font-size:11px;color:#8a8478;margin-bottom:.5rem;font-weight:600;text-align:center}
+.meaning-tag{font-size:13px;color:#e67700;font-weight:700;margin-bottom:.8rem;text-align:center}
+.sentence{font-family:"Lora",serif;font-size:17px;font-weight:400;color:#1a1814;line-height:1.7;text-align:center;padding:0 .5rem}
+.blank{font-family:"DM Sans",sans-serif;font-size:18px;font-weight:700;color:#e67700;letter-spacing:2px;border-bottom:2px solid #e67700;padding:0 4px}
+.hint{font-size:13px;color:#8a8478;margin-top:1rem;display:flex;align-items:center;gap:6px}
+.hint-ico{width:26px;height:26px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:12px}
+.ans{margin-top:.9rem;width:100%;animation:fup .25s ease}
+@keyframes fup{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.divline{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem}
+.ans-label{font-size:11px;color:#8a8478;text-align:center;margin-bottom:.3rem;font-weight:600}
+.ans-word{font-family:"Lora",serif;font-size:28px;font-weight:700;color:#e67700;text-align:center;margin-bottom:.4rem}
+.ans-form{font-size:12px;color:#8a8478;text-align:center;margin-bottom:.7rem}
+.vtable{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid #ffe0b2}
+.vtable th{background:#fff3e0;color:#e67700;font-size:11px;font-weight:700;padding:7px 4px;text-align:center;letter-spacing:.5px}
+.vtable td{padding:9px 4px;text-align:center;border-top:1px solid #ffe0b2;font-family:"Lora",serif;font-weight:700;font-size:14px}
+.vtable tr:nth-child(even) td{background:#fffbf5}
+.v1{color:#3b5bdb}.v2{color:#e67700}.v3{color:#2d7a4f}.ving{color:#9775fa}
+.notebox{margin-top:.5rem;background:#fff8e1;border:1px solid #ffe08a;border-radius:10px;padding:.5rem .8rem;text-align:left}
+.notelabel{font-size:10px;font-weight:700;color:#a05c00;letter-spacing:.5px;margin-bottom:2px}
+.notetext{font-size:11px;color:#7a4800;line-height:1.5}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s}
+.cb-ico{font-size:16px}.cb-sub{font-size:9px;font-weight:500;opacity:.7}
+.cb-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f}.cb-p:hover{background:#d5f0e2}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00}.cb-h:hover{background:#fde8c2}
+.cb-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232}.cb-b:hover{background:#f9d8d8}
+.res{text-align:center;padding:.8rem 0}
+.res-ico{font-size:50px;margin-bottom:.7rem}
+.res-title{font-family:"Lora",serif;font-size:18px;font-weight:700;color:#1a1814;margin-bottom:.3rem}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1rem;line-height:1.6}
+.srow{display:flex;gap:7px;margin-bottom:1rem}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center}
+.sbox .sn{font-size:21px;font-weight:700}.sbox .sl{font-size:10px;margin-top:2px}
+.sbp{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00}
+.sbb{background:#fdf0f0;border-color:#f5a8a8;color:#b83232}
+.rlist-wrap{text-align:left;margin-bottom:1rem}
+.rlist-ttl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto}
+.ri{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid #e8e4dc;background:#fff}
+.ri:last-child{border-bottom:none}
+.ri-word{font-family:"Lora",serif;font-size:13px;font-weight:700;color:#1a1814;min-width:80px}
+.ri-forms{font-size:11px;color:#e67700;margin-left:auto}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none}
+.btn-orange{background:linear-gradient(135deg,#e67700,#ff922b);color:#fff;box-shadow:0 3px 10px rgba(230,119,0,.25)}
+.btn-orange:hover{opacity:.9}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478}
+.btn-ghost:hover{background:#e8e4dc}
+.final{text-align:center;padding:2rem 0}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>&#128218; TOEIC Verb: Tebak Bentuknya!</h1>
+<div class="sub" id="tsub">Semua — 92 kata kerja dari TOEIC 101-200</div>
+<div class="filters">
+  <button class="fb all-btn on" onclick="setCat('ALL')">Semua (92)</button>
+  <button class="fb" onclick="setCat('REG')">Regular &#10003; (80)</button>
+  <button class="fb" onclick="setCat('IRR')">Irregular &#9889; (12)</button>
+</div>
+<div id="qv">
+  <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+  <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+  <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+  <div class="pills">
+    <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Tahu</div>
+    <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+    <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+  </div>
+  <div class="card" id="card" onclick="reveal()">
+    <div class="ctag" id="ctag"></div>
+    <div class="qlabel">Isi ___ dengan bentuk verb yang tepat:</div>
+    <div class="meaning-tag" id="mtag"></div>
+    <div class="sentence" id="sentence"></div>
+    <div class="hint" id="hint"><div class="hint-ico">&#128070;</div>Ketuk untuk lihat jawaban</div>
+    <div class="ans" id="ans" style="display:none">
+      <div class="divline"></div>
+      <div class="ans-label">Jawaban:</div>
+      <div class="ans-word" id="ans-word"></div>
+      <div class="ans-form" id="ans-form"></div>
+      <table class="vtable">
+        <thead><tr><th>V1</th><th>V2</th><th>V3</th><th>V-ing</th></tr></thead>
+        <tbody><tr>
+          <td class="v1" id="av1"></td>
+          <td class="v2" id="av2"></td>
+          <td class="v3" id="av3"></td>
+          <td class="ving" id="aving"></td>
+        </tr></tbody>
+      </table>
+      <div class="notebox" id="notebox" style="display:none">
+        <div class="notelabel">&#9888; CATATAN</div>
+        <div class="notetext" id="notetext"></div>
+      </div>
+    </div>
+  </div>
+  <div class="btnrow" id="ba" style="display:none">
+    <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">&#128533;</span><span>Belum</span><span class="cb-sub">Muncul lagi</span></button>
+    <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">&#129300;</span><span>Hampir</span><span class="cb-sub">Muncul lagi</span></button>
+    <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">&#10003;</span><span>Tahu!</span><span class="cb-sub">Tidak lagi</span></button>
+  </div>
+</div>
+<div id="rv" style="display:none">
+  <div class="res">
+    <div class="res-ico" id="ri"></div>
+    <div class="res-title" id="rt"></div>
+    <div class="res-sub" id="rs"></div>
+    <div class="srow">
+      <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Tahu</div></div>
+      <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+      <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+    </div>
+    <div id="rlw" style="display:none">
+      <div class="rlist-wrap">
+        <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
+        <div class="rlist" id="rl"></div>
+      </div>
+    </div>
+    <button class="btnbig btn-orange" id="nb" onclick="nextRonde()"></button>
+    <button class="btnbig btn-ghost" onclick="fullRestart()">Mulai dari awal</button>
+  </div>
+</div>
+<div id="fv" style="display:none">
+  <div class="final">
+    <div style="font-size:60px;margin-bottom:.8rem">&#127942;</div>
+    <div class="res-title">Semua verb dikuasai!</div>
+    <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.3rem">V1/V2/V3/V-ing kamu sudah kuat!</div>
+    <button class="btnbig btn-orange" onclick="fullRestart()">Ulangi dari awal</button>
+  </div>
+</div>
+</div>
+<script>
+var V=[
+  {v1:"speak",v2:"spoke",v3:"spoken",ving:"speaking",m:"berbicara",cat:"REG",e:"The CEO spoke about his career experiences.",b:"The CEO ___ about his career experiences.",af:"V2",aw:"spoke",n:"Irregular! speak-spoke-spoken"},
+  {v1:"take",v2:"took",v3:"taken",ving:"taking",m:"mengambil/naik",cat:"IRR",e:"Passengers who will be taking a connecting domestic flight should go to Terminal A.",b:"Passengers who will be ___ a connecting domestic flight should go to Terminal A.",af:"V-ing",aw:"taking",n:"Irregular! take-took-taken"},
+  {v1:"eat",v2:"ate",v3:"eaten",ving:"eating",m:"makan",cat:"IRR",e:"Fresh and tasty apple-cider donuts are available to eat.",b:"Fresh and tasty apple-cider donuts are available to ___.",af:"V1",aw:"eat",n:"Irregular! eat-ate-eaten"},
+  {v1:"ensure",v2:"ensured",v3:"ensured",ving:"ensuring",m:"memastikan",cat:"REG",e:"One responsibility of the IT department is to ensure that the company is using updated software.",b:"One responsibility of the IT department is to ___ that the company is using updated software.",af:"V1",aw:"ensure",n:"Regular: +d"},
+  {v1:"check",v2:"checked",v3:"checked",ving:"checking",m:"memeriksa",cat:"REG",e:"It is wise to check a company dress code before visiting.",b:"It is wise to ___ a company dress code before visiting.",af:"V1",aw:"check",n:"Regular: +ed"},
+  {v1:"support",v2:"supported",v3:"supported",ving:"supporting",m:"mendukung",cat:"REG",e:"Employees will enthusiastically support any new hires.",b:"Employees will enthusiastically ___ any new hires.",af:"V1",aw:"support",n:"Regular: +ed"},
+  {v1:"inspect",v2:"inspected",v3:"inspected",ving:"inspecting",m:"memeriksa",cat:"REG",e:"Wheel alignments and brake system inspections are part of our vehicle service plan.",b:"Wheel alignments and brake system inspections are part of our vehicle service plan.",af:"V1",aw:"inspect",n:"Regular: +ed"},
+  {v1:"register",v2:"registered",v3:"registered",ving:"registering",m:"mendaftar",cat:"REG",e:"Registration for the Marketing Coalition Conference is now open.",b:"Registration for the Marketing Coalition Conference is now open.",af:"V1",aw:"register",n:"Regular: +ed (drop e)"},
+  {v1:"grow",v2:"grew",v3:"grown",ving:"growing",m:"tumbuh/berkembang",cat:"IRR",e:"Growth in the home entertainment industry has been limited.",b:"Growth in the home entertainment industry has been limited.",af:"V1",aw:"grow",n:"Irregular! grow-grew-grown"},
+  {v1:"deliver",v2:"delivered",v3:"delivered",ving:"delivering",m:"mengirimkan",cat:"REG",e:"Hawson Furniture will be making deliveries on the east side of town.",b:"Hawson Furniture will be making deliveries on the east side of town.",af:"V1",aw:"deliver",n:"Regular: +ed"},
+  {v1:"prohibit",v2:"prohibited",v3:"prohibited",ving:"prohibiting",m:"melarang",cat:"REG",e:"The Marlton City Council does not have the authority to prohibit parking.",b:"The Marlton City Council does not have the authority to ___ parking.",af:"V1",aw:"prohibit",n:"Regular: +ed"},
+  {v1:"look",v2:"looked",v3:"looked",ving:"looking",m:"mencari/melihat",cat:"REG",e:"Project Earth Group is looking for ways to reduce emissions.",b:"Project Earth Group is ___ for ways to reduce emissions.",af:"V-ing",aw:"looking",n:"Regular: +ed"},
+  {v1:"design",v2:"designed",v3:"designed",ving:"designing",m:"merancang",cat:"REG",e:"Our skilled tailors are happy to design a custom-made suit.",b:"Our skilled tailors are happy to ___ a custom-made suit.",af:"V1",aw:"design",n:"Regular: +d"},
+  {v1:"fit",v2:"fitted",v3:"fitted",ving:"fitting",m:"cocok/sesuai",cat:"REG",e:"A custom-made suit that fits your style and budget perfectly.",b:"A custom-made suit that fits your style and budget perfectly.",af:"V1",aw:"fit",n:"Double t: fit-fitted-fitted-fitting"},
+  {v1:"prove",v2:"proved",v3:"proved/proven",ving:"proving",m:"membuktikan",cat:"IRR",e:"Project manager Hannah Chung has proved to be very helpful.",b:"Project manager Hannah Chung has ___ to be very helpful.",af:"V3",aw:"proved",n:"V3 bisa proved atau proven"},
+  {v1:"receive",v2:"received",v3:"received",ving:"receiving",m:"menerima",cat:"REG",e:"Lehua Vacation Club members will receive double points.",b:"Lehua Vacation Club members will ___ double points.",af:"V1",aw:"receive",n:"Regular: +d (drop e)"},
+  {v1:"use",v2:"used",v3:"used",ving:"using",m:"menggunakan",cat:"REG",e:"The costumes were not received soon enough to be used.",b:"The costumes were not received soon enough to be ___.",af:"V3",aw:"used",n:"Regular: +d (drop e)"},
+  {v1:"excel",v2:"excelled",v3:"excelled",ving:"excelling",m:"unggul",cat:"REG",e:"Mr. Wu would excel in the role of event organizer.",b:"Mr. Wu would ___ in the role of event organizer.",af:"V1",aw:"excel",n:"Regular: double l +ed"},
+  {v1:"close",v2:"closed",v3:"closed",ving:"closing",m:"menutup",cat:"REG",e:"The northbound lane will be temporarily closed.",b:"The northbound lane will be temporarily ___.",af:"V3",aw:"closed",n:"Regular: +d (drop e)"},
+  {v1:"handle",v2:"handled",v3:"handled",ving:"handling",m:"menangani",cat:"REG",e:"Airline representatives must handle a wide range of passenger issues.",b:"Airline representatives must ___ a wide range of passenger issues.",af:"V1",aw:"handle",n:"Regular: +d (drop e)"},
+  {v1:"delete",v2:"deleted",v3:"deleted",ving:"deleting",m:"menghapus",cat:"REG",e:"The meeting notes were accidentally deleted.",b:"The meeting notes were accidentally ___.",af:"V3",aw:"deleted",n:"Regular: +d (drop e)"},
+  {v1:"predict",v2:"predicted",v3:"predicted",ving:"predicting",m:"memprediksi",cat:"REG",e:"The magazine predicts that the price of corn will rise.",b:"The magazine predicts that the price of corn will rise.",af:"V1",aw:"predict",n:"Regular: +ed"},
+  {v1:"need",v2:"needed",v3:"needed",ving:"needing",m:"membutuhkan",cat:"REG",e:"Anyone who still needs to take the fire safety training should do so.",b:"Anyone who still needs to take the fire safety training should do so.",af:"V1",aw:"need",n:"Regular: +ed"},
+  {v1:"begin",v2:"began",v3:"begun",ving:"beginning",m:"memulai",cat:"IRR",e:"Emerging technologies have already begun to transform the shipping industry.",b:"Emerging technologies have already ___ to transform the shipping industry.",af:"V3",aw:"begun",n:"Irregular! begin-began-begun. Double n: beginning"},
+  {v1:"transform",v2:"transformed",v3:"transformed",ving:"transforming",m:"mengubah",cat:"REG",e:"Technologies have begun to transform the shipping industry.",b:"Technologies have begun to ___ the shipping industry.",af:"V1",aw:"transform",n:"Regular: +ed"},
+  {v1:"outline",v2:"outlined",v3:"outlined",ving:"outlining",m:"menguraikan",cat:"REG",e:"The company handbook outlines the high standards.",b:"The company handbook outlines the high standards.",af:"V1",aw:"outline",n:"Regular: +d (drop e)"},
+  {v1:"meet",v2:"met",v3:"met",ving:"meeting",m:"memenuhi/bertemu",cat:"IRR",e:"Standards that employees are expected to meet every day.",b:"Standards that employees are expected to ___ every day.",af:"V1",aw:"meet",n:"Irregular! meet-met-met"},
+  {v1:"move",v2:"moved",v3:"moved",ving:"moving",m:"memindahkan",cat:"REG",e:"The board meeting will be moved to a date when all can attend.",b:"The board meeting will be ___ to a date when all can attend.",af:"V3",aw:"moved",n:"Regular: +d (drop e)"},
+  {v1:"require",v2:"required",v3:"required",ving:"requiring",m:"memerlukan",cat:"REG",e:"The project required the collaboration of several teams.",b:"The project ___ the collaboration of several teams.",af:"V3",aw:"required",n:"Regular: +d (drop e)"},
+  {v1:"send",v2:"sent",v3:"sent",ving:"sending",m:"mengirim",cat:"IRR",e:"We cannot send the store coupon booklet to the printers.",b:"We cannot ___ the store coupon booklet to the printers.",af:"V1",aw:"send",n:"Irregular! send-sent-sent"},
+  {v1:"approve",v2:"approved",v3:"approved",ving:"approving",m:"menyetujui",cat:"REG",e:"We cannot send it until it has been approved by Ms. Jeon.",b:"We cannot send it until it has been ___ by Ms. Jeon.",af:"V3",aw:"approved",n:"Regular: +d (drop e)"},
+  {v1:"look for",v2:"looked for",v3:"looked for",ving:"looking for",m:"mencari",cat:"REG",e:"We are looking for a new shipping company.",b:"We are ___ a new shipping company.",af:"V-ing",aw:"looking for",n:"Phrasal verb: look for"},
+  {v1:"help",v2:"helped",v3:"helped",ving:"helping",m:"membantu",cat:"REG",e:"The brochure helps applicants understand the terms of their loans.",b:"The brochure helps applicants understand the terms of their loans.",af:"V1",aw:"help",n:"Regular: +ed"},
+  {v1:"pass",v2:"passed",v3:"passed",ving:"passing",m:"lulus/melewati",cat:"REG",e:"The project passed the review stage.",b:"The project ___ the review stage.",af:"V3",aw:"passed",n:"Regular: +ed (double s)"},
+  {v1:"decide",v2:"decided",v3:"decided",ving:"deciding",m:"memutuskan",cat:"REG",e:"The team decided to proceed with the plan.",b:"The team ___ to proceed with the plan.",af:"V3",aw:"decided",n:"Regular: +d (drop e)"},
+  {v1:"perform",v2:"performed",v3:"performed",ving:"performing",m:"melakukan/tampil",cat:"REG",e:"The band performed at the event.",b:"The band ___ at the event.",af:"V3",aw:"performed",n:"Regular: +ed"},
+  {v1:"provide",v2:"provided",v3:"provided",ving:"providing",m:"menyediakan",cat:"REG",e:"The brochure provides supplemental information.",b:"The brochure provides supplemental information.",af:"V1",aw:"provide",n:"Regular: +d (drop e)"},
+  {v1:"understand",v2:"understood",v3:"understood",ving:"understanding",m:"memahami",cat:"IRR",e:"The brochure helps applicants understand the terms.",b:"The brochure helps applicants ___ the terms.",af:"V1",aw:"understand",n:"Irregular! understand-understood-understood"},
+  {v1:"rise",v2:"rose",v3:"risen",ving:"rising",m:"naik/meningkat",cat:"IRR",e:"The price of corn will rise 5 percent.",b:"The price of corn will ___ 5 percent.",af:"V1",aw:"rise",n:"Irregular! rise-rose-risen"},
+  {v1:"recreate",v2:"recreated",v3:"recreated",ving:"recreating",m:"membuat ulang",cat:"REG",e:"Mr. Hahm was able to recreate the meeting notes.",b:"Mr. Hahm was able to ___ the meeting notes.",af:"V1",aw:"recreate",n:"Regular: +d (drop e)"},
+  {v1:"plant",v2:"planted",v3:"planted",ving:"planting",m:"menanam",cat:"REG",e:"We will teach you how to plant a rain garden.",b:"We will teach you how to ___ a rain garden.",af:"V1",aw:"plant",n:"Regular: +ed"},
+  {v1:"filter",v2:"filtered",v3:"filtered",ving:"filtering",m:"menyaring",cat:"REG",e:"A special soil mix to filter pollutants from rainwater.",b:"A special soil mix to ___ pollutants from rainwater.",af:"V1",aw:"filter",n:"Regular: +ed"},
+  {v1:"improve",v2:"improved",v3:"improved",ving:"improving",m:"meningkatkan",cat:"REG",e:"Rain gardens improve drainage and protect rivers.",b:"Rain gardens ___ drainage and protect rivers.",af:"V1",aw:"improve",n:"Regular: +d (drop e)"},
+  {v1:"protect",v2:"protected",v3:"protected",ving:"protecting",m:"melindungi",cat:"REG",e:"Rain gardens protect rivers and streams.",b:"Rain gardens ___ rivers and streams.",af:"V1",aw:"protect",n:"Regular: +ed"},
+  {v1:"renew",v2:"renewed",v3:"renewed",ving:"renewing",m:"memperbarui",cat:"REG",e:"Your library card must be renewed if you intend to keep your membership.",b:"Your library card must be ___ if you intend to keep your membership.",af:"V3",aw:"renewed",n:"Regular: +ed"},
+  {v1:"expire",v2:"expired",v3:"expired",ving:"expiring",m:"kedaluwarsa",cat:"REG",e:"Your library card will expire one month from today.",b:"Your library card will ___ one month from today.",af:"V1",aw:"expire",n:"Regular: +d (drop e)"},
+  {v1:"complete",v2:"completed",v3:"completed",ving:"completing",m:"menyelesaikan",cat:"REG",e:"Failure to complete your renewal will result in expiration.",b:"Failure to ___ your renewal will result in expiration.",af:"V1",aw:"complete",n:"Regular: +d (drop e)"},
+  {v1:"coordinate",v2:"coordinated",v3:"coordinated",ving:"coordinating",m:"mengoordinasikan",cat:"REG",e:"Thank you for coordinating our annual company retreat.",b:"Thank you for ___ our annual company retreat.",af:"V-ing",aw:"coordinating",n:"Regular: +d (drop e)"},
+  {v1:"impress",v2:"impressed",v3:"impressed",ving:"impressing",m:"mengesankan",cat:"REG",e:"Our employees were thoroughly impressed by the venue selection.",b:"Our employees were thoroughly ___ by the venue selection.",af:"V3",aw:"impressed",n:"Regular: +ed"},
+  {v1:"exceed",v2:"exceeded",v3:"exceeded",ving:"exceeding",m:"melampaui",cat:"REG",e:"Your professionalism consistently exceeds our expectations.",b:"Your professionalism consistently exceeds our expectations.",af:"V1",aw:"exceed",n:"Regular: +ed"},
+  {v1:"benefit",v2:"benefited",v3:"benefited",ving:"benefiting",m:"menguntungkan",cat:"REG",e:"The auction benefits our Young Designers Award program.",b:"The auction benefits our Young Designers Award program.",af:"V1",aw:"benefit",n:"Regular: +ed"},
+  {v1:"follow",v2:"followed",v3:"followed",ving:"following",m:"mengikuti",cat:"REG",e:"Our attendees follow your work closely.",b:"Our attendees ___ your work closely.",af:"V1",aw:"follow",n:"Regular: +ed"},
+  {v1:"contribute",v2:"contributed",v3:"contributed",ving:"contributing",m:"berkontribusi",cat:"REG",e:"They loved the designs you contributed for this event.",b:"They loved the designs you ___ for this event.",af:"V3",aw:"contributed",n:"Regular: +d (drop e)"},
+  {v1:"cancel",v2:"cancelled",v3:"cancelled",ving:"cancelling",m:"membatalkan",cat:"REG",e:"The band performance that night had been cancelled.",b:"The band performance that night had been ___.",af:"V3",aw:"cancelled",n:"Regular: double l +ed (British)"},
+  {v1:"apologize",v2:"apologized",v3:"apologized",ving:"apologizing",m:"meminta maaf",cat:"REG",e:"The head chef came out to apologize.",b:"The head chef came out to ___.",af:"V1",aw:"apologize",n:"Regular: +d (drop e)"},
+  {v1:"change",v2:"changed",v3:"changed",ving:"changing",m:"mengubah",cat:"REG",e:"Head Chef Adio Brown has changed the spices.",b:"Head Chef Adio Brown has ___ the spices.",af:"V3",aw:"changed",n:"Regular: +d (drop e)"},
+  {v1:"supply",v2:"supplied",v3:"supplied",ving:"supplying",m:"memasok",cat:"REG",e:"Kitchen Swifts supplies menus recipes and ingredients.",b:"Kitchen Swifts supplies menus recipes and ingredients.",af:"V1",aw:"supply",n:"Regular: y to i +ed"},
+  {v1:"choose",v2:"chose",v3:"chosen",ving:"choosing",m:"memilih",cat:"IRR",e:"We are honored that you chose us for a fourth year in a row.",b:"We are honored that you ___ us for a fourth year in a row.",af:"V2",aw:"chose",n:"Irregular! choose-chose-chosen"},
+  {v1:"deliver",v2:"delivered",v3:"delivered",ving:"delivering",m:"mengirimkan",cat:"REG",e:"A box is delivered weekly.",b:"A box is ___ weekly.",af:"V3",aw:"delivered",n:"Regular: +ed"},
+  {v1:"raise",v2:"raised",v3:"raised",ving:"raising",m:"menaikkan",cat:"REG",e:"Current customers will see no price increase with the partnership.",b:"Current customers will see no price increase with the partnership.",af:"V1",aw:"raise",n:"Regular: +d (drop e)"},
+  {v1:"reflect",v2:"reflected",v3:"reflected",ving:"reflecting",m:"mencerminkan",cat:"REG",e:"His cooking reflects his Filipino heritage.",b:"His cooking reflects his Filipino heritage.",af:"V1",aw:"reflect",n:"Regular: +ed"},
+  {v1:"travel",v2:"travelled",v3:"travelled",ving:"travelling",m:"bepergian",cat:"REG",e:"You can feel like you are travelling the world.",b:"You can feel like you are ___ the world.",af:"V-ing",aw:"travelling",n:"Regular: double l +ed (British)"},
+  {v1:"fly",v2:"flew",v3:"flown",ving:"flying",m:"terbang",cat:"IRR",e:"It was a worthwhile treat before I flew back to Hong Kong.",b:"It was a worthwhile treat before I ___ back to Hong Kong.",af:"V2",aw:"flew",n:"Irregular! fly-flew-flown"},
+  {v1:"book",v2:"booked",v3:"booked",ving:"booking",m:"memesan",cat:"REG",e:"It is usually fully booked for dinner.",b:"It is usually fully ___ for dinner.",af:"V3",aw:"booked",n:"Regular: +ed"},
+  {v1:"arrange",v2:"arranged",v3:"arranged",ving:"arranging",m:"mengatur",cat:"REG",e:"The activities you arranged were impressive.",b:"The activities you ___ were impressive.",af:"V3",aw:"arranged",n:"Regular: +d (drop e)"},
+  {v1:"open",v2:"opened",v3:"opened",ving:"opening",m:"membuka",cat:"REG",e:"The recently opened Enriqua restaurant.",b:"The recently ___ Enriqua restaurant.",af:"V3",aw:"opened",n:"Regular: +ed"},
+  {v1:"drive",v2:"drove",v3:"driven",ving:"driving",m:"mengemudi",cat:"IRR",e:"I will drive my rental car to your house.",b:"I will ___ my rental car to your house.",af:"V1",aw:"drive",n:"Irregular! drive-drove-driven"},
+  {v1:"hand",v2:"handed",v3:"handed",ving:"handing",m:"menyerahkan",cat:"REG",e:"I will hand deliver the items to you.",b:"I will ___ deliver the items to you.",af:"V1",aw:"hand",n:"Regular: +ed"},
+  {v1:"damage",v2:"damaged",v3:"damaged",ving:"damaging",m:"merusak",cat:"REG",e:"If any damage occurs in transit the repair is expensive.",b:"If any ___ occurs in transit the repair is expensive.",af:"V1",aw:"damage",n:"Regular: +d (drop e)"},
+  {v1:"trust",v2:"trusted",v3:"trusted",ving:"trusting",m:"mempercayai",cat:"REG",e:"My policy is to hire a courier service I trust.",b:"My policy is to hire a courier service I ___.",af:"V1",aw:"trust",n:"Regular: +ed"},
+  {v1:"volunteer",v2:"volunteered",v3:"volunteered",ving:"volunteering",m:"sukarela",cat:"REG",e:"Truck drivers have kindly volunteered to transport donations.",b:"Truck drivers have kindly ___ to transport donations.",af:"V3",aw:"volunteered",n:"Regular: +ed"},
+  {v1:"donate",v2:"donated",v3:"donated",ving:"donating",m:"menyumbangkan",cat:"REG",e:"Those wishing to donate surplus produce can visit the Web site.",b:"Those wishing to ___ surplus produce can visit the Web site.",af:"V1",aw:"donate",n:"Regular: +d (drop e)"},
+  {v1:"yield",v2:"yielded",v3:"yielded",ving:"yielding",m:"menghasilkan",cat:"REG",e:"This season excellent weather has yielded a substantial harvest.",b:"This season excellent weather has ___ a substantial harvest.",af:"V3",aw:"yielded",n:"Regular: +ed"},
+  {v1:"store",v2:"stored",v3:"stored",ving:"storing",m:"menyimpan",cat:"REG",e:"Consider storing your bag in a locker for just 2 dollars.",b:"Consider ___ your bag in a locker for just 2 dollars.",af:"V-ing",aw:"storing",n:"Regular: +d (drop e)"},
+  {v1:"record",v2:"recorded",v3:"recorded",ving:"recording",m:"merekam",cat:"REG",e:"Audience members are not allowed to make a recording of the performance.",b:"Audience members are not allowed to make a ___ of the performance.",af:"V-ing",aw:"recording",n:"Regular: +ed"},
+  {v1:"distract",v2:"distracted",v3:"distracted",ving:"distracting",m:"mengganggu",cat:"REG",e:"Ringtones and lit screens are very distracting.",b:"Ringtones and lit screens are very ___.",af:"V-ing",aw:"distracting",n:"Regular: +ed"},
+  {v1:"adhere",v2:"adhered",v3:"adhered",ving:"adhering",m:"mematuhi",cat:"REG",e:"We ask that you adhere to the following guidelines.",b:"We ask that you ___ to the following guidelines.",af:"V1",aw:"adhere",n:"Regular: +d (drop e)"},
+  {v1:"refrain",v2:"refrained",v3:"refrained",ving:"refraining",m:"menahan diri",cat:"REG",e:"Please refrain from making phone calls at all times.",b:"Please ___ from making phone calls at all times.",af:"V1",aw:"refrain",n:"Regular: +ed"},
+  {v1:"purchase",v2:"purchased",v3:"purchased",ving:"purchasing",m:"membeli",cat:"REG",e:"Thank you for purchasing this item.",b:"Thank you for ___ this item.",af:"V-ing",aw:"purchasing",n:"Regular: +d (drop e)"},
+  {v1:"assemble",v2:"assembled",v3:"assembled",ving:"assembling",m:"merakit",cat:"REG",e:"Assemble the item on a soft surface.",b:"___ the item on a soft surface.",af:"V1",aw:"assemble",n:"Regular: +d (drop e)"},
+  {v1:"overtighten",v2:"overtightened",v3:"overtightened",ving:"overtightening",m:"mengencangkan berlebihan",cat:"REG",e:"Never overtighten any screws or bolts.",b:"Never ___ any screws or bolts.",af:"V1",aw:"overtighten",n:"Regular: +ed"},
+  {v1:"schedule",v2:"scheduled",v3:"scheduled",ving:"scheduling",m:"menjadwalkan",cat:"REG",e:"Please schedule meetings during the underlined hours.",b:"Please ___ meetings during the underlined hours.",af:"V1",aw:"schedule",n:"Regular: +d (drop e)"},
+  {v1:"accommodate",v2:"accommodated",v3:"accommodated",ving:"accommodating",m:"menampung",cat:"REG",e:"The space can accommodate up to 200 guests.",b:"The space can ___ up to 200 guests.",af:"V1",aw:"accommodate",n:"Regular: +d (drop e)"},
+  {v1:"renovate",v2:"renovated",v3:"renovated",ving:"renovating",m:"merenovasi",cat:"REG",e:"The Bryant Foyer was renovated just over a year ago.",b:"The Bryant Foyer was ___ just over a year ago.",af:"V3",aw:"renovated",n:"Regular: +d (drop e)"},
+  {v1:"revolutionize",v2:"revolutionized",v3:"revolutionized",ving:"revolutionizing",m:"merevolusi",cat:"REG",e:"This restaurant has revolutionized the local food scene.",b:"This restaurant has ___ the local food scene.",af:"V3",aw:"revolutionized",n:"Regular: +d (drop e)"},
+  {v1:"cater",v2:"catered",v3:"catered",ving:"catering",m:"menyediakan makanan",cat:"REG",e:"The on-site restaurant caters our events.",b:"The on-site restaurant caters our events.",af:"V1",aw:"cater",n:"Regular: +ed"},
+  {v1:"evaluate",v2:"evaluated",v3:"evaluated",ving:"evaluating",m:"mengevaluasi",cat:"REG",e:"The team will evaluate the new software.",b:"The team will ___ the new software.",af:"V1",aw:"evaluate",n:"Regular: +d (drop e)"},
+  {v1:"implement",v2:"implemented",v3:"implemented",ving:"implementing",m:"menerapkan",cat:"REG",e:"The company will implement a new policy.",b:"The company will ___ a new policy.",af:"V1",aw:"implement",n:"Regular: +ed"},
+  {v1:"expedite",v2:"expedited",v3:"expedited",ving:"expediting",m:"mempercepat",cat:"REG",e:"Please remind him to expedite a summary to us.",b:"Please remind him to ___ a summary to us.",af:"V1",aw:"expedite",n:"Regular: +d (drop e)"},
+  {v1:"incorporate",v2:"incorporated",v3:"incorporated",ving:"incorporating",m:"menggabungkan",cat:"REG",e:"We need to incorporate its findings into the slides.",b:"We need to ___ its findings into the slides.",af:"V1",aw:"incorporate",n:"Regular: +d (drop e)"},
+  {v1:"generate",v2:"generated",v3:"generated",ving:"generating",m:"menghasilkan",cat:"REG",e:"Invoices will be generated automatically each month.",b:"Invoices will be ___ automatically each month.",af:"V3",aw:"generated",n:"Regular: +d (drop e)"},
+  {v1:"investigate",v2:"investigated",v3:"investigated",ving:"investigating",m:"menyelidiki",cat:"REG",e:"Please investigate the problem without delay.",b:"Please ___ the problem without delay.",af:"V1",aw:"investigate",n:"Regular: +d (drop e)"}
+];
+
+var LABELS={REG:"Regular",IRR:"Irregular",ALL:"Semua"};
+function sh(a){return a.slice().sort(function(){return Math.random()-.5})}
+var deck,idx,ronde=1,cp,ch,cbv,rev,toRev,curCat="ALL";
+
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on")});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')") b.classList.add("on")});
+  ronde=1;fullRestart();
+}
+
+function fullRestart(){
+  var src=curCat==="ALL"?V:V.filter(function(v){return v.cat===curCat});
+  deck=sh(src);
+  document.getElementById("tsub").textContent=(curCat==="ALL"?"Semua — "+deck.length+" kata kerja":LABELS[curCat]+" — "+deck.length+" kata");
+  go();
+}
+
+function go(){
+  idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
+  show("qv");hide("rv");hide("fv");
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+
+function nextRonde(){ronde++;deck=sh(toRev);go()}
+
+function showCard(){
+  rev=false;
+  var q=deck[idx];
+  document.getElementById("ctag").textContent=q.cat==="IRR"?"Irregular ⚡":"Regular ✓";
+  document.getElementById("mtag").textContent=q.v1+" = "+q.m;
+  // Render sentence with blank highlighted
+  var s=q.b;
+  document.getElementById("sentence").innerHTML=s.replace("___","<span class=\"blank\">___</span>");
+  document.getElementById("ans-word").textContent=q.aw;
+  document.getElementById("ans-form").textContent="Bentuk: "+q.af+" dari "+q.v1;
+  document.getElementById("av1").textContent=q.v1;
+  document.getElementById("av2").textContent=q.v2;
+  document.getElementById("av3").textContent=q.v3;
+  document.getElementById("aving").textContent=q.ving;
+  var nb=document.getElementById("notebox");
+  if(q.n){document.getElementById("notetext").textContent=q.n;nb.style.display=""}
+  else nb.style.display="none";
+  document.getElementById("ans").style.display="none";
+  document.getElementById("hint").style.display="flex";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  document.getElementById("pb").style.width=Math.round(idx/deck.length*100)+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="block";
+  document.getElementById("hint").style.display="none";
+  document.getElementById("ba").style.display="flex";
+  document.getElementById("card").className="card done";
+}
+
+function rate(r){
+  if(r==="p") cp++;
+  else if(r==="h"){ch++;toRev.push(deck[idx]);}
+  else{cbv++;toRev.push(deck[idx]);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+
+function upStats(){
+  document.getElementById("sp").textContent=cp;
+  document.getElementById("sh").textContent=ch;
+  document.getElementById("sb").textContent=cbv;
+}
+
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  hide("qv");
+  if(toRev.length===0){show("fv");return;}
+  show("rv");
+  document.getElementById("rp").textContent=cp;
+  document.getElementById("rh").textContent=ch;
+  document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri").textContent=pct>=90?"🌟":pct>=70?"😊":pct>=50?"💪":"😤";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":pct>=50?"Lumayan! Ulangi "+toRev.length+" kartu.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  toRev.forEach(function(v){
+    var d=document.createElement("div");d.className="ri";
+    d.innerHTML="<span class=\"ri-word\">"+v.v1+"</span><span class=\"ri-forms\">"+v.v2+" / "+v.v3+" / "+v.ving+"</span>";
+    rl.appendChild(d);
+  });
+  document.getElementById("rlw").style.display="";
+}
+
+function show(id){document.getElementById(id).style.display=""}
+function hide(id){document.getElementById(id).style.display="none"}
+
+setCat("ALL");
+</script>
+</body>
+</html>
