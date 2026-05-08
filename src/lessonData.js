@@ -5413,6 +5413,10 @@ const lesson9 = {
     { id: 42, char: '休息',   pinyin: 'xiūxi',      pos: 'V',    en: 'to rest; to take a break; closed',  id_: 'istirahat; tutup (toko/restoran)', example: '這家餐廳今天休息。', examplePinyin: 'Zhè jiā cāntīng jīntiān xiūxi.', exampleEn: 'This restaurant is closed today.' },
     { id: 43, char: '棒球',   pinyin: 'bàngqiú',    pos: 'N',    en: 'baseball',                         id_: 'bisbol', example: '棒球比賽的時間是從幾點到幾點？', examplePinyin: 'Bàngqiú bǐsài de shíjiān shì cóng jǐ diǎn dào jǐ diǎn?', exampleEn: 'What time is the baseball game from?' },
     { id: 44, char: '法國',   pinyin: 'Fǎguó',      pos: 'N',    en: 'France',                           id_: 'Prancis', example: '他從2013年到2017年都在法國學畫畫。', examplePinyin: 'Tā cóng 2013 nián dào 2017 nián dōu zài Fǎguó xué huàhuà.', exampleEn: 'He studied painting in France from 2013 to 2017.' },
+    { id: 45, char: '飯店',   pinyin: 'fàndiàn',    pos: 'N',    en: 'hotel (M:家)',                      id_: 'hotel', example: '我要怎麼到那家飯店？', examplePinyin: 'Wǒ yào zěnme dào nà jiā fàndiàn?', exampleEn: 'How do I get to that hotel?' },
+    { id: 46, char: '捷運',   pinyin: 'jiéyùn',     pos: 'N',    en: 'MRT; metro; subway',               id_: 'MRT; kereta bawah tanah', example: '你要先坐捷運，再坐公車。', examplePinyin: 'Nǐ yào xiān zuò jiéyùn, zài zuò gōngchē.', exampleEn: 'Take the MRT first, then take the bus.' },
+    { id: 47, char: '公車',   pinyin: 'gōngchē',    pos: 'N',    en: 'bus (M:輛)',                       id_: 'bus', example: '我每天坐公車去學校。', examplePinyin: 'Wǒ měitiān zuò gōngchē qù xuéxiào.', exampleEn: 'I take the bus to school every day.' },
+    { id: 48, char: '東西',   pinyin: 'dōngxi',     pos: 'N',    en: 'thing; stuff; item',               id_: 'barang; sesuatu', example: '我想先去百貨公司買東西。', examplePinyin: 'Wǒ xiǎng xiān qù bǎihuògōngsī mǎi dōngxi.', exampleEn: 'I want to go to the department store to shop first.' },
   ],
 
   phrases: [
@@ -5446,8 +5450,20 @@ const lesson9 = {
         { zh: '我明天從早上到晚上都沒有空，後天可以嗎？', pinyin: 'Wǒ míngtiān cóng zǎoshàng dào wǎnshàng dōu méi yǒu kòng, hòutiān kěyǐ ma?', en: 'I am not free from morning to night tomorrow. How about the day after tomorrow?' },
         { zh: '可是從四點到五點半我要上英文課。', pinyin: 'Kěshì cóng sì diǎn dào wǔ diǎn bàn wǒ yào shàng Yīngwén kè.', en: 'But I have English class from 4 to 5:30.' },
         { zh: '這家餐廳從二月五號到二月二十號休息。', pinyin: 'Zhè jiā cāntīng cóng èr yuè wǔ hào dào èr yuè èrshí hào xiūxi.', en: 'This restaurant is closed from February 5th to February 20th.' },
-        { zh: '棒球比賽的時間是從幾點到幾點？從一點到四點。', pinyin: 'Bàngqiú bǐsài de shíjiān shì cóng jǐ diǎn dào jǐ diǎn? Cóng yī diǎn dào sì diǎn.', en: 'What time is the baseball game from? From 1 to 4 o\'clock.' },
-        { zh: '他從2013年到2017年都在法國學畫畫嗎？', pinyin: 'Tā cóng 2013 nián dào 2017 nián dōu zài Fǎguó xué huàhuà ma?', en: 'Was he studying painting in France from 2013 to 2017?' },
+        { zh: '棒球的比賽是從一點到四點下午。', pinyin: 'Bàngqiú de bǐsài shì cóng yī diǎn dào sì diǎn xiàwǔ.', en: 'The baseball game is from 1 o\'clock to 4 in the afternoon.' },
+        { zh: '他從2013年到2017年都在法國學畫畫。', pinyin: 'Tā cóng 2013 nián dào 2017 nián dōu zài Fǎguó xué huàhuà.', en: 'He studied painting in France from 2013 to 2017.' },
+      ],
+    },
+    {
+      id: 'G3',
+      title: 'III. 先……再…… — First... Then...',
+      explanation: '先 (first/before) and 再 (then/afterwards) are used together to indicate a sequence of actions. 先 introduces the first action, and 再 introduces the next action that follows.',
+      pattern: 'S  先  V1(O),  再  V2(O)',
+      examples: [
+        { zh: '你們兩個人，誰先說？他先說，我再說。', pinyin: 'Nǐmen liǎng gè rén, shéi xiān shuō? Tā xiān shuō, wǒ zài shuō.', en: 'Between the two of you, who speaks first? He speaks first, then I speak.' },
+        { zh: '我要怎麼到那家飯店？你要先坐捷運，再坐公車。', pinyin: 'Wǒ yào zěnme dào nà jiā fàndiàn? Nǐ yào xiān zuò jiéyùn, zài zuò gōngchē.', en: 'How do I get to that hotel? You should take the MRT first, then take the bus.' },
+        { zh: '我想先去百貨公司買東西，再去朋友家。', pinyin: 'Wǒ xiǎng xiān qù bǎihuògōngsī mǎi dōngxi, zài qù péngyǒu jiā.', en: 'I want to go to the department store to shop first, then go to my friend\'s place.' },
+        { zh: '好。我先回宿舍做功課，再跟你一起去找他。', pinyin: 'Hǎo. Wǒ xiān huí sùshè zuò gōngkè, zài gēn nǐ yīqǐ qù zhǎo tā.', en: 'OK. I\'ll go back to the dorm to do homework first, then go find him with you.' },
       ],
     },
   ],
