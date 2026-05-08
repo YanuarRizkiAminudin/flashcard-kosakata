@@ -6,7 +6,7 @@ const flashcards = [
     id: 'MC1',
     category: 'Mandarin',
     icon: '📗',
-    title: '時代華語 TradisionalZ Chinese',
+    title: '時代華語 Tradisional Chinese',
     kartu: 8,
     level: 'BAB 1–8 · A1',
     route: '/lessons',
