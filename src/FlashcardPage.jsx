@@ -65,6 +65,15 @@ const flashcards = [
     level: 'Tebak bentuk verb · TOEIC 101–200',
     route: '/game/toeic-verb-guess',
   },
+  {
+    id: 7,
+    category: 'Grammar',
+    icon: '📋',
+    title: 'Pola Verb TOEIC/TOEFL',
+    kartu: 8,
+    level: 'Pemula · V1 V2 V3 Ving · Bahasa Indonesia',
+    route: '/game/toeic-verb-pattern',
+  },
 ]
 
 // ── Card ──────────────────────────────────────────────────────────────────────

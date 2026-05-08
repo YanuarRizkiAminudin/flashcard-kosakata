@@ -15,6 +15,7 @@ function App() {
       <Route path="/game/flashcard-mandarin" element={<GamePage file="flashcard_lengkap_intact/flashcard_lengkap_intact.html" title="Flashcard Mandarin INTACT" />} />
       <Route path="/game/toeic-vocabulary" element={<GamePage file="flashcard_lengkap_intact/toeic_vocabulary_flashcard.html" title="TOEIC Vocabulary" />} />
       <Route path="/game/toeic-verb-guess" element={<GamePage file="flashcard_lengkap_intact/toeic_verb_guess.html" title="TOEIC Verb V1/V2/V3/Ving" />} />
+      <Route path="/game/toeic-verb-pattern" element={<GamePage file="flashcard_lengkap_intact/toeic_verb_pattern.html" title="Pola Verb TOEIC/TOEFL" />} />
       <Route path="/voice" element={<VoicePage />} />
       <Route path="/toeic-test" element={<ToeicTestPage />} />
       <Route path="/lessons" element={<LessonListPage />} />

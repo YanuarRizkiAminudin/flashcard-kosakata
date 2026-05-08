@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEIC Grammar: Pola Verb</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px}
+#app{width:100%;max-width:520px}
+h1{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:3px}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:14px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.badge{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#e8e4dc;color:#8a8478}
+.ctr{font-size:13px;color:#8a8478}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem}
+.pbar{height:4px;border-radius:99px;transition:width .4s}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.9rem}
+
+/* CARD */
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 2px 14px rgba(0,0,0,.07);padding:1.4rem 1.2rem;margin-bottom:.8rem;position:relative;overflow:hidden;animation:fup .3s ease}
+@keyframes fup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px}
+
+.card-num{font-size:10px;font-weight:700;letter-spacing:1px;color:#8a8478;margin-bottom:.5rem;text-transform:uppercase}
+.card-title{font-family:"Lora",serif;font-size:22px;font-weight:700;color:#1a1814;margin-bottom:.3rem}
+.card-subtitle{font-size:13px;color:#8a8478;margin-bottom:1rem}
+
+/* SIGNAL BOX */
+.signal-box{background:#f8f9ff;border:1px solid #dde3ff;border-radius:12px;padding:.7rem .9rem;margin-bottom:.8rem}
+.signal-label{font-size:10px;font-weight:700;color:#3b5bdb;letter-spacing:.5px;margin-bottom:.4rem}
+.signal-list{list-style:none;padding:0}
+.signal-list li{font-size:13px;color:#374151;padding:3px 0;display:flex;align-items:flex-start;gap:6px}
+.signal-list li::before{content:"→";color:#3b5bdb;font-weight:700;flex-shrink:0}
+
+/* FORMULA */
+.formula-box{background:#fff3e0;border:1px solid #ffd8a8;border-radius:12px;padding:.6rem .9rem;margin-bottom:.8rem}
+.formula-label{font-size:10px;font-weight:700;color:#e67700;letter-spacing:.5px;margin-bottom:.3rem}
+.formula{font-family:"Lora",serif;font-size:15px;font-weight:700;color:#e67700}
+
+/* EXAMPLES */
+.ex-box{margin-bottom:.8rem}
+.ex-label{font-size:10px;font-weight:700;color:#2d7a4f;letter-spacing:.5px;margin-bottom:.4rem}
+.ex-item{background:#edf7f1;border:1px solid #a8d9bc;border-radius:10px;padding:.5rem .8rem;margin-bottom:.4rem}
+.ex-en{font-family:"Lora",serif;font-size:14px;color:#1a1814;margin-bottom:2px}
+.ex-en .highlight{color:#2d7a4f;font-weight:700;text-decoration:underline;text-decoration-color:#a8d9bc}
+.ex-id{font-size:12px;color:#5a7a6a;font-style:italic}
+
+/* TIP */
+.tip-box{background:#fff8e1;border:1px solid #ffe08a;border-radius:12px;padding:.6rem .9rem;margin-bottom:.8rem}
+.tip-label{font-size:10px;font-weight:700;color:#a05c00;letter-spacing:.5px;margin-bottom:.3rem}
+.tip-text{font-size:12px;color:#7a4800;line-height:1.6}
+
+/* TABLE */
+.vtable{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;border:1px solid #e8e4dc;margin-bottom:.8rem;font-size:12px}
+.vtable th{background:#f3f4f6;color:#374151;font-size:11px;font-weight:700;padding:7px 6px;text-align:center}
+.vtable td{padding:7px 6px;text-align:center;border-top:1px solid #e8e4dc;color:#374151}
+.vtable tr:nth-child(even) td{background:#f9fafb}
+.vtable .hl{font-weight:700;color:#3b5bdb}
+
+/* NAV BUTTONS */
+.nav-row{display:flex;gap:8px;margin-top:.4rem}
+.nav-btn{flex:1;padding:11px;border-radius:13px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-prev{background:#f3f4f6;color:#374151}.btn-prev:hover{background:#e5e7eb}
+.btn-next{color:#fff}.btn-next:hover{opacity:.9}
+.btn-prev:disabled{opacity:.35;cursor:not-allowed}
+
+/* PROGRESS DOTS */
+.dots{display:flex;gap:5px;justify-content:center;margin-bottom:1rem;flex-wrap:wrap}
+.dot-item{width:8px;height:8px;border-radius:50%;background:#e8e4dc;cursor:pointer;transition:all .2s}
+.dot-item.active{width:20px;border-radius:4px}
+.dot-item.seen{background:#a8d9bc}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>📚 TOEIC Grammar: Pola Verb</h1>
+  <div class="sub">8 pola penting · Untuk pemula · Bahasa Indonesia</div>
+
+  <div class="topbar">
+    <span class="badge" id="badge">Kartu 1</span>
+    <span class="ctr" id="ctr">1 / 8</span>
+  </div>
+  <div class="pbar-bg"><div class="pbar" id="pb" style="width:12.5%"></div></div>
+  <div class="plabels"><span id="pl">Mulai belajar</span><span id="pr">8 pola</span></div>
+
+  <div class="dots" id="dots"></div>
+
+  <div id="card-area"></div>
+
+  <div class="nav-row">
+    <button class="nav-btn btn-prev" id="btn-prev" onclick="go(-1)" disabled>← Sebelumnya</button>
+    <button class="nav-btn btn-next" id="btn-next" onclick="go(1)">Berikutnya →</button>
+  </div>
+</div>
+
+<script>
+var cards = [
+  {
+    color: "linear-gradient(90deg,#74c0fc,#3b5bdb)",
+    pbar: "#3b5bdb",
+    title: "V1 — Bentuk Dasar",
+    subtitle: "Kata kerja paling polos, tanpa tambahan apa-apa",
+    signals: [
+      "Setelah <b>will / would / can / could / should / must / may / might</b>",
+      "Setelah <b>to</b> (to + V1 = infinitive)",
+      "Kalimat perintah langsung",
+      "Subjek jamak (they, we, I, you) + present"
+    ],
+    formula: "will / can / should / must + V1",
+    examples: [
+      { en: "The company will <mark>implement</mark> a new policy.", id: "Perusahaan akan menerapkan kebijakan baru.", hl: "implement" },
+      { en: "You need <mark>to check</mark> the report.", id: "Kamu perlu memeriksa laporan itu.", hl: "to check" },
+      { en: "They <mark>deliver</mark> packages every day.", id: "Mereka mengirim paket setiap hari.", hl: "deliver" }
+    ],
+    tip: "💡 Lihat kata sebelumnya. Kalau ada will/can/should/must/to → langsung pakai V1 (bentuk dasar, tanpa -s/-ed/-ing)."
+  },
+  {
+    color: "linear-gradient(90deg,#ffa94d,#e67700)",
+    pbar: "#e67700",
+    title: "V2 — Bentuk Lampau",
+    subtitle: "Kejadian yang sudah selesai di masa lalu",
+    signals: [
+      "Ada kata waktu lampau: <b>yesterday, last week/month/year, ago, in 2020</b>",
+      "Kalimat cerita masa lalu tanpa kata bantu",
+      "Tidak ada have/has/had di depannya"
+    ],
+    formula: "yesterday / last / ago + V2",
+    examples: [
+      { en: "The CEO <mark>spoke</mark> about his career yesterday.", id: "CEO berbicara tentang kariernya kemarin.", hl: "spoke" },
+      { en: "The team <mark>decided</mark> to proceed last week.", id: "Tim memutuskan untuk melanjutkan minggu lalu.", hl: "decided" },
+      { en: "She <mark>flew</mark> back to Hong Kong two days ago.", id: "Dia terbang kembali ke Hong Kong dua hari lalu.", hl: "flew" }
+    ],
+    tip: "💡 Cari kata sinyal waktu lampau dulu (yesterday, last, ago). Kalau ada → pakai V2. Regular: +ed. Irregular: harus hafal (go→went, take→took).",
+    table: {
+      headers: ["Sinyal Waktu", "Contoh"],
+      rows: [
+        ["yesterday", "He spoke yesterday."],
+        ["last week/month/year", "She left last year."],
+        ["... ago", "They met 3 days ago."],
+        ["in + tahun lalu", "We opened in 2019."]
+      ]
+    }
+  },
+  {
+    color: "linear-gradient(90deg,#69db7c,#2d7a4f)",
+    pbar: "#2d7a4f",
+    title: "V3 — Setelah have/has/had",
+    subtitle: "Kejadian yang masih ada hubungannya dengan sekarang",
+    signals: [
+      "Setelah <b>have / has</b> → Present Perfect",
+      "Setelah <b>had</b> → Past Perfect",
+      "Setelah <b>be (is/am/are/was/were)</b> → Passive Voice"
+    ],
+    formula: "have / has / had + V3  |  be + V3 (passive)",
+    examples: [
+      { en: "Technologies have already <mark>begun</mark> to transform the industry.", id: "Teknologi sudah mulai mengubah industri.", hl: "begun" },
+      { en: "The meeting notes were accidentally <mark>deleted</mark>.", id: "Catatan rapat secara tidak sengaja terhapus.", hl: "deleted" },
+      { en: "The foyer has been <mark>renovated</mark>.", id: "Foyer sudah direnovasi.", hl: "renovated" }
+    ],
+    tip: "💡 Lihat kata sebelumnya. have/has/had → V3. be (is/are/was/were) → V3 (passive). Regular V3 = +ed. Irregular harus hafal (begin→begun, take→taken).",
+    table: {
+      headers: ["Pola", "Arti", "Contoh"],
+      rows: [
+        ["have/has + V3", "Sudah pernah / baru saja", "She has left."],
+        ["had + V3", "Sudah sebelum kejadian lain", "He had gone before I arrived."],
+        ["be + V3", "Kalimat pasif (di-/ter-)", "It was approved."]
+      ]
+    }
+  },
+  {
+    color: "linear-gradient(90deg,#da77f2,#9775fa)",
+    pbar: "#9775fa",
+    title: "V-ing — Sedang Berlangsung",
+    subtitle: "Aksi yang sedang terjadi saat itu",
+    signals: [
+      "Setelah <b>is / am / are / was / were</b> (be + V-ing)",
+      "Setelah kata kerja: <b>enjoy, keep, avoid, finish, consider, suggest</b>",
+      "Sebagai subjek kalimat (gerund)"
+    ],
+    formula: "is / am / are / was / were + V-ing",
+    examples: [
+      { en: "Project Earth Group is <mark>looking</mark> for ways to reduce emissions.", id: "Project Earth Group sedang mencari cara mengurangi emisi.", hl: "looking" },
+      { en: "You can feel like you are <mark>travelling</mark> the world.", id: "Kamu bisa merasa seperti sedang berkeliling dunia.", hl: "travelling" },
+      { en: "Please refrain from <mark>making</mark> phone calls.", id: "Harap menahan diri dari menelepon.", hl: "making" }
+    ],
+    tip: "💡 Lihat kata sebelumnya. is/am/are/was/were → V-ing. Juga setelah: enjoy, avoid, keep, finish, consider → V-ing. Rumus: V + -ing (double konsonan jika perlu)."
+  },
+  {
+    color: "linear-gradient(90deg,#ff8787,#c92a2a)",
+    pbar: "#c92a2a",
+    title: "Passive Voice — be + V3",
+    subtitle: "Subjek dikenai aksi, bukan melakukan aksi",
+    signals: [
+      "Subjek = penerima aksi (bukan pelaku)",
+      "Ada kata <b>by</b> (oleh) atau pelaku tidak disebutkan",
+      "Pola: <b>be + V3</b>"
+    ],
+    formula: "is/are/was/were/been + V3",
+    examples: [
+      { en: "The costumes were not <mark>received</mark> soon enough.", id: "Kostum tidak diterima cukup cepat.", hl: "received" },
+      { en: "Invoices will be <mark>generated</mark> automatically.", id: "Faktur akan dibuat secara otomatis.", hl: "generated" },
+      { en: "The space can accommodate up to 200 guests.", id: "Ruangan dapat menampung hingga 200 tamu.", hl: "" }
+    ],
+    tip: "💡 Tanya: siapa yang melakukan aksi? Kalau subjek = yang kena aksi → passive (be + V3). Contoh: 'The report was submitted' = laporan itu diserahkan (oleh seseorang).",
+    table: {
+      headers: ["Waktu", "Rumus Passive", "Contoh"],
+      rows: [
+        ["Present", "is/are + V3", "It is approved."],
+        ["Past", "was/were + V3", "It was deleted."],
+        ["Future", "will be + V3", "It will be sent."],
+        ["Perfect", "has/have been + V3", "It has been done."]
+      ]
+    }
+  },
+  {
+    color: "linear-gradient(90deg,#4dabf7,#1971c2)",
+    pbar: "#1971c2",
+    title: "V1+s/es — Subjek Tunggal",
+    subtitle: "Fakta umum atau kebiasaan, subjek = dia/itu (tunggal)",
+    signals: [
+      "Subjek tunggal: <b>he / she / it / nama orang / nama perusahaan</b>",
+      "Kalimat fakta umum atau rutinitas",
+      "Tidak ada kata bantu (will/can/dll)"
+    ],
+    formula: "He / She / It + V1+s/es",
+    examples: [
+      { en: "The magazine <mark>predicts</mark> that the price will rise.", id: "Majalah itu memprediksi bahwa harga akan naik.", hl: "predicts" },
+      { en: "His cooking <mark>reflects</mark> his Filipino heritage.", id: "Masakannya mencerminkan warisan Filipinanya.", hl: "reflects" },
+      { en: "The restaurant <mark>caters</mark> our events.", id: "Restoran itu melayani acara kami.", hl: "caters" }
+    ],
+    tip: "💡 Subjek = he/she/it/nama → tambah -s atau -es. Pengecualian: have → has, do → does, go → goes. Kalau subjek jamak (they/we) → V1 biasa tanpa -s.",
+    table: {
+      headers: ["Subjek", "Verb", "Contoh"],
+      rows: [
+        ["I / You / We / They", "V1 (tanpa -s)", "They deliver packages."],
+        ["He / She / It / Nama", "V1 + s/es", "She delivers packages."]
+      ]
+    }
+  },
+  {
+    color: "linear-gradient(90deg,#63e6be,#0ca678)",
+    pbar: "#0ca678",
+    title: "Ringkasan: 4 Sinyal Utama",
+    subtitle: "Cara cepat mengenali jawaban soal TOEIC/TOEFL",
+    signals: [
+      "<b>will/can/should/must/to</b> → V1",
+      "<b>yesterday/last/ago</b> → V2",
+      "<b>have/has/had</b> → V3",
+      "<b>is/am/are/was/were</b> → V-ing atau V3 (passive)"
+    ],
+    formula: "Lihat kata SEBELUM blank → tentukan bentuk verb",
+    examples: [
+      { en: "The team will ___ the software. → <mark>evaluate</mark> (V1)", id: "Setelah will → V1", hl: "evaluate" },
+      { en: "The notes were accidentally ___. → <mark>deleted</mark> (V3 passive)", id: "Setelah were → V3 passive", hl: "deleted" },
+      { en: "She has ___ to be very helpful. → <mark>proved</mark> (V3)", id: "Setelah has → V3", hl: "proved" }
+    ],
+    tip: "💡 Strategi soal: (1) Lihat kata sebelum blank. (2) Cocokkan dengan sinyal. (3) Pilih bentuk yang sesuai. Jangan langsung lihat pilihan jawaban dulu!",
+    table: {
+      headers: ["Sinyal", "Bentuk", "Contoh"],
+      rows: [
+        ["will/can/should/must/to", "V1", "will implement"],
+        ["yesterday/last/ago", "V2", "spoke yesterday"],
+        ["have/has/had", "V3", "has begun"],
+        ["is/are/was/were + aksi", "V-ing", "is looking"],
+        ["is/are/was/were + pasif", "V3", "was deleted"],
+        ["he/she/it + fakta", "V1+s", "predicts"]
+      ]
+    }
+  },
+  {
+    color: "linear-gradient(90deg,#ffd43b,#f59f00)",
+    pbar: "#f59f00",
+    title: "Latihan Cepat: Tebak Bentuknya!",
+    subtitle: "Baca kalimat → tebak bentuk verb yang tepat → cek jawaban",
+    signals: [
+      "The company ___ (implement) a new policy next month.",
+      "She ___ (fly) back to Hong Kong last night.",
+      "The report has been ___ (approve) by the manager.",
+      "They are ___ (look) for a new office.",
+      "He ___ (predict) that sales will increase."
+    ],
+    formula: "Jawaban: will implement (V1) | flew (V2) | approved (V3) | looking (V-ing) | predicts (V1+s)",
+    examples: [
+      { en: "will <mark>implement</mark> → setelah will → V1", id: "✅ Sinyal: will", hl: "implement" },
+      { en: "<mark>flew</mark> → last night = lampau → V2", id: "✅ Sinyal: last night", hl: "flew" },
+      { en: "has been <mark>approved</mark> → have been + V3 passive", id: "✅ Sinyal: has been", hl: "approved" },
+      { en: "are <mark>looking</mark> → are + V-ing", id: "✅ Sinyal: are", hl: "looking" },
+      { en: "He <mark>predicts</mark> → subjek tunggal → V1+s", id: "✅ Sinyal: He (tunggal)", hl: "predicts" }
+    ],
+    tip: "🎯 Kamu sudah tahu 4 pola utama! Latihan terus dengan flashcard Verb Guess untuk hafal bentuk V1/V2/V3/Ving setiap kata kerja."
+  }
+];
+
+var cur = 0;
+
+function renderDots() {
+  var d = document.getElementById("dots");
+  d.innerHTML = "";
+  cards.forEach(function(c, i) {
+    var el = document.createElement("div");
+    el.className = "dot-item" + (i === cur ? " active" : (i < cur ? " seen" : ""));
+    el.style.background = i === cur ? c.pbar : (i < cur ? "#a8d9bc" : "#e8e4dc");
+    el.onclick = (function(idx){ return function(){ cur=idx; render(); }; })(i);
+    d.appendChild(el);
+  });
+}
+
+function render() {
+  var c = cards[cur];
+  document.getElementById("badge").textContent = "Kartu " + (cur+1);
+  document.getElementById("ctr").textContent = (cur+1) + " / " + cards.length;
+  document.getElementById("pb").style.width = Math.round((cur+1)/cards.length*100) + "%";
+  document.getElementById("pb").style.background = c.pbar;
+  document.getElementById("pl").textContent = cur === cards.length-1 ? "Selesai! 🎉" : (cur+1) + " dari " + cards.length + " pola";
+  document.getElementById("btn-prev").disabled = cur === 0;
+  document.getElementById("btn-next").textContent = cur === cards.length-1 ? "🔁 Ulangi" : "Berikutnya →";
+  document.getElementById("btn-next").style.background = c.pbar;
+
+  renderDots();
+
+  // Build card HTML
+  var html = '<div class="card" style="--accent:'+c.pbar+'">';
+  html += '<div style="position:absolute;top:0;left:0;right:0;height:4px;background:'+c.color+'"></div>';
+  html += '<div class="card-num">Pola ' + (cur+1) + ' dari ' + cards.length + '</div>';
+  html += '<div class="card-title">' + c.title + '</div>';
+  html += '<div class="card-subtitle">' + c.subtitle + '</div>';
+
+  // Signals
+  html += '<div class="signal-box"><div class="signal-label">🔍 KAPAN DIPAKAI</div><ul class="signal-list">';
+  c.signals.forEach(function(s){ html += '<li>' + s + '</li>'; });
+  html += '</ul></div>';
+
+  // Formula
+  html += '<div class="formula-box"><div class="formula-label">📐 RUMUS</div><div class="formula">' + c.formula + '</div></div>';
+
+  // Table if exists
+  if (c.table) {
+    html += '<table class="vtable"><thead><tr>';
+    c.table.headers.forEach(function(h){ html += '<th>' + h + '</th>'; });
+    html += '</tr></thead><tbody>';
+    c.table.rows.forEach(function(r){
+      html += '<tr>';
+      r.forEach(function(cell, ci){ html += '<td' + (ci===0?'':' class="hl"') + '>' + cell + '</td>'; });
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+  }
+
+  // Examples
+  html += '<div class="ex-box"><div class="ex-label">✏️ CONTOH KALIMAT</div>';
+  c.examples.forEach(function(ex){
+    var enText = ex.hl ? ex.en.replace(new RegExp('(<mark>)?'+ex.hl+'(</mark>)?','g'), '<span class="highlight">'+ex.hl+'</span>') : ex.en;
+    // handle already-marked
+    enText = ex.en.replace(/<mark>/g,'<span class="highlight">').replace(/<\/mark>/g,'</span>');
+    html += '<div class="ex-item"><div class="ex-en">' + enText + '</div><div class="ex-id">' + ex.id + '</div></div>';
+  });
+  html += '</div>';
+
+  // Tip
+  html += '<div class="tip-box"><div class="tip-label">⚡ TIPS CEPAT</div><div class="tip-text">' + c.tip + '</div></div>';
+
+  html += '</div>';
+  document.getElementById("card-area").innerHTML = html;
+}
+
+function go(dir) {
+  if (dir === 1 && cur === cards.length - 1) { cur = 0; }
+  else { cur = Math.max(0, Math.min(cards.length-1, cur+dir)); }
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+render();
+</script>
+</body>
+</html>
