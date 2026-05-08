@@ -5399,6 +5399,13 @@ const lesson9 = {
     { id: 28, char: '一起',   pinyin: 'yīqǐ',       pos: 'Adv',  en: 'together',                 id_: 'bersama-sama' },
     { id: 29, char: '擺脫',   pinyin: 'bǎituō',     pos: 'V',    en: 'to get rid of; to break free from', id_: 'terbebas dari; melepaskan diri', example: '我想擺脫這個壞習慣。', examplePinyin: 'Wǒ xiǎng bǎituō zhège huài xíguàn.', exampleEn: 'I want to get rid of this bad habit.' },
     { id: 30, char: '幹嘛',   pinyin: 'gànma',      pos: 'Phr',  en: 'what are you doing? why? what for?', id_: 'mau ngapain? kenapa? buat apa?', example: '你幹嘛這樣說？', examplePinyin: 'Nǐ gànma zhèyàng shuō?', exampleEn: 'Why do you say that?' },
+    { id: 31, char: '在',     pinyin: 'zài',        pos: 'Adv',  en: 'in the process of (ongoing action)', id_: 'sedang (menunjukkan aksi berlangsung)', example: '他在上書法課。', examplePinyin: 'Tā zài shàng shūfǎ kè.', exampleEn: 'He is in calligraphy class.' },
+    { id: 32, char: '騎',     pinyin: 'qí',         pos: 'V',    en: 'to ride (bicycle, horse)',          id_: 'mengendarai; naik (sepeda, kuda)', example: '他們在騎腳踏車。', examplePinyin: 'Tāmen zài qí jiǎotàchē.', exampleEn: 'They are riding bicycles.' },
+    { id: 33, char: '腳踏車', pinyin: 'jiǎotàchē',  pos: 'N',    en: 'bicycle (M:輛)',                    id_: 'sepeda' },
+    { id: 34, char: '運動',   pinyin: 'yùndòng',    pos: 'V/N',  en: 'to exercise; sports',              id_: 'berolahraga; olahraga', example: '你哥哥在做什麼？他在運動。', examplePinyin: 'Nǐ gēgē zài zuò shénme? Tā zài yùndòng.', exampleEn: 'What is your older brother doing? He is exercising.' },
+    { id: 35, char: '打籃球', pinyin: 'dǎ lánqiú',  pos: 'V-sep',en: 'to play basketball',               id_: 'bermain basket', example: '他們在打籃球。', examplePinyin: 'Tāmen zài dǎ lánqiú.', exampleEn: 'They are playing basketball.' },
+    { id: 36, char: '跳日本舞', pinyin: 'tiào Rìběn wǔ', pos: 'V', en: 'to dance Japanese dance',       id_: 'menari tari Jepang', example: '他們在跳日本舞。', examplePinyin: 'Tāmen zài tiào Rìběn wǔ.', exampleEn: 'They are dancing Japanese dance.' },
+    { id: 37, char: '畫畫',   pinyin: 'huàhuà',     pos: 'V-sep',en: 'to draw; to paint',               id_: 'menggambar; melukis', example: '這個孩子在畫畫。', examplePinyin: 'Zhège háizi zài huàhuà.', exampleEn: 'This child is drawing.' },
   ],
 
   phrases: [
@@ -5410,11 +5417,15 @@ const lesson9 = {
   grammar: [
     {
       id: 'G1',
-      title: 'I. — (coming soon)',
-      explanation: 'Grammar untuk BAB 9 akan ditambahkan.',
-      pattern: '—',
+      title: 'I. "在 V" Indicating Ongoing Actions',
+      explanation: '"在 V" indicates the progressive aspect of an action — something is currently happening. It is equivalent to "is/are + V-ing" in English.',
+      pattern: 'S  在  V(O)',
       examples: [
-        { zh: '—', pinyin: '—', en: '—' },
+        { zh: '他們在打籃球。', pinyin: 'Tāmen zài dǎ lánqiú.', en: 'They are playing basketball.' },
+        { zh: '你在做什麼？我在做功課。', pinyin: 'Nǐ zài zuò shénme? Wǒ zài zuò gōngkè.', en: 'What are you doing? I am doing homework.' },
+        { zh: '他們在做什麼？他們在騎腳踏車。', pinyin: 'Tāmen zài zuò shénme? Tāmen zài qí jiǎotàchē.', en: 'What are they doing? They are riding bicycles.' },
+        { zh: '你哥哥在做什麼？他在運動。', pinyin: 'Nǐ gēgē zài zuò shénme? Tā zài yùndòng.', en: 'What is your older brother doing? He is exercising.' },
+        { zh: '現在他在上書法課。', pinyin: 'Xiànzài tā zài shàng shūfǎ kè.', en: 'He is in calligraphy class right now.' },
       ],
     },
   ],
