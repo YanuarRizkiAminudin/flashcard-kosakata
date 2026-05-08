@@ -5398,6 +5398,7 @@ const lesson9 = {
     { id: 27, char: '再',     pinyin: 'zài',        pos: 'Adv',  en: 'then; again; afterwards',  id_: 'lalu; kemudian; lagi' },
     { id: 28, char: '一起',   pinyin: 'yīqǐ',       pos: 'Adv',  en: 'together',                 id_: 'bersama-sama' },
     { id: 29, char: '擺脫',   pinyin: 'bǎituō',     pos: 'V',    en: 'to get rid of; to break free from', id_: 'terbebas dari; melepaskan diri', example: '我想擺脫這個壞習慣。', examplePinyin: 'Wǒ xiǎng bǎituō zhège huài xíguàn.', exampleEn: 'I want to get rid of this bad habit.' },
+    { id: 30, char: '幹嘛',   pinyin: 'gànma',      pos: 'Phr',  en: 'what are you doing? why? what for?', id_: 'mau ngapain? kenapa? buat apa?', example: '你幹嘛這樣說？', examplePinyin: 'Nǐ gànma zhèyàng shuō?', exampleEn: 'Why do you say that?' },
   ],
 
   phrases: [
