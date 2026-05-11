@@ -1,0 +1,1054 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEFL iBT Simulation — Listening & Reading</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#eef2f7;font-family:'DM Sans',sans-serif;min-height:100vh;color:#111827}
+
+/* ── TOPBAR ── */
+.topbar{position:sticky;top:0;z-index:100;background:#1e3a5f;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;gap:16px;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.topbar-left{display:flex;align-items:center;gap:14px}
+.back-btn{padding:7px 14px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.back-btn:hover{background:rgba(255,255,255,.25)}
+.test-label{font-size:15px;font-weight:700;letter-spacing:.3px}
+.section-badge{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3)}
+
+/* ── TIMER ── */
+.timer-wrap{display:flex;align-items:center;gap:8px}
+.timer-label{font-size:11px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.5px}
+.timer{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px;color:#fff;min-width:80px;text-align:right}
+.timer.warn{color:#fbbf24}
+.timer.danger{color:#f87171;animation:pulse .8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ── PROGRESS ── */
+.progress-bar-wrap{background:rgba(255,255,255,.15);height:4px;border-radius:99px;overflow:hidden;width:120px}
+.progress-bar-fill{height:4px;background:linear-gradient(90deg,#60a5fa,#a78bfa);border-radius:99px;transition:width .3s}
+
+/* ── SECTION SWITCHER ── */
+.section-tabs{display:flex;background:#fff;border-bottom:2px solid #e5e7eb;padding:0 24px}
+.sec-tab{padding:14px 20px;border:none;background:transparent;font-size:13px;font-weight:600;color:#9ca3af;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;display:flex;align-items:center;gap:6px}
+.sec-tab.active{color:#1e3a5f;border-bottom-color:#1e3a5f}
+.sec-tab .tab-count{font-size:11px;background:#e5e7eb;border-radius:99px;padding:2px 7px;font-weight:700}
+.sec-tab.active .tab-count{background:#dbeafe;color:#1e40af}
+.sec-tab.done .tab-count{background:#d1fae5;color:#065f46}
+
+/* ── MAIN LAYOUT ── */
+.main{max-width:820px;margin:0 auto;padding:28px 20px 100px;display:flex;flex-direction:column;gap:18px}
+
+/* ── SECTION INTRO ── */
+.section-intro{background:#fff;border-radius:16px;padding:28px 28px;border:1px solid #e5e7eb;text-align:center}
+.section-intro h2{font-size:22px;font-weight:800;color:#1e3a5f;margin-bottom:8px}
+.section-intro p{font-size:14px;color:#6b7280;line-height:1.7;max-width:520px;margin:0 auto 20px}
+.intro-meta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.meta-pill{background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:8px 16px;font-size:13px;font-weight:600;color:#3730a3}
+.start-btn{padding:14px 40px;background:#1e3a5f;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
+.start-btn:hover{background:#1e40af;transform:scale(1.02)}
+
+/* ── AUDIO PLAYER ── */
+.audio-block{background:#fff;border-radius:14px;padding:18px 20px;border:1px solid #e5e7eb;display:flex;flex-direction:column;gap:10px}
+.audio-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6b7280}
+.audio-player-row{display:flex;align-items:center;gap:12px}
+.audio-play-btn{width:44px;height:44px;border-radius:50%;background:#1e3a5f;border:none;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.audio-play-btn:hover{background:#1e40af}
+.audio-progress{flex:1;height:6px;background:#e5e7eb;border-radius:99px;cursor:pointer;position:relative}
+.audio-progress-fill{height:6px;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:99px;pointer-events:none;transition:width .1s linear}
+.audio-time{font-size:12px;color:#9ca3af;font-variant-numeric:tabular-nums;white-space:nowrap}
+.audio-note{font-size:12px;color:#f59e0b;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px}
+
+/* ── PASSAGE ── */
+.passage-block{background:#fff;border-radius:14px;padding:20px 22px;border:1px solid #e5e7eb}
+.passage-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6b7280;margin-bottom:10px}
+.passage-text{font-size:14px;color:#374151;line-height:1.9;white-space:pre-line;background:#f9fafb;border-radius:10px;padding:16px;border:1px solid #f3f4f6;max-height:320px;overflow-y:auto}
+
+/* ── QUESTION CARD ── */
+.q-header-row{display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;padding:12px 16px;border:1px solid #e5e7eb}
+.q-counter{font-size:14px;font-weight:700;color:#111827}
+.q-section-chip{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:99px}
+.chip-listening{background:#dbeafe;color:#1e40af}
+.chip-reading{background:#d1fae5;color:#065f46}
+.q-answered-info{font-size:13px;color:#9ca3af;margin-left:auto}
+
+.progress-strip{height:4px;background:#e5e7eb;border-radius:99px;overflow:hidden}
+.progress-strip-fill{height:4px;background:linear-gradient(90deg,#3b82f6,#8b5cf6);border-radius:99px;transition:width .3s}
+
+.question-card{background:#fff;border-radius:14px;padding:20px 22px;border:1px solid #e5e7eb}
+.q-sentence{font-size:15px;color:#111827;line-height:1.7;margin-bottom:14px;font-weight:500}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{padding:11px 16px;border-radius:10px;border:1.5px solid #e5e7eb;background:#fff;font-size:14px;color:#374151;cursor:pointer;text-align:left;transition:all .15s;font-family:'DM Sans',sans-serif}
+.opt:hover{border-color:#6b7280;background:#f3f4f6}
+.opt.selected{border-color:#3b82f6;background:#eff6ff;font-weight:600;color:#1e40af}
+.opt.correct{border-color:#16a34a;background:#f0fdf4;color:#15803d;font-weight:600}
+.opt.wrong{border-color:#dc2626;background:#fef2f2;color:#dc2626;font-weight:600}
+
+/* ── NAV ── */
+.nav-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav-btn{padding:12px 24px;border-radius:10px;border:1.5px solid #e5e7eb;background:#fff;font-size:14px;font-weight:600;color:#374151;cursor:pointer;transition:all .2s}
+.nav-btn:hover:not(:disabled){border-color:#1e3a5f;color:#1e3a5f}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed}
+.nav-btn.next{background:#1e3a5f;color:#fff;border-color:#1e3a5f}
+.nav-btn.next:hover:not(:disabled){background:#1e40af}
+.nav-btn.submit-all{background:#059669;color:#fff;border-color:#059669;padding:12px 28px}
+.nav-btn.submit-all:hover{background:#047857}
+
+/* ── DOTS ── */
+.dots-nav{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
+.dot-btn{width:10px;height:10px;border-radius:50%;border:none;background:#e5e7eb;cursor:pointer;transition:all .15s;padding:0}
+.dot-btn.dot-answered{background:#93c5fd}
+.dot-btn.dot-active{background:#1e3a5f;transform:scale(1.4)}
+.dot-btn.dot-correct{background:#86efac}
+.dot-btn.dot-wrong{background:#fca5a5}
+
+/* ── RESULT ── */
+.result-wrap{max-width:820px;margin:0 auto;padding:40px 20px 80px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.result-card{width:100%;background:#fff;border-radius:20px;padding:32px 28px;border:1px solid #e5e7eb;text-align:center}
+.result-emoji{font-size:64px;margin-bottom:8px}
+.result-title{font-size:28px;font-weight:800;color:#111827;margin-bottom:4px}
+.result-sub{font-size:15px;color:#6b7280;margin-bottom:24px}
+.score-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px}
+.score-box{border-radius:14px;padding:16px 12px;border:1px solid}
+.score-box .sn{font-size:28px;font-weight:800}
+.score-box .sl{font-size:12px;font-weight:600;margin-top:4px;opacity:.8}
+.sb-total{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
+.sb-listen{background:#dbeafe;border-color:#93c5fd;color:#1d4ed8}
+.sb-read{background:#d1fae5;border-color:#6ee7b7;color:#065f46}
+.toefl-score-note{font-size:13px;color:#6b7280;background:#f9fafb;border-radius:10px;padding:12px 16px;margin-bottom:20px;line-height:1.6}
+.review-list{width:100%;display:flex;flex-direction:column;gap:5px;max-height:360px;overflow-y:auto;margin-bottom:20px;text-align:left}
+.review-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:10px;font-size:13px}
+.r-correct{background:#f0fdf4;border:1px solid #86efac}
+.r-wrong{background:#fef2f2;border:1px solid #fca5a5}
+.r-num{font-weight:700;min-width:32px;color:#374151;flex-shrink:0}
+.r-sec{font-size:10px;font-weight:700;padding:2px 6px;border-radius:99px;flex-shrink:0;margin-top:1px}
+.r-sec-l{background:#dbeafe;color:#1e40af}
+.r-sec-r{background:#d1fae5;color:#065f46}
+.r-your{flex:1;color:#374151}
+.r-ans{font-weight:600;flex-shrink:0}
+.r-correct .r-ans{color:#16a34a}
+.r-wrong .r-ans{color:#dc2626}
+.retry-btn{padding:14px 40px;background:#1e3a5f;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
+.retry-btn:hover{background:#1e40af;transform:scale(1.02)}
+
+/* ── TIME UP OVERLAY ── */
+.timeup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;display:flex;align-items:center;justify-content:center;display:none}
+.timeup-box{background:#fff;border-radius:20px;padding:40px 36px;text-align:center;max-width:380px;width:90%}
+.timeup-box h2{font-size:24px;font-weight:800;color:#dc2626;margin-bottom:8px}
+.timeup-box p{font-size:14px;color:#6b7280;margin-bottom:24px;line-height:1.6}
+.timeup-btn{padding:14px 36px;background:#1e3a5f;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer}
+
+@media(max-width:600px){
+  .topbar{padding:10px 14px;gap:10px}
+  .test-label{font-size:13px}
+  .timer{font-size:18px}
+  .score-grid{grid-template-columns:1fr 1fr}
+  .section-tabs{padding:0 12px}
+  .sec-tab{padding:12px 12px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- TIME UP OVERLAY -->
+<div class="timeup-overlay" id="timeup-overlay">
+  <div class="timeup-box">
+    <div style="font-size:48px;margin-bottom:12px">⏰</div>
+    <h2>Time is Up!</h2>
+    <p>Your 2-hour test session has ended. Your answers have been submitted automatically.</p>
+    <button class="timeup-btn" onclick="forceSubmit()">See My Results</button>
+  </div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="back-btn" onclick="history.back()">← Back</button>
+    <span class="test-label">TOEFL iBT Simulation</span>
+    <span class="section-badge" id="section-badge">Listening</span>
+  </div>
+  <div class="timer-wrap">
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="timer-progress" style="width:100%"></div></div>
+    <span class="timer-label">TIME</span>
+    <span class="timer" id="timer">2:00:00</span>
+  </div>
+</div>
+
+<!-- SECTION TABS -->
+<div class="section-tabs" id="section-tabs">
+  <button class="sec-tab active" id="tab-listening" onclick="switchSection('listening')">
+    🎧 Listening <span class="tab-count" id="tab-l-count">0/34</span>
+  </button>
+  <button class="sec-tab" id="tab-reading" onclick="switchSection('reading')">
+    📖 Reading <span class="tab-count" id="tab-r-count">0/36</span>
+  </button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main-content"></div>
+
+<!-- RESULT -->
+<div id="result-content" style="display:none"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA — LISTENING (Q1-34)  |  READING (Q35-70)
+// Replace audio src with your actual file when ready
+// ═══════════════════════════════════════════════════════════
+
+var LISTENING = [
+  // ── Conversation 1 (Q1-5) ──
+  { id:1, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 1',
+    passage:'[Listen to a conversation between a student and a professor about a research paper.]',
+    text:'1. What is the main topic of the conversation?',
+    opts:['(A) The student wants to change her major','(B) The student is asking for an extension on her paper','(C) The professor is explaining the grading rubric','(D) The student is requesting feedback on her draft'],
+    answer:'(D) The student is requesting feedback on her draft' },
+  { id:2, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 1',
+    passage:'[Listen to a conversation between a student and a professor about a research paper.]',
+    text:'2. What does the professor suggest the student do first?',
+    opts:['(A) Rewrite the introduction','(B) Add more sources to the bibliography','(C) Narrow down the thesis statement','(D) Submit the paper as it is'],
+    answer:'(C) Narrow down the thesis statement' },
+  { id:3, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 1',
+    passage:'[Listen to a conversation between a student and a professor about a research paper.]',
+    text:'3. What does the professor imply about the student\'s research?',
+    opts:['(A) It is too broad to be useful','(B) It shows strong analytical thinking','(C) It lacks sufficient evidence','(D) It is well-organized but too short'],
+    answer:'(B) It shows strong analytical thinking' },
+  { id:4, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 1',
+    passage:'[Listen to a conversation between a student and a professor about a research paper.]',
+    text:'4. Why does the student mention the library database?',
+    opts:['(A) To explain why she could not find sources','(B) To show she has already done extensive research','(C) To ask the professor for access','(D) To complain about limited resources'],
+    answer:'(B) To show she has already done extensive research' },
+  { id:5, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 1',
+    passage:'[Listen to a conversation between a student and a professor about a research paper.]',
+    text:'5. What will the student most likely do next?',
+    opts:['(A) Visit the writing center','(B) Resubmit the paper immediately','(C) Revise the thesis and return for another meeting','(D) Drop the course'],
+    answer:'(C) Revise the thesis and return for another meeting' },
+
+  // ── Lecture 1 (Q6-11) ──
+  { id:6, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 1 — Biology',
+    passage:'[Listen to part of a lecture in a biology class about animal migration patterns.]',
+    text:'6. What is the lecture mainly about?',
+    opts:['(A) How animals navigate using the stars','(B) The role of magnetic fields in animal migration','(C) Why some animals do not migrate','(D) The economic impact of bird migration'],
+    answer:'(B) The role of magnetic fields in animal migration' },
+  { id:7, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 1 — Biology',
+    passage:'[Listen to part of a lecture in a biology class about animal migration patterns.]',
+    text:'7. According to the professor, what do magnetite crystals do?',
+    opts:['(A) Help animals store energy for long journeys','(B) Allow animals to detect Earth\'s magnetic field','(C) Protect animals from predators during migration','(D) Regulate body temperature in cold climates'],
+    answer:'(B) Allow animals to detect Earth\'s magnetic field' },
+  { id:8, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 1 — Biology',
+    passage:'[Listen to part of a lecture in a biology class about animal migration patterns.]',
+    text:'8. What example does the professor use to illustrate magnetic navigation?',
+    opts:['(A) Monarch butterflies','(B) Arctic terns','(C) Humpback whales','(D) Sea turtles'],
+    answer:'(D) Sea turtles' },
+  { id:9, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 1 — Biology',
+    passage:'[Listen to part of a lecture in a biology class about animal migration patterns.]',
+    text:'9. What does the professor say about birds that migrate at night?',
+    opts:['(A) They rely entirely on star patterns','(B) They use both magnetic cues and star patterns','(C) They are more likely to get lost than daytime migrants','(D) They have larger magnetite deposits than other birds'],
+    answer:'(B) They use both magnetic cues and star patterns' },
+  { id:10, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 1 — Biology',
+    passage:'[Listen to part of a lecture in a biology class about animal migration patterns.]',
+    text:'10. What can be inferred about animals that lose their magnetic sense?',
+    opts:['(A) They adapt by using visual landmarks','(B) They stop migrating altogether','(C) Their migration routes become less accurate','(D) They develop stronger eyesight'],
+    answer:'(C) Their migration routes become less accurate' },
+  { id:11, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 1 — Biology',
+    passage:'[Listen to part of a lecture in a biology class about animal migration patterns.]',
+    text:'11. What is the professor\'s attitude toward recent research on this topic?',
+    opts:['(A) Skeptical — the findings are not yet reliable','(B) Enthusiastic — new discoveries are expanding the field','(C) Neutral — the research is ongoing with no conclusions','(D) Critical — the methods used are flawed'],
+    answer:'(B) Enthusiastic — new discoveries are expanding the field' },
+
+  // ── Conversation 2 (Q12-16) ──
+  { id:12, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 2',
+    passage:'[Listen to a conversation between two students discussing a group project.]',
+    text:'12. What problem do the students discuss?',
+    opts:['(A) One member has not been contributing to the project','(B) They cannot agree on the project topic','(C) The deadline has been moved up','(D) Their professor rejected their proposal'],
+    answer:'(A) One member has not been contributing to the project' },
+  { id:13, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 2',
+    passage:'[Listen to a conversation between two students discussing a group project.]',
+    text:'13. What does the woman suggest doing about the situation?',
+    opts:['(A) Inform the professor immediately','(B) Talk to the group member directly first','(C) Divide the missing work between themselves','(D) Request a new group assignment'],
+    answer:'(B) Talk to the group member directly first' },
+  { id:14, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 2',
+    passage:'[Listen to a conversation between two students discussing a group project.]',
+    text:'14. What does the man say about the project deadline?',
+    opts:['(A) It has already passed','(B) It is in two weeks','(C) It is next Friday','(D) It can be extended'],
+    answer:'(C) It is next Friday' },
+  { id:15, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 2',
+    passage:'[Listen to a conversation between two students discussing a group project.]',
+    text:'15. What does the woman mean when she says "we can\'t carry the whole team"?',
+    opts:['(A) The project is too heavy to complete alone','(B) It is unfair for only two people to do all the work','(C) They need more team members to finish','(D) The professor should reduce the workload'],
+    answer:'(B) It is unfair for only two people to do all the work' },
+  { id:16, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 2',
+    passage:'[Listen to a conversation between two students discussing a group project.]',
+    text:'16. What will the students most likely do next?',
+    opts:['(A) Email the professor about the problem','(B) Meet with the absent group member','(C) Submit the project without the missing section','(D) Ask another student to join their group'],
+    answer:'(B) Meet with the absent group member' },
+
+  // ── Lecture 2 (Q17-22) ──
+  { id:17, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 2 — History',
+    passage:'[Listen to part of a lecture in a history class about the Industrial Revolution.]',
+    text:'17. What aspect of the Industrial Revolution does the professor focus on?',
+    opts:['(A) The political causes of industrialization','(B) The social effects on the working class','(C) The role of steam power in transportation','(D) The decline of agricultural economies'],
+    answer:'(B) The social effects on the working class' },
+  { id:18, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 2 — History',
+    passage:'[Listen to part of a lecture in a history class about the Industrial Revolution.]',
+    text:'18. According to the professor, what was a major consequence of urbanization?',
+    opts:['(A) Improved living standards for all workers','(B) Overcrowding and poor sanitation in cities','(C) A decrease in factory production','(D) Greater political power for the working class'],
+    answer:'(B) Overcrowding and poor sanitation in cities' },
+  { id:19, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 2 — History',
+    passage:'[Listen to part of a lecture in a history class about the Industrial Revolution.]',
+    text:'19. What does the professor say about child labor during this period?',
+    opts:['(A) It was illegal in most countries','(B) It was widely practiced and poorly regulated','(C) It was limited to agricultural work','(D) It was supported by labor unions'],
+    answer:'(B) It was widely practiced and poorly regulated' },
+  { id:20, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 2 — History',
+    passage:'[Listen to part of a lecture in a history class about the Industrial Revolution.]',
+    text:'20. Why does the professor mention the Luddite movement?',
+    opts:['(A) To show that workers supported technological progress','(B) As an example of resistance to industrialization','(C) To explain how machines improved working conditions','(D) To describe the origins of trade unions'],
+    answer:'(B) As an example of resistance to industrialization' },
+  { id:21, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 2 — History',
+    passage:'[Listen to part of a lecture in a history class about the Industrial Revolution.]',
+    text:'21. What does the professor imply about the long-term impact of the Industrial Revolution?',
+    opts:['(A) Its negative effects outweighed its benefits','(B) It had no lasting impact on modern society','(C) It laid the foundation for modern economic systems','(D) It was limited to Western Europe'],
+    answer:'(C) It laid the foundation for modern economic systems' },
+  { id:22, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 2 — History',
+    passage:'[Listen to part of a lecture in a history class about the Industrial Revolution.]',
+    text:'22. What does the professor suggest students do for the next class?',
+    opts:['(A) Read chapters 5 and 6 of the textbook','(B) Watch a documentary about factory conditions','(C) Write a one-page reflection on urbanization','(D) Research a specific industrial city'],
+    answer:'(A) Read chapters 5 and 6 of the textbook' },
+
+  // ── Lecture 3 (Q23-28) ──
+  { id:23, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 3 — Psychology',
+    passage:'[Listen to part of a lecture in a psychology class about memory formation.]',
+    text:'23. What is the main subject of the lecture?',
+    opts:['(A) How stress affects academic performance','(B) The stages of memory encoding and retrieval','(C) The difference between short-term and long-term memory','(D) How sleep deprivation impairs cognitive function'],
+    answer:'(B) The stages of memory encoding and retrieval' },
+  { id:24, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 3 — Psychology',
+    passage:'[Listen to part of a lecture in a psychology class about memory formation.]',
+    text:'24. According to the professor, what happens during the consolidation stage?',
+    opts:['(A) New information enters working memory','(B) Memories are transferred from short-term to long-term storage','(C) The brain deletes unnecessary information','(D) Emotional memories are separated from factual ones'],
+    answer:'(B) Memories are transferred from short-term to long-term storage' },
+  { id:25, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 3 — Psychology',
+    passage:'[Listen to part of a lecture in a psychology class about memory formation.]',
+    text:'25. What role does the hippocampus play in memory?',
+    opts:['(A) It stores all long-term memories permanently','(B) It processes emotional responses to memories','(C) It is critical for forming new memories','(D) It controls the retrieval of procedural memories'],
+    answer:'(C) It is critical for forming new memories' },
+  { id:26, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 3 — Psychology',
+    passage:'[Listen to part of a lecture in a psychology class about memory formation.]',
+    text:'26. What does the professor say about the "spacing effect"?',
+    opts:['(A) Studying in long sessions is more effective than short ones','(B) Spreading study sessions over time improves retention','(C) Spacing only helps with procedural memory','(D) The effect has not been proven in controlled studies'],
+    answer:'(B) Spreading study sessions over time improves retention' },
+  { id:27, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 3 — Psychology',
+    passage:'[Listen to part of a lecture in a psychology class about memory formation.]',
+    text:'27. What can be inferred about students who cram the night before an exam?',
+    opts:['(A) They will perform better due to heightened focus','(B) Their short-term recall may be good but long-term retention suffers','(C) They are more likely to experience test anxiety','(D) Their performance is the same as students who study gradually'],
+    answer:'(B) Their short-term recall may be good but long-term retention suffers' },
+  { id:28, section:'L', audio:'Test_01.mp3', audioLabel:'Lecture 3 — Psychology',
+    passage:'[Listen to part of a lecture in a psychology class about memory formation.]',
+    text:'28. What study technique does the professor recommend?',
+    opts:['(A) Re-reading notes multiple times','(B) Highlighting key terms in textbooks','(C) Active recall through self-testing','(D) Listening to recorded lectures while sleeping'],
+    answer:'(C) Active recall through self-testing' },
+
+  // ── Conversation 3 (Q29-34) ──
+  { id:29, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 3',
+    passage:'[Listen to a conversation between a student and a university librarian.]',
+    text:'29. Why does the student visit the library?',
+    opts:['(A) To return overdue books','(B) To get help finding research materials','(C) To apply for a library card','(D) To reserve a study room'],
+    answer:'(B) To get help finding research materials' },
+  { id:30, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 3',
+    passage:'[Listen to a conversation between a student and a university librarian.]',
+    text:'30. What database does the librarian recommend for scientific articles?',
+    opts:['(A) JSTOR','(B) PubMed','(C) Google Scholar','(D) ProQuest'],
+    answer:'(B) PubMed' },
+  { id:31, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 3',
+    passage:'[Listen to a conversation between a student and a university librarian.]',
+    text:'31. What problem does the student mention about online sources?',
+    opts:['(A) They are too expensive to access','(B) They are difficult to cite properly','(C) It is hard to tell if they are credible','(D) They are not accepted by the professor'],
+    answer:'(C) It is hard to tell if they are credible' },
+  { id:32, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 3',
+    passage:'[Listen to a conversation between a student and a university librarian.]',
+    text:'32. What does the librarian say about peer-reviewed articles?',
+    opts:['(A) They are written by students for academic credit','(B) They have been evaluated by experts in the field','(C) They are only available in print format','(D) They are updated more frequently than textbooks'],
+    answer:'(B) They have been evaluated by experts in the field' },
+  { id:33, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 3',
+    passage:'[Listen to a conversation between a student and a university librarian.]',
+    text:'33. What does the librarian offer to do for the student?',
+    opts:['(A) Write a bibliography for the paper','(B) Schedule a one-on-one research consultation','(C) Email a list of recommended sources','(D) Reserve the relevant books for two weeks'],
+    answer:'(B) Schedule a one-on-one research consultation' },
+  { id:34, section:'L', audio:'Test_01.mp3', audioLabel:'Conversation 3',
+    passage:'[Listen to a conversation between a student and a university librarian.]',
+    text:'34. What will the student most likely do after the conversation?',
+    opts:['(A) Go home and search online independently','(B) Sign up for the research consultation','(C) Ask the professor for a list of sources','(D) Visit a different library branch'],
+    answer:'(B) Sign up for the research consultation' },
+];
+
+var READING = [
+  // ── Passage 1 (Q35-42) ──
+  { id:35, section:'R', passageTitle:'The History of the Printing Press',
+    passage:`The invention of the printing press by Johannes Gutenberg in the mid-15th century revolutionized the way information was disseminated across Europe. Before this innovation, books were painstakingly copied by hand, making them rare and expensive. Gutenberg's press used movable metal type, allowing for the mass production of texts at a fraction of the previous cost and time.
+
+The first major work printed on Gutenberg's press was the Bible, completed around 1455. This marked the beginning of the "Gutenberg Revolution," which dramatically increased literacy rates and made knowledge accessible to a broader audience. The printing press also played a crucial role in the spread of the Renaissance, the Reformation, and the Scientific Revolution.
+
+By the end of the 15th century, printing presses had been established in over 200 European cities. The ability to produce books quickly and cheaply meant that ideas could spread faster than ever before. Scholars, scientists, and religious reformers used printed materials to challenge established authorities and share new perspectives.
+
+However, the printing press also raised concerns. Authorities worried about the spread of heretical or seditious ideas. Censorship became a common response, with governments and religious institutions attempting to control what could be printed. Despite these efforts, the press remained a powerful tool for change, fundamentally altering the course of human history.`,
+    text:'35. What is the main purpose of the passage?',
+    opts:['(A) To describe the technical details of Gutenberg\'s printing press','(B) To explain the impact of the printing press on European society','(C) To compare handwritten books with printed books','(D) To discuss the economic benefits of mass production'],
+    answer:'(B) To explain the impact of the printing press on European society' },
+  { id:36, section:'R', passageTitle:'The History of the Printing Press',
+    passage:`[Same passage as Q35]`,
+    text:'36. According to the passage, what was the first major work printed by Gutenberg?',
+    opts:['(A) A scientific treatise','(B) A collection of poetry','(C) The Bible','(D) A political manifesto'],
+    answer:'(C) The Bible' },
+  { id:37, section:'R', passageTitle:'The History of the Printing Press',
+    passage:`[Same passage as Q35]`,
+    text:'37. The word "disseminated" in paragraph 1 is closest in meaning to',
+    opts:['(A) Spread','(B) Hidden','(C) Translated','(D) Destroyed'],
+    answer:'(A) Spread' },
+  { id:38, section:'R', passageTitle:'The History of the Printing Press',
+    passage:`[Same passage as Q35]`,
+    text:'38. What can be inferred about literacy rates before the printing press?',
+    opts:['(A) They were higher in rural areas than in cities','(B) They were limited because books were scarce and expensive','(C) They were unaffected by the availability of books','(D) They were already increasing due to other innovations'],
+    answer:'(B) They were limited because books were scarce and expensive' },
+  { id:39, section:'R', passageTitle:'The History of the Printing Press',
+    passage:`[Same passage as Q35]`,
+    text:'39. According to paragraph 3, how many European cities had printing presses by the end of the 15th century?',
+    opts:['(A) Fewer than 50','(B) About 100','(C) Over 200','(D) More than 500'],
+    answer:'(C) Over 200' },
+  { id:40, section:'R', passageTitle:'The History of the Printing Press',
+    passage:`[Same passage as Q35]`,
+    text:'40. Why did authorities become concerned about the printing press?',
+    opts:['(A) It was too expensive to maintain','(B) It could spread ideas that challenged their power','(C) It reduced the demand for handwritten manuscripts','(D) It was difficult to operate'],
+    answer:'(B) It could spread ideas that challenged their power' },
+  { id:41, section:'R', passageTitle:'The History of the Printing Press',
+    passage:`[Same passage as Q35]`,
+    text:'41. The word "seditious" in paragraph 4 is closest in meaning to',
+    opts:['(A) Rebellious','(B) Educational','(C) Religious','(D) Scientific'],
+    answer:'(A) Rebellious' },
+  { id:42, section:'R', passageTitle:'The History of the Printing Press',
+    passage:`[Same passage as Q35]`,
+    text:'42. Which of the following best expresses the essential information in the highlighted sentence? (Paragraph 4: "Despite these efforts, the press remained a powerful tool for change, fundamentally altering the course of human history.")',
+    opts:['(A) Censorship was effective in stopping the spread of new ideas','(B) The printing press continued to have a major impact despite attempts to control it','(C) Authorities eventually gave up trying to regulate printed materials','(D) The press was only powerful in countries without censorship'],
+    answer:'(B) The printing press continued to have a major impact despite attempts to control it' },
+
+  // ── Passage 2 (Q43-50) ──
+  { id:43, section:'R', passageTitle:'Coral Reef Ecosystems',
+    passage:`Coral reefs are among the most diverse and productive ecosystems on Earth, often referred to as the "rainforests of the sea." These underwater structures are built by colonies of tiny animals called coral polyps, which secrete calcium carbonate to form hard skeletons. Over thousands of years, these skeletons accumulate to create the massive reef structures we see today.
+
+Coral reefs provide habitat for approximately 25% of all marine species, despite covering less than 1% of the ocean floor. Fish, mollusks, crustaceans, and countless other organisms depend on reefs for food, shelter, and breeding grounds. The complex structure of reefs creates numerous niches, allowing a wide variety of species to coexist.
+
+However, coral reefs are under severe threat from human activities and climate change. Rising ocean temperatures cause coral bleaching, a phenomenon in which corals expel the symbiotic algae (zooxanthellae) that provide them with energy and color. Without these algae, corals turn white and become vulnerable to disease and death. Ocean acidification, caused by increased absorption of atmospheric carbon dioxide, also weakens coral skeletons and inhibits reef growth.
+
+Overfishing, pollution, and destructive fishing practices further degrade reef ecosystems. Efforts to protect and restore coral reefs include establishing marine protected areas, reducing carbon emissions, and developing coral restoration techniques such as coral gardening. Scientists are also researching heat-resistant coral strains that may be better equipped to survive in warming oceans.`,
+    text:'43. What is the main topic of the passage?',
+    opts:['(A) The formation and importance of coral reefs','(B) The different species that live in coral reefs','(C) The economic value of coral reefs to humans','(D) The history of coral reef research'],
+    answer:'(A) The formation and importance of coral reefs' },
+  { id:44, section:'R', passageTitle:'Coral Reef Ecosystems',
+    passage:`[Same passage as Q43]`,
+    text:'44. According to the passage, what percentage of marine species depend on coral reefs?',
+    opts:['(A) About 10%','(B) Approximately 25%','(C) Nearly 50%','(D) Over 75%'],
+    answer:'(B) Approximately 25%' },
+  { id:45, section:'R', passageTitle:'Coral Reef Ecosystems',
+    passage:`[Same passage as Q43]`,
+    text:'45. The word "niches" in paragraph 2 is closest in meaning to',
+    opts:['(A) Habitats','(B) Dangers','(C) Competitors','(D) Predators'],
+    answer:'(A) Habitats' },
+  { id:46, section:'R', passageTitle:'Coral Reef Ecosystems',
+    passage:`[Same passage as Q43]`,
+    text:'46. What causes coral bleaching?',
+    opts:['(A) Overfishing by humans','(B) Pollution from coastal cities','(C) Rising ocean temperatures','(D) Destructive fishing practices'],
+    answer:'(C) Rising ocean temperatures' },
+  { id:47, section:'R', passageTitle:'Coral Reef Ecosystems',
+    passage:`[Same passage as Q43]`,
+    text:'47. According to paragraph 3, what role do zooxanthellae play?',
+    opts:['(A) They build the coral skeleton','(B) They provide energy and color to corals','(C) They protect corals from predators','(D) They help corals reproduce'],
+    answer:'(B) They provide energy and color to corals' },
+  { id:48, section:'R', passageTitle:'Coral Reef Ecosystems',
+    passage:`[Same passage as Q43]`,
+    text:'48. What is ocean acidification?',
+    opts:['(A) The increase in ocean salinity due to evaporation','(B) The warming of ocean waters from climate change','(C) The weakening of coral skeletons due to absorbed carbon dioxide','(D) The spread of algae blooms in coastal waters'],
+    answer:'(C) The weakening of coral skeletons due to absorbed carbon dioxide' },
+  { id:49, section:'R', passageTitle:'Coral Reef Ecosystems',
+    passage:`[Same passage as Q43]`,
+    text:'49. Which of the following is NOT mentioned as a threat to coral reefs?',
+    opts:['(A) Overfishing','(B) Pollution','(C) Invasive species','(D) Destructive fishing practices'],
+    answer:'(C) Invasive species' },
+  { id:50, section:'R', passageTitle:'Coral Reef Ecosystems',
+    passage:`[Same passage as Q43]`,
+    text:'50. What is one method scientists are using to help coral reefs survive?',
+    opts:['(A) Relocating reefs to cooler waters','(B) Developing heat-resistant coral strains','(C) Removing all fish from reef areas','(D) Covering reefs with protective nets'],
+    answer:'(B) Developing heat-resistant coral strains' },
+
+  // ── Passage 3 (Q51-58) ──
+  { id:51, section:'R', passageTitle:'The Development of Language',
+    passage:`The origin of human language remains one of the most intriguing questions in anthropology and linguistics. Unlike other forms of animal communication, human language is characterized by its complexity, flexibility, and ability to convey abstract concepts. Researchers have proposed various theories about how language evolved, but no single explanation has gained universal acceptance.
+
+One prominent theory suggests that language developed gradually from simpler forms of communication used by early hominids. According to this view, proto-language may have consisted of basic vocalizations and gestures that conveyed immediate needs and emotions. Over time, these primitive signals became more sophisticated, eventually evolving into the complex grammatical structures we use today.
+
+Another theory posits that language emerged suddenly, perhaps due to a genetic mutation that gave early humans the cognitive capacity for symbolic thought and syntax. Proponents of this "language instinct" hypothesis argue that the human brain is uniquely wired for language acquisition, as evidenced by the ease with which children learn to speak.
+
+Archaeological evidence provides some clues about when language might have emerged. The development of complex tools, art, and social structures around 50,000 to 100,000 years ago suggests that early humans possessed advanced cognitive abilities, including language. However, because language leaves no direct fossil record, its exact origins remain speculative.
+
+Modern studies of language acquisition in children and comparisons with animal communication systems continue to shed light on this mystery. While we may never know precisely how language began, ongoing research brings us closer to understanding one of humanity's most defining characteristics.`,
+    text:'51. What is the main purpose of the passage?',
+    opts:['(A) To prove that language evolved from animal communication','(B) To discuss theories about the origin of human language','(C) To describe how children learn language','(D) To explain the structure of modern languages'],
+    answer:'(B) To discuss theories about the origin of human language' },
+  { id:52, section:'R', passageTitle:'The Development of Language',
+    passage:`[Same passage as Q51]`,
+    text:'52. According to paragraph 1, what makes human language unique?',
+    opts:['(A) It is used by all human societies','(B) It can convey abstract concepts','(C) It is learned during childhood','(D) It uses vocal sounds'],
+    answer:'(B) It can convey abstract concepts' },
+  { id:53, section:'R', passageTitle:'The Development of Language',
+    passage:`[Same passage as Q51]`,
+    text:'53. The word "proto-language" in paragraph 2 most likely refers to',
+    opts:['(A) An early, simple form of language','(B) A written language system','(C) A language used by children','(D) A language that no longer exists'],
+    answer:'(A) An early, simple form of language' },
+  { id:54, section:'R', passageTitle:'The Development of Language',
+    passage:`[Same passage as Q51]`,
+    text:'54. What does the "language instinct" hypothesis suggest?',
+    opts:['(A) Language developed slowly over millions of years','(B) Language emerged suddenly due to a genetic change','(C) Language is learned entirely through social interaction','(D) Language evolved from written symbols'],
+    answer:'(B) Language emerged suddenly due to a genetic change' },
+  { id:55, section:'R', passageTitle:'The Development of Language',
+    passage:`[Same passage as Q51]`,
+    text:'55. According to paragraph 4, what evidence suggests early humans had language?',
+    opts:['(A) Fossilized vocal cords','(B) Written records from 100,000 years ago','(C) Complex tools, art, and social structures','(D) Similarities between ancient and modern languages'],
+    answer:'(C) Complex tools, art, and social structures' },
+  { id:56, section:'R', passageTitle:'The Development of Language',
+    passage:`[Same passage as Q51]`,
+    text:'56. Why is it difficult to determine exactly when language originated?',
+    opts:['(A) Early humans did not use language','(B) Language leaves no direct fossil record','(C) All ancient languages have been lost','(D) Researchers disagree on the definition of language'],
+    answer:'(B) Language leaves no direct fossil record' },
+  { id:57, section:'R', passageTitle:'The Development of Language',
+    passage:`[Same passage as Q51]`,
+    text:'57. The word "speculative" in paragraph 4 is closest in meaning to',
+    opts:['(A) Certain','(B) Theoretical','(C) Proven','(D) Rejected'],
+    answer:'(B) Theoretical' },
+  { id:58, section:'R', passageTitle:'The Development of Language',
+    passage:`[Same passage as Q51]`,
+    text:'58. What does the author imply about future research on language origins?',
+    opts:['(A) It will definitively prove one theory correct','(B) It will continue to provide new insights','(C) It is unlikely to yield any new information','(D) It should focus only on modern languages'],
+    answer:'(B) It will continue to provide new insights' },
+
+  // ── Passage 4 (Q59-66) ──
+  { id:59, section:'R', passageTitle:'Renewable Energy Sources',
+    passage:`As concerns about climate change and fossil fuel depletion grow, renewable energy sources have become increasingly important. Solar, wind, hydroelectric, and geothermal power offer sustainable alternatives to coal, oil, and natural gas. Each renewable energy source has distinct advantages and challenges that affect its viability in different regions.
+
+Solar energy harnesses sunlight using photovoltaic cells or solar thermal systems. It is abundant and can be deployed at various scales, from small rooftop panels to large solar farms. However, solar power generation is intermittent, depending on weather conditions and time of day. Energy storage systems, such as batteries, are essential for maintaining a consistent power supply.
+
+Wind energy captures the kinetic energy of moving air through turbines. Wind farms can be located onshore or offshore, with offshore installations generally producing more consistent power due to stronger and steadier winds. Like solar power, wind energy is intermittent and requires backup systems or energy storage to ensure reliability.
+
+Hydroelectric power generates electricity by harnessing the energy of flowing water, typically through dams. It is one of the oldest and most reliable forms of renewable energy, capable of providing baseload power. However, large dam projects can have significant environmental and social impacts, including habitat disruption and displacement of communities.
+
+Geothermal energy taps into heat from the Earth's interior to generate electricity or provide direct heating. It is highly reliable and produces minimal emissions, but it is geographically limited to regions with accessible geothermal resources, such as volcanic areas or tectonic plate boundaries.
+
+The transition to renewable energy requires substantial investment in infrastructure, technology development, and policy support. Governments and private sectors worldwide are increasingly committing to renewable energy targets, recognizing that a diversified energy portfolio is essential for a sustainable future.`,
+    text:'59. What is the main idea of the passage?',
+    opts:['(A) Fossil fuels are superior to renewable energy sources','(B) Renewable energy sources offer sustainable alternatives with unique benefits and challenges','(C) Solar energy is the most effective renewable energy source','(D) Renewable energy is too expensive to implement globally'],
+    answer:'(B) Renewable energy sources offer sustainable alternatives with unique benefits and challenges' },
+  { id:60, section:'R', passageTitle:'Renewable Energy Sources',
+    passage:`[Same passage as Q59]`,
+    text:'60. According to the passage, what is a major limitation of solar power?',
+    opts:['(A) It is too expensive to install','(B) It produces harmful emissions','(C) It is intermittent and depends on weather','(D) It requires large amounts of water'],
+    answer:'(C) It is intermittent and depends on weather' },
+  { id:61, section:'R', passageTitle:'Renewable Energy Sources',
+    passage:`[Same passage as Q59]`,
+    text:'61. The word "intermittent" in paragraph 2 is closest in meaning to',
+    opts:['(A) Continuous','(B) Irregular','(C) Expensive','(D) Efficient'],
+    answer:'(B) Irregular' },
+  { id:62, section:'R', passageTitle:'Renewable Energy Sources',
+    passage:`[Same passage as Q59]`,
+    text:'62. Why are offshore wind farms generally more effective than onshore ones?',
+    opts:['(A) They are cheaper to build','(B) They produce more consistent power due to stronger winds','(C) They have less environmental impact','(D) They require less maintenance'],
+    answer:'(B) They produce more consistent power due to stronger winds' },
+  { id:63, section:'R', passageTitle:'Renewable Energy Sources',
+    passage:`[Same passage as Q59]`,
+    text:'63. What is one disadvantage of hydroelectric power mentioned in the passage?',
+    opts:['(A) It is unreliable during droughts','(B) It produces significant greenhouse gas emissions','(C) It can disrupt habitats and displace communities','(D) It is only effective in coastal regions'],
+    answer:'(C) It can disrupt habitats and displace communities' },
+  { id:64, section:'R', passageTitle:'Renewable Energy Sources',
+    passage:`[Same passage as Q59]`,
+    text:'64. According to paragraph 5, what limits the use of geothermal energy?',
+    opts:['(A) High operational costs','(B) Geographic availability of geothermal resources','(C) Lack of government support','(D) Environmental concerns'],
+    answer:'(B) Geographic availability of geothermal resources' },
+  { id:65, section:'R', passageTitle:'Renewable Energy Sources',
+    passage:`[Same passage as Q59]`,
+    text:'65. The word "diversified" in paragraph 6 is closest in meaning to',
+    opts:['(A) Simplified','(B) Varied','(C) Centralized','(D) Reduced'],
+    answer:'(B) Varied' },
+  { id:66, section:'R', passageTitle:'Renewable Energy Sources',
+    passage:`[Same passage as Q59]`,
+    text:'66. What does the author suggest is necessary for the transition to renewable energy?',
+    opts:['(A) Abandoning all fossil fuel use immediately','(B) Focusing only on solar and wind power','(C) Investment in infrastructure, technology, and policy support','(D) Waiting for new energy sources to be discovered'],
+    answer:'(C) Investment in infrastructure, technology, and policy support' },
+
+  // ── Passage 5 (Q67-70) ──
+  { id:67, section:'R', passageTitle:'The Role of Sleep in Learning',
+    passage:`Sleep plays a critical role in learning and memory consolidation. During sleep, the brain processes and organizes information acquired during waking hours, transferring it from short-term to long-term memory. Research has shown that adequate sleep enhances cognitive performance, problem-solving abilities, and creativity.
+
+The sleep cycle consists of several stages, including rapid eye movement (REM) sleep and non-REM sleep. REM sleep is particularly important for consolidating procedural memories, such as motor skills, while non-REM sleep is associated with declarative memory, which involves facts and events. Both stages are essential for optimal learning.
+
+Sleep deprivation has been shown to impair attention, decision-making, and emotional regulation. Students who sacrifice sleep to study often perform worse on exams than those who get sufficient rest. Chronic sleep deprivation can also have long-term health consequences, including increased risk of cardiovascular disease, obesity, and mental health disorders.
+
+Experts recommend that adults get 7-9 hours of sleep per night, while teenagers and children require even more. Establishing a consistent sleep schedule, creating a restful environment, and avoiding stimulants before bedtime can improve sleep quality and, consequently, learning outcomes.`,
+    text:'67. What is the main purpose of the passage?',
+    opts:['(A) To explain the stages of the sleep cycle','(B) To discuss the importance of sleep for learning and memory','(C) To describe the health risks of sleep deprivation','(D) To provide tips for improving sleep quality'],
+    answer:'(B) To discuss the importance of sleep for learning and memory' },
+  { id:68, section:'R', passageTitle:'The Role of Sleep in Learning',
+    passage:`[Same passage as Q67]`,
+    text:'68. According to the passage, what type of memory is consolidated during REM sleep?',
+    opts:['(A) Declarative memory','(B) Procedural memory','(C) Short-term memory','(D) Emotional memory'],
+    answer:'(B) Procedural memory' },
+  { id:69, section:'R', passageTitle:'The Role of Sleep in Learning',
+    passage:`[Same passage as Q67]`,
+    text:'69. What does the passage suggest about students who stay up late to study?',
+    opts:['(A) They perform better due to extra study time','(B) They often perform worse than well-rested students','(C) They have better long-term memory retention','(D) They are more creative during exams'],
+    answer:'(B) They often perform worse than well-rested students' },
+  { id:70, section:'R', passageTitle:'The Role of Sleep in Learning',
+    passage:`[Same passage as Q67]`,
+    text:'70. How many hours of sleep do experts recommend for adults?',
+    opts:['(A) 5-6 hours','(B) 6-7 hours','(C) 7-9 hours','(D) 9-11 hours'],
+    answer:'(C) 7-9 hours' },
+];
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+var ALL = LISTENING.concat(READING);
+var answers = {};
+var currentSection = 'listening';
+var currentIdx = 0;
+var submitted = false;
+var sectionStarted = { listening: false, reading: false };
+
+// Timer: 2 hours = 7200 seconds
+var TOTAL_SECONDS = 7200;
+var secondsLeft = TOTAL_SECONDS;
+var timerInterval = null;
+
+// ═══════════════════════════════════════════════════════════
+// TIMER
+// ═══════════════════════════════════════════════════════════
+function startTimer() {
+  if (timerInterval) return;
+  timerInterval = setInterval(function() {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('timeup-overlay').style.display = 'flex';
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  var h = Math.floor(secondsLeft / 3600);
+  var m = Math.floor((secondsLeft % 3600) / 60);
+  var s = secondsLeft % 60;
+  var str = h + ':' + pad(m) + ':' + pad(s);
+  var el = document.getElementById('timer');
+  el.textContent = str;
+  el.className = 'timer';
+  if (secondsLeft <= 600) el.className = 'timer danger';
+  else if (secondsLeft <= 1800) el.className = 'timer warn';
+  var pct = (secondsLeft / TOTAL_SECONDS * 100).toFixed(1);
+  document.getElementById('timer-progress').style.width = pct + '%';
+}
+
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+function forceSubmit() {
+  document.getElementById('timeup-overlay').style.display = 'none';
+  submitted = true;
+  showResult();
+}
+
+// ═══════════════════════════════════════════════════════════
+// SECTION SWITCH
+// ═══════════════════════════════════════════════════════════
+function switchSection(sec) {
+  currentSection = sec;
+  var list = sec === 'listening' ? LISTENING : READING;
+  currentIdx = 0;
+  document.getElementById('tab-listening').className = 'sec-tab' + (sec === 'listening' ? ' active' : '');
+  document.getElementById('tab-reading').className = 'sec-tab' + (sec === 'reading' ? ' active' : '');
+  document.getElementById('section-badge').textContent = sec === 'listening' ? 'Listening' : 'Reading';
+  if (!sectionStarted[sec]) {
+    showSectionIntro(sec);
+  } else {
+    renderQuestion();
+  }
+  updateTabCounts();
+}
+
+function showSectionIntro(sec) {
+  var main = document.getElementById('main-content');
+  if (sec === 'listening') {
+    main.innerHTML = `
+      <div class="main">
+        <div class="section-intro">
+          <div style="font-size:52px;margin-bottom:12px">🎧</div>
+          <h2>Listening Section</h2>
+          <p>You will listen to conversations and lectures, then answer questions about what you heard. Each audio will play automatically when you reach that question group.</p>
+          <div class="intro-meta">
+            <div class="meta-pill">📝 34 Questions</div>
+            <div class="meta-pill">🎙️ 3 Conversations + 3 Lectures</div>
+            <div class="meta-pill">⏱️ Part of 2-hour total</div>
+          </div>
+          <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 16px;font-size:13px;color:#92400e;margin-bottom:20px;text-align:left">
+            ⚠️ <strong>Audio note:</strong> Replace <code>Test_01.mp3</code> with your actual audio file in the same folder. The player will appear on each question group.
+          </div>
+          <button class="start-btn" onclick="startSection('listening')">Start Listening Section →</button>
+        </div>
+      </div>`;
+  } else {
+    main.innerHTML = `
+      <div class="main">
+        <div class="section-intro">
+          <div style="font-size:52px;margin-bottom:12px">📖</div>
+          <h2>Reading Section</h2>
+          <p>You will read academic passages and answer comprehension questions. You can scroll back to re-read the passage at any time.</p>
+          <div class="intro-meta">
+            <div class="meta-pill">📝 36 Questions</div>
+            <div class="meta-pill">📄 5 Passages</div>
+            <div class="meta-pill">⏱️ Part of 2-hour total</div>
+          </div>
+          <button class="start-btn" onclick="startSection('reading')">Start Reading Section →</button>
+        </div>
+      </div>`;
+  }
+}
+
+function startSection(sec) {
+  sectionStarted[sec] = true;
+  startTimer();
+  renderQuestion();
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER QUESTION
+// ═══════════════════════════════════════════════════════════
+function renderQuestion() {
+  if (submitted) { showResult(); return; }
+  var list = currentSection === 'listening' ? LISTENING : READING;
+  var q = list[currentIdx];
+  var totalInSection = list.length;
+  var answeredInSection = list.filter(function(x){ return answers[x.id] !== undefined; }).length;
+  var globalIdx = currentSection === 'listening' ? currentIdx : LISTENING.length + currentIdx;
+  var pct = Math.round((currentIdx + 1) / totalInSection * 100);
+  var isLast = currentIdx === totalInSection - 1;
+  var isLastOverall = currentSection === 'reading' && isLast;
+
+  var chipClass = currentSection === 'listening' ? 'chip-listening' : 'chip-reading';
+  var chipLabel = currentSection === 'listening' ? '🎧 Listening' : '📖 Reading';
+
+  // Audio block (listening only — show when first question of a group)
+  var audioHtml = '';
+  if (currentSection === 'listening') {
+    var prevQ = currentIdx > 0 ? LISTENING[currentIdx - 1] : null;
+    var showAudio = !prevQ || prevQ.audioLabel !== q.audioLabel;
+    if (showAudio) {
+      audioHtml = `
+        <div class="audio-block">
+          <div class="audio-label">🎧 ${q.audioLabel}</div>
+          <div class="audio-player-row">
+            <button class="audio-play-btn" id="play-btn-${q.id}" onclick="toggleAudio('${q.audio}', ${q.id})">▶</button>
+            <div class="audio-progress" id="prog-${q.id}" onclick="seekAudio(event, ${q.id})">
+              <div class="audio-progress-fill" id="prog-fill-${q.id}" style="width:0%"></div>
+            </div>
+            <span class="audio-time" id="audio-time-${q.id}">0:00 / 0:00</span>
+          </div>
+          <div class="audio-note">⚠️ Place your audio file as <strong>Test_01.mp3</strong> in the same folder to enable playback.</div>
+        </div>`;
+    }
+  }
+
+  // Passage block
+  var passageHtml = '';
+  if (q.passage) {
+    var passTitle = q.passageTitle || q.audioLabel || '';
+    passageHtml = `
+      <div class="passage-block">
+        <div class="passage-title">${passTitle}</div>
+        <div class="passage-text">${q.passage}</div>
+      </div>`;
+  }
+
+  // Options
+  var optsHtml = q.opts.map(function(opt) {
+    var cls = 'opt';
+    if (submitted) {
+      if (opt === q.answer) cls = 'opt correct';
+      else if (answers[q.id] === opt) cls = 'opt wrong';
+    } else {
+      if (answers[q.id] === opt) cls = 'opt selected';
+    }
+    return `<button class="${cls}" onclick="selectAnswer(${q.id}, '${opt.replace(/'/g,"\\'")}', this)">${opt}</button>`;
+  }).join('');
+
+  // Nav buttons
+  var navHtml = '';
+  if (isLastOverall && !submitted) {
+    navHtml = `
+      <button class="nav-btn" onclick="prevQ()" ${currentIdx === 0 ? 'disabled' : ''}>← Prev</button>
+      <button class="nav-btn submit-all" onclick="submitAll()">✅ Submit All Answers</button>`;
+  } else if (isLast && currentSection === 'listening') {
+    navHtml = `
+      <button class="nav-btn" onclick="prevQ()" ${currentIdx === 0 ? 'disabled' : ''}>← Prev</button>
+      <button class="nav-btn next" onclick="switchSection('reading')">Go to Reading →</button>`;
+  } else {
+    navHtml = `
+      <button class="nav-btn" onclick="prevQ()" ${currentIdx === 0 ? 'disabled' : ''}>← Prev</button>
+      <button class="nav-btn next" onclick="nextQ()" ${!answers[q.id] && !submitted ? 'disabled' : ''}>Next →</button>`;
+  }
+
+  // Dots
+  var dotsHtml = list.map(function(qq, i) {
+    var cls = 'dot-btn';
+    if (i === currentIdx) cls += ' dot-active';
+    if (submitted) {
+      cls += answers[qq.id] === qq.answer ? ' dot-correct' : ' dot-wrong';
+    } else if (answers[qq.id]) {
+      cls += ' dot-answered';
+    }
+    return `<button class="${cls}" onclick="jumpTo(${i})" title="Q${qq.id}"></button>`;
+  }).join('');
+
+  var main = document.getElementById('main-content');
+  main.innerHTML = `
+    <div class="main">
+      ${audioHtml}
+      ${passageHtml}
+      <div class="q-header-row">
+        <span class="q-counter">Q${globalIdx + 1} of ${ALL.length}</span>
+        <span class="q-section-chip ${chipClass}">${chipLabel}</span>
+        <span class="q-answered-info">${answeredInSection}/${totalInSection} answered</span>
+      </div>
+      <div class="progress-strip"><div class="progress-strip-fill" style="width:${pct}%"></div></div>
+      <div class="question-card">
+        <p class="q-sentence">${q.text}</p>
+        <div class="opts">${optsHtml}</div>
+      </div>
+      <div class="nav-row">${navHtml}</div>
+      <div class="dots-nav">${dotsHtml}</div>
+    </div>`;
+
+  updateTabCounts();
+}
+
+// ═══════════════════════════════════════════════════════════
+// ANSWER & NAVIGATION
+// ═══════════════════════════════════════════════════════════
+function selectAnswer(id, opt, btn) {
+  if (submitted) return;
+  answers[id] = opt;
+  // Re-render opts only
+  var list = currentSection === 'listening' ? LISTENING : READING;
+  var q = list[currentIdx];
+  var optsEl = btn.closest('.opts');
+  optsEl.querySelectorAll('.opt').forEach(function(b) {
+    b.className = 'opt';
+    if (b.textContent.trim() === opt.trim()) b.className = 'opt selected';
+  });
+  // Enable next button
+  var nextBtn = document.querySelector('.nav-btn.next');
+  if (nextBtn) nextBtn.disabled = false;
+  updateTabCounts();
+  // Auto-advance after 600ms
+  setTimeout(function() {
+    var list2 = currentSection === 'listening' ? LISTENING : READING;
+    var isLast = currentIdx === list2.length - 1;
+    var isLastOverall = currentSection === 'reading' && isLast;
+    if (!isLastOverall && !isLast) {
+      nextQ();
+    } else if (isLast && currentSection === 'listening') {
+      // stay, let user click Go to Reading
+    }
+  }, 700);
+}
+
+function nextQ() {
+  var list = currentSection === 'listening' ? LISTENING : READING;
+  if (currentIdx < list.length - 1) {
+    currentIdx++;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function prevQ() {
+  if (currentIdx > 0) {
+    currentIdx--;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function jumpTo(i) {
+  currentIdx = i;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateTabCounts() {
+  var la = LISTENING.filter(function(q){ return answers[q.id] !== undefined; }).length;
+  var ra = READING.filter(function(q){ return answers[q.id] !== undefined; }).length;
+  document.getElementById('tab-l-count').textContent = la + '/' + LISTENING.length;
+  document.getElementById('tab-r-count').textContent = ra + '/' + READING.length;
+  var tabL = document.getElementById('tab-listening');
+  var tabR = document.getElementById('tab-reading');
+  if (la === LISTENING.length) tabL.classList.add('done'); else tabL.classList.remove('done');
+  if (ra === READING.length) tabR.classList.add('done'); else tabR.classList.remove('done');
+}
+
+// ═══════════════════════════════════════════════════════════
+// AUDIO
+// ═══════════════════════════════════════════════════════════
+var currentAudio = null;
+var currentAudioId = null;
+
+function toggleAudio(src, id) {
+  if (currentAudio && currentAudioId === id) {
+    if (currentAudio.paused) { currentAudio.play(); document.getElementById('play-btn-' + id).textContent = '⏸'; }
+    else { currentAudio.pause(); document.getElementById('play-btn-' + id).textContent = '▶'; }
+    return;
+  }
+  if (currentAudio) { currentAudio.pause(); }
+  currentAudio = new Audio(src);
+  currentAudioId = id;
+  currentAudio.addEventListener('timeupdate', function() {
+    var pct = currentAudio.duration ? (currentAudio.currentTime / currentAudio.duration * 100) : 0;
+    var fill = document.getElementById('prog-fill-' + id);
+    var timeEl = document.getElementById('audio-time-' + id);
+    if (fill) fill.style.width = pct + '%';
+    if (timeEl) timeEl.textContent = fmtTime(currentAudio.currentTime) + ' / ' + fmtTime(currentAudio.duration || 0);
+  });
+  currentAudio.addEventListener('ended', function() {
+    var btn = document.getElementById('play-btn-' + id);
+    if (btn) btn.textContent = '▶';
+  });
+  currentAudio.play();
+  document.getElementById('play-btn-' + id).textContent = '⏸';
+}
+
+function seekAudio(e, id) {
+  if (!currentAudio || currentAudioId !== id) return;
+  var bar = document.getElementById('prog-' + id);
+  var rect = bar.getBoundingClientRect();
+  var ratio = (e.clientX - rect.left) / rect.width;
+  currentAudio.currentTime = ratio * currentAudio.duration;
+}
+
+function fmtTime(s) {
+  if (!s || isNaN(s)) return '0:00';
+  var m = Math.floor(s / 60);
+  var sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+// ═══════════════════════════════════════════════════════════
+// SUBMIT & RESULT
+// ═══════════════════════════════════════════════════════════
+function submitAll() {
+  if (currentAudio) currentAudio.pause();
+  clearInterval(timerInterval);
+  submitted = true;
+  showResult();
+}
+
+function showResult() {
+  document.getElementById('section-tabs').style.display = 'none';
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('result-content').style.display = 'block';
+
+  var lScore = LISTENING.filter(function(q){ return answers[q.id] === q.answer; }).length;
+  var rScore = READING.filter(function(q){ return answers[q.id] === q.answer; }).length;
+  var total = lScore + rScore;
+  var totalQ = ALL.length;
+
+  // TOEFL iBT scaled score estimate (0-30 per section, 0-120 total)
+  var lScaled = Math.round((lScore / LISTENING.length) * 30);
+  var rScaled = Math.round((rScore / READING.length) * 30);
+  var totalScaled = lScaled + rScaled;
+
+  var emoji = total / totalQ >= 0.8 ? '🏆' : total / totalQ >= 0.6 ? '🎯' : '📚';
+  var grade = total / totalQ >= 0.8 ? 'Excellent!' : total / totalQ >= 0.6 ? 'Good Job!' : 'Keep Practicing!';
+
+  var reviewHtml = ALL.map(function(q) {
+    var correct = answers[q.id] === q.answer;
+    var secCls = q.section === 'L' ? 'r-sec-l' : 'r-sec-r';
+    var secLabel = q.section === 'L' ? 'L' : 'R';
+    return `<div class="review-item ${correct ? 'r-correct' : 'r-wrong'}">
+      <span class="r-num">Q${q.id}</span>
+      <span class="r-sec ${secCls}">${secLabel}</span>
+      <span class="r-your">Your: ${answers[q.id] || '—'}</span>
+      <span class="r-ans">${correct ? '✓' : '✗'} ${q.answer}</span>
+    </div>`;
+  }).join('');
+
+  var timeUsed = TOTAL_SECONDS - secondsLeft;
+  var th = Math.floor(timeUsed / 3600);
+  var tm = Math.floor((timeUsed % 3600) / 60);
+  var ts = timeUsed % 60;
+  var timeStr = th + 'h ' + pad(tm) + 'm ' + pad(ts) + 's';
+
+  document.getElementById('result-content').innerHTML = `
+    <div class="result-wrap">
+      <div class="result-card">
+        <div class="result-emoji">${emoji}</div>
+        <div class="result-title">${grade}</div>
+        <div class="result-sub">${total}/${totalQ} correct · Time used: ${timeStr}</div>
+        <div class="score-grid">
+          <div class="score-box sb-total">
+            <div class="sn">${totalScaled}/60</div>
+            <div class="sl">Total Score</div>
+          </div>
+          <div class="score-box sb-listen">
+            <div class="sn">${lScaled}/30</div>
+            <div class="sl">Listening</div>
+          </div>
+          <div class="score-box sb-read">
+            <div class="sn">${rScaled}/30</div>
+            <div class="sl">Reading</div>
+          </div>
+        </div>
+        <div class="toefl-score-note">
+          📊 <strong>Score Estimate:</strong> This simulation covers Listening + Reading only (max 60 pts of the full 120-pt iBT).
+          Full TOEFL iBT also includes Speaking (0–30) and Writing (0–30).<br>
+          <strong>Listening:</strong> ${lScore}/${LISTENING.length} correct → ~${lScaled}/30 &nbsp;|&nbsp;
+          <strong>Reading:</strong> ${rScore}/${READING.length} correct → ~${rScaled}/30
+        </div>
+        <div class="review-list">${reviewHtml}</div>
+        <button class="retry-btn" onclick="restartTest()">�� Try Again</button>
+      </div>
+    </div>`;
+}
+
+function restartTest() {
+  answers = {};
+  currentSection = 'listening';
+  currentIdx = 0;
+  submitted = false;
+  sectionStarted = { listening: false, reading: false };
+  secondsLeft = TOTAL_SECONDS;
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = null;
+  updateTimerDisplay();
+  document.getElementById('section-tabs').style.display = 'flex';
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('result-content').style.display = 'none';
+  document.getElementById('tab-listening').className = 'sec-tab active';
+  document.getElementById('tab-reading').className = 'sec-tab';
+  document.getElementById('section-badge').textContent = 'Listening';
+  updateTabCounts();
+  showSectionIntro('listening');
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+updateTimerDisplay();
+updateTabCounts();
+showSectionIntro('listening');
+
+</script>
+</body>
+</html>

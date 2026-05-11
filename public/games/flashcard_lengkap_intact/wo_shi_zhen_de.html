@@ -72,9 +72,9 @@ body{background:linear-gradient(135deg,rgba(26,5,51,0.85) 0%,rgba(45,10,78,0.80)
       </div>
     </div>
     <div class="controls">
-      <button class="ctrl-btn" onclick="skip(-10)" title="Mundur 10s">⏪</button>
+      <button class="ctrl-btn" onclick="skip(-10)" title="Back 10s">⏪</button>
       <button class="play-btn" id="play-btn" onclick="togglePlay()">▶</button>
-      <button class="ctrl-btn" onclick="skip(10)" title="Maju 10s">⏩</button>
+      <button class="ctrl-btn" onclick="skip(10)" title="Forward 10s">⏩</button>
     </div>
     <div class="volume-row">
       <span class="vol-icon">🔈</span>
@@ -85,7 +85,7 @@ body{background:linear-gradient(135deg,rgba(26,5,51,0.85) 0%,rgba(45,10,78,0.80)
 
   <!-- Lyrics -->
   <div class="lyrics-section">
-    <div class="lyrics-title">歌詞 · Lirik</div>
+    <div class="lyrics-title">歌詞 · Lyrics</div>
     <div id="lyrics-container"></div>
   </div>
 
@@ -98,54 +98,54 @@ body{background:linear-gradient(135deg,rgba(26,5,51,0.85) 0%,rgba(45,10,78,0.80)
 // Time = approximate, adjust as needed
 var lyrics = [
   // ── Verse 1 ──
-  [37.5,  '聽說感情要慢慢累積', 'Katanya perasaan harus dibangun perlahan'],
-  [44.5,  '由不得讓我放肆任性', 'Tidak bisa membiarkanku bertindak sesuka hati'],
-  [51.5,  '怎麼我循規蹈矩', 'Mengapa aku sudah mengikuti semua aturan'],
-  [55.5,  '拼了命付出', 'Berjuang sekuat tenaga untuk memberi'],
-  [59.0,  '你沒有回應', 'Tapi kamu tidak memberikan respons'],
+  [37.5,  '聽說感情要慢慢累積', 'They say feelings have to be built up slowly'],
+  [44.5,  '由不得讓我放肆任性', 'I can\'t just act however I please'],
+  [51.5,  '怎麼我循規蹈矩', 'Even though I\'ve followed every rule'],
+  [55.5,  '拼了命付出', 'And given everything I have'],
+  [59.0,  '你沒有回應', 'You still give me no response'],
   // ── Verse 2 ──
-  [63.5,  '聽說感情難免力不從心', 'Katanya perasaan kadang tak bisa dipaksakan'],
-  [70.5,  '你故意拒絕 卻不見蹤影', 'Kamu sengaja menolak, lalu menghilang begitu saja'],
-  [71.5,  '你給的眼神好比', 'Tatapan yang kamu berikan bagaikan'],
-  [76.5,  '大熱天裡', 'Di tengah hari yang terik'],
-  [79.5,  '一道冷空氣', 'Hembusan udara dingin'],
+  [63.5,  '聽說感情難免力不從心', 'They say feelings sometimes fall short of the heart\'s will'],
+  [70.5,  '你故意拒絕 卻不見蹤影', 'You deliberately push me away, then vanish without a trace'],
+  [71.5,  '你給的眼神好比', 'The look you give me is like'],
+  [76.5,  '大熱天裡', 'On a scorching summer day'],
+  [79.5,  '一道冷空氣', 'A sudden rush of cold air'],
   // ── Chorus 1 ──
-  [85.5,  '我是真的真的真的很愛你', 'Aku sungguh-sungguh sungguh-sungguh sangat mencintaimu'],
-  [93.5,  '以為付出了一切就非得有意義', 'Kukira memberikan segalanya pasti punya makna'],
-  [100.5,  '你給的難題', 'Tantangan yang kamu berikan'],
-  [103.5,  '我不曾逃避', 'Tak pernah kuhindari'],
-  [107.5, '誰叫我已愛你成性', 'Siapa suruh aku sudah terlanjur mencintaimu'],
-  [114.5, '總有一天可以用力緊緊抱住你', 'Suatu hari nanti aku pasti bisa memelukmu erat-erat'],
-  [122.5, '畢竟繼續的呼吸也要有點目的', 'Bagaimanapun, napas yang terus berjalan pun butuh tujuan'],
-  [129.5, '一身的傷痛', 'Seluruh tubuh penuh luka'],
-  [132.5, '委屈的痕跡', 'Bekas rasa sakit hati'],
-  [136.5, '在妳防備的眼睛裡', 'Di matamu yang selalu berjaga'],
-  [142.5, '都是零', 'Semuanya nol'],
+  [85.5,  '我是真的真的真的很愛你', 'I truly, truly, truly love you so much'],
+  [93.5,  '以為付出了一切就非得有意義', 'I thought giving everything would have to mean something'],
+  [100.5,  '你給的難題', 'Every challenge you give me'],
+  [103.5,  '我不曾逃避', 'I have never run away from'],
+  [107.5, '誰叫我已愛你成性', 'Who told me to fall so deeply in love with you'],
+  [114.5, '總有一天可以用力緊緊抱住你', 'One day I will be able to hold you tight in my arms'],
+  [122.5, '畢竟繼續的呼吸也要有點目的', 'After all, even the breath that keeps going needs a purpose'],
+  [129.5, '一身的傷痛', 'A body full of pain'],
+  [132.5, '委屈的痕跡', 'The marks of a wounded heart'],
+  [136.5, '在妳防備的眼睛裡', 'In your guarded eyes'],
+  [142.5, '都是零', 'They all mean nothing'],
   // ── Verse 3 ──
-  [149.5, '聽說感情難免力不從心', 'Katanya perasaan kadang tak bisa dipaksakan'],
-  [156.5, '你故意拒絕 卻不見蹤影', 'Kamu sengaja menolak, lalu menghilang begitu saja'],
-  [164.5, '你給的眼神好比', 'Tatapan yang kamu berikan bagaikan'],
-  [169.5, '大熱天裡', 'Di tengah hari yang terik'],
-  [172.5, '一道冷空氣', 'Hembusan udara dingin'],
+  [149.5, '聽說感情難免力不從心', 'They say feelings sometimes fall short of the heart\'s will'],
+  [156.5, '你故意拒絕 卻不見蹤影', 'You deliberately push me away, then vanish without a trace'],
+  [164.5, '你給的眼神好比', 'The look you give me is like'],
+  [169.5, '大熱天裡', 'On a scorching summer day'],
+  [172.5, '一道冷空氣', 'A sudden rush of cold air'],
   // ── Chorus 2 ──
-  [178.5, '我是真的真的真的很愛你', 'Aku sungguh-sungguh sungguh-sungguh sangat mencintaimu'],
-  [186.5, '以為付出了一切就非得有意義', 'Kukira memberikan segalanya pasti punya makna'],
-  [193.5, '你給的難題', 'Tantangan yang kamu berikan'],
-  [196.5, '我不曾逃避', 'Tak pernah kuhindari'],
-  [200.5, '誰叫我已愛你成性', 'Siapa suruh aku sudah terlanjur mencintaimu'],
-  [207.5, '總有一天可以用力緊緊抱住你', 'Suatu hari nanti aku pasti bisa memelukmu erat-erat'],
-  [215.5, '畢竟繼續的呼吸也要有點目的', 'Bagaimanapun, napas yang terus berjalan pun butuh tujuan'],
-  [222.5, '一身的傷痛', 'Seluruh tubuh penuh luka'],
-  [225.5, '委屈的痕跡', 'Bekas rasa sakit hati'],
-  [229.5, '在你想防備的眼睛裡', 'Di matamu yang selalu berjaga'],
-  [236.5, '都是零', 'Semuanya nol'],
+  [178.5, '我是真的真的真的很愛你', 'I truly, truly, truly love you so much'],
+  [186.5, '以為付出了一切就非得有意義', 'I thought giving everything would have to mean something'],
+  [193.5, '你給的難題', 'Every challenge you give me'],
+  [196.5, '我不曾逃避', 'I have never run away from'],
+  [200.5, '誰叫我已愛你成性', 'Who told me to fall so deeply in love with you'],
+  [207.5, '總有一天可以用力緊緊抱住你', 'One day I will be able to hold you tight in my arms'],
+  [215.5, '畢竟繼續的呼吸也要有點目的', 'After all, even the breath that keeps going needs a purpose'],
+  [222.5, '一身的傷痛', 'A body full of pain'],
+  [225.5, '委屈的痕跡', 'The marks of a wounded heart'],
+  [229.5, '在你想防備的眼睛裡', 'In your ever-guarded eyes'],
+  [236.5, '都是零', 'They all mean nothing'],
   // ── Outro ──
-  [256.5, '我是真的真的真的很愛你', 'Aku sungguh-sungguh sungguh-sungguh sangat mencintaimu'],
-  [263.5, '以為付出了一切就非得有意義', 'Kukira memberikan segalanya pasti punya makna'],
-  [271.5, '一身的傷痛', 'Seluruh tubuh penuh luka'],
-  [275.5, '委屈的痕跡', 'Bekas rasa sakit hati'],
-  [278.5, '在你想防備的眼睛裡', 'Di matamu yang selalu berjaga'],
-  [285.5, '都是零', 'Semuanya nol'],
+  [256.5, '我是真的真的真的很愛你', 'I truly, truly, truly love you so much'],
+  [263.5, '以為付出了一切就非得有意義', 'I thought giving everything would have to mean something'],
+  [271.5, '一身的傷痛', 'A body full of pain'],
+  [275.5, '委屈的痕跡', 'The marks of a wounded heart'],
+  [278.5, '在你想防備的眼睛裡', 'In your ever-guarded eyes'],
+  [285.5, '都是零', 'They all mean nothing'],
 ];
 
 var audio = document.getElementById('audio');

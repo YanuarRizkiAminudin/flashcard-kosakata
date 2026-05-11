@@ -17,6 +17,7 @@ function App() {
       <Route path="/game/toeic-verb-guess" element={<GamePage file="flashcard_lengkap_intact/toeic_verb_guess.html" title="TOEIC Verb V1/V2/V3/Ving" />} />
       <Route path="/game/toeic-verb-pattern" element={<GamePage file="flashcard_lengkap_intact/toeic_verb_pattern.html" title="Pola Verb TOEIC/TOEFL" />} />
       <Route path="/game/wo-shi-zhen-de" element={<GamePage file="flashcard_lengkap_intact/wo_shi_zhen_de.html" title="我是真的真的真的很愛你" />} />
+      <Route path="/game/toefl-test" element={<GamePage file="flashcard_lengkap_intact/toefl_test.html" title="TOEFL iBT Simulation" />} />
       <Route path="/voice" element={<VoicePage />} />
       <Route path="/toeic-test" element={<ToeicTestPage />} />
       <Route path="/lessons" element={<LessonListPage />} />
