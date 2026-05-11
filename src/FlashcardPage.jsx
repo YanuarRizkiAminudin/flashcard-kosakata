@@ -5,6 +5,7 @@ const flashcards = [
   {
     id: 'MC1',
     category: 'Mandarin',
+    categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
     icon: '📗',
     title: '時代華語 Tradisional Chinese',
     kartu: 9,
@@ -14,6 +15,7 @@ const flashcards = [
   {
     id: 1,
     category: 'Mandarin',
+    categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
     icon: '🀄',
     title: 'Flashcard Mandarin INTACT',
     kartu: 250,
@@ -23,6 +25,7 @@ const flashcards = [
   {
     id: 3,
     category: 'Audio',
+    categoryColor: '#f3e8ff', categoryTextColor: '#6b21a8',
     icon: '🎙️',
     title: 'Voice Record Mandarin',
     kartu: 3,
@@ -32,15 +35,17 @@ const flashcards = [
   {
     id: 8,
     category: 'Music',
+    categoryColor: '#fdf2f8', categoryTextColor: '#a21caf',
     icon: '🎵',
     title: '我是真的真的真的很愛你',
     kartu: 32,
-    level: 'Jerry Yan · 言承旭 · Lirik + Terjemahan',
+    level: 'Jerry Yan · 言承旭 · Lyrics + Translation',
     route: '/game/wo-shi-zhen-de',
   },
   {
     id: 2,
     category: 'English',
+    categoryColor: '#dbeafe', categoryTextColor: '#1e40af',
     icon: '📖',
     title: 'Flashcard TOEIC',
     kartu: 235,
@@ -50,6 +55,7 @@ const flashcards = [
   {
     id: 4,
     category: 'TOEIC',
+    categoryColor: '#e0e7ff', categoryTextColor: '#3730a3',
     icon: '📝',
     title: 'TOEIC Reading Test',
     kartu: 100,
@@ -59,6 +65,7 @@ const flashcards = [
   {
     id: 9,
     category: 'TOEFL',
+    categoryColor: '#d1fae5', categoryTextColor: '#065f46',
     icon: '🎓',
     title: 'TOEFL iBT Simulation',
     kartu: 70,
@@ -68,24 +75,27 @@ const flashcards = [
   {
     id: 6,
     category: 'English',
+    categoryColor: '#dbeafe', categoryTextColor: '#1e40af',
     icon: '🔤',
     title: 'TOEIC Verb V1/V2/V3/Ving',
     kartu: 92,
-    level: 'Tebak bentuk verb · TOEIC 101–200',
+    level: 'Guess verb forms · TOEIC 101–200',
     route: '/game/toeic-verb-guess',
   },
   {
     id: 7,
     category: 'Grammar',
+    categoryColor: '#fef9c3', categoryTextColor: '#854d0e',
     icon: '📋',
     title: 'Pola Verb TOEIC/TOEFL',
     kartu: 8,
-    level: 'Pemula · V1 V2 V3 Ving · Bahasa Indonesia',
+    level: 'Beginner · V1 V2 V3 Ving',
     route: '/game/toeic-verb-pattern',
   },
   {
     id: 5,
     category: 'Personal',
+    categoryColor: '#f3f4f6', categoryTextColor: '#374151',
     icon: '🗂️',
     title: 'My Flashcards',
     kartu: 0,
@@ -110,7 +120,7 @@ function FlashcardCard({ card }) {
       <div className="card-icon">{card.icon}</div>
       <div>
         <h2 className="card-title">{card.title}</h2>
-        <p className="card-meta">{card.kartu} {card.id === 'MC1' ? 'Lessons' : card.id === 5 ? 'Cards saved' : 'Cards'} &bull; {card.level}</p>
+        <p className="card-meta">{card.kartu} {card.id === 'MC1' ? 'Lessons' : card.id === 5 ? 'Cards saved' : card.id === 9 ? 'Questions' : 'Cards'} &bull; {card.level}</p>
       </div>
       <button className="belajar-btn" onClick={() => navigate(card.route)}>
         Start Learning →
