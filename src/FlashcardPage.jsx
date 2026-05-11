@@ -57,6 +57,15 @@ const flashcards = [
     route: '/toeic-test',
   },
   {
+    id: 9,
+    category: 'TOEFL',
+    icon: '🎓',
+    title: 'TOEFL iBT Simulation',
+    kartu: 70,
+    level: 'Listening + Reading · 2 Hours',
+    route: '/game/toefl-test',
+  },
+  {
     id: 6,
     category: 'English',
     icon: '🔤',
