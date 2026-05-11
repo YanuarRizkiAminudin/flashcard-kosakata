@@ -363,6 +363,25 @@ var READING = [
   {"id": "R100", "sec": "R", "part": 7, "grp": "Part 7 — Questions 196-200 refer to the following invoice, notice, and e-mail.", "text": "200. What does Mr. Singh ask Ms. Peterson to do?", "opts": ["(A) Make a bill payment", "(B) Solve a problem", "(C) Confirm an order", "(D) Update an account number"], "ans": "(B) Solve a problem", "passage": "INVOICE — Green Canyon Landscaping\nOrbys Distributors — Order dated June 10\nItems: Fertilizer, soil mix, irrigation supplies\nSubtotal: $4,800\nDiscount applied: 10%\nTotal due: $4,320\n\n---\nNOTICE — Orbys Distributors\nTo our valued customers:\nOur current invoicing system has been in use since Orbys Distributors was founded over twenty years ago. As a much-needed upgrade, we are switching to electronic invoicing. Starting August 1, invoices will be generated automatically each month and will be sent to the e-mail address associated with your company's account.\n\nOur long-standing incentives remain in place:\n- A 10% discount for orders of more than $4,000\n- A 20% discount for charitable organizations\n- Free deliveries to locations within 5 miles of one of our supply centers\n- Free samples for members of our Frequent Buyer Club\n\n---\nE-MAIL — From: Tanvir Singh, Account Manager\nTo: Mary Peterson, Billing Department\nDate: September 12\nSubject: Account 1012-4\n\nHello Mary,\nI received a query today from William Tesoriero at Tesoriero Remodeling. His monthly invoice for August never arrived. As you know, Mr. Tesoriero was one of our very first customers and is also a member of the Frequent Buyer Club. I explained that the rollout of our electronic invoicing system did not go as smoothly as we had hoped. I would appreciate it if you could please investigate the problem without delay and send the invoice for August to Mr. Tesoriero.\nTanvir"},
 ];
 
+// ═══════════════════════════════════════════
+// FIX CORRUPTED OPTS
+// LISTENING opts were stored as a single-element array containing
+// a string like: "(A) foo','(B) bar','(C) baz','(D) qux"
+// (the \',\' in source becomes ',' at runtime after JS parsing)
+// Split them back into proper 4-element arrays.
+// ═══════════════════════════════════════════
+LISTENING.forEach(function(q) {
+  if (q.opts && q.opts.length === 1 && typeof q.opts[0] === 'string') {
+    var raw = q.opts[0];
+    // At runtime the separator is: ','  (single-quote comma single-quote)
+    var parts = raw.split("','");
+    if (parts.length >= 2) {
+      // Strip any leading/trailing quotes left over
+      q.opts = parts.map(function(p) { return p.replace(/^'+|'+$/g, ''); });
+    }
+  }
+});
+
 // STATE
 // ═══════════════════════════════════════════
 var answers = {};
@@ -526,7 +545,7 @@ function renderQuestion() {
     } else {
       if (answers[q.id] === opt) cls = 'opt selected';
     }
-    var safeOpt = opt.replace(/'/g, "\'");
+    var safeOpt = opt.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
     return '<button class="' + cls + '" onclick="selectAnswer(\'' + q.id + '\',\'' + safeOpt + '\')">' + opt + '</button>';
   }).join('');
 
