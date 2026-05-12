@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pola Verb TOEIC/TOEFL</title>
+<title>Pola Verb TOEIC/TOEFL — Mode Kebalikan</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -11,16 +11,12 @@ body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;displa
 #app{width:100%;max-width:500px}
 h1{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:3px}
 .sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:12px}
-.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
-.fb{padding:5px 11px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
-.fb:hover{border-color:#f59f00;color:#f59f00}
-.fb.on{background:#f59f00;color:#fff;border-color:#f59f00}
-.fb.all-btn.on{background:#1a1814;border-color:#1a1814}
+.mode-badge{display:inline-block;background:linear-gradient(135deg,#7048e8,#9775fa);color:#fff;font-size:11px;font-weight:700;letter-spacing:.8px;padding:4px 12px;border-radius:99px;margin:0 auto 12px;display:flex;justify-content:center}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
 .badge{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#e8e4dc;color:#8a8478}
 .ctr{font-size:13px;color:#8a8478}
 .pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem}
-.pbar{height:4px;background:linear-gradient(90deg,#f59f00,#ffd43b);border-radius:99px;transition:width .4s}
+.pbar{height:4px;background:linear-gradient(90deg,#7048e8,#9775fa);border-radius:99px;transition:width .4s}
 .plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.8rem}
 .pills{display:flex;gap:6px;margin-bottom:.9rem}
 .pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500}
@@ -29,18 +25,28 @@ h1{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;margi
 .pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232}
 .dot{width:6px;height:6px;border-radius:50%;display:inline-block}
 .dp{background:#2d7a4f}.dh{background:#a05c00}.db{background:#b83232}
+
+/* CARD */
 .card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 2px 14px rgba(0,0,0,.07);min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1.2rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
 .card:hover:not(.done){transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,.1)}
-.ctag{font-size:10px;font-weight:600;letter-spacing:.8px;padding:3px 9px;border-radius:99px;background:#fff8e1;color:#f59f00;margin-bottom:.6rem}
-.q-text{font-family:"Lora",serif;font-weight:700;color:#1a1814;font-size:26px;line-height:1.3;text-align:center;margin-bottom:.3rem}
-.q-signal{font-size:13px;color:#8a8478;text-align:center;font-style:italic;margin-top:.4rem}
+
+/* Mode label on card */
+.ctag{font-size:10px;font-weight:700;letter-spacing:.8px;padding:3px 9px;border-radius:99px;background:#f3f0ff;color:#7048e8;margin-bottom:.6rem}
+
+/* The ANSWER shown as question */
+.q-form{font-family:"Lora",serif;font-weight:700;font-size:28px;line-height:1.2;text-align:center;margin-bottom:.3rem}
+.q-formula{font-size:14px;font-weight:600;text-align:center;color:#8a8478;margin-bottom:.4rem}
+.q-prompt{font-size:13px;color:#8a8478;text-align:center;font-style:italic;margin-top:.4rem}
+
 .hint{font-size:13px;color:#8a8478;margin-top:1rem;display:flex;align-items:center;gap:6px}
 .hint-ico{width:26px;height:26px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:12px}
+
+/* Answer reveal */
 .ans{margin-top:.8rem;width:100%;animation:fup .25s ease}
 @keyframes fup{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 .divline{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem}
-.ans-form{font-family:"Lora",serif;font-size:24px;font-weight:700;text-align:center;margin-bottom:.2rem}
-.ans-formula{font-size:13px;color:#8a8478;text-align:center;margin-bottom:.8rem;font-weight:600}
+.ans-signal-label{font-size:10px;font-weight:700;color:#7048e8;letter-spacing:.5px;margin-bottom:4px;text-align:center}
+.ans-signal{font-family:"Lora",serif;font-size:18px;font-weight:700;text-align:center;margin-bottom:.5rem;line-height:1.4}
 .exbox{background:#f8f9ff;border:1px solid #d0d9ff;border-radius:10px;padding:.6rem .8rem;text-align:left;margin-bottom:.5rem}
 .exlabel{font-size:10px;font-weight:700;color:#3b5bdb;letter-spacing:.5px;margin-bottom:3px}
 .extext{font-size:13px;color:#1a1814;line-height:1.6;font-family:"Lora",serif;font-style:italic}
@@ -48,12 +54,16 @@ h1{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;margi
 .tipbox{background:#fff8e1;border:1px solid #ffe08a;border-radius:10px;padding:.5rem .8rem;text-align:left}
 .tiplabel{font-size:10px;font-weight:700;color:#a05c00;letter-spacing:.5px;margin-bottom:2px}
 .tiptext{font-size:12px;color:#7a4800;line-height:1.5}
+
+/* Buttons */
 .btnrow{display:flex;gap:7px;margin-bottom:.7rem}
 .cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s}
 .cb-ico{font-size:16px}.cb-sub{font-size:9px;font-weight:500;opacity:.7}
 .cb-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f}.cb-p:hover{background:#d5f0e2}
 .cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00}.cb-h:hover{background:#fde8c2}
 .cb-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232}.cb-b:hover{background:#f9d8d8}
+
+/* Result */
 .res{text-align:center;padding:.8rem 0}
 .res-ico{font-size:50px;margin-bottom:.7rem}
 .res-title{font-family:"Lora",serif;font-size:18px;font-weight:700;color:#1a1814;margin-bottom:.3rem}
@@ -70,86 +80,102 @@ h1{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;margi
 .ri{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid #e8e4dc;background:#fff}
 .ri:last-child{border-bottom:none}
 .ri-word{font-family:"Lora",serif;font-size:12px;font-weight:700;color:#1a1814;flex:1}
-.ri-form{font-size:11px;color:#f59f00;font-weight:600}
+.ri-form{font-size:11px;color:#7048e8;font-weight:600}
 .btnbig{width:100%;padding:13px;border-radius:13px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none}
-.btn-yellow{background:linear-gradient(135deg,#f59f00,#ffd43b);color:#1a1814;box-shadow:0 3px 10px rgba(245,159,0,.25)}
-.btn-yellow:hover{opacity:.9}
+.btn-purple{background:linear-gradient(135deg,#7048e8,#9775fa);color:#fff;box-shadow:0 3px 10px rgba(112,72,232,.25)}
+.btn-purple:hover{opacity:.9}
 .btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478}
 .btn-ghost:hover{background:#e8e4dc}
 .final{text-align:center;padding:2rem 0}
+
+/* Back to normal mode link */
+.mode-switch{text-align:center;margin-bottom:10px}
+.mode-switch a{font-size:12px;color:#7048e8;text-decoration:none;font-weight:600}
+.mode-switch a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
 <div id="app">
-<h1>&#128218; Pola Verb TOEIC/TOEFL</h1>
-<div class="sub" id="tsub">12 pola penting &bull; Pemula &bull; Bahasa Indonesia</div>
-<div style="text-align:center;margin-bottom:10px"><a href="toeic_verb_pattern_reverse.html" style="font-size:12px;color:#7048e8;text-decoration:none;font-weight:600;background:#f3f0ff;padding:4px 12px;border-radius:99px;border:1px solid #d0bfff">&#128260; Coba Mode Kebalikan</a></div>
-<div id="qv">
-  <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
-  <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
-  <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
-  <div class="pills">
-    <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Hafal</div>
-    <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
-    <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
-  </div>
-  <div class="card" id="card" onclick="reveal()">
-    <div class="ctag" id="ctag">Pola Verb</div>
-    <div class="q-text" id="qtext"></div>
-    <div class="q-signal" id="qsignal"></div>
-    <div class="hint" id="hint"><div class="hint-ico">&#128070;</div>Ketuk untuk lihat jawaban</div>
-    <div class="ans" id="ans" style="display:none">
-      <div class="divline"></div>
-      <div class="ans-form" id="ans-form"></div>
-      <div class="ans-formula" id="ans-formula"></div>
-      <div class="exbox">
-        <div class="exlabel">&#9997;&#65039; CONTOH</div>
-        <div class="extext" id="extext"></div>
-        <div class="exid" id="exid"></div>
-      </div>
-      <div class="tipbox">
-        <div class="tiplabel">&#9889; TIPS</div>
-        <div class="tiptext" id="tiptext"></div>
-      </div>
+  <h1>&#128218; Pola Verb TOEIC/TOEFL</h1>
+  <div class="sub" id="tsub">Mode Kebalikan — Lihat bentuk, tebak sinyalnya!</div>
+  <div class="mode-badge">&#128260; MODE KEBALIKAN</div>
+  <div class="mode-switch"><a href="toeic_verb_pattern.html">← Kembali ke mode normal</a></div>
+
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Hafal</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
     </div>
-  </div>
-  <div class="btnrow" id="ba" style="display:none">
-    <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">&#128533;</span><span>Belum</span><span class="cb-sub">Muncul lagi</span></button>
-    <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">&#129300;</span><span>Hampir</span><span class="cb-sub">Muncul lagi</span></button>
-    <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">&#10003;</span><span>Hafal!</span><span class="cb-sub">Tidak lagi</span></button>
-  </div>
-</div>
-<div id="rv" style="display:none">
-  <div class="res">
-    <div class="res-ico" id="ri"></div>
-    <div class="res-title" id="rt"></div>
-    <div class="res-sub" id="rs"></div>
-    <div class="srow">
-      <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Hafal</div></div>
-      <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
-      <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
-    </div>
-    <div id="rlw" style="display:none">
-      <div class="rlist-wrap">
-        <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
-        <div class="rlist" id="rl"></div>
+
+    <div class="card" id="card" onclick="reveal()">
+      <div class="ctag">Tebak Sinyalnya!</div>
+      <!-- Show the FORM as the question -->
+      <div class="q-form" id="qform"></div>
+      <div class="q-formula" id="qformula"></div>
+      <div class="q-prompt">Kata/sinyal apa yang muncul sebelum blank?</div>
+      <div class="hint" id="hint"><div class="hint-ico">&#128070;</div>Ketuk untuk lihat jawaban</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="divline"></div>
+        <div class="ans-signal-label">&#128270; SINYAL / KONTEKS</div>
+        <div class="ans-signal" id="ans-signal"></div>
+        <div class="exbox">
+          <div class="exlabel">&#9997;&#65039; CONTOH</div>
+          <div class="extext" id="extext"></div>
+          <div class="exid" id="exid"></div>
+        </div>
+        <div class="tipbox">
+          <div class="tiplabel">&#9889; TIPS</div>
+          <div class="tiptext" id="tiptext"></div>
+        </div>
       </div>
     </div>
-    <button class="btnbig btn-yellow" id="nb" onclick="nextRonde()"></button>
-    <button class="btnbig btn-ghost" onclick="fullRestart()">Mulai dari awal</button>
+
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">&#128533;</span><span>Belum</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">&#129300;</span><span>Hampir</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">&#10003;</span><span>Hafal!</span><span class="cb-sub">Tidak lagi</span></button>
+    </div>
+  </div>
+
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Hafal</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">Mulai dari awal</button>
+    </div>
+  </div>
+
+  <div id="fv" style="display:none">
+    <div class="final">
+      <div style="font-size:60px;margin-bottom:.8rem">&#127942;</div>
+      <div class="res-title">Semua pola dikuasai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.3rem">Kamu sudah hafal sinyal untuk setiap bentuk verb!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">Ulangi dari awal</button>
+      <a href="toeic_verb_pattern.html" style="display:block;text-align:center;font-size:12px;color:#7048e8;font-weight:600;margin-top:8px">Coba mode normal →</a>
+    </div>
   </div>
 </div>
-<div id="fv" style="display:none">
-  <div class="final">
-    <div style="font-size:60px;margin-bottom:.8rem">&#127942;</div>
-    <div class="res-title">Semua pola dikuasai!</div>
-    <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.3rem">Pola verb TOEIC sudah terekam di otak kamu!</div>
-    <button class="btnbig btn-yellow" onclick="fullRestart()">Ulangi dari awal</button>
-  </div>
-</div>
-</div>
+
 <script>
-var V=[
+// Same data — but we FLIP: form becomes the question, q becomes the answer
+var V = [
   {
     "q": "will / can / should / must + ___",
     "signal": "Setelah modal: will, can, should, must, may, might",
@@ -273,93 +299,98 @@ var V=[
 ];
 
 function sh(a){return a.slice().sort(function(){return Math.random()-.5})}
-var deck,idx,ronde=1,cp,ch,cbv,rev,toRev;
+var deck, idx, ronde=1, cp, ch, cbv, rev, toRev;
 
 function fullRestart(){
-  deck=sh(V);
-  document.getElementById("tsub").textContent=deck.length+" pola penting • Pemula • Bahasa Indonesia";
+  ronde = 1;
+  deck = sh(V);
+  document.getElementById("tsub").textContent = deck.length + " pola penting • Mode Kebalikan";
   go();
 }
 
 function go(){
-  idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
-  show("qv");hide("rv");hide("fv");
-  document.getElementById("rb").textContent="Ronde "+ronde;
-  upStats();showCard();
+  idx=0; cp=0; ch=0; cbv=0; rev=false; toRev=[];
+  show("qv"); hide("rv"); hide("fv");
+  document.getElementById("rb").textContent = "Ronde " + ronde;
+  upStats(); showCard();
 }
 
-function nextRonde(){ronde++;deck=sh(toRev);go()}
+function nextRonde(){ ronde++; deck = sh(toRev); go(); }
 
 function showCard(){
-  rev=false;
-  var q=deck[idx];
-  document.getElementById("ctag").style.background="#fff8e1";
-  document.getElementById("ctag").style.color=q.color||"#f59f00";
-  document.getElementById("qtext").textContent=q.q;
-  document.getElementById("qsignal").textContent=q.signal;
-  document.getElementById("ans-form").textContent=q.form;
-  document.getElementById("ans-form").style.color=q.color||"#f59f00";
-  document.getElementById("ans-formula").textContent=q.formula;
-  document.getElementById("extext").textContent=q.ex_en;
-  document.getElementById("exid").textContent=q.ex_id;
-  document.getElementById("tiptext").textContent=q.tip;
-  document.getElementById("ans").style.display="none";
-  document.getElementById("hint").style.display="flex";
-  document.getElementById("ba").style.display="none";
-  document.getElementById("card").className="card";
-  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
-  document.getElementById("pb").style.width=Math.round(idx/deck.length*100)+"%";
-  document.getElementById("pl").textContent=idx+" selesai";
-  document.getElementById("pr").textContent=deck.length+" kartu";
+  rev = false;
+  var q = deck[idx];
+  // FLIPPED: show form + formula as the question
+  document.getElementById("qform").textContent = q.form;
+  document.getElementById("qform").style.color = q.color || "#7048e8";
+  document.getElementById("qformula").textContent = q.formula;
+  // Answer = the signal / context
+  document.getElementById("ans-signal").textContent = q.q;
+  document.getElementById("ans-signal").style.color = q.color || "#7048e8";
+  document.getElementById("extext").textContent = q.ex_en;
+  document.getElementById("exid").textContent = q.ex_id;
+  document.getElementById("tiptext").textContent = q.tip;
+  document.getElementById("ans").style.display = "none";
+  document.getElementById("hint").style.display = "flex";
+  document.getElementById("ba").style.display = "none";
+  document.getElementById("card").className = "card";
+  document.getElementById("ctr").textContent = (idx+1) + "/" + deck.length;
+  document.getElementById("pb").style.width = Math.round(idx / deck.length * 100) + "%";
+  document.getElementById("pl").textContent = idx + " selesai";
+  document.getElementById("pr").textContent = deck.length + " kartu";
 }
 
 function reveal(){
-  if(rev)return;rev=true;
-  document.getElementById("ans").style.display="block";
-  document.getElementById("hint").style.display="none";
-  document.getElementById("ba").style.display="flex";
-  document.getElementById("card").className="card done";
+  if(rev) return; rev = true;
+  document.getElementById("ans").style.display = "block";
+  document.getElementById("hint").style.display = "none";
+  document.getElementById("ba").style.display = "flex";
+  document.getElementById("card").className = "card done";
 }
 
 function rate(r){
-  if(r==="p") cp++;
-  else if(r==="h"){ch++;toRev.push(deck[idx]);}
-  else{cbv++;toRev.push(deck[idx]);}
-  upStats();idx++;
-  if(idx>=deck.length){showResult();return;}
+  if(r === "p") cp++;
+  else if(r === "h"){ ch++; toRev.push(deck[idx]); }
+  else { cbv++; toRev.push(deck[idx]); }
+  upStats(); idx++;
+  if(idx >= deck.length){ showResult(); return; }
   showCard();
 }
 
 function upStats(){
-  document.getElementById("sp").textContent=cp;
-  document.getElementById("sh").textContent=ch;
-  document.getElementById("sb").textContent=cbv;
+  document.getElementById("sp").textContent = cp;
+  document.getElementById("sh").textContent = ch;
+  document.getElementById("sb").textContent = cbv;
 }
 
 function showResult(){
-  document.getElementById("pb").style.width="100%";
+  document.getElementById("pb").style.width = "100%";
   hide("qv");
-  if(toRev.length===0){show("fv");return;}
+  if(toRev.length === 0){ show("fv"); return; }
   show("rv");
-  document.getElementById("rp").textContent=cp;
-  document.getElementById("rh").textContent=ch;
-  document.getElementById("rbb").textContent=cbv;
-  var pct=Math.round(cp/deck.length*100);
-  document.getElementById("ri").textContent=pct>=90?"&#127775;":pct>=70?"&#128522;":pct>=50?"&#128170;":"&#128548;";
-  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
-  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
-  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
-  var rl=document.getElementById("rl");rl.innerHTML="";
+  document.getElementById("rp").textContent = cp;
+  document.getElementById("rh").textContent = ch;
+  document.getElementById("rbb").textContent = cbv;
+  var pct = Math.round(cp / deck.length * 100);
+  document.getElementById("ri").textContent = pct>=90?"🌟":pct>=70?"😊":pct>=50?"💪":"😤";
+  document.getElementById("rt").textContent = "Ronde " + ronde + " selesai!";
+  document.getElementById("rs").textContent = pct>=90
+    ? "Hampir sempurna! " + toRev.length + " kartu tersisa."
+    : pct>=70
+    ? "Bagus! " + toRev.length + " kartu perlu diulang."
+    : "Semangat! " + toRev.length + " kartu menunggumu.";
+  document.getElementById("nb").textContent = "Lanjut Ronde " + (ronde+1) + " → " + toRev.length + " kartu";
+  var rl = document.getElementById("rl"); rl.innerHTML = "";
   toRev.forEach(function(v){
-    var d=document.createElement("div");d.className="ri";
-    d.innerHTML="<span class='ri-word'>"+v.q+"</span><span class='ri-form'>"+v.form+"</span>";
+    var d = document.createElement("div"); d.className = "ri";
+    d.innerHTML = "<span class='ri-word'>" + v.form + "</span><span class='ri-form'>" + v.q + "</span>";
     rl.appendChild(d);
   });
-  document.getElementById("rlw").style.display="";
+  document.getElementById("rlw").style.display = "";
 }
 
-function show(id){document.getElementById(id).style.display=""}
-function hide(id){document.getElementById(id).style.display="none"}
+function show(id){ document.getElementById(id).style.display = ""; }
+function hide(id){ document.getElementById(id).style.display = "none"; }
 
 fullRestart();
 </script>
