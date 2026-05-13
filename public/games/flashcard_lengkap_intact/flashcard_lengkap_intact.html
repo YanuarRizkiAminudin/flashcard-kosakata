@@ -93,8 +93,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
     <button class="fb" onclick="setL('L6')">L6 網球</button>
     <button class="fb" onclick="setL('L7')">L7 交通</button>
     <button class="fb" onclick="setL('L8')">L8 百貨公司</button>
-  <button class="fb" onclick="setL('L9')">L9 中文課</button>
-  </div>
+  <button class="fb" onclick="setL('L9')">L9 禮拜二</button>
   <div id="qv">
     <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/–</span></div>
     <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
@@ -677,9 +676,54 @@ var V=[
 {z:'捷運',p:'jiéyùn',i:'MRT; kereta bawah tanah',l:'L9',e:'MRT; metro; subway'},
 {z:'公車',p:'gōngchē',i:'bus (M: 輛)',l:'L9',e:'bus'},
 {z:'東西',p:'dōngxi',i:'barang; sesuatu',l:'L9',e:'thing; stuff; item'},
+// ── L9 Dialogue 2 — 禮拜二 ──
+{z:'期中考',p:'qīzhōng kǎo',i:'ujian tengah semester',l:'L9',e:'midterm exam'},
+{z:'快要',p:'kuàiyào',i:'hampir; sebentar lagi akan',l:'L9',e:'about to; soon'},
+{z:'對面',p:'duìmiàn',i:'seberang; di depan',l:'L9',e:'opposite side; across from'},
+{z:'大教室',p:'dà jiàoshì',i:'ruang kelas besar / aula belajar',l:'L9',e:'large classroom'},
+{z:'教室',p:'jiàoshì',i:'ruang kelas',l:'L9',e:'classroom'},
+{z:'舒服',p:'shūfú',i:'nyaman; enak',l:'L9',e:'comfortable'},
+{z:'每天',p:'měitiān',i:'setiap hari',l:'L9',e:'every day'},
+{z:'班',p:'bān',i:'kelas (kelompok siswa)',l:'L9',e:'class; group'},
+{z:'禮拜一',p:'lǐbài yī',i:'hari Senin',l:'L9',e:'Monday'},
+{z:'禮拜二',p:'lǐbài èr',i:'hari Selasa',l:'L9',e:'Tuesday'},
+{z:'禮拜三',p:'lǐbài sān',i:'hari Rabu',l:'L9',e:'Wednesday'},
+{z:'禮拜四',p:'lǐbài sì',i:'hari Kamis',l:'L9',e:'Thursday'},
+{z:'禮拜五',p:'lǐbài wǔ',i:'hari Jumat',l:'L9',e:'Friday'},
+{z:'禮拜六',p:'lǐbài liù',i:'hari Sabtu',l:'L9',e:'Saturday'},
+{z:'禮拜天',p:'lǐbài tiān',i:'hari Minggu',l:'L9',e:'Sunday'},
+{z:'語言交換',p:'yǔyán jiāohuàn',i:'pertukaran bahasa / language exchange',l:'L9',e:'language exchange'},
+{z:'別的',p:'bié de',i:'yang lain; lainnya',l:'L9',e:'other; another'},
+{z:'最近',p:'zuìjìn',i:'belakangan ini; akhir-akhir ini',l:'L9',e:'recently; lately'},
+{z:'比較',p:'bǐjiào',i:'relatif; lebih (perbandingan)',l:'L9',e:'relatively; comparatively'},
+{z:'沒有空',p:'méiyǒu kòng',i:'tidak ada waktu; tidak bisa',l:'L9',e:'to have no free time'},
+{z:'也許',p:'yěxǔ',i:'mungkin; barangkali',l:'L9',e:'maybe; perhaps'},
+{z:'幫',p:'bāng',i:'membantu',l:'L9',e:'to help'},
+{z:'希望',p:'xīwàng',i:'berharap; semoga',l:'L9',e:'to hope; hope'},
+{z:'能',p:'néng',i:'bisa; mampu; boleh',l:'L9',e:'can; able to; may'},
+{z:'只能',p:'zhǐ néng',i:'hanya bisa',l:'L9',e:'can only'},
+{z:'飛',p:'fēi',i:'terbang',l:'L9',e:'to fly'},
+{z:'走',p:'zǒu',i:'berjalan; pergi',l:'L9',e:'to walk; to go'},
+{z:'咳嗽',p:'késòu',i:'batuk',l:'L9',e:'to cough'},
+{z:'腳',p:'jiǎo',i:'kaki',l:'L9',e:'foot; leg'},
+{z:'受傷',p:'shòushāng',i:'terluka; cedera',l:'L9',e:'to be injured'},
+{z:'手機',p:'shǒujī',i:'ponsel; HP',l:'L9',e:'mobile phone'},
+{z:'電腦',p:'diànnǎo',i:'komputer',l:'L9',e:'computer'},
+{z:'開車',p:'kāichē',i:'menyetir; mengendarai mobil',l:'L9',e:'to drive a car'},
+{z:'車',p:'chē',i:'kendaraan; mobil',l:'L9',e:'car; vehicle'},
+{z:'說話',p:'shuōhuà',i:'berbicara',l:'L9',e:'to speak; to talk'},
+{z:'遠',p:'yuǎn',i:'jauh',l:'L9',e:'far; distant'},
+{z:'請',p:'qǐng',i:'mengundang; mentraktir; silakan',l:'L9',e:'to invite; to treat; please'},
+{z:'先...再...',p:'xiān...zài...',i:'dulu...baru kemudian...',l:'L9',e:'first...then...'},
+{z:'百貨公司',p:'bǎihuò gōngsī',i:'pusat perbelanjaan; department store',l:'L9',e:'department store'},
+{z:'海邊',p:'hǎibiān',i:'tepi pantai; pinggir laut',l:'L9',e:'seaside; beach'},
+{z:'游泳',p:'yóuyǒng',i:'berenang',l:'L9',e:'to swim'},
+{z:'體育課',p:'tǐyù kè',i:'pelajaran olahraga',l:'L9',e:'PE class; physical education'},
+{z:'網球課',p:'wǎngqiú kè',i:'pelajaran tenis',l:'L9',e:'tennis class'},
+{z:'畫畫課',p:'huàhuà kè',i:'pelajaran menggambar',l:'L9',e:'drawing/art class'},
 ];
 
-var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',L7:'L7 交通',L8:'L8 百貨公司',ALL:'Semua'};
+var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',L7:'L7 交通',L8:'L8 百貨公司',L9:'L9 禮拜二',ALL:'Semua'};
 function sh(a){return a.slice().sort(function(){return Math.random()-.5;});}
 var deck,idx,ronde,cp,ch,cbv,rev,toRev,curL='ALL',lang='id';
 

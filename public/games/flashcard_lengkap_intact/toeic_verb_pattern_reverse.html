@@ -115,13 +115,14 @@ h1{font-family:"Lora",serif;font-size:16px;color:#1a1814;text-align:center;margi
       <div class="ctag">Tebak Sinyalnya!</div>
       <!-- Show the FORM as the question -->
       <div class="q-form" id="qform"></div>
-      <div class="q-formula" id="qformula"></div>
       <div class="q-prompt">Kata/sinyal apa yang muncul sebelum blank?</div>
       <div class="hint" id="hint"><div class="hint-ico">&#128070;</div>Ketuk untuk lihat jawaban</div>
       <div class="ans" id="ans" style="display:none">
         <div class="divline"></div>
         <div class="ans-signal-label">&#128270; SINYAL / KONTEKS</div>
         <div class="ans-signal" id="ans-signal"></div>
+        <div class="ans-signal-label" style="margin-top:.5rem">&#128196; FORMULA</div>
+        <div class="q-formula" id="qformula" style="text-align:center;font-size:14px;font-weight:600;color:#8a8478;margin-bottom:.6rem"></div>
         <div class="exbox">
           <div class="exlabel">&#9997;&#65039; CONTOH</div>
           <div class="extext" id="extext"></div>
@@ -302,6 +303,7 @@ function showCard(){
   // FLIPPED: show form + formula as the question
   document.getElementById("qform").textContent = q.form;
   document.getElementById("qform").style.color = q.color || "#7048e8";
+  // formula shown only after reveal — set it here so it's ready
   document.getElementById("qformula").textContent = q.formula;
   // Answer = the signal / context
   document.getElementById("ans-signal").textContent = q.q;
