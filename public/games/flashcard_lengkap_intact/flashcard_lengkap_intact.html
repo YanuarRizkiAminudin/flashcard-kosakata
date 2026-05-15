@@ -94,6 +94,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
     <button class="fb" onclick="setL('L7')">L7 交通</button>
     <button class="fb" onclick="setL('L8')">L8 百貨公司</button>
     <button class="fb" onclick="setL('L9')">L9 禮拜二</button>
+    <button class="fb" onclick="setL('L10')">L10 看醫生</button>
   </div>
   <div id="qv">
     <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/–</span></div>
@@ -747,9 +748,38 @@ var V=[
 {z:'毛筆',p:'máobǐ',i:'kuas tulis (untuk kaligrafi)',l:'L9',e:'writing brush; calligraphy brush'},
 {z:'結束',p:'jiéshù',i:'selesai; berakhir',l:'L9',e:'to end; to finish'},
 {z:'教授',p:'jiàoshòu',i:'profesor',l:'L9',e:'professor'},
+// ═══════════════════════════════════════════
+// LESSON 10 — 看醫生 (Dialogue 1)
+// ═══════════════════════════════════════════
+{z:'請假',p:'qǐngjià',i:'minta izin tidak masuk',l:'L10',e:'to ask for leave; to take a day off'},
+{z:'發燒',p:'fāshāo',i:'demam',l:'L10',e:'to have a fever'},
+{z:'看醫生',p:'kàn yīshēng',i:'periksa ke dokter',l:'L10',e:'to see a doctor'},
+{z:'醫生',p:'yīshēng',i:'dokter',l:'L10',e:'doctor'},
+{z:'醫院',p:'yīyuàn',i:'rumah sakit (M: 家)',l:'L10',e:'hospital'},
+{z:'不錯',p:'búcuò',i:'tidak buruk; lumayan bagus',l:'L10',e:'not bad; pretty good'},
+{z:'感冒',p:'gǎnmào',i:'flu; masuk angin',l:'L10',e:'to have a cold; flu'},
+{z:'戴',p:'dài',i:'memakai (aksesori/masker)',l:'L10',e:'to wear (accessories/mask)'},
+{z:'口罩',p:'kǒuzhào',i:'masker',l:'L10',e:'face mask'},
+{z:'常常',p:'chángcháng',i:'sering-sering',l:'L10',e:'often; frequently'},
+{z:'洗手',p:'xǐshǒu',i:'cuci tangan',l:'L10',e:'to wash hands'},
+{z:'健康',p:'jiànkāng',i:'sehat; kesehatan',l:'L10',e:'healthy; health'},
+{z:'生病',p:'shēngbìng',i:'sakit; jatuh sakit',l:'L10',e:'to get sick; to be ill'},
+{z:'平常',p:'píngcháng',i:'biasanya; sehari-hari',l:'L10',e:'usually; ordinarily'},
+{z:'注意',p:'zhùyì',i:'memperhatikan; berhati-hati',l:'L10',e:'to pay attention; to be careful'},
+{z:'身體',p:'shēntǐ',i:'tubuh; badan',l:'L10',e:'body; health (physical)'},
+{z:'身體健康',p:'shēntǐ jiànkāng',i:'kesehatan tubuh; sehat jasmani',l:'L10',e:'physical health'},
+{z:'多',p:'duō',i:'lebih banyak; banyak',l:'L10',e:'more; many'},
+{z:'多喝水',p:'duō hē shuǐ',i:'banyak minum air',l:'L10',e:'drink more water'},
+{z:'多休息',p:'duō xiūxí',i:'banyak istirahat',l:'L10',e:'rest more'},
+{z:'蘋果',p:'píngguǒ',i:'apel (M: 個)',l:'L10',e:'apple'},
+{z:'藥局',p:'yàojú',i:'apotek',l:'L10',e:'pharmacy; drugstore'},
+{z:'藥',p:'yào',i:'obat',l:'L10',e:'medicine; drug'},
+{z:'吃藥',p:'chīyào',i:'minum obat',l:'L10',e:'to take medicine'},
+{z:'帶',p:'dài',i:'membawa; membawa serta',l:'L10',e:'to bring; to carry'},
+{z:'應該',p:'yīnggāi',i:'seharusnya; sebaiknya',l:'L10',e:'should; ought to'},
 ];
 
-var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',L7:'L7 交通',L8:'L8 百貨公司',L9:'L9 禮拜二',ALL:'Semua'};
+var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',L7:'L7 交通',L8:'L8 百貨公司',L9:'L9 禮拜二',L10:'L10 看醫生',ALL:'Semua'};
 function sh(a){return a.slice().sort(function(){return Math.random()-.5;});}
 var deck,idx,ronde,cp,ch,cbv,rev,toRev,curL='ALL',lang='id';
 
