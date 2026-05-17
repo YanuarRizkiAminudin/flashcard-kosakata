@@ -1,0 +1,410 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEIC Test 06 — Vocabulary Flashcard</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:480px;}
+h1{font-family:'Lora',serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:12px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;}
+.fb{padding:5px 11px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.fb:hover{border-color:#2d7a4f;color:#2d7a4f;}
+.fb.on{background:#2d7a4f;color:#fff;border-color:#2d7a4f;}
+.fb.all-btn.on{background:#1a1814;border-color:#1a1814;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;}
+.badge{font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#e8e4dc;color:#8a8478;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#2d7a4f,#52c48a);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.8rem;}
+.pills{display:flex;gap:6px;margin-bottom:.9rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#2d7a4f;}.dh{background:#a05c00;}.db{background:#b83232;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 2px 14px rgba(0,0,0,.07);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.2rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f5c97a,#52c48a,#85b7eb);opacity:.6;}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,.1);}
+.ctag{font-size:10px;font-weight:600;letter-spacing:.8px;padding:3px 9px;border-radius:99px;background:#e8e4dc;color:#8a8478;margin-bottom:.7rem;}
+.word{font-family:'Lora',serif;font-weight:700;color:#1a1814;line-height:1.2;text-align:center;}
+.word.big{font-size:44px;}.word.med{font-size:34px;}.word.sm{font-size:26px;}.word.xs{font-size:20px;}.word.xxs{font-size:15px;}
+.hint{font-size:13px;color:#8a8478;margin-top:.8rem;display:flex;align-items:center;gap:6px;}
+.hint-ico{width:26px;height:26px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+.divline{width:36px;height:1px;background:#e8e4dc;margin:0 auto .6rem;}
+.pos{font-size:11px;font-weight:600;color:#8a8478;margin-bottom:4px;}
+.meaning{font-size:17px;font-weight:600;color:#2d7a4f;margin-bottom:4px;}
+.id-txt{font-size:13px;color:#8a8478;line-height:1.5;}
+.ex-txt{font-size:11px;color:#5a7a6a;font-style:italic;margin-top:7px;line-height:1.6;border-left:2px solid #a8d9bc;padding-left:8px;text-align:left;width:100%;}
+.syns{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:8px;}
+.syn{font-size:11px;background:#edf7f1;border:1px solid #a8d9bc;color:#2d7a4f;border-radius:99px;padding:3px 10px;font-weight:500;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:16px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}.cb-p:hover{background:#d5f0e2;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}.cb-b:hover{background:#f9d8d8;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:50px;margin-bottom:.7rem;}
+.res-title{font-family:'Lora',serif;font-size:18px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sbox .sn{font-size:21px;font-weight:700;}.sbox .sl{font-size:10px;margin-top:2px;}
+.sbp{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid #e8e4dc;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-word{font-family:'Lora',serif;font-size:14px;font-weight:700;color:#1a1814;min-width:100px;}
+.ri-pos{font-size:10px;color:#8a8478;}
+.ri-id{font-size:11px;color:#2d7a4f;margin-left:auto;text-align:right;max-width:160px;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-green{background:linear-gradient(135deg,#2d7a4f,#3da866);color:#fff;box-shadow:0 3px 10px rgba(45,122,79,.25);}
+.btn-green:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc !important;color:#8a8478;}
+.btn-ghost:hover{background:#e8e4dc;}
+.final{text-align:center;padding:2rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>TOEIC Test 06 — Vocabulary</h1>
+  <div class="sub" id="tsub">All categories</div>
+  <div class="filters">
+    <button class="fb all-btn on" onclick="setCat('ALL')">All</button>
+    <button class="fb" onclick="setCat('VERB')">Verbs</button>
+    <button class="fb" onclick="setCat('NOUN')">Nouns</button>
+    <button class="fb" onclick="setCat('ADJ')">Adjectives</button>
+    <button class="fb" onclick="setCat('ADV')">Adverbs</button>
+    <button class="fb" onclick="setCat('PHRASE')">Phrases</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Round 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 done</span><span id="pr">-- cards</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Got it</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Almost</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Review</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="ctag" id="ctag"></div>
+      <div class="word" id="word"></div>
+      <div class="hint" id="hint"><div class="hint-ico">&#128070;</div>Tap to see answer</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="divline"></div>
+        <div class="pos" id="pos"></div>
+        <div class="meaning" id="meaning"></div>
+        <div class="id-txt" id="idt"></div>
+        <div class="ex-txt" id="ext" style="display:none"></div>
+        <div class="syns" id="syns"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">&#128533;</span><span>Review</span><span class="cb-sub">Show again</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">&#129300;</span><span>Almost</span><span class="cb-sub">Show again</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">&#10003;</span><span>Got it</span><span class="cb-sub">Remove card</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Got it</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Almost</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Review</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Cards for next round</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-green" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">Start over</button>
+    </div>
+  </div>
+  <div id="fv" style="display:none">
+    <div class="final">
+      <div style="font-size:60px;margin-bottom:.8rem">&#127942;</div>
+      <div class="res-title">All mastered!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.3rem;">Your TOEIC Test 06 vocab is ready!</div>
+      <button class="btnbig btn-green" onclick="fullRestart()">Restart</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+// ── VERBS ──
+{w:"authorize",pos:"verb",cat:"VERB",m:"to officially approve",i:"to give official permission for something",e:"Only the manager is authorized to approve expense reports.",s:["approve","permit","sanction"]},
+{w:"consolidate",pos:"verb",cat:"VERB",m:"to combine into one",i:"to merge separate things into a single stronger unit",e:"The company plans to consolidate its two offices into one location.",s:["merge","combine","unify"]},
+{w:"retain",pos:"verb",cat:"VERB",m:"to keep or maintain",i:"to continue to have something; not to lose it",e:"The company has managed to retain its top employees for over a decade.",s:["keep","maintain","preserve"]},
+{w:"revise",pos:"verb",cat:"VERB",m:"to update or correct",i:"to make changes to improve or correct something",e:"Please revise the proposal before submitting it to the client.",s:["update","amend","edit"]},
+{w:"notify",pos:"verb",cat:"VERB",m:"to inform officially",i:"to formally tell someone about something",e:"Please notify the HR department of any changes to your personal information.",s:["inform","alert","advise"]},
+{w:"finalize",pos:"verb",cat:"VERB",m:"to complete the last details",i:"to put the finishing touches on something",e:"We need to finalize the contract before the end of the week.",s:["complete","conclude","settle"]},
+{w:"outsource",pos:"verb",cat:"VERB",m:"to hire externally",i:"to arrange for work to be done by an outside company",e:"The firm decided to outsource its IT support to a specialist company.",s:["subcontract","delegate","farm out"]},
+{w:"streamline",pos:"verb",cat:"VERB",m:"to make more efficient",i:"to simplify a process to make it faster and more effective",e:"The new software will streamline the invoicing process.",s:["simplify","optimize","improve"]},
+{w:"reimburse",pos:"verb",cat:"VERB",m:"to pay back expenses",i:"to repay someone for money they have spent",e:"Submit your receipts and we will reimburse you within five business days.",s:["repay","refund","compensate"]},
+{w:"launch",pos:"verb",cat:"VERB",m:"to introduce publicly",i:"to start or introduce a new product, service, or campaign",e:"The company will launch its new product line next quarter.",s:["introduce","release","unveil"]},
+{w:"negotiate",pos:"verb",cat:"VERB",m:"to discuss to reach agreement",i:"to have formal discussions to reach a mutually acceptable outcome",e:"Both parties agreed to negotiate the terms of the contract.",s:["discuss","bargain","mediate"]},
+{w:"monitor",pos:"verb",cat:"VERB",m:"to watch and check",i:"to regularly observe and check the progress of something",e:"The supervisor will monitor employee performance on a monthly basis.",s:["track","oversee","observe"]},
+{w:"allocate",pos:"verb",cat:"VERB",m:"to assign resources",i:"to distribute resources or duties for a specific purpose",e:"The budget was allocated equally among all departments.",s:["assign","distribute","designate"]},
+{w:"comply",pos:"verb",cat:"VERB",m:"to follow rules",i:"to act in accordance with rules, regulations, or requests",e:"All staff must comply with the new workplace safety guidelines.",s:["obey","adhere to","conform to"]},
+{w:"submit",pos:"verb",cat:"VERB",m:"to hand in formally",i:"to present a document or application for consideration",e:"Please submit your application before the deadline.",s:["hand in","present","file"]},
+{w:"coordinate",pos:"verb",cat:"VERB",m:"to organize jointly",i:"to organize people or activities so they work together effectively",e:"She was asked to coordinate the annual sales conference.",s:["organize","manage","arrange"]},
+{w:"evaluate",pos:"verb",cat:"VERB",m:"to assess carefully",i:"to judge or calculate the quality or value of something",e:"The committee will evaluate all proposals by Friday.",s:["assess","review","appraise"]},
+{w:"implement",pos:"verb",cat:"VERB",m:"to put into action",i:"to put a plan or decision into effect",e:"The new policy will be implemented starting next month.",s:["execute","apply","carry out"]},
+{w:"verify",pos:"verb",cat:"VERB",m:"to confirm accuracy",i:"to make sure that something is true or correct",e:"Please verify your contact details before submitting the form.",s:["confirm","validate","check"]},
+{w:"expedite",pos:"verb",cat:"VERB",m:"to speed up",i:"to make a process happen more quickly",e:"We need to expedite the shipment to meet the client deadline.",s:["accelerate","rush","fast-track"]},
+{w:"postpone",pos:"verb",cat:"VERB",m:"to delay to a later time",i:"to arrange for something to happen at a later time than planned",e:"The board meeting has been postponed until further notice.",s:["delay","defer","reschedule"]},
+{w:"acquire",pos:"verb",cat:"VERB",m:"to obtain or buy",i:"to gain possession of something, especially through effort or purchase",e:"The company acquired a smaller competitor last year.",s:["obtain","purchase","gain"]},
+{w:"distribute",pos:"verb",cat:"VERB",m:"to hand out or deliver",i:"to give or deliver something to a number of people",e:"The marketing team will distribute flyers at the trade show.",s:["deliver","hand out","circulate"]},
+{w:"renovate",pos:"verb",cat:"VERB",m:"to repair and improve",i:"to repair and improve a building or room",e:"The office will be renovated over the summer break.",s:["refurbish","restore","remodel"]},
+{w:"register",pos:"verb",cat:"VERB",m:"to sign up officially",i:"to put your name on an official list",e:"You must register for the seminar at least two weeks in advance.",s:["sign up","enroll","record"]},
+{w:"facilitate",pos:"verb",cat:"VERB",m:"to make easier",i:"to make a process or action easier or more achievable",e:"The new platform will facilitate communication between teams.",s:["enable","support","assist"]},
+{w:"highlight",pos:"verb",cat:"VERB",m:"to draw attention to",i:"to emphasize something as important",e:"The report highlights the need for better data security.",s:["emphasize","feature","showcase"]},
+{w:"generate",pos:"verb",cat:"VERB",m:"to produce or create",i:"to cause something to exist or occur",e:"The campaign generated significant interest from potential investors.",s:["produce","create","yield"]},
+{w:"enhance",pos:"verb",cat:"VERB",m:"to improve quality",i:"to increase or improve the quality, value, or extent of something",e:"The upgrade will enhance the performance of the entire system.",s:["improve","boost","strengthen"]},
+{w:"anticipate",pos:"verb",cat:"VERB",m:"to expect in advance",i:"to expect or predict something before it happens",e:"We anticipate strong demand for the new product.",s:["expect","foresee","predict"]},
+{w:"accommodate",pos:"verb",cat:"VERB",m:"to provide space or adjust",i:"to provide room for, or to adjust to meet needs",e:"The conference hall can accommodate up to 500 guests.",s:["house","hold","cater for"]},
+{w:"demonstrate",pos:"verb",cat:"VERB",m:"to show clearly",i:"to show or prove something clearly",e:"The results demonstrate the effectiveness of the new approach.",s:["show","prove","illustrate"]},
+{w:"collaborate",pos:"verb",cat:"VERB",m:"to work together",i:"to work jointly with others on a project",e:"The two departments will collaborate on the new marketing campaign.",s:["cooperate","partner","team up"]},
+{w:"investigate",pos:"verb",cat:"VERB",m:"to examine thoroughly",i:"to carry out a systematic inquiry into something",e:"The auditors were asked to investigate the financial discrepancy.",s:["examine","probe","look into"]},
+{w:"propose",pos:"verb",cat:"VERB",m:"to suggest formally",i:"to put forward a plan or idea for consideration",e:"The manager proposed a new approach to customer service.",s:["suggest","recommend","put forward"]},
+// ── NOUNS ──
+{w:"agenda",pos:"noun",cat:"NOUN",m:"list of meeting topics",i:"a list of items to be discussed at a meeting",e:"Please review the agenda before the meeting starts.",s:["schedule","plan","itinerary"]},
+{w:"amendment",pos:"noun",cat:"NOUN",m:"a formal change",i:"a change or addition made to a document or law",e:"The board approved an amendment to the original contract.",s:["revision","modification","change"]},
+{w:"audit",pos:"noun",cat:"NOUN",m:"official financial check",i:"an official examination of financial accounts",e:"The annual audit revealed no significant irregularities.",s:["inspection","review","examination"]},
+{w:"benchmark",pos:"noun",cat:"NOUN",m:"a standard for comparison",i:"a standard or point of reference used for comparison",e:"The company uses industry benchmarks to measure its performance.",s:["standard","reference","criterion"]},
+{w:"budget",pos:"noun",cat:"NOUN",m:"financial plan",i:"an estimate of income and expenditure for a set period",e:"The marketing budget for next year has been increased by 15 percent.",s:["allocation","funds","financial plan"]},
+{w:"candidate",pos:"noun",cat:"NOUN",m:"a person applying for a job",i:"a person who applies for a job or is nominated for a position",e:"We received over 200 applications from qualified candidates.",s:["applicant","nominee","contender"]},
+{w:"capacity",pos:"noun",cat:"NOUN",m:"maximum amount possible",i:"the maximum amount that something can contain or produce",e:"The factory is currently operating at full capacity.",s:["volume","limit","output"]},
+{w:"certificate",pos:"noun",cat:"NOUN",m:"official document of achievement",i:"an official document proving a fact or qualification",e:"Participants will receive a certificate upon completion of the course.",s:["credential","diploma","document"]},
+{w:"circulation",pos:"noun",cat:"NOUN",m:"distribution or movement",i:"the movement of something from place to place",e:"The memo was put into circulation among all department heads.",s:["distribution","spread","flow"]},
+{w:"clause",pos:"noun",cat:"NOUN",m:"a section of a contract",i:"a specific section or condition in a legal document",e:"Please read the termination clause carefully before signing.",s:["provision","condition","section"]},
+{w:"commission",pos:"noun",cat:"NOUN",m:"a fee for completing a sale",i:"a payment made to someone for selling goods or services",e:"Sales representatives earn a 10 percent commission on each deal.",s:["fee","percentage","bonus"]},
+{w:"compliance",pos:"noun",cat:"NOUN",m:"following rules",i:"the act of obeying rules, regulations, or standards",e:"All employees must complete the annual compliance training.",s:["adherence","conformity","observance"]},
+{w:"confidentiality",pos:"noun",cat:"NOUN",m:"keeping information private",i:"the state of keeping information secret",e:"All staff must sign a confidentiality agreement before starting.",s:["privacy","secrecy","discretion"]},
+{w:"contractor",pos:"noun",cat:"NOUN",m:"an independent worker",i:"a person or company hired to do specific work under a contract",e:"We hired an outside contractor to handle the renovation.",s:["subcontractor","freelancer","vendor"]},
+{w:"correspondence",pos:"noun",cat:"NOUN",m:"written communication",i:"letters or emails exchanged between people",e:"Please keep all correspondence related to the project on file.",s:["communication","letters","emails"]},
+{w:"deficit",pos:"noun",cat:"NOUN",m:"a shortfall in funds",i:"the amount by which something falls short of what is needed",e:"The company reported a budget deficit for the third quarter.",s:["shortfall","loss","gap"]},
+{w:"delegation",pos:"noun",cat:"NOUN",m:"assigning tasks to others",i:"the act of giving authority or tasks to someone else",e:"Effective delegation is a key management skill.",s:["assignment","transfer","handover"]},
+{w:"endorsement",pos:"noun",cat:"NOUN",m:"official support or approval",i:"a public statement of support or approval",e:"The product received an endorsement from a well-known athlete.",s:["approval","backing","support"]},
+{w:"expenditure",pos:"noun",cat:"NOUN",m:"money spent",i:"the total amount of money spent",e:"The company needs to reduce its expenditure on travel.",s:["spending","expense","outlay"]},
+{w:"forecast",pos:"noun",cat:"NOUN",m:"a prediction of future events",i:"a statement about what is likely to happen in the future",e:"The sales forecast for next year looks very promising.",s:["prediction","projection","estimate"]},
+{w:"franchise",pos:"noun",cat:"NOUN",m:"a licensed business model",i:"a license to operate a business using another company brand",e:"She opened a franchise of the popular coffee chain.",s:["license","branch","outlet"]},
+{w:"grievance",pos:"noun",cat:"NOUN",m:"a formal complaint",i:"an official complaint about unfair treatment",e:"Employees can submit a grievance through the HR portal.",s:["complaint","objection","dispute"]},
+{w:"headquarters",pos:"noun",cat:"NOUN",m:"main office location",i:"the main office or center of operations of an organization",e:"The company headquarters is located in downtown Chicago.",s:["head office","main office","base"]},
+{w:"incentive",pos:"noun",cat:"NOUN",m:"a reward to motivate action",i:"something that motivates or encourages someone to do something",e:"The company offers financial incentives for meeting sales targets.",s:["reward","motivation","bonus"]},
+{w:"inventory",pos:"noun",cat:"NOUN",m:"a list of stock",i:"a complete list of items in stock",e:"The warehouse team conducts a full inventory check every quarter.",s:["stock","supply","stockpile"]},
+{w:"invoice",pos:"noun",cat:"NOUN",m:"a bill for goods or services",i:"a document requesting payment for goods or services provided",e:"Please send the invoice to the accounts payable department.",s:["bill","statement","receipt"]},
+{w:"liability",pos:"noun",cat:"NOUN",m:"legal responsibility",i:"the state of being legally responsible for something",e:"The company accepted liability for the defective products.",s:["responsibility","obligation","accountability"]},
+{w:"merger",pos:"noun",cat:"NOUN",m:"combining two companies",i:"the combining of two companies into one",e:"The merger between the two firms was completed last month.",s:["acquisition","consolidation","union"]},
+{w:"momentum",pos:"noun",cat:"NOUN",m:"forward progress",i:"the force or speed of movement; growing strength",e:"The project gained momentum after the initial funding was secured.",s:["progress","drive","impetus"]},
+{w:"obligation",pos:"noun",cat:"NOUN",m:"a duty or requirement",i:"something you are required to do by law or morally",e:"It is your obligation to report any safety hazards immediately.",s:["duty","responsibility","requirement"]},
+{w:"overhead",pos:"noun",cat:"NOUN",m:"ongoing business costs",i:"the regular costs of running a business, not including production",e:"Reducing overhead is essential to improving profit margins.",s:["expenses","running costs","operating costs"]},
+{w:"patent",pos:"noun",cat:"NOUN",m:"exclusive rights to an invention",i:"a government license giving exclusive rights to an invention",e:"The company filed a patent for its new manufacturing process.",s:["license","copyright","intellectual property"]},
+{w:"procurement",pos:"noun",cat:"NOUN",m:"obtaining goods or services",i:"the process of obtaining goods or services for a business",e:"The procurement team is responsible for sourcing all office supplies.",s:["purchasing","acquisition","sourcing"]},
+{w:"productivity",pos:"noun",cat:"NOUN",m:"efficiency of output",i:"the effectiveness of productive effort",e:"The new software significantly improved team productivity.",s:["efficiency","output","performance"]},
+{w:"proposal",pos:"noun",cat:"NOUN",m:"a formal suggestion",i:"a plan or suggestion put forward for consideration",e:"The client approved our proposal for the new website design.",s:["suggestion","plan","offer"]},
+{w:"quota",pos:"noun",cat:"NOUN",m:"a fixed target amount",i:"a fixed share or target that must be achieved",e:"Each sales representative has a monthly quota to meet.",s:["target","limit","allocation"]},
+{w:"reimbursement",pos:"noun",cat:"NOUN",m:"repayment of expenses",i:"the action of repaying a person for money spent",e:"Submit your receipts to receive full reimbursement.",s:["refund","repayment","compensation"]},
+{w:"revenue",pos:"noun",cat:"NOUN",m:"income from business",i:"the income generated from normal business operations",e:"The company reported record revenue in the fourth quarter.",s:["income","earnings","turnover"]},
+{w:"subsidiary",pos:"noun",cat:"NOUN",m:"a company owned by another",i:"a company controlled by a larger parent company",e:"The firm opened a new subsidiary in Southeast Asia.",s:["branch","affiliate","division"]},
+{w:"surplus",pos:"noun",cat:"NOUN",m:"an excess amount",i:"an amount left over when requirements have been met",e:"The department ended the year with a budget surplus.",s:["excess","remainder","leftover"]},
+{w:"turnover",pos:"noun",cat:"NOUN",m:"total sales or staff changes",i:"the amount of business done, or the rate at which staff leave",e:"High staff turnover is a sign of low employee satisfaction.",s:["revenue","sales","attrition"]},
+{w:"vendor",pos:"noun",cat:"NOUN",m:"a supplier or seller",i:"a person or company that sells goods or services",e:"We are evaluating three vendors for the new office furniture contract.",s:["supplier","seller","provider"]},
+{w:"warranty",pos:"noun",cat:"NOUN",m:"a guarantee on a product",i:"a written guarantee promising to repair or replace a product",e:"The appliance comes with a two-year warranty.",s:["guarantee","assurance","coverage"]},
+{w:"workforce",pos:"noun",cat:"NOUN",m:"all employees of a company",i:"the people engaged in or available for work",e:"The company plans to expand its workforce by 20 percent next year.",s:["staff","employees","personnel"]},
+// ── ADJECTIVES ──
+{w:"adequate",pos:"adj",cat:"ADJ",m:"enough; satisfactory",i:"sufficient for a specific need or requirement",e:"Make sure the budget is adequate to cover all project costs.",s:["sufficient","enough","satisfactory"]},
+{w:"comprehensive",pos:"adj",cat:"ADJ",m:"covering everything",i:"including all or nearly all elements or aspects",e:"The report provides a comprehensive overview of market trends.",s:["thorough","complete","extensive"]},
+{w:"confidential",pos:"adj",cat:"ADJ",m:"private; secret",i:"intended to be kept secret",e:"All client information must be treated as confidential.",s:["private","classified","restricted"]},
+{w:"consecutive",pos:"adj",cat:"ADJ",m:"following in order",i:"following each other continuously without interruption",e:"The company has reported profits for five consecutive quarters.",s:["successive","continuous","sequential"]},
+{w:"dedicated",pos:"adj",cat:"ADJ",m:"committed to a purpose",i:"devoted to a task or purpose",e:"She is a dedicated employee who always goes above and beyond.",s:["committed","devoted","hardworking"]},
+{w:"eligible",pos:"adj",cat:"ADJ",m:"qualified to receive",i:"satisfying the conditions required to receive something",e:"Employees who have worked for two years are eligible for the bonus.",s:["qualified","entitled","suitable"]},
+{w:"exclusive",pos:"adj",cat:"ADJ",m:"limited to one group",i:"restricted to a particular person or group",e:"Members have exclusive access to the premium lounge.",s:["restricted","limited","private"]},
+{w:"flexible",pos:"adj",cat:"ADJ",m:"able to adapt easily",i:"willing to change or compromise",e:"We offer flexible working hours to all full-time employees.",s:["adaptable","versatile","adjustable"]},
+{w:"mandatory",pos:"adj",cat:"ADJ",m:"required by law or rules",i:"required by law or rules; compulsory",e:"Attendance at the safety briefing is mandatory for all new staff.",s:["compulsory","required","obligatory"]},
+{w:"outstanding",pos:"adj",cat:"ADJ",m:"excellent; unpaid",i:"exceptionally good; or not yet paid or resolved",e:"She received an award for her outstanding contribution to the team.",s:["excellent","exceptional","remarkable"]},
+{w:"preliminary",pos:"adj",cat:"ADJ",m:"done before the main event",i:"coming before a more important action or event",e:"The preliminary results suggest the campaign was a success.",s:["initial","preparatory","introductory"]},
+{w:"profitable",pos:"adj",cat:"ADJ",m:"generating financial gain",i:"yielding profit or financial gain",e:"The new product line has been highly profitable.",s:["lucrative","rewarding","successful"]},
+{w:"qualified",pos:"adj",cat:"ADJ",m:"having the right skills",i:"officially recognized as having the necessary skills",e:"We are looking for a qualified accountant to join our team.",s:["certified","trained","competent"]},
+{w:"reliable",pos:"adj",cat:"ADJ",m:"consistently dependable",i:"consistently good in quality or performance",e:"We need a reliable supplier who can meet our deadlines.",s:["dependable","trustworthy","consistent"]},
+{w:"substantial",pos:"adj",cat:"ADJ",m:"large in size or amount",i:"of considerable importance, size, or worth",e:"The company made a substantial investment in new technology.",s:["significant","considerable","large"]},
+{w:"supplemental",pos:"adj",cat:"ADJ",m:"added to complete",i:"provided in addition to what already exists",e:"The supplemental report contains additional financial data.",s:["additional","extra","complementary"]},
+{w:"temporary",pos:"adj",cat:"ADJ",m:"lasting for a short time",i:"lasting for only a limited period of time",e:"The road closure is temporary and will last about two weeks.",s:["short-term","interim","provisional"]},
+{w:"unanimous",pos:"adj",cat:"ADJ",m:"agreed by everyone",i:"fully agreed by all people involved",e:"The board reached a unanimous decision to approve the merger.",s:["agreed","united","undivided"]},
+{w:"urgent",pos:"adj",cat:"ADJ",m:"requiring immediate action",i:"requiring immediate action or attention",e:"Please respond to this urgent request as soon as possible.",s:["pressing","critical","immediate"]},
+{w:"valid",pos:"adj",cat:"ADJ",m:"legally or officially acceptable",i:"legally or officially acceptable",e:"Your parking permit is valid for 30 days from the date of issue.",s:["legitimate","acceptable","current"]},
+// ── ADVERBS ──
+{w:"accordingly",pos:"adv",cat:"ADV",m:"in a way that is appropriate",i:"in a way that is appropriate to the circumstances",e:"Please review the updated guidelines and act accordingly.",s:["appropriately","correspondingly","therefore"]},
+{w:"approximately",pos:"adv",cat:"ADV",m:"roughly; about",i:"used to show that something is not exact",e:"The project will take approximately three months to complete.",s:["roughly","about","around"]},
+{w:"consistently",pos:"adv",cat:"ADV",m:"in the same way always",i:"in every case or on every occasion; always",e:"She has consistently exceeded her sales targets.",s:["always","regularly","constantly"]},
+{w:"efficiently",pos:"adv",cat:"ADV",m:"in a productive way",i:"in a way that achieves maximum productivity with minimum waste",e:"The new system processes orders more efficiently.",s:["productively","effectively","smoothly"]},
+{w:"exclusively",pos:"adv",cat:"ADV",m:"only; solely",i:"to the exclusion of everything else",e:"This offer is available exclusively to premium members.",s:["solely","only","entirely"]},
+{w:"immediately",pos:"adv",cat:"ADV",m:"right away",i:"at once; without delay",e:"Please contact the IT department immediately if you notice any issues.",s:["instantly","at once","right away"]},
+{w:"initially",pos:"adv",cat:"ADV",m:"at the beginning",i:"at the beginning; at first",e:"The project was initially expected to take six months.",s:["at first","originally","at the start"]},
+{w:"mutually",pos:"adv",cat:"ADV",m:"shared by both sides",i:"experienced or done by each of two or more parties",e:"Both companies agreed on mutually beneficial terms.",s:["jointly","reciprocally","together"]},
+{w:"promptly",pos:"adv",cat:"ADV",m:"quickly and on time",i:"with little or no delay; punctually",e:"Please respond to customer inquiries promptly.",s:["quickly","immediately","without delay"]},
+{w:"significantly",pos:"adv",cat:"ADV",m:"by a large amount",i:"in a sufficiently great or important way",e:"Sales have increased significantly since the new campaign launched.",s:["considerably","substantially","greatly"]},
+{w:"temporarily",pos:"adv",cat:"ADV",m:"for a limited time",i:"for a limited period of time; not permanently",e:"The office will be temporarily closed for renovations.",s:["briefly","for now","short-term"]},
+{w:"thoroughly",pos:"adv",cat:"ADV",m:"completely and carefully",i:"in a thorough manner; completely",e:"Please review the document thoroughly before signing.",s:["completely","carefully","fully"]},
+// ── PHRASES ──
+{w:"as of",pos:"phrase",cat:"PHRASE",m:"starting from a date",i:"used to indicate the time or date from which something applies",e:"As of January 1, all employees must use the new system.",s:["starting from","effective","beginning"]},
+{w:"at your earliest convenience",pos:"phrase",cat:"PHRASE",m:"as soon as possible",i:"used to politely ask someone to do something soon",e:"Please contact us at your earliest convenience.",s:["as soon as possible","when you can","promptly"]},
+{w:"be subject to",pos:"phrase",cat:"PHRASE",m:"dependent on conditions",i:"likely to be affected by or dependent on something",e:"All prices are subject to change without notice.",s:["dependent on","conditional on","liable to"]},
+{w:"bring to your attention",pos:"phrase",cat:"PHRASE",m:"to inform someone",i:"to make someone aware of something important",e:"I would like to bring to your attention a recent change in policy.",s:["inform","notify","alert"]},
+{w:"due to",pos:"phrase",cat:"PHRASE",m:"because of",i:"as a result of; caused by",e:"The meeting was cancelled due to a scheduling conflict.",s:["because of","owing to","as a result of"]},
+{w:"in accordance with",pos:"phrase",cat:"PHRASE",m:"following the rules of",i:"in a way that follows or obeys something",e:"Please act in accordance with company policy at all times.",s:["following","complying with","as per"]},
+{w:"in lieu of",pos:"phrase",cat:"PHRASE",m:"instead of",i:"in place of; as a substitute for",e:"Employees may take time off in lieu of overtime pay.",s:["instead of","in place of","as a substitute for"]},
+{w:"in the event of",pos:"phrase",cat:"PHRASE",m:"if something happens",i:"if a particular thing happens",e:"In the event of an emergency, please follow the evacuation plan.",s:["if","should","in case of"]},
+{w:"on behalf of",pos:"phrase",cat:"PHRASE",m:"representing someone",i:"as a representative of someone",e:"I am writing on behalf of the entire management team.",s:["representing","for","in the name of"]},
+{w:"prior to",pos:"phrase",cat:"PHRASE",m:"before",i:"before a particular time or event",e:"Please submit all documents prior to the interview.",s:["before","ahead of","in advance of"]},
+{w:"regardless of",pos:"phrase",cat:"PHRASE",m:"without being affected by",i:"without being influenced by something",e:"All employees are treated equally regardless of their background.",s:["despite","irrespective of","no matter"]},
+{w:"take effect",pos:"phrase",cat:"PHRASE",m:"to become active",i:"to come into operation; to start working",e:"The new regulations will take effect on the first of next month.",s:["come into force","become active","apply"]},
+{w:"up to date",pos:"phrase",cat:"PHRASE",m:"current; modern",i:"incorporating the latest information or developments",e:"Please make sure your contact information is up to date.",s:["current","latest","recent"]},
+{w:"with regard to",pos:"phrase",cat:"PHRASE",m:"concerning; about",i:"in connection with; concerning",e:"With regard to your inquiry, we will respond within 48 hours.",s:["concerning","regarding","about"]},
+{w:"on a regular basis",pos:"phrase",cat:"PHRASE",m:"regularly; routinely",i:"done at regular intervals",e:"Performance reviews are conducted on a regular basis.",s:["regularly","routinely","periodically"]},
+{w:"at no additional cost",pos:"phrase",cat:"PHRASE",m:"free of extra charge",i:"without any extra payment required",e:"Installation is included at no additional cost.",s:["free of charge","at no extra cost","included"]},
+{w:"in short supply",pos:"phrase",cat:"PHRASE",m:"not enough available",i:"available in limited quantities",e:"Skilled technicians are currently in short supply.",s:["scarce","limited","hard to find"]},
+{w:"reach out",pos:"phrase",cat:"PHRASE",m:"to contact someone",i:"to make contact with someone",e:"Please reach out to our support team if you have any questions.",s:["contact","get in touch","connect"]},
+{w:"set aside",pos:"phrase",cat:"PHRASE",m:"to reserve for a purpose",i:"to keep something for a specific purpose",e:"We have set aside a portion of the budget for training.",s:["reserve","allocate","save"]},
+{w:"carry out",pos:"phrase",cat:"PHRASE",m:"to perform or complete",i:"to perform or complete a task",e:"The team will carry out a full review of the process.",s:["perform","execute","complete"]},
+];
+
+var LABELS={VERB:"Verb",NOUN:"Noun",ADJ:"Adjective",ADV:"Adverb",PHRASE:"Phrase",ALL:"All"};
+function sh(a){return a.slice().sort(function(){return Math.random()-.5;});}
+var deck,idx,ronde,cp,ch,cbv,rev,toRev,curCat="ALL";
+
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){
+    if(b.getAttribute("onclick")==="setCat('"+c+"')") b.classList.add("on");
+  });
+  ronde=1; fullRestart();
+}
+
+function fullRestart(){
+  var src=curCat==="ALL"?V:V.filter(function(v){return v.cat===curCat;});
+  deck=sh(src);
+  var total=deck.length;
+  document.getElementById("tsub").textContent=
+    (curCat==="ALL"?"All categories — "+total+" words":LABELS[curCat]+" — "+total+" words");
+  go();
+}
+
+function go(){
+  idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
+  show("qv");hide("rv");hide("fv");
+  document.getElementById("rb").textContent="Round "+ronde;
+  upStats();showCard();
+}
+
+function nextRonde(){ronde++;deck=sh(toRev);go();}
+
+function showCard(){
+  rev=false;
+  var q=deck[idx];
+  var el=document.getElementById("word");
+  el.textContent=q.w;
+  var l=q.w.length;
+  el.className="word "+(l<=6?"big":l<=10?"med":l<=16?"sm":l<=24?"xs":"xxs");
+  document.getElementById("ctag").textContent=LABELS[q.cat]||q.cat;
+  document.getElementById("pos").textContent=q.pos;
+  document.getElementById("meaning").textContent=q.m;
+  document.getElementById("idt").textContent=q.i;
+  var extEl=document.getElementById("ext");
+  if(q.e){extEl.textContent='"'+q.e+'"';extEl.style.display="block";}
+  else{extEl.style.display="none";}
+  var synsEl=document.getElementById("syns");
+  synsEl.innerHTML="";
+  if(q.s){q.s.forEach(function(s){
+    var span=document.createElement("span");
+    span.className="syn";span.textContent=s;
+    synsEl.appendChild(span);
+  });}
+  document.getElementById("ans").style.display="none";
+  document.getElementById("hint").style.display="flex";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" done";
+  document.getElementById("pr").textContent=deck.length+" cards";
+}
+
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="block";
+  document.getElementById("hint").style.display="none";
+  document.getElementById("ba").style.display="flex";
+  document.getElementById("card").className="card done";
+}
+
+function rate(r){
+  var q=deck[idx];
+  if(r==="p") cp++;
+  else if(r==="h"){ch++;toRev.push(q);}
+  else{cbv++;toRev.push(q);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+
+function upStats(){
+  document.getElementById("sp").textContent=cp;
+  document.getElementById("sh").textContent=ch;
+  document.getElementById("sb").textContent=cbv;
+}
+
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  hide("qv");
+  if(toRev.length===0){show("fv");return;}
+  show("rv");
+  document.getElementById("rp").textContent=cp;
+  document.getElementById("rh").textContent=ch;
+  document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri").textContent=pct>=90?"&#127775;":pct>=70?"&#128522;":pct>=50?"&#128170;":"&#128548;";
+  document.getElementById("rt").textContent="Round "+ronde+" complete!";
+  document.getElementById("rs").textContent=
+    pct>=90?"Almost perfect! "+toRev.length+" cards left.":
+    pct>=70?"Great job! "+toRev.length+" cards to review.":
+    pct>=50?"Good effort! Review "+toRev.length+" cards.":
+    "Keep going! "+toRev.length+" cards waiting.";
+  document.getElementById("nb").textContent="Round "+(ronde+1)+" → "+toRev.length+" cards";
+  var rl=document.getElementById("rl");
+  rl.innerHTML="";
+  toRev.forEach(function(v){
+    var d=document.createElement("div");d.className="ri";
+    d.innerHTML="<span class='ri-word'>"+v.w+"</span><div><div class='ri-pos'>"+v.pos+"</div></div><span class='ri-id'>"+v.m+"</span>";
+    rl.appendChild(d);
+  });
+  document.getElementById("rlw").style.display="";
+}
+
+function show(id){document.getElementById(id).style.display="";}
+function hide(id){document.getElementById(id).style.display="none";}
+
+setCat("ALL");
+</script>
+</body>
+</html>

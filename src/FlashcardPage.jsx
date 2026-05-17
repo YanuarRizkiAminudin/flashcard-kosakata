@@ -53,6 +53,16 @@ const flashcards = [
     route: '/game/toeic-vocabulary',
   },
   {
+    id: 10,
+    category: 'TOEIC',
+    categoryColor: '#e0e7ff', categoryTextColor: '#3730a3',
+    icon: '📘',
+    title: 'TOEIC Test 06 Vocabulary',
+    kartu: 131,
+    level: 'Verbs · Nouns · Adj · Adv · Phrases',
+    route: '/game/toeic-test06-vocab',
+  },
+  {
     id: 4,
     category: 'TOEIC',
     categoryColor: '#e0e7ff', categoryTextColor: '#3730a3',
