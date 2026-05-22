@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandarin L10 — Kesehatan & Tata Bahasa</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:500px;}
+h1{font-family:'Noto Serif TC',serif;font-size:15px;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;}
+.fb{padding:5px 11px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#c0392b;color:#c0392b;}
+.fb.on{background:#c0392b;color:#fff;border-color:#c0392b;}
+.fb.all-btn.on{background:#1a1814;border-color:#1a1814;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#e8e4dc;color:#8a8478;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#c0392b,#e74c3c);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#2d7a4f;}.dh{background:#a05c00;}.db{background:#b83232;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 2px 14px rgba(0,0,0,.07);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.2rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c0392b,#e74c3c,#f39c12);opacity:.7;}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,.1);}
+.ctag{font-size:10px;font-weight:600;letter-spacing:.8px;padding:3px 9px;border-radius:99px;background:#fdf0f0;color:#c0392b;margin-bottom:.6rem;}
+.zh{font-family:'Noto Serif TC',serif;font-weight:700;color:#1a1814;line-height:1.2;text-align:center;}
+.zh.big{font-size:52px;}.zh.med{font-size:38px;}.zh.sm{font-size:28px;}.zh.xs{font-size:20px;}
+.py-front{font-size:14px;color:#c0392b;font-weight:600;margin-top:6px;}
+.hint{font-size:13px;color:#8a8478;margin-top:.8rem;display:flex;align-items:center;gap:6px;}
+.hint-ico{width:26px;height:26px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+.divline{width:36px;height:1px;background:#e8e4dc;margin:0 auto .6rem;}
+.py-ans{font-size:18px;font-weight:700;color:#c0392b;margin-bottom:3px;}
+.pos-tag{font-size:11px;font-weight:600;color:#8a8478;margin-bottom:4px;}
+.meaning-id{font-size:16px;font-weight:600;color:#2d7a4f;margin-bottom:3px;}
+.meaning-en{font-size:13px;color:#8a8478;margin-bottom:6px;}
+.ex-txt{font-size:12px;color:#5a7a6a;font-style:italic;line-height:1.6;border-left:2px solid #f5a8a8;padding-left:8px;text-align:left;width:100%;margin-top:6px;}
+.grammar-note{font-size:11px;color:#7d6608;background:#fef9e7;border:1px solid #f9e79f;border-radius:8px;padding:6px 10px;margin-top:7px;line-height:1.5;text-align:left;width:100%;}
+.syns{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:7px;}
+.syn{font-size:11px;background:#fdf0f0;border:1px solid #f5a8a8;color:#c0392b;border-radius:99px;padding:3px 10px;font-weight:500;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:16px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}.cb-p:hover{background:#d5f0e2;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}.cb-b:hover{background:#f9d8d8;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:50px;margin-bottom:.7rem;}
+.res-title{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sbox .sn{font-size:21px;font-weight:700;}.sbox .sl{font-size:10px;margin-top:2px;}
+.sbp{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid #e8e4dc;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;min-width:50px;text-align:center;}
+.ri-py{font-size:11px;font-weight:600;color:#c0392b;}
+.ri-id{font-size:11px;color:#8a8478;margin-left:auto;text-align:right;max-width:160px;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-red{background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;box-shadow:0 3px 10px rgba(192,57,43,.25);}
+.btn-red:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc !important;color:#8a8478;}
+.btn-ghost:hover{background:#e8e4dc;}
+.final{text-align:center;padding:2rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>時代華語 L10 — 看醫生</h1>
+  <div class="sub" id="tsub">Semua kategori</div>
+  <div class="filters">
+    <button class="fb all-btn on" onclick="setCat('ALL')">Semua</button>
+    <button class="fb" onclick="setCat('VOCAB')">生詞 Kosakata</button>
+    <button class="fb" onclick="setCat('GRAMMAR')">語法 Tata Bahasa</button>
+    <button class="fb" onclick="setCat('PHRASE')">句型 Pola Kalimat</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="ctag" id="ctag"></div>
+      <div class="zh" id="zh"></div>
+      <div class="py-front" id="py-front"></div>
+      <div class="hint" id="hint"><div class="hint-ico">👆</div>Ketuk untuk lihat jawaban</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="divline"></div>
+        <div class="py-ans" id="py-ans"></div>
+        <div class="pos-tag" id="pos-tag"></div>
+        <div class="meaning-id" id="meaning-id"></div>
+        <div class="meaning-en" id="meaning-en"></div>
+        <div class="ex-txt" id="ex-txt" style="display:none"></div>
+        <div class="grammar-note" id="grammar-note" style="display:none"></div>
+        <div class="syns" id="syns"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum paham</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir paham</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">✓</span><span>Paham</span><span class="cb-sub">Tidak muncul lagi</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir paham</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum paham</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-red" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv" style="display:none">
+    <div class="final">
+      <div style="font-size:60px;margin-bottom:.8rem">🏆</div>
+      <div class="res-title">Semua dikuasai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.3rem;">L10 sudah siap! 加油！</div>
+      <button class="btnbig btn-red" onclick="fullRestart()">Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+// ── 生詞 KOSAKATA ──
+{z:"不舒服",py:"bù shūfú",cat:"VOCAB",pos:"Vs-pred",id:"tidak enak badan / sakit",en:"not feeling well; sick",ex:"我身體不舒服，所以不能跟你們去打球。",g:""},
+{z:"發燒",py:"fāshāo",cat:"VOCAB",pos:"Vi",id:"demam",en:"to have a fever",ex:"他發燒了，不能來上課。",g:""},
+{z:"感冒",py:"gǎnmào",cat:"VOCAB",pos:"Vi/N",id:"flu / masuk angin",en:"to have a cold; a cold",ex:"最近很多人感冒了。",g:""},
+{z:"咳嗽",py:"késòu",cat:"VOCAB",pos:"Vi",id:"batuk",en:"to cough",ex:"我咳嗽、頭痛，鼻子也不舒服。",g:""},
+{z:"頭痛",py:"tóutòng",cat:"VOCAB",pos:"Vi/N",id:"sakit kepala",en:"headache; to have a headache",ex:"我咳嗽、頭痛，鼻子也不舒服。",g:""},
+{z:"肚子痛",py:"dùzi tòng",cat:"VOCAB",pos:"Vi",id:"sakit perut",en:"stomachache; to have a stomachache",ex:"最近也有很多人肚子痛。",g:""},
+{z:"生病",py:"shēngbìng",cat:"VOCAB",pos:"Vi",id:"sakit / jatuh sakit",en:"to get sick; to be ill",ex:"平常不生病的人也要注意。",g:""},
+{z:"看醫生",py:"kàn yīshēng",cat:"VOCAB",pos:"VO",id:"pergi ke dokter",en:"to see a doctor",ex:"他今天要去看醫生。",g:""},
+{z:"醫院",py:"yīyuàn",cat:"VOCAB",pos:"N",id:"rumah sakit",en:"hospital",ex:"他家附近有一家不錯的醫院。",g:""},
+{z:"醫生",py:"yīshēng",cat:"VOCAB",pos:"N",id:"dokter",en:"doctor",ex:"醫生說，我應該多喝水，不需要吃藥。",g:""},
+{z:"戴口罩",py:"dài kǒuzhào",cat:"VOCAB",pos:"VO",id:"memakai masker",en:"to wear a mask",ex:"你們要戴口罩，也要常常洗手。",g:""},
+{z:"洗手",py:"xǐshǒu",cat:"VOCAB",pos:"VO",id:"mencuci tangan",en:"to wash hands",ex:"要常常洗手。",g:""},
+{z:"健康",py:"jiànkāng",cat:"VOCAB",pos:"Vs/N",id:"sehat / kesehatan",en:"healthy; health",ex:"我很健康，不常生病。",g:""},
+{z:"注意",py:"zhùyì",cat:"VOCAB",pos:"Vt",id:"memperhatikan / berhati-hati",en:"to pay attention; to be careful",ex:"平常不生病的人也要注意。",g:""},
+{z:"休息",py:"xiūxi",cat:"VOCAB",pos:"Vi",id:"beristirahat",en:"to rest",ex:"要多休息。",g:""},
+{z:"乾淨",py:"gānjìng",cat:"VOCAB",pos:"Vs",id:"bersih",en:"clean",ex:"這張椅子不太乾淨，我要那張。",g:""},
+{z:"需要",py:"xūyào",cat:"VOCAB",pos:"Vst/Vaux",id:"membutuhkan / perlu",en:"to need; to need to do something",ex:"每個人都需要朋友。",g:"Sebagai Vaux: 我累了，需要回家休息。"},
+{z:"藥",py:"yào",cat:"VOCAB",pos:"N",id:"obat",en:"medication; medicine",ex:"醫生說，我應該多喝水，不需要吃藥。",g:""},
+{z:"吃藥",py:"chī yào",cat:"VOCAB",pos:"VO",id:"minum obat",en:"to take medicine",ex:"要是發燒了，就吃紅色的藥。",g:""},
+{z:"記得",py:"jìdé",cat:"VOCAB",pos:"Vst",id:"ingat / masih ingat",en:"to remember",ex:"我只記得明天有考試，不記得有功課。",g:"Lawan kata: 忘 wàng (lupa)"},
+{z:"請假",py:"qǐngjià",cat:"VOCAB",pos:"VO",id:"minta izin tidak masuk",en:"to ask for leave; to call in sick",ex:"我明天不能來上課，今天要先跟老師請假。",g:""},
+{z:"天氣",py:"tiānqì",cat:"VOCAB",pos:"N",id:"cuaca",en:"weather",ex:"最近天氣冷了，很多人感冒了。",g:""},
+{z:"水果",py:"shuǐguǒ",cat:"VOCAB",pos:"N",id:"buah-buahan",en:"fruit",ex:"妳可以帶一些水果去看國安。",g:""},
+{z:"蘋果",py:"píngguǒ",cat:"VOCAB",pos:"N",id:"apel",en:"apple",ex:"我明天帶一些蘋果去看他。",g:""},
+// ── 語法 TATA BAHASA ──
+{z:"跟 (1) — bersama",py:"gēn",cat:"GRAMMAR",pos:"Prep",id:"bersama / dengan (orang)",en:"together with (person)",ex:"我喜歡跟家人去海邊玩。",g:"Pola: 跟 + orang + V\n今天晚上我要跟朋友吃飯。\n我常常跟他一起去百貨公司買東西。"},
+{z:"跟 (2) — kepada",py:"gēn",cat:"GRAMMAR",pos:"Prep",id:"kepada / dengan (berbicara)",en:"to; with (speaking to someone)",ex:"他跟家人說英文，跟同學說中文。",g:"Pola: 跟 + orang + 說/講\n計程車司機跟我說：「去機場 1,200 塊錢。」\n我明天不能來上課，今天要先跟老師請假。"},
+{z:"跟 (3) — dari",py:"gēn",cat:"GRAMMAR",pos:"Prep",id:"dari (belajar dari / meminta dari)",en:"from (learning from / asking from)",ex:"我跟李老師學書法。",g:"Pola: 跟 + orang + 學/要\n他二十歲了，不跟爸媽要錢了。\n我不想跟朋友買舊車，我想買新車。"},
+{z:"的 — Clause + 的 + N",py:"de",cat:"GRAMMAR",pos:"Particle",id:"partikel: klausa + 的 + kata benda",en:"Clause + 的 + Noun (relative clause)",ex:"媽媽買的蘋果非常好吃。",g:"Pola: [Klausa] + 的 + N\n① 我寫的字 (karakter yang saya tulis)\n② 媽媽給我的蘋果 (apel yang ibu berikan)\n他唱的歌很好聽，是哪國歌？\n我不懂他們說的話，你懂嗎？"},
+{z:"的 — (Vaux/A) + V(O) + 的 + N",py:"de",cat:"GRAMMAR",pos:"Particle",id:"partikel: (Vaux/A) + V(O) + 的 + N",en:"(Vaux/A) + V(O) + 的 + Noun",ex:"感冒的人要注意身體健康。",g:"Pola: (Vaux/A) + V(O) + 的 + N\n① 感冒的人 (orang yang flu)\n② 會做飯的孩子 (anak yang bisa masak)\n③ 常常運動的老先生 (kakek yang sering olahraga)\n在台北坐捷運的人很多。\n會說中文的人不一定會教中文。"},
+{z:"的 — Clause + 的 + SP + (Nu) + M + N",py:"de",cat:"GRAMMAR",pos:"Particle",id:"partikel: klausa + 的 + SP + (Nu) + M + N",en:"Clause + 的 + Specifier + (Number) + Measure + Noun",ex:"我太太買的那件衣服好貴！",g:"Pola: [Klausa] + 的 + SP + (Nu) + M + N\n① 他寫的這幾個字 (beberapa karakter yang dia tulis)\n② 戴口罩的這位醫生 (dokter yang memakai masker ini)\n你問的這兩個問題非常難。\n在跳舞的那些學生都是我的朋友。"},
+{z:"會 — will / akan",py:"huì",cat:"GRAMMAR",pos:"Vaux",id:"akan (menyatakan rencana masa depan)",en:"will; to be going to + V",ex:"他明天沒有空，不會來我們家。",g:"會 sebagai Vaux berarti 'akan' (rencana/prediksi masa depan)\n老師：你明天要記得帶毛筆來學校。\n學生：好，我會帶毛筆來。\n孩子：媽，妳要幫我買襪子嗎？\n媽媽：我今天會去百貨公司幫你買。"},
+{z:"要是／如果……，就……",py:"yàoshi/rúguǒ...jiù...",cat:"GRAMMAR",pos:"Conj",id:"kalau/jika... maka...",en:"if... then...",ex:"如果明天天氣不好，我們就不要去游泳了。",g:"Pola: 要是/如果 + [kondisi]，就 + [hasil]\n① 要是他不去，我們就不要去了。\n② 如果你想吃，就多吃一點吧！\n要是我有車，就可以開車去上課。\n如果明天要來的人很多，我就多買一點兒飲料跟蛋糕。"},
+{z:"多／少 + V",py:"duō/shǎo + V",cat:"GRAMMAR",pos:"Pattern",id:"lebih banyak / lebih sedikit melakukan V",en:"to do something more / less",ex:"你應該多運動，少喝一點兒酒。",g:"Pola: 多/少 + V(O) — digunakan untuk memberi saran\n① 多運動。(Olahraga lebih banyak.)\n② 少看手機。(Kurangi melihat HP.)\n我發燒了，醫生跟我說要多喝水、多休息、少看手機。\n我們學習語言，平常應該要多聽、多說、多寫、多練習。"},
+// ── 句型 POLA KALIMAT ──
+{z:"他應該去看醫生。",py:"Tā yīnggāi qù kàn yīshēng.",cat:"PHRASE",pos:"Sentence",id:"Dia seharusnya pergi ke dokter.",en:"He should go see a doctor.",ex:"他發燒了？那他應該去看醫生。",g:"應該 = seharusnya (modal verb)"},
+{z:"最近很多人感冒。",py:"Zuìjìn hěn duō rén gǎnmào.",cat:"PHRASE",pos:"Sentence",id:"Belakangan ini banyak orang flu.",en:"Recently many people have caught a cold.",ex:"最近天氣冷了，很多人感冒了。",g:"最近 = belakangan ini / akhir-akhir ini"},
+{z:"你要戴口罩，也要常常洗手。",py:"Nǐ yào dài kǒuzhào, yě yào cháng cháng xǐshǒu.",cat:"PHRASE",pos:"Sentence",id:"Kamu harus memakai masker dan juga sering mencuci tangan.",en:"You should wear a mask and also wash your hands often.",ex:"最近很多人感冒，你們要戴口罩，也要常常洗手。",g:"也 = juga (menghubungkan dua kewajiban)"},
+{z:"我很健康，不常生病。",py:"Wǒ hěn jiànkāng, bù cháng shēngbìng.",cat:"PHRASE",pos:"Sentence",id:"Saya sangat sehat, tidak sering sakit.",en:"I am very healthy and don't get sick often.",ex:"老師，我很健康，不常生病。",g:"不常 = tidak sering"},
+{z:"你覺得哪裡不舒服？",py:"Nǐ juéde nǎlǐ bù shūfú?",cat:"PHRASE",pos:"Sentence",id:"Kamu merasa tidak enak di bagian mana?",en:"Where do you feel uncomfortable? / What are your symptoms?",ex:"醫生：你覺得哪裡不舒服？",g:"哪裡 = di mana / bagian mana"},
+{z:"是因為吃的東西不乾淨嗎？",py:"Shì yīnwèi chī de dōngxi bù gānjìng ma?",cat:"PHRASE",pos:"Sentence",id:"Apakah karena makanan yang dimakan tidak bersih?",en:"Is it because the food eaten was not clean?",ex:"國安：是因為吃的東西不乾淨嗎？",g:"吃的東西 = makanan yang dimakan (Clause + 的 + N)"},
+{z:"我會給你三天的藥。",py:"Wǒ huì gěi nǐ sān tiān de yào.",cat:"PHRASE",pos:"Sentence",id:"Saya akan memberi kamu obat untuk tiga hari.",en:"I will give you medicine for three days.",ex:"醫生：我會給你三天的藥。",g:"會 = akan (rencana masa depan)"},
+{z:"要是發燒了，就吃紅色的藥。",py:"Yàoshi fāshāo le, jiù chī hóngsè de yào.",cat:"PHRASE",pos:"Sentence",id:"Kalau demam, maka minumlah obat yang merah.",en:"If you have a fever, then take the red medicine.",ex:"你要記得多喝一點兒水，要是發燒了，就吃紅色的藥。",g:"要是...就... = kalau/jika... maka..."},
+{z:"你應該多喝水，也要多休息。",py:"Nǐ yīnggāi duō hē shuǐ, yě yào duō xiūxi.",cat:"PHRASE",pos:"Sentence",id:"Kamu seharusnya banyak minum air dan juga banyak istirahat.",en:"You should drink more water and also rest more.",ex:"妳可以帶一些水果去看國安，跟他說應該多喝水，也要多休息。",g:"多 + V = lebih banyak melakukan V"},
+{z:"常常生病的人要注意身體健康。",py:"Cháng cháng shēngbìng de rén yào zhùyì shēntǐ jiànkāng.",cat:"PHRASE",pos:"Sentence",id:"Orang yang sering sakit harus memperhatikan kesehatan tubuhnya.",en:"People who get sick often should pay attention to their health.",ex:"常常生病的人要注意身體健康。",g:"常常生病的人 = orang yang sering sakit (Clause + 的 + N)"},
+{z:"如果明天天氣好，我就去打球。",py:"Rúguǒ míngtiān tiānqì hǎo, wǒ jiù qù dǎqiú.",cat:"PHRASE",pos:"Sentence",id:"Kalau besok cuacanya bagus, saya akan pergi bermain bola.",en:"If the weather is good tomorrow, I will go play ball.",ex:"如果明天天氣好，我就去打球。",g:"如果...就... = kalau/jika... maka..."},
+{z:"我們學習語言，應該多聽、多說、多寫。",py:"Wǒmen xuéxí yǔyán, yīnggāi duō tīng, duō shuō, duō xiě.",cat:"PHRASE",pos:"Sentence",id:"Kita belajar bahasa, seharusnya banyak mendengar, berbicara, dan menulis.",en:"When learning a language, we should listen more, speak more, and write more.",ex:"我們學習語言，平常應該要多聽、多說、多寫、多練習。",g:"多 + V pattern untuk memberi saran belajar bahasa"},
+];
+
+var LABELS={VOCAB:"生詞 Kosakata",GRAMMAR:"語法 Tata Bahasa",PHRASE:"句型 Pola Kalimat",ALL:"Semua"};
+function sh(a){return a.slice().sort(function(){return Math.random()-.5;});}
+var deck,idx,ronde,cp,ch,cbv,rev,toRev,curCat="ALL";
+
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){
+    if(b.getAttribute("onclick")==="setCat('"+c+"')") b.classList.add("on");
+  });
+  ronde=1; fullRestart();
+}
+
+function fullRestart(){
+  var src=curCat==="ALL"?V:V.filter(function(v){return v.cat===curCat;});
+  deck=sh(src);
+  var total=deck.length;
+  document.getElementById("tsub").textContent=
+    (curCat==="ALL"?"Semua — "+total+" kartu":LABELS[curCat]+" — "+total+" kartu");
+  go();
+}
+
+function go(){
+  idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
+  show("qv");hide("rv");hide("fv");
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+
+function nextRonde(){ronde++;deck=sh(toRev);go();}
+
+function showCard(){
+  rev=false;
+  var q=deck[idx];
+  var el=document.getElementById("zh");
+  el.textContent=q.z;
+  var l=q.z.length;
+  el.className="zh "+(l<=2?"big":l<=4?"med":l<=8?"sm":"xs");
+  document.getElementById("ctag").textContent=LABELS[q.cat]||q.cat;
+  document.getElementById("py-front").textContent=q.py;
+  document.getElementById("py-ans").textContent=q.py;
+  document.getElementById("pos-tag").textContent=q.pos;
+  document.getElementById("meaning-id").textContent=q.id;
+  document.getElementById("meaning-en").textContent=q.en;
+  var exEl=document.getElementById("ex-txt");
+  if(q.ex){exEl.innerHTML="<strong>例句：</strong> "+q.ex;exEl.style.display="block";}
+  else{exEl.style.display="none";}
+  var gEl=document.getElementById("grammar-note");
+  if(q.g){gEl.innerHTML="📝 "+q.g.replace(/\n/g,"<br>");gEl.style.display="block";}
+  else{gEl.style.display="none";}
+  document.getElementById("syns").innerHTML="";
+  document.getElementById("ans").style.display="none";
+  document.getElementById("hint").style.display="flex";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="block";
+  document.getElementById("hint").style.display="none";
+  document.getElementById("ba").style.display="flex";
+  document.getElementById("card").className="card done";
+}
+
+function rate(r){
+  var q=deck[idx];
+  if(r==="p") cp++;
+  else if(r==="h"){ch++;toRev.push(q);}
+  else{cbv++;toRev.push(q);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+
+function upStats(){
+  document.getElementById("sp").textContent=cp;
+  document.getElementById("sh").textContent=ch;
+  document.getElementById("sb").textContent=cbv;
+}
+
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  hide("qv");
+  if(toRev.length===0){show("fv");return;}
+  show("rv");
+  document.getElementById("rp").textContent=cp;
+  document.getElementById("rh").textContent=ch;
+  document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  var ico=pct>=90?"🌟":pct>=70?"😊":pct>=50?"💪":"😅";
+  document.getElementById("ri").textContent=ico;
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=
+    pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":
+    pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":
+    pct>=50?"Lumayan! Ulangi "+toRev.length+" kartu.":
+    "Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");
+  rl.innerHTML="";
+  toRev.forEach(function(v){
+    var d=document.createElement("div");d.className="ri";
+    d.innerHTML="<span class='ri-zh'>"+v.z+"</span><div><div class='ri-py'>"+v.py+"</div></div><span class='ri-id'>"+v.id+"</span>";
+    rl.appendChild(d);
+  });
+  document.getElementById("rlw").style.display="";
+}
+
+function show(id){document.getElementById(id).style.display="";}
+function hide(id){document.getElementById(id).style.display="none";}
+
+setCat("ALL");
+</script>
+</body>
+</html>

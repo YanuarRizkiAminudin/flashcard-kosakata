@@ -19,6 +19,7 @@ function App() {
       <Route path="/game/wo-shi-zhen-de" element={<GamePage file="flashcard_lengkap_intact/wo_shi_zhen_de.html" title="我是真的真的真的很愛你" />} />
       <Route path="/game/toefl-test" element={<GamePage file="flashcard_lengkap_intact/toefl_test.html" title="TOEFL iBT Simulation" />} />
       <Route path="/game/toeic-test06-vocab" element={<GamePage file="flashcard_lengkap_intact/toeic_test06_vocab.html" title="TOEIC Test 06 Vocabulary" />} />
+      <Route path="/game/mandarin-l10" element={<GamePage file="flashcard_lengkap_intact/mandarin_l10.html" title="Mandarin L10 — 看醫生" />} />
       <Route path="/voice" element={<VoicePage />} />
       <Route path="/toeic-test" element={<ToeicTestPage />} />
       <Route path="/lessons" element={<LessonListPage />} />
