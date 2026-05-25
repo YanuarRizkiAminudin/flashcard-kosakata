@@ -844,7 +844,11 @@ function setLang(l){
   document.getElementById('btn-en').style.background = l==='en'?'#1971c2':'';
   document.getElementById('btn-en').style.color = l==='en'?'#fff':'';
   document.getElementById('btn-en').style.borderColor = l==='en'?'#1971c2':'';
-  if(deck && deck[idx]) showCard();
+  if(deck && deck[idx]){
+    var q=deck[idx];
+    var meaning=(lang==='en'&&q.e)?q.e:q.i;
+    document.getElementById('idt').textContent=meaning;
+  }
 }
 
 function setL(l){
