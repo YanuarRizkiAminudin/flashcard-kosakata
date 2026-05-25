@@ -1,26 +1,19 @@
 ﻿content = open("public/games/flashcard_lengkap_intact/flashcard_lengkap_intact.html", encoding="utf-8").read()
 
-# The issue might be in the e field values containing parentheses with special chars
-# Check specifically for the entries we added that might have issues
+# The backslash itself might be the issue in the count - verify the actual fix
 import re
+m = re.search(r"不要.*?e:'[^']*'", content, re.DOTALL)
+if m:
+    print("不要 entry:", m.group(0)[:100])
 
-# Find the problematic entry
-prob = re.search(r"\{z:'穿穿看'[^}]+\}", content)
-if prob:
-    print("穿穿看 entry:", prob.group(0))
+# Count quotes properly - escaped quotes should not count
+v_start = content.index("var V=[")
+v_end = content.index("];", v_start) + 2
+v_section = content[v_start:v_end]
 
-# Check for entries with (V V 看 pattern) - the parentheses might cause issues
-vvkan = re.search(r"V V 看 pattern", content)
-if vvkan:
-    print("\nContext around V V 看:")
-    print(repr(content[vvkan.start()-50:vvkan.end()+50]))
-
-# Check for 快要 entry
-kuaiyao = re.search(r"\{z:'快要'[^}]+\}", content)
-if kuaiyao:
-    print("\n快要 entry:", kuaiyao.group(0))
-
-# Check for 一樓 entry  
-yilou = re.search(r"\{z:'一樓'[^}]+\}", content)
-if yilou:
-    print("\n一樓 entry:", yilou.group(0))
+# Better check: use a proper JS string parser approach
+# Find any e: or i: value that contains an unescaped single quote
+bad = re.findall(r"(?:,e:|,i:)'((?:[^'\\]|\\.)*(?:[^\\])'[^,}\n])", v_section)
+print(f"Bad entries: {len(bad)}")
+for b in bad[:5]:
+    print(f"  {b[:80]}")
