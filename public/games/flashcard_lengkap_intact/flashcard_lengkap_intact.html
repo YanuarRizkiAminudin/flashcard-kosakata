@@ -41,7 +41,8 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
 @keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
 .divline{width:36px;height:1px;background:#e8e4dc;margin:0 auto .6rem;}
 .py{font-size:18px;font-weight:600;color:#2d7a4f;margin-bottom:3px;}
-.id-txt{font-size:13px;color:#8a8478;line-height:1.5;}
+.en-txt{font-size:20px;font-weight:700;color:#1a1814;line-height:1.4;text-align:center;margin-bottom:4px;}
+.id-txt{font-size:12px;color:#8a8478;line-height:1.4;font-style:italic;}
 .btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
 .cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
 .cb-ico{font-size:16px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
@@ -112,6 +113,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
       <div class="ans" id="ans" style="display:none">
         <div class="divline"></div>
         <div class="py" id="py"></div>
+        <div class="en-txt" id="ent"></div>
         <div class="id-txt" id="idt"></div>
       </div>
     </div>
@@ -844,11 +846,6 @@ function setLang(l){
   document.getElementById('btn-en').style.background = l==='en'?'#1971c2':'';
   document.getElementById('btn-en').style.color = l==='en'?'#fff':'';
   document.getElementById('btn-en').style.borderColor = l==='en'?'#1971c2':'';
-  if(deck && deck[idx]){
-    var q=deck[idx];
-    var meaning=(lang==='en'&&q.e)?q.e:q.i;
-    document.getElementById('idt').textContent=meaning;
-  }
 }
 
 function setL(l){
@@ -887,8 +884,8 @@ function showCard(){
   el.className='zh '+(l<=2?'big':l<=4?'med':l<=6?'sm':'xs');
   document.getElementById('ctag').textContent=LABELS[q.l]||q.l;
   document.getElementById('py').textContent=q.p;
-  var meaning = (lang==='en' && q.e) ? q.e : q.i;
-  document.getElementById('idt').textContent=meaning;
+  document.getElementById('ent').textContent=q.e || q.i;
+  document.getElementById('idt').textContent=q.i;
   document.getElementById('ans').style.display='none';
   document.getElementById('hint').style.display='flex';
   document.getElementById('ba').style.display='none';
