@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandarin — 沒 Phrases & Kosakata</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:linear-gradient(135deg,#f0f7ff 0%,#f5f0ff 100%);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:500px;}
+
+h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:2px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+
+/* Category Filter */
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#2563eb;color:#2563eb;}
+.fb.on{background:#2563eb;color:#fff;border-color:#2563eb;}
+.fb.cat-mei.on{background:#dc2626;border-color:#dc2626;}
+.fb.cat-time.on{background:#d97706;border-color:#d97706;}
+.fb.cat-place.on{background:#059669;border-color:#059669;}
+.fb.cat-people.on{background:#7c3aed;border-color:#7c3aed;}
+.fb.cat-food.on{background:#db2777;border-color:#db2777;}
+.fb.cat-other.on{background:#0891b2;border-color:#0891b2;}
+
+/* Lang Switch */
+.lang-switch{display:flex;background:#fff;border:1px solid #e8e4dc;border-radius:99px;padding:3px;gap:2px;margin-bottom:12px;align-items:center;}
+.lang-switch label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:99px;color:#8a8478;transition:all .2s;user-select:none;}
+.lang-switch label:hover{color:#2563eb;}
+.lang-switch input[type=radio]{display:none;}
+.lang-switch input[type=radio]:checked + label{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.3);}
+
+/* Progress */
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#dbeafe;color:#2563eb;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+
+/* Stats pills */
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#2d7a4f;}.dh{background:#a05c00;}.db{background:#b83232;}
+
+/* Card */
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:24px;box-shadow:0 4px 20px rgba(37,99,235,.08);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--cat-color,linear-gradient(90deg,#2563eb,#7c3aed));opacity:.9;}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,99,235,.15);}
+
+.card-badges{display:flex;gap:6px;margin-bottom:.6rem;align-items:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:600;border-radius:99px;padding:2px 9px;}
+
+/* Front ZH */
+.zh-main{font-family:'Noto Serif TC',serif;font-weight:700;color:#1a1814;line-height:1.2;text-align:center;}
+.zh-main.big{font-size:58px;}
+.zh-main.med{font-size:44px;}
+.zh-main.sm{font-size:32px;}
+.zh-main.xs{font-size:22px;}
+.py-show{font-size:15px;color:#2563eb;font-weight:600;margin-top:8px;letter-spacing:.5px;}
+
+/* Front ID/EN */
+.focus-label{font-size:12px;font-weight:600;margin-bottom:8px;letter-spacing:.3px;color:#8a8478;}
+.front-word{font-weight:700;text-align:center;font-family:'DM Sans',sans-serif;}
+.front-word.id-word{font-size:28px;color:#1a1814;}
+.front-word.en-word{font-size:26px;color:#1a1814;}
+
+/* Hint */
+.hint{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:6px;}
+.hint-ico{width:24px;height:24px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:11px;}
+
+/* Answer */
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+.divline{width:40px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+
+.ans-block{margin-bottom:.5rem;}
+.ans-lang-tag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:3px;}
+.ans-zh{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:700;color:#1a1814;}
+.ans-py{font-size:15px;font-weight:700;color:#2563eb;margin-bottom:2px;}
+.ans-id{font-size:17px;font-weight:600;color:#059669;}
+.ans-en{font-size:14px;color:#7c3aed;font-weight:500;}
+
+/* Rating buttons */
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:18px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}.cb-p:hover{background:#d5f0e2;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}.cb-b:hover{background:#f9d8d8;}
+
+/* Result */
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:54px;margin-bottom:.7rem;}
+.res-title{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sbox .sn{font-size:22px;font-weight:700;}.sbox .sl{font-size:10px;margin-top:2px;}
+.sbp{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #e8e4dc;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;min-width:60px;}
+.ri-py{font-size:10px;font-weight:600;color:#2563eb;}
+.ri-id{font-size:11px;color:#059669;margin-left:auto;text-align:right;max-width:180px;}
+
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-blue{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;box-shadow:0 3px 10px rgba(37,99,235,.25);}
+.btn-blue:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc !important;color:#8a8478;}
+.btn-ghost:hover{background:#f0f4ff;}
+.final{text-align:center;padding:2rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>沒 + 詞彙 · Mandarin Flashcard</h1>
+  <div class="sub" id="sub-label">Semua — memuat...</div>
+
+  <!-- Category filter -->
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">全部 Semua</button>
+    <button class="fb cat-mei" onclick="setCat('MEI')">沒… Phrases</button>
+    <button class="fb cat-time" onclick="setCat('TIME')">🕐 Waktu</button>
+    <button class="fb cat-place" onclick="setCat('PLACE')">🏠 Tempat</button>
+    <button class="fb cat-people" onclick="setCat('PEOPLE')">👤 Orang</button>
+    <button class="fb cat-food" onclick="setCat('FOOD')">🍜 Makanan</button>
+    <button class="fb cat-other" onclick="setCat('OTHER')">🛒 Lainnya</button>
+  </div>
+
+  <!-- Lang Switch -->
+  <div style="font-size:11px;color:#8a8478;text-align:center;margin-bottom:6px;font-weight:600;letter-spacing:.5px;">TAMPILAN SOAL</div>
+  <div class="lang-switch">
+    <input type="radio" name="lang" id="lzh" value="zh" checked>
+    <label for="lzh">🇨🇳 中文</label>
+    <input type="radio" name="lang" id="lid" value="id">
+    <label for="lid">🇮🇩 Indonesia</label>
+    <input type="radio" name="lang" id="len" value="en">
+    <label for="len">🇬🇧 English</label>
+  </div>
+
+  <!-- Quiz View -->
+  <div id="qv">
+    <div class="topbar">
+      <span class="badge" id="rb">Ronde 1</span>
+      <span class="ctr" id="ctr">1/--</span>
+    </div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <div class="card-num" id="card-num"></div>
+        <div class="cat-badge" id="cat-badge"></div>
+      </div>
+
+      <!-- ZH front -->
+      <div id="front-zh" style="display:none;text-align:center;">
+        <div class="zh-main" id="zh-disp"></div>
+        <div class="py-show" id="py-disp"></div>
+      </div>
+      <!-- ID front -->
+      <div id="front-id" style="display:none;text-align:center;">
+        <div class="focus-label">🇮🇩 Bahasa Indonesia</div>
+        <div class="front-word id-word" id="id-disp"></div>
+      </div>
+      <!-- EN front -->
+      <div id="front-en" style="display:none;text-align:center;">
+        <div class="focus-label">🇬🇧 English</div>
+        <div class="front-word en-word" id="en-disp"></div>
+      </div>
+
+      <div class="hint" id="hint"><div class="hint-ico">👆</div>Ketuk untuk jawaban</div>
+
+      <div class="ans" id="ans" style="display:none">
+        <div class="divline"></div>
+        <div class="ans-block">
+          <div class="ans-lang-tag">繁體中文</div>
+          <div class="ans-zh" id="ans-zh"></div>
+          <div class="ans-py" id="ans-py"></div>
+        </div>
+        <div class="ans-block">
+          <div class="ans-lang-tag">🇮🇩 Indonesia</div>
+          <div class="ans-id" id="ans-id"></div>
+        </div>
+        <div class="ans-block">
+          <div class="ans-lang-tag">🇬🇧 English</div>
+          <div class="ans-en" id="ans-en"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">✓</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+
+  <!-- Result View -->
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-blue" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">Mulai dari awal</button>
+    </div>
+  </div>
+
+  <!-- Final View -->
+  <div id="fv" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🏆</div>
+      <div class="res-title">全部掌握了！</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 .3rem;">Semua kartu dikuasai!</div>
+      <div style="font-size:12px;color:#7c3aed;margin-bottom:1.3rem;">太棒了！繼續加油！🎉</div>
+      <button class="btnbig btn-blue" onclick="fullRestart()">Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA (Traditional Chinese) ──
+var V = [
+
+// ══════════════════════════════════════
+// MEI — 沒 PHRASES
+// ══════════════════════════════════════
+{zh:"沒事",       py:"méishì",         id:"Tidak apa-apa",              en:"It's fine / No worries",           cat:"MEI"},
+{zh:"沒錢",       py:"méiqián",        id:"Tidak punya uang",           en:"No money",                         cat:"MEI"},
+{zh:"沒空",       py:"méikòng",        id:"Tidak ada waktu luang",      en:"No free time / Busy",              cat:"MEI"},
+{zh:"沒用",       py:"méiyòng",        id:"Tidak berguna",              en:"Useless",                          cat:"MEI"},
+{zh:"沒勁",       py:"méijìn",         id:"Tidak seru / Tidak bertenaga",en:"Boring / No energy",             cat:"MEI"},
+{zh:"沒意思",     py:"méiyìsi",        id:"Membosankan / Tidak menarik","en":"Boring / Uninteresting",        cat:"MEI"},
+{zh:"沒關係",     py:"méiguānxi",      id:"Tidak masalah",              en:"It doesn't matter / No problem",   cat:"MEI"},
+{zh:"沒問題",     py:"méiwèntí",       id:"Tidak ada masalah",          en:"No problem",                       cat:"MEI"},
+{zh:"沒時間",     py:"méishíjiān",     id:"Tidak punya waktu",          en:"No time",                          cat:"MEI"},
+{zh:"沒辦法",     py:"méibànfǎ",       id:"Tidak ada cara",             en:"No way / Can't help it",           cat:"MEI"},
+{zh:"沒希望",     py:"méixīwàng",      id:"Tidak ada harapan",          en:"No hope",                          cat:"MEI"},
+{zh:"沒心情",     py:"méixīnqíng",     id:"Tidak ada mood",             en:"Not in the mood",                  cat:"MEI"},
+{zh:"沒禮貌",     py:"méilǐmào",       id:"Tidak sopan",                en:"Rude / Impolite",                  cat:"MEI"},
+{zh:"沒興趣",     py:"méixìngqù",      id:"Tidak tertarik",             en:"Not interested",                   cat:"MEI"},
+{zh:"沒感覺",     py:"méigǎnjué",      id:"Tidak terasa / Tidak ada perasaan","en":"No feeling / Numb",       cat:"MEI"},
+{zh:"沒機會",     py:"méijīhuì",       id:"Tidak ada kesempatan",       en:"No opportunity",                   cat:"MEI"},
+{zh:"沒反應",     py:"méifǎnyìng",     id:"Tidak ada reaksi",           en:"No reaction / No response",        cat:"MEI"},
+{zh:"沒精神",     py:"méijīngshén",    id:"Tidak bersemangat",          en:"No energy / Listless",             cat:"MEI"},
+{zh:"沒消息",     py:"méixiāoxi",      id:"Tidak ada kabar",            en:"No news",                          cat:"MEI"},
+{zh:"沒經驗",     py:"méijīngyàn",     id:"Tidak berpengalaman",        en:"No experience",                    cat:"MEI"},
+{zh:"沒耐心",     py:"méinàixīn",      id:"Tidak sabaran",              en:"Impatient",                        cat:"MEI"},
+{zh:"沒文化",     py:"méiwénhuà",      id:"Kurang pendidikan",          en:"Uneducated / Uncultured",           cat:"MEI"},
+{zh:"沒道理",     py:"méidàolǐ",       id:"Tidak masuk akal",           en:"Unreasonable / Makes no sense",    cat:"MEI"},
+{zh:"沒良心",     py:"méiliángxīn",    id:"Tidak punya hati nurani",    en:"Heartless / Unscrupulous",         cat:"MEI"},
+{zh:"沒出息",     py:"méichūxi",       id:"Tidak berkembang",           en:"No prospects / Going nowhere",     cat:"MEI"},
+{zh:"沒睡醒",     py:"méishuìxǐng",    id:"Belum benar-benar bangun",   en:"Not fully awake yet",              cat:"MEI"},
+{zh:"沒變化",     py:"méibiànhuà",     id:"Tidak ada perubahan",        en:"No change",                        cat:"MEI"},
+{zh:"沒印象",     py:"méiyìnxiàng",    id:"Tidak ada kesan / Tidak ingat","en":"No impression / Can't recall",cat:"MEI"},
+{zh:"沒目標",     py:"méimùbiāo",      id:"Tidak punya tujuan",         en:"No goal / Aimless",                cat:"MEI"},
+{zh:"沒天分",     py:"méitiānfèn",     id:"Tidak berbakat",             en:"No talent",                        cat:"MEI"},
+{zh:"沒方向",     py:"méifāngxiàng",   id:"Tidak punya arah",           en:"No direction / Lost",              cat:"MEI"},
+{zh:"沒動力",     py:"méidònglì",      id:"Tidak punya motivasi",       en:"No motivation / Unmotivated",      cat:"MEI"},
+{zh:"沒把握",     py:"méibǎwò",        id:"Tidak yakin",                en:"Not confident / Unsure",           cat:"MEI"},
+{zh:"沒脾氣",     py:"méipíqi",        id:"Tidak marah / Lembut",       en:"No temper / Easy-going",           cat:"MEI"},
+{zh:"沒資格",     py:"méizīgé",        id:"Tidak memenuhi syarat",      en:"Not qualified",                    cat:"MEI"},
+{zh:"沒理由",     py:"méilǐyóu",       id:"Tidak ada alasan",           en:"No reason",                        cat:"MEI"},
+{zh:"沒必要",     py:"méibìyào",       id:"Tidak perlu",                en:"Not necessary",                    cat:"MEI"},
+{zh:"沒能力",     py:"méinénglì",      id:"Tidak mampu",                en:"Incapable / No ability",           cat:"MEI"},
+{zh:"沒習慣",     py:"méixíguàn",      id:"Belum terbiasa",             en:"Not used to it",                   cat:"MEI"},
+{zh:"沒安全感",   py:"méiānquángǎn",   id:"Tidak merasa aman",          en:"Insecure",                         cat:"MEI"},
+{zh:"沒重點",     py:"méizhòngdiǎn",   id:"Tidak ada poin utama",       en:"No main point / Off-topic",        cat:"MEI"},
+{zh:"沒結果",     py:"méijiéguǒ",      id:"Tidak ada hasil",            en:"No result / Fruitless",            cat:"MEI"},
+{zh:"沒誠意",     py:"méichéngyì",     id:"Tidak tulus",                en:"Insincere",                        cat:"MEI"},
+{zh:"沒水準",     py:"méishuǐzhǔn",    id:"Tidak berkualitas",          en:"Low quality / Below standard",     cat:"MEI"},
+{zh:"沒價值",     py:"méijiàzhí",      id:"Tidak bernilai",             en:"No value / Worthless",             cat:"MEI"},
+{zh:"沒良好習慣", py:"méiliánghǎoxíguàn",id:"Tidak punya kebiasaan baik","en":"No good habits",               cat:"MEI"},
+{zh:"沒責任感",   py:"méizérèngǎn",    id:"Tidak punya tanggung jawab", en:"Irresponsible",                    cat:"MEI"},
+{zh:"沒面子",     py:"méimiànzi",      id:"Kehilangan muka",            en:"Loss of face",                     cat:"MEI"},
+{zh:"沒頭腦",     py:"méitóunǎo",      id:"Tidak pakai otak",           en:"Brainless / Thoughtless",          cat:"MEI"},
+{zh:"沒自信",     py:"méizìxìn",       id:"Tidak percaya diri",         en:"No self-confidence",               cat:"MEI"},
+{zh:"沒胃口",     py:"méiwèikǒu",      id:"Tidak berselera makan",      en:"No appetite",                      cat:"MEI"},
+{zh:"沒勇氣",     py:"méiyǒngqì",      id:"Tidak punya keberanian",     en:"No courage / Cowardly",            cat:"MEI"},
+{zh:"沒意識",     py:"méiyìshí",       id:"Tidak sadar",                en:"Unaware / Unconscious",            cat:"MEI"},
+{zh:"沒條件",     py:"méitiáojiàn",    id:"Tidak punya syarat / kondisi","en":"Lacks the conditions",         cat:"MEI"},
+{zh:"沒心沒肺",   py:"méixīnméifèi",   id:"Cuek / Tidak ambil pusing",  en:"Carefree / Heartless",             cat:"MEI"},
+{zh:"沒良策",     py:"méiliángcè",     id:"Tidak ada solusi bagus",     en:"No good strategy",                 cat:"MEI"},
+{zh:"沒效率",     py:"méixiàolǜ",      id:"Tidak efisien",              en:"Inefficient",                      cat:"MEI"},
+{zh:"沒水平",     py:"méishuǐpíng",    id:"Tidak bermutu",              en:"No quality / Substandard",         cat:"MEI"},
+{zh:"沒頭緒",     py:"méitóuxù",       id:"Bingung tidak tahu mulai dari mana","en":"Confused / No clue where to start",cat:"MEI"},
+{zh:"沒信號",     py:"méixìnhào",      id:"Tidak ada sinyal",           en:"No signal",                        cat:"MEI"},
+
+// ══════════════════════════════════════
+// TIME — 時間詞
+// ══════════════════════════════════════
+{zh:"現在",  py:"xiànzài",   id:"Sekarang",        en:"Now",          cat:"TIME"},
+{zh:"以前",  py:"yǐqián",    id:"Sebelumnya / Dulu", en:"Before / Previously", cat:"TIME"},
+{zh:"以後",  py:"yǐhòu",     id:"Setelah / Nanti",  en:"After / Later",cat:"TIME"},
+{zh:"早上",  py:"zǎoshang",  id:"Pagi hari",        en:"Morning",      cat:"TIME"},
+{zh:"中午",  py:"zhōngwǔ",   id:"Tengah hari",      en:"Noon",         cat:"TIME"},
+{zh:"下午",  py:"xiàwǔ",     id:"Siang / Sore hari",en:"Afternoon",    cat:"TIME"},
+{zh:"晚上",  py:"wǎnshang",  id:"Malam hari",       en:"Evening / Night",cat:"TIME"},
+{zh:"年",    py:"nián",      id:"Tahun",            en:"Year",         cat:"TIME"},
+{zh:"月",    py:"yuè",       id:"Bulan",            en:"Month",        cat:"TIME"},
+{zh:"星期",  py:"xīngqī",    id:"Minggu",           en:"Week",         cat:"TIME"},
+{zh:"天",    py:"tiān",      id:"Hari / Langit",    en:"Day / Sky",    cat:"TIME"},
+{zh:"小時",  py:"xiǎoshí",   id:"Jam (satuan waktu)",en:"Hour",        cat:"TIME"},
+{zh:"分鐘",  py:"fēnzhōng",  id:"Menit",            en:"Minute",       cat:"TIME"},
+{zh:"秒",    py:"miǎo",      id:"Detik",            en:"Second",       cat:"TIME"},
+{zh:"時間",  py:"shíjiān",   id:"Waktu",            en:"Time",         cat:"TIME"},
+{zh:"時候",  py:"shíhou",    id:"Saat / Momen",     en:"Moment / When",cat:"TIME"},
+{zh:"生日",  py:"shēngrì",   id:"Ulang tahun",      en:"Birthday",     cat:"TIME"},
+
+// ══════════════════════════════════════
+// PLACE — 地方 & 物品
+// ══════════════════════════════════════
+{zh:"家",    py:"jiā",       id:"Rumah",            en:"Home / Family", cat:"PLACE"},
+{zh:"房子",  py:"fángzi",    id:"Rumah (bangunan)", en:"House",         cat:"PLACE"},
+{zh:"房間",  py:"fángjiān",  id:"Kamar",            en:"Room",          cat:"PLACE"},
+{zh:"門",    py:"mén",       id:"Pintu",            en:"Door",          cat:"PLACE"},
+{zh:"窗戶",  py:"chuānghu",  id:"Jendela",          en:"Window",        cat:"PLACE"},
+{zh:"桌子",  py:"zhuōzi",    id:"Meja",             en:"Table",         cat:"PLACE"},
+{zh:"椅子",  py:"yǐzi",      id:"Kursi",            en:"Chair",         cat:"PLACE"},
+{zh:"床",    py:"chuáng",    id:"Tempat tidur",     en:"Bed",           cat:"PLACE"},
+{zh:"電腦",  py:"diànnǎo",   id:"Komputer",         en:"Computer",      cat:"PLACE"},
+{zh:"手機",  py:"shǒujī",    id:"Ponsel",           en:"Phone",         cat:"PLACE"},
+{zh:"學校",  py:"xuéxiào",   id:"Sekolah",          en:"School",        cat:"PLACE"},
+
+// ══════════════════════════════════════
+// PEOPLE — 人物 & 職業
+// ══════════════════════════════════════
+{zh:"學生",  py:"xuésheng",  id:"Pelajar / Murid",  en:"Student",      cat:"PEOPLE"},
+{zh:"老師",  py:"lǎoshī",    id:"Guru",             en:"Teacher",      cat:"PEOPLE"},
+{zh:"朋友",  py:"péngyou",   id:"Teman",            en:"Friend",       cat:"PEOPLE"},
+{zh:"同學",  py:"tóngxué",   id:"Teman sekelas",    en:"Classmate",    cat:"PEOPLE"},
+{zh:"公司",  py:"gōngsī",    id:"Perusahaan",       en:"Company",      cat:"PEOPLE"},
+{zh:"老闆",  py:"lǎobǎn",    id:"Bos / Majikan",    en:"Boss",         cat:"PEOPLE"},
+{zh:"醫生",  py:"yīshēng",   id:"Dokter",           en:"Doctor",       cat:"PEOPLE"},
+{zh:"護士",  py:"hùshi",     id:"Perawat",          en:"Nurse",        cat:"PEOPLE"},
+{zh:"經理",  py:"jīnglǐ",    id:"Manajer",          en:"Manager",      cat:"PEOPLE"},
+{zh:"爸爸",  py:"bàba",      id:"Ayah",             en:"Father",       cat:"PEOPLE"},
+{zh:"媽媽",  py:"māma",      id:"Ibu",              en:"Mother",       cat:"PEOPLE"},
+{zh:"哥哥",  py:"gēge",      id:"Kakak laki-laki",  en:"Older brother",cat:"PEOPLE"},
+{zh:"弟弟",  py:"dìdi",      id:"Adik laki-laki",   en:"Younger brother",cat:"PEOPLE"},
+{zh:"姐姐",  py:"jiějiě",    id:"Kakak perempuan",  en:"Older sister", cat:"PEOPLE"},
+{zh:"妹妹",  py:"mèimei",    id:"Adik perempuan",   en:"Younger sister",cat:"PEOPLE"},
+{zh:"兒子",  py:"érzi",      id:"Anak laki-laki",   en:"Son",          cat:"PEOPLE"},
+{zh:"女兒",  py:"nǚ'ér",     id:"Anak perempuan",   en:"Daughter",     cat:"PEOPLE"},
+{zh:"家人",  py:"jiārén",    id:"Anggota keluarga", en:"Family member", cat:"PEOPLE"},
+{zh:"孩子",  py:"háizi",     id:"Anak-anak",        en:"Child",        cat:"PEOPLE"},
+
+// ══════════════════════════════════════
+// FOOD — 食物 & 飲料
+// ══════════════════════════════════════
+{zh:"水",    py:"shuǐ",      id:"Air",              en:"Water",        cat:"FOOD"},
+{zh:"茶",    py:"chá",       id:"Teh",              en:"Tea",          cat:"FOOD"},
+{zh:"咖啡",  py:"kāfēi",     id:"Kopi",             en:"Coffee",       cat:"FOOD"},
+{zh:"米飯",  py:"mǐfàn",     id:"Nasi",             en:"Rice",         cat:"FOOD"},
+{zh:"麵條",  py:"miàntiáo",  id:"Mie",              en:"Noodles",      cat:"FOOD"},
+{zh:"肉",    py:"ròu",       id:"Daging",           en:"Meat",         cat:"FOOD"},
+{zh:"雞蛋",  py:"jīdàn",     id:"Telur",            en:"Egg",          cat:"FOOD"},
+{zh:"水果",  py:"shuǐguǒ",   id:"Buah-buahan",      en:"Fruit",        cat:"FOOD"},
+{zh:"蘋果",  py:"píngguǒ",   id:"Apel",             en:"Apple",        cat:"FOOD"},
+{zh:"香蕉",  py:"xiāngjiāo", id:"Pisang",           en:"Banana",       cat:"FOOD"},
+{zh:"菜",    py:"cài",       id:"Sayur / Masakan",  en:"Dish / Vegetable",cat:"FOOD"},
+{zh:"魚",    py:"yú",        id:"Ikan",             en:"Fish",         cat:"FOOD"},
+{zh:"牛奶",  py:"niúnǎi",    id:"Susu",             en:"Milk",         cat:"FOOD"},
+{zh:"麵包",  py:"miànbāo",   id:"Roti",             en:"Bread",        cat:"FOOD"},
+{zh:"糖",    py:"táng",      id:"Gula",             en:"Sugar",        cat:"FOOD"},
+{zh:"鹽",    py:"yán",       id:"Garam",            en:"Salt",         cat:"FOOD"},
+
+// ══════════════════════════════════════
+// OTHER — 其他
+// ══════════════════════════════════════
+{zh:"飯店",  py:"fàndiàn",   id:"Restoran",         en:"Restaurant",   cat:"OTHER"},
+{zh:"菜單",  py:"càidān",    id:"Menu",             en:"Menu",         cat:"OTHER"},
+{zh:"早餐",  py:"zǎocān",    id:"Sarapan",          en:"Breakfast",    cat:"OTHER"},
+{zh:"晚餐",  py:"wǎncān",    id:"Makan malam",      en:"Dinner",       cat:"OTHER"},
+{zh:"錢",    py:"qián",      id:"Uang",             en:"Money",        cat:"OTHER"},
+{zh:"銀行",  py:"yínháng",   id:"Bank",             en:"Bank",         cat:"OTHER"},
+{zh:"市場",  py:"shìchǎng",  id:"Pasar",            en:"Market",       cat:"OTHER"},
+{zh:"商店",  py:"shāngdiàn", id:"Toko",             en:"Shop / Store", cat:"OTHER"},
+];
+
+// ── Category config ──
+var CAT_CONFIG = {
+  ALL:    {label:"全部 Semua",    color:"linear-gradient(90deg,#2563eb,#7c3aed)", bg:"#dbeafe",   fg:"#2563eb"},
+  MEI:    {label:"沒… Phrases",  color:"linear-gradient(90deg,#dc2626,#f87171)", bg:"#fee2e2",   fg:"#dc2626"},
+  TIME:   {label:"🕐 Waktu",     color:"linear-gradient(90deg,#d97706,#fbbf24)", bg:"#fef3c7",   fg:"#d97706"},
+  PLACE:  {label:"🏠 Tempat",    color:"linear-gradient(90deg,#059669,#34d399)", bg:"#d1fae5",   fg:"#059669"},
+  PEOPLE: {label:"👤 Orang",     color:"linear-gradient(90deg,#7c3aed,#a78bfa)", bg:"#ede9fe",   fg:"#7c3aed"},
+  FOOD:   {label:"🍜 Makanan",   color:"linear-gradient(90deg,#db2777,#f472b6)", bg:"#fce7f3",   fg:"#db2777"},
+  OTHER:  {label:"🛒 Lainnya",   color:"linear-gradient(90deg,#0891b2,#38bdf8)", bg:"#e0f2fe",   fg:"#0891b2"},
+};
+
+// ── State ──
+var deck, idx, ronde, cp, ch, cbv, rev, toRev, curCat;
+ronde = 1; curCat = "ALL";
+
+document.querySelectorAll('input[name="lang"]').forEach(function(r) {
+  r.addEventListener('change', function() { ronde=1; fullRestart(); });
+});
+
+function shuffle(a) { return a.slice().sort(function() { return Math.random() - .5; }); }
+
+function setCat(c) {
+  curCat = c;
+  document.querySelectorAll(".fb").forEach(function(b) { b.classList.remove("on"); });
+  document.querySelectorAll(".fb").forEach(function(b) {
+    if (b.getAttribute("onclick") === "setCat('" + c + "')") b.classList.add("on");
+  });
+  ronde = 1; fullRestart();
+}
+
+function fullRestart() {
+  var src = curCat === "ALL" ? V : V.filter(function(v) { return v.cat === curCat; });
+  deck = shuffle(src);
+  var cfg = CAT_CONFIG[curCat] || CAT_CONFIG.ALL;
+  document.getElementById("sub-label").textContent = cfg.label + " — " + deck.length + " kartu";
+  go();
+}
+
+function go() {
+  idx=0; cp=0; ch=0; cbv=0; rev=false; toRev=[];
+  show("qv"); hide("rv"); hide("fv");
+  document.getElementById("rb").textContent = "Ronde " + ronde;
+  upStats(); showCard();
+}
+
+function nextRonde() { ronde++; deck = shuffle(toRev); go(); }
+
+function showCard() {
+  rev = false;
+  var q = deck[idx];
+  var lang = document.querySelector('input[name="lang"]:checked').value;
+  var cfg = CAT_CONFIG[q.cat] || CAT_CONFIG.ALL;
+
+  // Card accent color
+  document.getElementById("card").style.setProperty("--cat-color", cfg.color);
+
+  // Card number + category badge
+  document.getElementById("card-num").textContent = (idx+1) + "/" + deck.length;
+  var badge = document.getElementById("cat-badge");
+  badge.textContent = cfg.label;
+  badge.style.background = cfg.bg;
+  badge.style.color = cfg.fg;
+
+  // Front
+  hide("front-zh"); hide("front-id"); hide("front-en");
+  if (lang === "zh") {
+    show("front-zh");
+    var el = document.getElementById("zh-disp");
+    el.textContent = q.zh;
+    var l = q.zh.length;
+    el.className = "zh-main " + (l<=2?"big":l<=4?"med":l<=8?"sm":"xs");
+    document.getElementById("py-disp").textContent = ""; // pinyin disembunyikan di soal
+  } else if (lang === "id") {
+    show("front-id");
+    document.getElementById("id-disp").textContent = q.id;
+  } else {
+    show("front-en");
+    document.getElementById("en-disp").textContent = q.en;
+  }
+
+  // Answer
+  document.getElementById("ans-zh").textContent = q.zh;
+  document.getElementById("ans-py").textContent = q.py;
+  document.getElementById("ans-id").textContent = q.id;
+  document.getElementById("ans-en").textContent = q.en;
+
+  document.getElementById("ans").style.display = "none";
+  document.getElementById("hint").style.display = "flex";
+  document.getElementById("ba").style.display = "none";
+  document.getElementById("card").className = "card";
+  document.getElementById("ctr").textContent = (idx+1) + "/" + deck.length;
+  var pct = Math.round(idx / deck.length * 100);
+  document.getElementById("pb").style.width = pct + "%";
+  document.getElementById("pl").textContent = idx + " selesai";
+  document.getElementById("pr").textContent = deck.length + " kartu";
+}
+
+function reveal() {
+  if (rev) return; rev = true;
+  document.getElementById("ans").style.display = "block";
+  document.getElementById("hint").style.display = "none";
+  document.getElementById("ba").style.display = "flex";
+  document.getElementById("card").className = "card done";
+}
+
+function rate(r) {
+  var q = deck[idx];
+  if (r === "p") cp++;
+  else if (r === "h") { ch++; toRev.push(q); }
+  else { cbv++; toRev.push(q); }
+  upStats(); idx++;
+  if (idx >= deck.length) { showResult(); return; }
+  showCard();
+}
+
+function upStats() {
+  document.getElementById("sp").textContent = cp;
+  document.getElementById("sh").textContent = ch;
+  document.getElementById("sb").textContent = cbv;
+}
+
+function showResult() {
+  document.getElementById("pb").style.width = "100%";
+  hide("qv");
+  if (toRev.length === 0) { show("fv"); return; }
+  show("rv");
+  document.getElementById("rp").textContent = cp;
+  document.getElementById("rh").textContent = ch;
+  document.getElementById("rbb").textContent = cbv;
+  var pct = Math.round(cp / deck.length * 100);
+  var ico = pct>=90?"🌟":pct>=70?"😊":pct>=50?"💪":"😅";
+  document.getElementById("ri").textContent = ico;
+  document.getElementById("rt").textContent = "Ronde " + ronde + " selesai!";
+  document.getElementById("rs").textContent =
+    pct>=90 ? "Hampir sempurna! " + toRev.length + " kartu tersisa." :
+    pct>=70 ? "Bagus! " + toRev.length + " kartu perlu diulang." :
+    pct>=50 ? "Lumayan! Ulangi " + toRev.length + " kartu." :
+    "Semangat! " + toRev.length + " kartu menunggumu.";
+  document.getElementById("nb").textContent = "Lanjut Ronde " + (ronde+1) + " → " + toRev.length + " kartu";
+
+  var rl = document.getElementById("rl");
+  rl.innerHTML = "";
+  toRev.forEach(function(v) {
+    var d = document.createElement("div"); d.className = "ri";
+    var cfg = CAT_CONFIG[v.cat] || CAT_CONFIG.ALL;
+    d.innerHTML =
+      "<span class='ri-zh'>" + v.zh + "</span>" +
+      "<div><div class='ri-py'>" + v.py + "</div></div>" +
+      "<div style='margin-left:auto;text-align:right;'>" +
+        "<div class='ri-id'>" + v.id + "</div>" +
+      "</div>";
+    rl.appendChild(d);
+  });
+  document.getElementById("rlw").style.display = "";
+}
+
+function show(id) { document.getElementById(id).style.display = ""; }
+function hide(id) { document.getElementById(id).style.display = "none"; }
+
+setCat("ALL");
+</script>
+</body>
+</html>

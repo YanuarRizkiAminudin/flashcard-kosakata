@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kata Keterangan — Mandarin 3 Bahasa</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:linear-gradient(135deg,#f0f4ff 0%,#fdf0f8 100%);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:500px;}
+
+/* Header */
+h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:2px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:12px;}
+
+/* Lang Switch */
+.lang-switch{display:flex;background:#fff;border:1px solid #e8e4dc;border-radius:99px;padding:3px;gap:2px;margin-bottom:12px;align-items:center;}
+.lang-switch label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:99px;color:#8a8478;transition:all .2s;user-select:none;}
+.lang-switch label:hover{color:#7c3aed;}
+.lang-switch input[type=radio]{display:none;}
+.lang-switch input[type=radio]:checked + label{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.3);}
+
+/* Progress */
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#ede9fe;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#a855f7);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+
+/* Stats pills */
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#2d7a4f;}.dh{background:#a05c00;}.db{background:#b83232;}
+
+/* Card */
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:24px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c3aed,#a855f7,#ec4899);opacity:.8;}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+
+/* Card number badge */
+.card-num{position:absolute;top:14px;right:14px;font-size:10px;font-weight:600;color:#a855f7;background:#f5f0ff;border:1px solid #ddd6fe;border-radius:99px;padding:2px 8px;}
+
+/* Front: Mandarin focus */
+.zh-main{font-family:'Noto Serif TC',serif;font-weight:700;color:#1a1814;line-height:1.2;text-align:center;}
+.zh-main.big{font-size:58px;}.zh-main.med{font-size:44px;}.zh-main.sm{font-size:34px;}.zh-main.xs{font-size:26px;}
+.py-show{font-size:16px;color:#7c3aed;font-weight:600;margin-top:8px;letter-spacing:.5px;}
+
+/* Front: focus mode labels */
+.focus-label{font-size:13px;font-weight:600;margin-bottom:8px;letter-spacing:.3px;}
+.focus-label.zh-lbl{color:#1a1814;}
+.focus-label.id-lbl{color:#2d7a4f;}
+.focus-label.en-lbl{color:#1d4ed8;}
+
+.front-word{font-weight:700;text-align:center;}
+.front-word.id-word{font-size:36px;color:#1a1814;font-family:'DM Sans',sans-serif;}
+.front-word.en-word{font-size:32px;color:#1a1814;font-family:'DM Sans',sans-serif;}
+
+/* Hint */
+.hint{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:6px;}
+.hint-ico{width:24px;height:24px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:11px;}
+
+/* Answer */
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+.divline{width:40px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+
+/* Answer sections */
+.ans-block{margin-bottom:.5rem;}
+.ans-lang-tag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:3px;}
+.ans-zh{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:700;color:#1a1814;}
+.ans-py{font-size:16px;font-weight:700;color:#7c3aed;margin-bottom:2px;}
+.ans-id{font-size:18px;font-weight:600;color:#2d7a4f;}
+.ans-en{font-size:15px;color:#1d4ed8;font-weight:500;}
+.ans-example{font-size:12px;color:#6b7280;font-style:italic;line-height:1.7;border-left:2px solid #ddd6fe;padding-left:10px;text-align:left;width:100%;margin-top:8px;}
+.ans-example-py{font-size:11px;color:#9ca3af;margin-top:2px;}
+
+/* Rating buttons */
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:18px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}.cb-p:hover{background:#d5f0e2;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}.cb-b:hover{background:#f9d8d8;}
+
+/* Result screen */
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:54px;margin-bottom:.7rem;}
+.res-title{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sbox .sn{font-size:22px;font-weight:700;}.sbox .sl{font-size:10px;margin-top:2px;}
+.sbp{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #e8e4dc;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:'Noto Serif TC',serif;font-size:18px;color:#1a1814;min-width:48px;text-align:center;}
+.ri-py{font-size:11px;font-weight:600;color:#7c3aed;}
+.ri-id{font-size:11px;color:#2d7a4f;margin-left:auto;text-align:right;}
+.ri-en{font-size:10px;color:#8a8478;margin-left:auto;text-align:right;}
+
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc !important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+
+.final{text-align:center;padding:2rem 0;}
+.final-icon{font-size:64px;margin-bottom:.8rem;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>副词 · Kata Keterangan</h1>
+  <div class="sub">30 kata · Mandarin + Indonesia + English</div>
+
+  <!-- Language Focus Switch -->
+  <div style="font-size:11px;color:#8a8478;text-align:center;margin-bottom:6px;font-weight:600;letter-spacing:.5px;">TAMPILAN SOAL</div>
+  <div class="lang-switch">
+    <input type="radio" name="lang" id="lzh" value="zh" checked>
+    <label for="lzh">🇨🇳 中文</label>
+    <input type="radio" name="lang" id="lid" value="id">
+    <label for="lid">🇮🇩 Indonesia</label>
+    <input type="radio" name="lang" id="len" value="en">
+    <label for="len">🇬🇧 English</label>
+  </div>
+
+  <!-- Quiz View -->
+  <div id="qv">
+    <div class="topbar">
+      <span class="badge" id="rb">Ronde 1</span>
+      <span class="ctr" id="ctr">1/--</span>
+    </div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+
+    <!-- Card -->
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-num" id="card-num"></div>
+
+      <!-- ZH front -->
+      <div id="front-zh" style="display:none;text-align:center;">
+        <div class="focus-label zh-lbl">中文 — Mandarin</div>
+        <div class="zh-main" id="zh-disp"></div>
+        <div class="py-show" id="py-disp"></div>
+      </div>
+
+      <!-- ID front -->
+      <div id="front-id" style="display:none;text-align:center;">
+        <div class="focus-label id-lbl">🇮🇩 Bahasa Indonesia</div>
+        <div class="front-word id-word" id="id-disp"></div>
+      </div>
+
+      <!-- EN front -->
+      <div id="front-en" style="display:none;text-align:center;">
+        <div class="focus-label en-lbl">🇬🇧 English</div>
+        <div class="front-word en-word" id="en-disp"></div>
+      </div>
+
+      <div class="hint" id="hint"><div class="hint-ico">👆</div>Ketuk untuk jawaban</div>
+
+      <!-- Answer (always shows all 3 languages) -->
+      <div class="ans" id="ans" style="display:none">
+        <div class="divline"></div>
+
+        <div class="ans-block">
+          <div class="ans-lang-tag">中文 Mandarin</div>
+          <div class="ans-zh" id="ans-zh"></div>
+          <div class="ans-py" id="ans-py"></div>
+        </div>
+
+        <div class="ans-block">
+          <div class="ans-lang-tag">🇮🇩 Indonesia</div>
+          <div class="ans-id" id="ans-id"></div>
+        </div>
+
+        <div class="ans-block">
+          <div class="ans-lang-tag">🇬🇧 English</div>
+          <div class="ans-en" id="ans-en"></div>
+        </div>
+
+        <div class="ans-example" id="ans-ex" style="display:none">
+          <span id="ex-zh"></span>
+          <div class="ans-example-py" id="ex-py"></div>
+          <div style="font-size:11px;color:#6b7280;margin-top:2px;" id="ex-id"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating buttons -->
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">✓</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+
+  <!-- Result View -->
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">Mulai dari awal</button>
+    </div>
+  </div>
+
+  <!-- Final View -->
+  <div id="fv" style="display:none">
+    <div class="final">
+      <div class="final-icon">🏆</div>
+      <div class="res-title">全部掌握了！</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 .3rem;">Semua kata keterangan dikuasai!</div>
+      <div style="font-size:12px;color:#a855f7;margin-bottom:1.3rem;">太棒了！加油！🎉</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA: 30 Adverbs ──
+var V = [
+  {
+    zh:"其实", py:"qíshí", id:"Sebenarnya", en:"Actually",
+    ex:"其实我不喜欢吃辣的。", ex_py:"Qíshí wǒ bù xǐhuān chī là de.",
+    ex_id:"Sebenarnya aku tidak suka makanan pedas."
+  },
+  {
+    zh:"尤其", py:"yóuqí", id:"Terutama", en:"Especially",
+    ex:"我喜欢水果，尤其是芒果。", ex_py:"Wǒ xǐhuān shuǐguǒ, yóuqí shì mángguǒ.",
+    ex_id:"Aku suka buah-buahan, terutama mangga."
+  },
+  {
+    zh:"一般来说", py:"yìbān lái shuō", id:"Umumnya", en:"Generally",
+    ex:"一般来说，他很早就睡觉了。", ex_py:"Yìbān lái shuō, tā hěn zǎo jiù shuìjiào le.",
+    ex_id:"Umumnya, dia sudah tidur sangat awal."
+  },
+  {
+    zh:"可惜", py:"kěxí", id:"Sayangnya", en:"Unfortunately",
+    ex:"可惜我那天没有去。", ex_py:"Kěxí wǒ nà tiān méiyǒu qù.",
+    ex_id:"Sayangnya aku tidak pergi hari itu."
+  },
+  {
+    zh:"马上", py:"mǎshàng", id:"Langsung / Segera", en:"Immediately",
+    ex:"他马上就来了。", ex_py:"Tā mǎshàng jiù lái le.",
+    ex_id:"Dia segera datang."
+  },
+  {
+    zh:"最近", py:"zuìjìn", id:"Baru-baru ini", en:"Recently",
+    ex:"我最近很忙。", ex_py:"Wǒ zuìjìn hěn máng.",
+    ex_id:"Baru-baru ini aku sangat sibuk."
+  },
+  {
+    zh:"经常", py:"jīngcháng", id:"Sering", en:"Frequently",
+    ex:"他经常去图书馆学习。", ex_py:"Tā jīngcháng qù túshūguǎn xuéxí.",
+    ex_id:"Dia sering pergi ke perpustakaan untuk belajar."
+  },
+  {
+    zh:"通常", py:"tōngcháng", id:"Biasanya", en:"Usually",
+    ex:"我通常七点起床。", ex_py:"Wǒ tōngcháng qī diǎn qǐchuáng.",
+    ex_id:"Biasanya aku bangun jam tujuh."
+  },
+  {
+    zh:"几乎不", py:"jīhū bù", id:"Nyaris tidak", en:"Hardly",
+    ex:"他几乎不喝酒。", ex_py:"Tā jīhū bù hē jiǔ.",
+    ex_id:"Dia nyaris tidak pernah minum alkohol."
+  },
+  {
+    zh:"突然", py:"tūrán", id:"Tiba-tiba", en:"Suddenly",
+    ex:"他突然站起来走了。", ex_py:"Tā tūrán zhàn qǐlái zǒu le.",
+    ex_id:"Tiba-tiba dia berdiri dan pergi."
+  },
+  {
+    zh:"幸好", py:"xìnghǎo", id:"Untungnya", en:"Fortunately",
+    ex:"幸好我带了雨伞。", ex_py:"Xìnghǎo wǒ dài le yǔsǎn.",
+    ex_id:"Untungnya aku membawa payung."
+  },
+  {
+    zh:"清楚地", py:"qīngchǔ de", id:"Dengan jelas", en:"Clearly",
+    ex:"请你清楚地说一遍。", ex_py:"Qǐng nǐ qīngchǔ de shuō yī biàn.",
+    ex_id:"Tolong katakan sekali lagi dengan jelas."
+  },
+  {
+    zh:"完全", py:"wánquán", id:"Benar-benar / Sepenuhnya", en:"Totally",
+    ex:"我完全不明白。", ex_py:"Wǒ wánquán bù míngbai.",
+    ex_id:"Aku benar-benar tidak mengerti."
+  },
+  {
+    zh:"一定", py:"yīdìng", id:"Pasti", en:"Definitely",
+    ex:"他一定知道答案。", ex_py:"Tā yīdìng zhīdào dá'àn.",
+    ex_id:"Dia pasti tahu jawabannya."
+  },
+  {
+    zh:"可能", py:"kěnéng", id:"Mungkin", en:"Possibly",
+    ex:"他可能已经回家了。", ex_py:"Tā kěnéng yǐjīng huíjiā le.",
+    ex_id:"Dia mungkin sudah pulang ke rumah."
+  },
+  {
+    zh:"当然", py:"dāngrán", id:"Tentu saja", en:"Certainly",
+    ex:"当然，我很愿意帮你。", ex_py:"Dāngrán, wǒ hěn yuànyì bāng nǐ.",
+    ex_id:"Tentu saja, aku sangat bersedia membantumu."
+  },
+  {
+    zh:"简单来说", py:"jiǎndān lái shuō", id:"Singkatnya", en:"Briefly",
+    ex:"简单来说，这个方法很好。", ex_py:"Jiǎndān lái shuō, zhège fāngfǎ hěn hǎo.",
+    ex_id:"Singkatnya, metode ini sangat bagus."
+  },
+  {
+    zh:"恰好", py:"qiàhǎo", id:"Tepatnya / Pas", en:"Exactly",
+    ex:"他说的恰好是我的想法。", ex_py:"Tā shuō de qiàhǎo shì wǒ de xiǎngfǎ.",
+    ex_id:"Yang dia katakan tepatnya adalah pikiranku."
+  },
+  {
+    zh:"之前", py:"zhīqián", id:"Sebelumnya", en:"Previously",
+    ex:"我之前没有听说过这件事。", ex_py:"Wǒ zhīqián méiyǒu tīng shuō guò zhè jiàn shì.",
+    ex_id:"Sebelumnya aku belum pernah mendengar tentang hal ini."
+  },
+  {
+    zh:"很明显", py:"hěn míngxiǎn", id:"Jelas banget", en:"Obviously",
+    ex:"很明显，他不喜欢这个主意。", ex_py:"Hěn míngxiǎn, tā bù xǐhuān zhège zhǔyì.",
+    ex_id:"Jelas banget, dia tidak menyukai ide ini."
+  },
+  {
+    zh:"老实说", py:"lǎoshí shuō", id:"Sejujurnya", en:"Honestly",
+    ex:"老实说，我不太喜欢那部电影。", ex_py:"Lǎoshí shuō, wǒ bù tài xǐhuān nà bù diànyǐng.",
+    ex_id:"Sejujurnya, aku kurang suka film itu."
+  },
+  {
+    zh:"大约", py:"dàyuē", id:"Kira-kira", en:"Roughly",
+    ex:"这里到学校大约要走十分钟。", ex_py:"Zhèlǐ dào xuéxiào dàyuē yào zǒu shí fēnzhōng.",
+    ex_id:"Dari sini ke sekolah kira-kira butuh 10 menit jalan kaki."
+  },
+  {
+    zh:"恰巧", py:"qiàqiǎo", id:"Kebetulan", en:"Coincidentally",
+    ex:"我们恰巧在同一天生日。", ex_py:"Wǒmen qiàqiǎo zài tóngyī tiān shēngrì.",
+    ex_id:"Kebetulan kami lahir di hari yang sama."
+  },
+  {
+    zh:"奇怪的是", py:"qíguài de shì", id:"Anehnya", en:"Strangely",
+    ex:"奇怪的是，他今天没来上课。", ex_py:"Qíguài de shì, tā jīntiān méi lái shàngkè.",
+    ex_id:"Anehnya, dia tidak masuk kelas hari ini."
+  },
+  {
+    zh:"希望", py:"xīwàng", id:"Semoga / Mudah-mudahan", en:"Hopefully",
+    ex:"希望明天天气好。", ex_py:"Xīwàng míngtiān tiānqì hǎo.",
+    ex_id:"Semoga cuaca besok bagus."
+  },
+  {
+    zh:"谢天谢地", py:"xiè tiān xiè dì", id:"Syukurlah", en:"Thankfully",
+    ex:"谢天谢地，他没有受伤。", ex_py:"Xiè tiān xiè dì, tā méiyǒu shòushāng.",
+    ex_id:"Syukurlah, dia tidak terluka."
+  },
+  {
+    zh:"字面上", py:"zìmiàn shàng", id:"Secara harfiah", en:"Literally",
+    ex:"这句话字面上的意思很简单。", ex_py:"Zhè jù huà zìmiàn shàng de yìsi hěn jiǎndān.",
+    ex_id:"Makna harfiah kalimat ini sangat sederhana."
+  },
+  {
+    zh:"依我看", py:"yī wǒ kàn", id:"Menurutku pribadi", en:"Personally",
+    ex:"依我看，这个决定不太好。", ex_py:"Yī wǒ kàn, zhège juédìng bù tài hǎo.",
+    ex_id:"Menurutku pribadi, keputusan ini kurang bagus."
+  },
+  {
+    zh:"出乎意料", py:"chū hū yìliào", id:"Tak terduga", en:"Unexpectedly",
+    ex:"结果出乎意料地好。", ex_py:"Jiéguǒ chū hū yìliào de hǎo.",
+    ex_id:"Hasilnya bagus secara tak terduga."
+  },
+  {
+    zh:"原来", py:"yuánlái", id:"Ternyata", en:"Apparently",
+    ex:"原来他是老师的儿子！", ex_py:"Yuánlái tā shì lǎoshī de érzi!",
+    ex_id:"Ternyata dia adalah anak si guru!"
+  }
+];
+
+// ── State ──
+var deck, idx, ronde, cp, ch, cbv, rev, toRev;
+ronde = 1;
+
+function getLang() {
+  var r = document.querySelector('input[name="lang"]:checked');
+  return r ? r.value : "zh";
+}
+
+// Listen for lang change — restart with current deck
+document.querySelectorAll('input[name="lang"]').forEach(function(r) {
+  r.addEventListener('change', function() { fullRestart(); });
+});
+
+function shuffle(a) { return a.slice().sort(function() { return Math.random() - .5; }); }
+
+function fullRestart() {
+  ronde = 1;
+  deck = shuffle(V);
+  document.getElementById("tsub") && (document.getElementById("tsub").textContent = "30 kata · " + deck.length + " kartu");
+  go();
+}
+
+function go() {
+  idx = 0; cp = 0; ch = 0; cbv = 0; rev = false; toRev = [];
+  show("qv"); hide("rv"); hide("fv");
+  document.getElementById("rb").textContent = "Ronde " + ronde;
+  upStats(); showCard();
+}
+
+function nextRonde() { ronde++; deck = shuffle(toRev); go(); }
+
+function showCard() {
+  rev = false;
+  var q = deck[idx];
+  var lang = getLang();
+
+  // Card number badge
+  document.getElementById("card-num").textContent = (idx + 1) + " / " + deck.length;
+
+  // Front display — show based on lang mode
+  hide("front-zh"); hide("front-id"); hide("front-en");
+
+  if (lang === "zh") {
+    show("front-zh");
+    var el = document.getElementById("zh-disp");
+    el.textContent = q.zh;
+    var l = q.zh.length;
+    el.className = "zh-main " + (l <= 2 ? "big" : l <= 4 ? "med" : l <= 8 ? "sm" : "xs");
+    document.getElementById("py-disp").textContent = ""; // pinyin disembunyikan di soal
+  } else if (lang === "id") {
+    show("front-id");
+    document.getElementById("id-disp").textContent = q.id;
+  } else {
+    show("front-en");
+    document.getElementById("en-disp").textContent = q.en;
+  }
+
+  // Answer always shows all 3
+  document.getElementById("ans-zh").textContent = q.zh;
+  document.getElementById("ans-py").textContent = q.py;
+  document.getElementById("ans-id").textContent = q.id;
+  document.getElementById("ans-en").textContent = q.en;
+
+  // Example sentence
+  var exEl = document.getElementById("ans-ex");
+  if (q.ex) {
+    document.getElementById("ex-zh").textContent = q.ex;
+    document.getElementById("ex-py").textContent = q.ex_py || "";
+    document.getElementById("ex-id").textContent = q.ex_id || "";
+    exEl.style.display = "block";
+  } else {
+    exEl.style.display = "none";
+  }
+
+  // Hide answer
+  document.getElementById("ans").style.display = "none";
+  document.getElementById("hint").style.display = "flex";
+  document.getElementById("ba").style.display = "none";
+  document.getElementById("card").className = "card";
+
+  // Progress
+  document.getElementById("ctr").textContent = (idx + 1) + "/" + deck.length;
+  var pct = Math.round(idx / deck.length * 100);
+  document.getElementById("pb").style.width = pct + "%";
+  document.getElementById("pl").textContent = idx + " selesai";
+  document.getElementById("pr").textContent = deck.length + " kartu";
+}
+
+function reveal() {
+  if (rev) return; rev = true;
+  document.getElementById("ans").style.display = "block";
+  document.getElementById("hint").style.display = "none";
+  document.getElementById("ba").style.display = "flex";
+  document.getElementById("card").className = "card done";
+}
+
+function rate(r) {
+  var q = deck[idx];
+  if (r === "p") cp++;
+  else if (r === "h") { ch++; toRev.push(q); }
+  else { cbv++; toRev.push(q); }
+  upStats(); idx++;
+  if (idx >= deck.length) { showResult(); return; }
+  showCard();
+}
+
+function upStats() {
+  document.getElementById("sp").textContent = cp;
+  document.getElementById("sh").textContent = ch;
+  document.getElementById("sb").textContent = cbv;
+}
+
+function showResult() {
+  document.getElementById("pb").style.width = "100%";
+  hide("qv");
+  if (toRev.length === 0) { show("fv"); return; }
+  show("rv");
+  document.getElementById("rp").textContent = cp;
+  document.getElementById("rh").textContent = ch;
+  document.getElementById("rbb").textContent = cbv;
+  var pct = Math.round(cp / deck.length * 100);
+  var ico = pct >= 90 ? "🌟" : pct >= 70 ? "😊" : pct >= 50 ? "💪" : "😅";
+  document.getElementById("ri").textContent = ico;
+  document.getElementById("rt").textContent = "Ronde " + ronde + " selesai!";
+  document.getElementById("rs").textContent =
+    pct >= 90 ? "Hampir sempurna! " + toRev.length + " kartu tersisa." :
+    pct >= 70 ? "Bagus! " + toRev.length + " kartu perlu diulang." :
+    pct >= 50 ? "Lumayan! Ulangi " + toRev.length + " kartu." :
+    "Semangat! " + toRev.length + " kartu menunggumu.";
+  document.getElementById("nb").textContent = "Lanjut Ronde " + (ronde + 1) + " → " + toRev.length + " kartu";
+
+  // Review list
+  var rl = document.getElementById("rl");
+  rl.innerHTML = "";
+  toRev.forEach(function(v) {
+    var d = document.createElement("div"); d.className = "ri";
+    d.innerHTML =
+      "<span class='ri-zh'>" + v.zh + "</span>" +
+      "<div><div class='ri-py'>" + v.py + "</div></div>" +
+      "<div style='margin-left:auto;text-align:right;'>" +
+        "<div class='ri-id'>" + v.id + "</div>" +
+        "<div class='ri-en'>" + v.en + "</div>" +
+      "</div>";
+    rl.appendChild(d);
+  });
+  document.getElementById("rlw").style.display = "";
+}
+
+function show(id) { document.getElementById(id).style.display = ""; }
+function hide(id) { document.getElementById(id).style.display = "none"; }
+
+// Init
+fullRestart();
+</script>
+</body>
+</html>
