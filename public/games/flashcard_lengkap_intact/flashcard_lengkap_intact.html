@@ -117,6 +117,11 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
         <div class="en-txt" id="ent"></div>
       </div>
     </div>
+    <div id="arti-popup" class="hint-popup" style="display:none">
+      <div class="hint-popup-txt" id="arti-en"></div>
+      <div class="hint-popup-py" id="arti-py"></div>
+    </div>
+    <button class="hint-btn" id="arti-btn" onclick="showArti(event)">💡 Arti</button>
     <div class="btnrow" id="ba" style="display:none">
       <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum paham</span><span class="cb-sub">Muncul lagi</span></button>
       <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir paham</span><span class="cb-sub">Muncul lagi</span></button>
@@ -877,11 +882,23 @@ function showCard(){
   document.getElementById('hint').style.display='flex';
   document.getElementById('ba').style.display='none';
   document.getElementById('card').className='card';
+  document.getElementById('arti-popup').style.display='none';
+  document.getElementById('arti-btn').style.display='flex';
   document.getElementById('ctr').textContent=(idx+1)+'/'+deck.length;
   var pct=Math.round(idx/deck.length*100);
   document.getElementById('pb').style.width=pct+'%';
   document.getElementById('pl').textContent=idx+' selesai';
   document.getElementById('pr').textContent=deck.length+' kartu';
+}
+
+function showArti(e){
+  e.stopPropagation();
+  if(rev) return;
+  var q=deck[idx];
+  document.getElementById('arti-en').textContent=q.e || q.i;
+  document.getElementById('arti-py').textContent=q.p;
+  document.getElementById('arti-popup').style.display='block';
+  document.getElementById('arti-btn').style.display='none';
 }
 
 function reveal(){
@@ -890,6 +907,8 @@ function reveal(){
   document.getElementById('hint').style.display='none';
   document.getElementById('ba').style.display='flex';
   document.getElementById('card').className='card done';
+  document.getElementById('arti-popup').style.display='none';
+  document.getElementById('arti-btn').style.display='none';
 }
 
 function rate(r){
