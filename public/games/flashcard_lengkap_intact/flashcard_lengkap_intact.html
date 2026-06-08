@@ -110,7 +110,6 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
         <div class="divline"></div>
         <div class="py" id="py"></div>
         <div class="en-txt" id="ent"></div>
-        <div class="id-txt" id="idt"></div>
       </div>
     </div>
     <div class="btnrow" id="ba" style="display:none">
@@ -830,19 +829,8 @@ var V=[
 
 var LABELS={L1:'L1 新同學',L2:'L2 幾點',L3:'L3 禮物',L4:'L4 咖啡',L5:'L5 錢包',L6:'L6 網球',L7:'L7 交通',L8:'L8 百貨公司',L9:'L9 禮拜二',L10:'L10 看醫生',ALL:'Semua'};
 function sh(a){return a.slice().sort(function(){return Math.random()-.5;});}
-var deck,idx,ronde,cp,ch,cbv,rev,toRev,curL='ALL',lang='id';
+var deck,idx,ronde,cp,ch,cbv,rev,toRev,curL='ALL';
 
-function setLang(l){
-  lang=l;
-  document.getElementById('btn-id').classList.toggle('on', l==='id');
-  document.getElementById('btn-en').classList.toggle('on', l==='en');
-  document.getElementById('btn-id').style.background = l==='id'?'#2d7a4f':'';
-  document.getElementById('btn-id').style.color = l==='id'?'#fff':'';
-  document.getElementById('btn-id').style.borderColor = l==='id'?'#2d7a4f':'';
-  document.getElementById('btn-en').style.background = l==='en'?'#1971c2':'';
-  document.getElementById('btn-en').style.color = l==='en'?'#fff':'';
-  document.getElementById('btn-en').style.borderColor = l==='en'?'#1971c2':'';
-}
 
 function setL(l){
   curL=l;
