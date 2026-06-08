@@ -37,6 +37,11 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
 .zh.big{font-size:78px;}.zh.med{font-size:52px;}.zh.sm{font-size:34px;}.zh.xs{font-size:24px;}
 .hint{font-size:13px;color:#8a8478;margin-top:.8rem;display:flex;align-items:center;gap:6px;}
 .hint-ico{width:26px;height:26px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.hint-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border:1.5px dashed #a8d9bc;border-radius:12px;background:transparent;color:#2d7a4f;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-bottom:.5rem;}
+.hint-btn:hover{background:#edf7f1;border-style:solid;}
+.hint-popup{background:linear-gradient(135deg,#edf7f1,#e8f4fd);border:1.5px solid #a8d9bc;border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:.5rem;animation:fup .2s ease;}
+.hint-popup-txt{font-size:18px;font-weight:700;color:#1a1814;margin-bottom:2px;}
+.hint-popup-py{font-size:13px;color:#2d7a4f;font-weight:600;}
 .ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;}
 @keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
 .divline{width:36px;height:1px;background:#e8e4dc;margin:0 auto .6rem;}
@@ -116,8 +121,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
       <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum paham</span><span class="cb-sub">Muncul lagi</span></button>
       <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir paham</span><span class="cb-sub">Muncul lagi</span></button>
       <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">✓</span><span>Paham</span><span class="cb-sub">Tidak muncul lagi</span></button>
-    </div>
-  </div>
+    </div>  </div>
   <div id="rv" style="display:none">
     <div class="res">
       <div class="res-ico" id="ri"></div>
