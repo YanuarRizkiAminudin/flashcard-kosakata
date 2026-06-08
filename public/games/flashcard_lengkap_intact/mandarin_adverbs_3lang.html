@@ -58,7 +58,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
 .focus-label.en-lbl{color:#1d4ed8;}
 
 .front-word{font-weight:700;text-align:center;}
-.front-word.id-word{font-size:36px;color:#1a1814;font-family:'DM Sans',sans-serif;}
+.front-word
 .front-word.en-word{font-size:32px;color:#1a1814;font-family:'DM Sans',sans-serif;}
 
 /* Hint */
@@ -75,7 +75,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
 .ans-lang-tag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:3px;}
 .ans-zh{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:700;color:#1a1814;}
 .ans-py{font-size:16px;font-weight:700;color:#7c3aed;margin-bottom:2px;}
-.ans-id{font-size:18px;font-weight:600;color:#2d7a4f;}
+
 .ans-en{font-size:15px;color:#1d4ed8;font-weight:500;}
 .ans-example{font-size:12px;color:#6b7280;font-style:italic;line-height:1.7;border-left:2px solid #ddd6fe;padding-left:10px;text-align:left;width:100%;margin-top:8px;}
 .ans-example-py{font-size:11px;color:#9ca3af;margin-top:2px;}
@@ -122,15 +122,13 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
 <body>
 <div id="app">
   <h1>副词 · Kata Keterangan</h1>
-  <div class="sub">30 kata · Mandarin + Indonesia + English</div>
+  <div class="sub">30 kata · Mandarin + English</div>
 
   <!-- Language Focus Switch -->
   <div style="font-size:11px;color:#8a8478;text-align:center;margin-bottom:6px;font-weight:600;letter-spacing:.5px;">TAMPILAN SOAL</div>
   <div class="lang-switch">
     <input type="radio" name="lang" id="lzh" value="zh" checked>
     <label for="lzh">🇨🇳 中文</label>
-    <input type="radio" name="lang" id="lid" value="id">
-    <label for="lid">🇮🇩 Indonesia</label>
     <input type="radio" name="lang" id="len" value="en">
     <label for="len">🇬🇧 English</label>
   </div>
@@ -158,12 +156,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
         <div class="focus-label zh-lbl">中文 — Mandarin</div>
         <div class="zh-main" id="zh-disp"></div>
         <div class="py-show" id="py-disp"></div>
-      </div>
-
-      <!-- ID front -->
-      <div id="front-id" style="display:none;text-align:center;">
-        <div class="focus-label id-lbl">🇮🇩 Bahasa Indonesia</div>
-        <div class="front-word id-word" id="id-disp"></div>
+      </div>        <div class="front-word id-word" id="id-disp"></div>
       </div>
 
       <!-- EN front -->
@@ -182,11 +175,6 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
           <div class="ans-lang-tag">中文 Mandarin</div>
           <div class="ans-zh" id="ans-zh"></div>
           <div class="ans-py" id="ans-py"></div>
-        </div>
-
-        <div class="ans-block">
-          <div class="ans-lang-tag">🇮🇩 Indonesia</div>
-          <div class="ans-id" id="ans-id"></div>
         </div>
 
         <div class="ans-block">
@@ -440,7 +428,7 @@ function showCard() {
   document.getElementById("card-num").textContent = (idx + 1) + " / " + deck.length;
 
   // Front display — show based on lang mode
-  hide("front-zh"); hide("front-id"); hide("front-en");
+  hide("front-zh"); hide("front-en");
 
   if (lang === "zh") {
     show("front-zh");
@@ -449,9 +437,6 @@ function showCard() {
     var l = q.zh.length;
     el.className = "zh-main " + (l <= 2 ? "big" : l <= 4 ? "med" : l <= 8 ? "sm" : "xs");
     document.getElementById("py-disp").textContent = ""; // pinyin disembunyikan di soal
-  } else if (lang === "id") {
-    show("front-id");
-    document.getElementById("id-disp").textContent = q.id;
   } else {
     show("front-en");
     document.getElementById("en-disp").textContent = q.en;
@@ -460,7 +445,6 @@ function showCard() {
   // Answer always shows all 3
   document.getElementById("ans-zh").textContent = q.zh;
   document.getElementById("ans-py").textContent = q.py;
-  document.getElementById("ans-id").textContent = q.id;
   document.getElementById("ans-en").textContent = q.en;
 
   // Example sentence

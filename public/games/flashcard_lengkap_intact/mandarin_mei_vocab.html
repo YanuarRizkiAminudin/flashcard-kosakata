@@ -69,7 +69,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
 /* Front ID/EN */
 .focus-label{font-size:12px;font-weight:600;margin-bottom:8px;letter-spacing:.3px;color:#8a8478;}
 .front-word{font-weight:700;text-align:center;font-family:'DM Sans',sans-serif;}
-.front-word.id-word{font-size:28px;color:#1a1814;}
+.front-word
 .front-word.en-word{font-size:26px;color:#1a1814;}
 
 /* Hint */
@@ -85,7 +85,7 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
 .ans-lang-tag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:3px;}
 .ans-zh{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:700;color:#1a1814;}
 .ans-py{font-size:15px;font-weight:700;color:#2563eb;margin-bottom:2px;}
-.ans-id{font-size:17px;font-weight:600;color:#059669;}
+
 .ans-en{font-size:14px;color:#7c3aed;font-weight:500;}
 
 /* Rating buttons */
@@ -145,8 +145,6 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
   <div class="lang-switch">
     <input type="radio" name="lang" id="lzh" value="zh" checked>
     <label for="lzh">🇨🇳 中文</label>
-    <input type="radio" name="lang" id="lid" value="id">
-    <label for="lid">🇮🇩 Indonesia</label>
     <input type="radio" name="lang" id="len" value="en">
     <label for="len">🇬🇧 English</label>
   </div>
@@ -176,11 +174,6 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
         <div class="zh-main" id="zh-disp"></div>
         <div class="py-show" id="py-disp"></div>
       </div>
-      <!-- ID front -->
-      <div id="front-id" style="display:none;text-align:center;">
-        <div class="focus-label">🇮🇩 Bahasa Indonesia</div>
-        <div class="front-word id-word" id="id-disp"></div>
-      </div>
       <!-- EN front -->
       <div id="front-en" style="display:none;text-align:center;">
         <div class="focus-label">🇬🇧 English</div>
@@ -195,10 +188,6 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
           <div class="ans-lang-tag">繁體中文</div>
           <div class="ans-zh" id="ans-zh"></div>
           <div class="ans-py" id="ans-py"></div>
-        </div>
-        <div class="ans-block">
-          <div class="ans-lang-tag">🇮🇩 Indonesia</div>
-          <div class="ans-id" id="ans-id"></div>
         </div>
         <div class="ans-block">
           <div class="ans-lang-tag">🇬🇧 English</div>
@@ -472,17 +461,14 @@ function showCard() {
   badge.style.color = cfg.fg;
 
   // Front
-  hide("front-zh"); hide("front-id"); hide("front-en");
+  hide("front-zh"); hide("front-en");
   if (lang === "zh") {
     show("front-zh");
     var el = document.getElementById("zh-disp");
     el.textContent = q.zh;
     var l = q.zh.length;
     el.className = "zh-main " + (l<=2?"big":l<=4?"med":l<=8?"sm":"xs");
-    document.getElementById("py-disp").textContent = ""; // pinyin disembunyikan di soal
-  } else if (lang === "id") {
-    show("front-id");
-    document.getElementById("id-disp").textContent = q.id;
+    document.getElementById("py-disp").textContent = "";
   } else {
     show("front-en");
     document.getElementById("en-disp").textContent = q.en;
@@ -491,7 +477,6 @@ function showCard() {
   // Answer
   document.getElementById("ans-zh").textContent = q.zh;
   document.getElementById("ans-py").textContent = q.py;
-  document.getElementById("ans-id").textContent = q.id;
   document.getElementById("ans-en").textContent = q.en;
 
   document.getElementById("ans").style.display = "none";
