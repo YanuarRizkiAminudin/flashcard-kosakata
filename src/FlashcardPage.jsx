@@ -43,6 +43,16 @@ const flashcards = [
     route: '/game/mandarin-mei-vocab',
   },
   {
+    id: 'POM1',
+    category: 'English',
+    categoryColor: '#fef3e2', categoryTextColor: '#92400e',
+    icon: '📖',
+    title: 'The Psychology of Money',
+    kartu: 25,
+    level: 'Morgan Housel · Quotes & Lessons',
+    route: '/game/psychology-of-money',
+  },
+  {
     id: 1,
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',

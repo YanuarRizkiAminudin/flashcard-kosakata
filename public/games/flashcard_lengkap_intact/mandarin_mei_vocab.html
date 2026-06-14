@@ -145,13 +145,22 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
     <button class="fb cat-other" onclick="setCat('OTHER')">🛒 Lainnya</button>
   </div>
 
-  <!-- Lang Switch -->
+  <!-- Lang Switch (Soal) -->
   <div style="font-size:11px;color:#8a8478;text-align:center;margin-bottom:6px;font-weight:600;letter-spacing:.5px;">TAMPILAN SOAL</div>
   <div class="lang-switch">
     <input type="radio" name="lang" id="lzh" value="zh" checked>
     <label for="lzh">🇨🇳 中文</label>
     <input type="radio" name="lang" id="len" value="en">
     <label for="len">🇬🇧 English</label>
+  </div>
+
+  <!-- Lang Switch (Jawaban) -->
+  <div style="font-size:11px;color:#8a8478;text-align:center;margin-bottom:6px;font-weight:600;letter-spacing:.5px;">TAMPILAN JAWABAN</div>
+  <div class="lang-switch">
+    <input type="radio" name="ans-lang" id="aid" value="id" checked>
+    <label for="aid">🇮🇩 Indonesia</label>
+    <input type="radio" name="ans-lang" id="aen" value="en">
+    <label for="aen">🇬🇧 English</label>
   </div>
 
   <!-- Quiz View -->
@@ -194,9 +203,13 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
           <div class="ans-zh" id="ans-zh"></div>
           <div class="ans-py" id="ans-py"></div>
         </div>
-        <div class="ans-block">
+        <div class="ans-block" id="ans-block-en">
           <div class="ans-lang-tag">🇬🇧 English</div>
           <div class="ans-en" id="ans-en"></div>
+        </div>
+        <div class="ans-block" id="ans-block-id" style="display:none">
+          <div class="ans-lang-tag">🇮🇩 Indonesia</div>
+          <div class="ans-en" id="ans-id"></div>
         </div>
       </div>
     </div>
@@ -489,6 +502,12 @@ function showCard() {
   document.getElementById("ans-zh").textContent = q.zh;
   document.getElementById("ans-py").textContent = q.py;
   document.getElementById("ans-en").textContent = q.en;
+  document.getElementById("ans-id").textContent = q.id;
+
+  // Show correct answer language block
+  var ansLang = document.querySelector('input[name="ans-lang"]:checked').value;
+  document.getElementById("ans-block-en").style.display = ansLang === "en" ? "" : "none";
+  document.getElementById("ans-block-id").style.display = ansLang === "id" ? "" : "none";
 
   document.getElementById("ans").style.display = "none";
   document.getElementById("hint").style.display = "flex";
@@ -507,7 +526,8 @@ function showArti(e) {
   e.stopPropagation();
   if (rev) return;
   var q = deck[idx];
-  document.getElementById("arti-en").textContent = q.en;
+  var ansLang = document.querySelector('input[name="ans-lang"]:checked').value;
+  document.getElementById("arti-en").textContent = ansLang === "id" ? q.id : q.en;
   document.getElementById("arti-py").textContent = q.py;
   document.getElementById("arti-popup").style.display = "block";
   document.getElementById("arti-btn").style.display = "none";

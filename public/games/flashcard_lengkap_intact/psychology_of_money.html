@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Psychology of Money — Flashcard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:linear-gradient(135deg,#fdf6ec 0%,#f0f4ff 100%);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:520px;}
+
+h1{font-family:'Playfair Display',serif;font-size:17px;color:#1a1814;text-align:center;margin-bottom:2px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+
+/* Category Filter */
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#c2783a;color:#c2783a;}
+.fb.on{background:#c2783a;color:#fff;border-color:#c2783a;}
+.fb.cat-behavior.on{background:#dc2626;border-color:#dc2626;}
+.fb.cat-wealth.on{background:#059669;border-color:#059669;}
+.fb.cat-luck.on{background:#7c3aed;border-color:#7c3aed;}
+.fb.cat-mindset.on{background:#2563eb;border-color:#2563eb;}
+.fb.cat-people.on{background:#d97706;border-color:#d97706;}
+
+/* Lang Switch */
+.lang-switch{display:flex;background:#fff;border:1px solid #e8e4dc;border-radius:99px;padding:3px;gap:2px;margin-bottom:12px;align-items:center;}
+.lang-switch label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:99px;color:#8a8478;transition:all .2s;user-select:none;}
+.lang-switch input[type=radio]{display:none;}
+.lang-switch input[type=radio]:checked + label{background:linear-gradient(135deg,#c2783a,#7c3aed);color:#fff;box-shadow:0 2px 8px rgba(194,120,58,.3);}
+
+/* Progress */
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:#fef3e2;color:#c2783a;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#c2783a,#7c3aed);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+
+/* Stats pills */
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#2d7a4f;}.dh{background:#a05c00;}.db{background:#b83232;}
+
+/* Card */
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:24px;box-shadow:0 4px 20px rgba(194,120,58,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.6rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--cat-color,linear-gradient(90deg,#c2783a,#7c3aed));opacity:.9;}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(194,120,58,.15);}
+
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;align-items:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:600;border-radius:99px;padding:2px 9px;}
+
+/* Quote front */
+.quote-wrap{text-align:center;}
+.quote-mark{font-size:40px;color:#e8d5c0;font-family:'Playfair Display',serif;line-height:.8;margin-bottom:4px;}
+.quote-text{font-family:'Playfair Display',serif;font-size:15px;color:#1a1814;line-height:1.6;text-align:center;font-style:italic;}
+
+/* Hint */
+.hint{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:6px;}
+.hint-ico{width:24px;height:24px;border-radius:50%;border:1px solid #e8e4dc;display:flex;align-items:center;justify-content:center;font-size:11px;}
+
+/* Answer */
+.ans{margin-top:.9rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+.divline{width:40px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.ans-block{margin-bottom:.6rem;}
+.ans-lang-tag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;}
+.ans-lesson{font-size:15px;font-weight:700;color:#1a1814;line-height:1.5;}
+.ans-id{font-size:13px;color:#059669;font-weight:500;line-height:1.5;margin-top:4px;}
+.ans-key{font-size:12px;color:#7c3aed;font-weight:600;margin-top:6px;font-style:italic;}
+
+/* Rating buttons */
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:18px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}.cb-p:hover{background:#d5f0e2;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}.cb-b:hover{background:#f9d8d8;}
+
+/* Hint button */
+.hint-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border:1.5px dashed #a8d9bc;border-radius:12px;background:transparent;color:#2d7a4f;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-bottom:.5rem;}
+.hint-btn:hover{background:#edf7f1;border-style:solid;}
+.hint-popup{background:linear-gradient(135deg,#fef3e2,#f0f4ff);border:1.5px solid #f5c97a;border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:.5rem;animation:fup .2s ease;}
+.hint-popup-txt{font-size:14px;font-weight:700;color:#1a1814;margin-bottom:2px;line-height:1.5;}
+.hint-popup-py{font-size:11px;color:#7c3aed;font-weight:600;font-style:italic;}
+
+/* Result */
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:54px;margin-bottom:.7rem;}
+.res-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sbox .sn{font-size:22px;font-weight:700;}.sbox .sl{font-size:10px;margin-top:2px;}
+.sbp{background:#edf7f1;border-color:#a8d9bc;color:#2d7a4f;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fdf0f0;border-color:#f5a8a8;color:#b83232;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-bottom:1px solid #e8e4dc;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-cat{font-size:10px;font-weight:700;color:#fff;border-radius:99px;padding:2px 7px;min-width:60px;text-align:center;flex-shrink:0;}
+.ri-txt{font-size:11px;color:#1a1814;line-height:1.4;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-warm{background:linear-gradient(135deg,#c2783a,#7c3aed);color:#fff;box-shadow:0 3px 10px rgba(194,120,58,.25);}
+.btn-warm:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc !important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f0e8;}
+.final{text-align:center;padding:2rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>📖 The Psychology of Money</h1>
+  <div class="sub" id="sub-label">Quotes & Lessons — Morgan Housel</div>
+
+  <!-- Category filter -->
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">All</button>
+    <button class="fb cat-behavior" onclick="setCat('BEHAVIOR')">🧠 Behavior</button>
+    <button class="fb cat-wealth" onclick="setCat('WEALTH')">💰 Wealth</button>
+    <button class="fb cat-luck" onclick="setCat('LUCK')">🎲 Luck</button>
+    <button class="fb cat-mindset" onclick="setCat('MINDSET')">💡 Mindset</button>
+    <button class="fb cat-people" onclick="setCat('PEOPLE')">👤 People</button>
+  </div>
+
+  <!-- Lang Switch (Jawaban) -->
+  <div style="font-size:11px;color:#8a8478;text-align:center;margin-bottom:6px;font-weight:600;letter-spacing:.5px;">TAMPILAN JAWABAN</div>
+  <div class="lang-switch">
+    <input type="radio" name="ans-lang" id="aid" value="id" checked>
+    <label for="aid">🇮🇩 Indonesia</label>
+    <input type="radio" name="ans-lang" id="aen" value="en">
+    <label for="aen">🇬🇧 English</label>
+  </div>
+
+  <!-- Quiz View -->
+  <div id="qv">
+    <div class="topbar">
+      <span class="badge" id="rb">Ronde 1</span>
+      <span class="ctr" id="ctr">1/--</span>
+    </div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <div class="card-num" id="card-num"></div>
+        <div class="cat-badge" id="cat-badge"></div>
+      </div>
+      <div class="quote-wrap">
+        <div class="quote-mark">"</div>
+        <div class="quote-text" id="quote-disp"></div>
+      </div>
+      <div class="hint" id="hint"><div class="hint-ico">👆</div>Ketuk untuk jawaban</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="divline"></div>
+        <div class="ans-block" id="ans-block-id">
+          <div class="ans-lang-tag">🇮🇩 Terjemahan</div>
+          <div class="ans-id" id="ans-id-txt"></div>
+        </div>
+        <div class="ans-block" id="ans-block-en" style="display:none">
+          <div class="ans-lang-tag">🇬🇧 Original Context</div>
+          <div class="ans-lesson" id="ans-en-txt"></div>
+        </div>
+        <div class="ans-key" id="ans-key-txt"></div>
+      </div>
+    </div>
+
+    <div id="arti-popup" class="hint-popup" style="display:none">
+      <div class="hint-popup-txt" id="arti-hint-txt"></div>
+      <div class="hint-popup-py" id="arti-hint-key"></div>
+    </div>
+    <button class="hint-btn" id="arti-btn" onclick="showArti(event)">💡 Lihat Terjemahan</button>
+
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">✓</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+
+  <!-- Result View -->
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-warm" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">Mulai dari awal</button>
+    </div>
+  </div>
+
+  <!-- Final View -->
+  <div id="fv" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🏆</div>
+      <div class="res-title">Semua dikuasai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.3rem;">Kamu sudah paham The Psychology of Money!</div>
+      <button class="btnbig btn-warm" onclick="fullRestart()">Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var CAT_CONFIG = {
+  ALL:      {label:"All",      bg:"#f5f0e8", fg:"#c2783a", color:"linear-gradient(90deg,#c2783a,#7c3aed)"},
+  BEHAVIOR: {label:"Behavior", bg:"#fdf0f0", fg:"#dc2626", color:"linear-gradient(90deg,#dc2626,#f97316)"},
+  WEALTH:   {label:"Wealth",   bg:"#edf7f1", fg:"#059669", color:"linear-gradient(90deg,#059669,#10b981)"},
+  LUCK:     {label:"Luck",     bg:"#f5f3ff", fg:"#7c3aed", color:"linear-gradient(90deg,#7c3aed,#a78bfa)"},
+  MINDSET:  {label:"Mindset",  bg:"#eff6ff", fg:"#2563eb", color:"linear-gradient(90deg,#2563eb,#60a5fa)"},
+  PEOPLE:   {label:"People",   bg:"#fef3e2", fg:"#d97706", color:"linear-gradient(90deg,#d97706,#f59e0b)"},
+};
+
+var V = [
+  // ── BEHAVIOR ──────────────────────────────────────────────────────
+  {
+    q: "Doing well with money has a little to do with how smart you are and a lot to do with how you behave.",
+    id: "Sukses dengan uang sedikit berkaitan dengan seberapa pintar kamu, dan sangat banyak berkaitan dengan bagaimana kamu berperilaku.",
+    en: "Financial success is mostly about behavior, not intelligence.",
+    key: "💡 Behavior > IQ",
+    cat: "BEHAVIOR"
+  },
+  {
+    q: "A genius who loses control of their emotions can be a financial disaster.",
+    id: "Seorang jenius yang kehilangan kendali atas emosinya bisa menjadi bencana keuangan.",
+    en: "Emotional control matters more than raw intelligence in finance.",
+    key: "💡 Emotion control = financial survival",
+    cat: "BEHAVIOR"
+  },
+  {
+    q: "Behavior is hard to teach, even to really smart people.",
+    id: "Perilaku sulit diajarkan, bahkan kepada orang-orang yang sangat cerdas.",
+    en: "You can teach math and formulas, but not how to behave under pressure.",
+    key: "💡 Smart ≠ disciplined",
+    cat: "BEHAVIOR"
+  },
+  {
+    q: "Financial success is not a hard science. It's a soft skill, where how you behave is more important than what you know.",
+    id: "Kesuksesan finansial bukan ilmu pasti. Ini adalah soft skill, di mana bagaimana kamu berperilaku lebih penting daripada apa yang kamu ketahui.",
+    en: "Finance is a soft skill — behavior beats knowledge.",
+    key: "💡 Soft skill > Technical knowledge",
+    cat: "BEHAVIOR"
+  },
+  {
+    q: "Knowing what to do tells you nothing about what happens in your head when you try to do it.",
+    id: "Mengetahui apa yang harus dilakukan tidak memberi tahu apa pun tentang apa yang terjadi di kepala kamu saat mencoba melakukannya.",
+    en: "The gap between knowing and doing is all psychology.",
+    key: "💡 Knowledge ≠ Execution",
+    cat: "BEHAVIOR"
+  },
+  {
+    q: "History never repeats itself; man always does.",
+    id: "Sejarah tidak pernah mengulang dirinya sendiri; manusialah yang selalu mengulanginya.",
+    en: "Voltaire's quote applied to money: we keep making the same behavioral mistakes.",
+    key: "💡 Human patterns repeat",
+    cat: "BEHAVIOR"
+  },
+  {
+    q: "To grasp why people bury themselves in debt you don't need to study interest rates; you need to study the history of greed, insecurity, and optimism.",
+    id: "Untuk memahami mengapa orang menenggelamkan diri dalam utang, kamu tidak perlu mempelajari suku bunga; kamu perlu mempelajari sejarah keserakahan, ketidakamanan, dan optimisme.",
+    en: "Debt is a psychology problem, not a math problem.",
+    key: "💡 Debt = greed + insecurity",
+    cat: "BEHAVIOR"
+  },
+  // ── WEALTH ────────────────────────────────────────────────────────
+  {
+    q: "Ordinary folks with no financial education can be wealthy if they have a handful of behavioral skills.",
+    id: "Orang biasa tanpa pendidikan keuangan bisa menjadi kaya jika memiliki sejumlah kecil keterampilan perilaku.",
+    en: "Behavioral skills — patience, consistency — can outperform formal education.",
+    key: "💡 Behavior builds wealth",
+    cat: "WEALTH"
+  },
+  {
+    q: "Read saved what little he could and invested it in blue chip stocks. Then he waited, for decades on end, as tiny savings compounded into more than $8 million.",
+    id: "Read menabung sebisanya dan menginvestasikannya di saham blue chip. Lalu ia menunggu, selama beberapa dekade, saat tabungan kecilnya berbunga menjadi lebih dari $8 juta.",
+    en: "Ronald Read: janitor → $8M philanthropist. The secret: save + invest + wait.",
+    key: "💡 Compound interest + patience",
+    cat: "WEALTH"
+  },
+  {
+    q: "Ronald Read was patient; Richard Fuscone was greedy. That's all it took to eclipse the massive education and experience gap between the two.",
+    id: "Ronald Read sabar; Richard Fuscone serakah. Hanya itu yang dibutuhkan untuk melampaui kesenjangan pendidikan dan pengalaman yang sangat besar di antara keduanya.",
+    en: "Patience beats credentials in wealth building.",
+    key: "💡 Patience > Education",
+    cat: "WEALTH"
+  },
+  {
+    q: "In what other industry does someone with no college degree massively outperform someone with the best education and the best connections?",
+    id: "Di industri lain mana seseorang tanpa gelar sarjana bisa jauh mengungguli seseorang dengan pendidikan terbaik dan koneksi terbaik?",
+    en: "Investing is unique: credentials don't guarantee success.",
+    key: "💡 Finance is the great equalizer",
+    cat: "WEALTH"
+  },
+  {
+    q: "High debt and illiquid assets left him bankrupt.",
+    id: "Utang tinggi dan aset yang tidak likuid membuatnya bangkrut.",
+    en: "Richard Fuscone's downfall: leverage + illiquidity during crisis.",
+    key: "💡 Debt + illiquidity = disaster",
+    cat: "WEALTH"
+  },
+  // ── LUCK ──────────────────────────────────────────────────────────
+  {
+    q: "Financial outcomes are driven by luck, independent of intelligence and effort.",
+    id: "Hasil keuangan dipengaruhi oleh keberuntungan, terlepas dari kecerdasan dan usaha.",
+    en: "Luck plays a significant role in financial outcomes — often underestimated.",
+    key: "💡 Luck is a variable",
+    cat: "LUCK"
+  },
+  {
+    q: "One, financial outcomes are driven by luck. Or, two, financial success is not a hard science — it's a soft skill.",
+    id: "Pertama, hasil keuangan dipengaruhi oleh keberuntungan. Atau kedua, kesuksesan finansial bukan ilmu pasti — melainkan soft skill.",
+    en: "Two explanations for why a janitor can beat a Harvard MBA in investing.",
+    key: "💡 Luck OR soft skill — both matter",
+    cat: "LUCK"
+  },
+  // ── MINDSET ───────────────────────────────────────────────────────
+  {
+    q: "Finance is overwhelmingly taught as a math-based field, where you put data into a formula and the formula tells you what to do.",
+    id: "Keuangan sebagian besar diajarkan sebagai bidang berbasis matematika, di mana kamu memasukkan data ke dalam rumus dan rumus itu memberi tahu apa yang harus dilakukan.",
+    en: "Traditional finance education ignores the psychological side.",
+    key: "💡 Math ≠ behavior",
+    cat: "MINDSET"
+  },
+  {
+    q: "We think about and are taught about money in ways that are too much like physics and not enough like psychology.",
+    id: "Kita berpikir tentang uang dengan cara yang terlalu mirip fisika dan tidak cukup seperti psikologi.",
+    en: "Money follows human behavior, not rigid physical laws.",
+    key: "💡 Money = psychology, not physics",
+    cat: "MINDSET"
+  },
+  {
+    q: "Money is everywhere, it affects all of us, and confuses most of us.",
+    id: "Uang ada di mana-mana, mempengaruhi kita semua, dan membingungkan sebagian besar dari kita.",
+    en: "Universal impact, universal confusion — that's why psychology of money matters.",
+    key: "💡 Money confuses everyone",
+    cat: "MINDSET"
+  },
+  {
+    q: "Few topics offer a more powerful magnifying glass that helps explain why people behave the way they do than money.",
+    id: "Sedikit topik yang menawarkan kaca pembesar lebih kuat untuk menjelaskan mengapa orang berperilaku seperti yang mereka lakukan selain uang.",
+    en: "Money reveals character and psychology like nothing else.",
+    key: "💡 Money = mirror of psychology",
+    cat: "MINDSET"
+  },
+  {
+    q: "Through collective trial and error over the years we learned how to become better farmers, skilled plumbers, and advanced chemists. But has trial and error taught us to become better with our personal finances?",
+    id: "Melalui trial and error kolektif selama bertahun-tahun kita belajar menjadi petani yang lebih baik, tukang ledeng terampil, dan kimiawan maju. Tapi apakah trial and error mengajarkan kita untuk lebih baik dalam keuangan pribadi?",
+    en: "Unlike other fields, we haven't improved much at personal finance over generations.",
+    key: "💡 Finance doesn't improve like other skills",
+    cat: "MINDSET"
+  },
+  {
+    q: "It offers lessons on things that apply to many areas of life, like risk, confidence, and happiness.",
+    id: "Ini menawarkan pelajaran tentang hal-hal yang berlaku di banyak area kehidupan, seperti risiko, kepercayaan diri, dan kebahagiaan.",
+    en: "The psychology of money teaches life skills beyond finance.",
+    key: "💡 Money lessons = life lessons",
+    cat: "MINDSET"
+  },
+  // ── PEOPLE ────────────────────────────────────────────────────────
+  {
+    q: "He had a relationship with money I'd describe as a mix of insecurity and childish stupidity.",
+    id: "Ia memiliki hubungan dengan uang yang bisa saya gambarkan sebagai campuran ketidakamanan dan kebodohan kekanak-kanakan.",
+    en: "The tech executive with stacks of cash — wealth without wisdom.",
+    key: "💡 Wealth ≠ wisdom",
+    cat: "PEOPLE"
+  },
+  {
+    q: "Ronald James Read was an American philanthropist, investor, janitor, and gas station attendant.",
+    id: "Ronald James Read adalah seorang filantropis, investor, penjaga kebersihan, dan petugas SPBU Amerika.",
+    en: "The most counterintuitive story in finance: a janitor who died with $8M.",
+    key: "💡 Anyone can build wealth quietly",
+    cat: "PEOPLE"
+  },
+  {
+    q: "Those who knew Read were baffled. Where did he get all that money? It turned out there was no secret.",
+    id: "Mereka yang mengenal Read kebingungan. Dari mana semua uang itu? Ternyata tidak ada rahasia.",
+    en: "No lottery, no inheritance. Just saving + investing + time.",
+    key: "💡 No secrets, just discipline",
+    cat: "PEOPLE"
+  },
+  {
+    q: "I currently have no income.",
+    id: "Saat ini saya tidak memiliki penghasilan.",
+    en: "Richard Fuscone — Harvard MBA, Merrill Lynch exec — told a bankruptcy judge in 2008.",
+    key: "💡 High income ≠ financial security",
+    cat: "PEOPLE"
+  },
+  {
+    q: "Former Merrill CEO praised Fuscone's business savvy, leadership skills, sound judgment and personal integrity.",
+    id: "CEO Merrill sebelumnya memuji kecerdasan bisnis, keterampilan kepemimpinan, penilaian yang baik, dan integritas pribadi Fuscone.",
+    en: "All the credentials in the world couldn't save Fuscone from over-leverage.",
+    key: "💡 Credentials don't prevent failure",
+    cat: "PEOPLE"
+  },
+];
+
+var curCat = "ALL";
+var deck, idx, ronde, cp, ch, cbv, rev, toRev;
+
+function shuffle(a) { return a.slice().sort(function(){ return Math.random() - .5; }); }
+
+function setCat(c) {
+  curCat = c;
+  document.querySelectorAll(".fb").forEach(function(b){ b.classList.remove("on"); });
+  document.querySelectorAll(".fb").forEach(function(b){
+    if (b.getAttribute("onclick") === "setCat('" + c + "')") b.classList.add("on");
+  });
+  ronde = 1; fullRestart();
+}
+
+function fullRestart() {
+  var src = curCat === "ALL" ? V : V.filter(function(v){ return v.cat === curCat; });
+  deck = shuffle(src);
+  document.getElementById("sub-label").textContent =
+    (curCat === "ALL" ? "All categories" : CAT_CONFIG[curCat].label) + " — " + deck.length + " kartu";
+  go();
+}
+
+function go() {
+  idx = 0; cp = 0; ch = 0; cbv = 0; rev = false; toRev = [];
+  show("qv"); hide("rv"); hide("fv");
+  document.getElementById("rb").textContent = "Ronde " + ronde;
+  upStats(); showCard();
+}
+
+function nextRonde() { ronde++; deck = shuffle(toRev); go(); }
+
+function showCard() {
+  rev = false;
+  var q = deck[idx];
+  var cfg = CAT_CONFIG[q.cat] || CAT_CONFIG.ALL;
+
+  document.getElementById("card").style.setProperty("--cat-color", cfg.color);
+  document.getElementById("card-num").textContent = (idx + 1) + "/" + deck.length;
+  var badge = document.getElementById("cat-badge");
+  badge.textContent = cfg.label;
+  badge.style.background = cfg.bg;
+  badge.style.color = cfg.fg;
+
+  document.getElementById("quote-disp").textContent = q.q;
+  document.getElementById("ans-id-txt").textContent = q.id;
+  document.getElementById("ans-en-txt").textContent = q.en;
+  document.getElementById("ans-key-txt").textContent = q.key;
+
+  var ansLang = document.querySelector('input[name="ans-lang"]:checked').value;
+  document.getElementById("ans-block-id").style.display = ansLang === "id" ? "" : "none";
+  document.getElementById("ans-block-en").style.display = ansLang === "en" ? "" : "none";
+
+  document.getElementById("ans").style.display = "none";
+  document.getElementById("ans-key-txt").style.display = "none";
+  document.getElementById("hint").style.display = "flex";
+  document.getElementById("ba").style.display = "none";
+  document.getElementById("card").className = "card";
+  document.getElementById("arti-popup").style.display = "none";
+  document.getElementById("arti-btn").style.display = "flex";
+  document.getElementById("ctr").textContent = (idx + 1) + "/" + deck.length;
+  var pct = Math.round(idx / deck.length * 100);
+  document.getElementById("pb").style.width = pct + "%";
+  document.getElementById("pl").textContent = idx + " selesai";
+  document.getElementById("pr").textContent = deck.length + " kartu";
+}
+
+function showArti(e) {
+  e.stopPropagation();
+  if (rev) return;
+  var q = deck[idx];
+  var ansLang = document.querySelector('input[name="ans-lang"]:checked').value;
+  document.getElementById("arti-hint-txt").textContent = ansLang === "id" ? q.id : q.en;
+  document.getElementById("arti-hint-key").textContent = q.key;
+  document.getElementById("arti-popup").style.display = "block";
+  document.getElementById("arti-btn").style.display = "none";
+}
+
+function reveal() {
+  if (rev) return; rev = true;
+  document.getElementById("ans").style.display = "block";
+  document.getElementById("ans-key-txt").style.display = "block";
+  document.getElementById("hint").style.display = "none";
+  document.getElementById("ba").style.display = "flex";
+  document.getElementById("card").className = "card done";
+  document.getElementById("arti-popup").style.display = "none";
+  document.getElementById("arti-btn").style.display = "none";
+}
+
+function rate(r) {
+  if (r === "p") cp++;
+  else if (r === "h") { ch++; toRev.push(deck[idx]); }
+  else { cbv++; toRev.push(deck[idx]); }
+  upStats(); idx++;
+  if (idx >= deck.length) { showResult(); return; }
+  showCard();
+}
+
+function upStats() {
+  document.getElementById("sp").textContent = cp;
+  document.getElementById("sh").textContent = ch;
+  document.getElementById("sb").textContent = cbv;
+}
+
+function showResult() {
+  document.getElementById("pb").style.width = "100%";
+  hide("qv");
+  if (toRev.length === 0) { show("fv"); return; }
+  show("rv");
+  document.getElementById("rp").textContent = cp;
+  document.getElementById("rh").textContent = ch;
+  document.getElementById("rbb").textContent = cbv;
+  var pct = Math.round(cp / deck.length * 100);
+  document.getElementById("ri").textContent = pct >= 90 ? "🌟" : pct >= 70 ? "😊" : pct >= 50 ? "💪" : "😤";
+  document.getElementById("rt").textContent = "Ronde " + ronde + " selesai!";
+  document.getElementById("rs").textContent =
+    pct >= 90 ? "Hampir sempurna! " + toRev.length + " kartu tersisa." :
+    pct >= 70 ? "Bagus! " + toRev.length + " kartu perlu diulang." :
+    pct >= 50 ? "Lumayan! Ulangi " + toRev.length + " kartu." :
+    "Semangat! " + toRev.length + " kartu menunggumu.";
+  document.getElementById("nb").textContent = "Lanjut Ronde " + (ronde + 1) + " → " + toRev.length + " kartu";
+  var rl = document.getElementById("rl");
+  rl.innerHTML = "";
+  toRev.forEach(function(v) {
+    var cfg = CAT_CONFIG[v.cat] || CAT_CONFIG.ALL;
+    var d = document.createElement("div"); d.className = "ri";
+    d.innerHTML = '<span class="ri-cat" style="background:' + cfg.fg + '">' + cfg.label + '</span>'
+      + '<span class="ri-txt">' + v.q.substring(0, 60) + (v.q.length > 60 ? "…" : "") + '</span>';
+    rl.appendChild(d);
+  });
+  document.getElementById("rlw").style.display = "";
+}
+
+function show(id) { document.getElementById(id).style.display = ""; }
+function hide(id) { document.getElementById(id).style.display = "none"; }
+
+ronde = 1; fullRestart();
+</script>
+</body>
+</html>
