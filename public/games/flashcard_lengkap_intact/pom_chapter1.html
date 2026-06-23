@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psychology of Money — Ch.0–1: No One's Crazy</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#faf7f2;font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 48px;}
+#app{width:100%;max-width:520px;}
+
+h1{font-family:'Lora',serif;font-size:17px;color:#3b2a1a;text-align:center;margin-bottom:3px;font-weight:700;}
+.sub{font-size:11px;color:#a8916c;text-align:center;margin-bottom:12px;letter-spacing:.3px;}
+
+/* Filters */
+.filters{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;}
+.fb{padding:6px 14px;border-radius:99px;border:1.5px solid #e8d8c4;background:#fff;color:#a8916c;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;}
+.fb:hover{border-color:#8b5e3c;color:#8b5e3c;}
+.fb.on{background:#8b5e3c;color:#fff;border-color:#8b5e3c;}
+.fb.cat-sent.on{background:#92400e;border-color:#92400e;}
+.fb.cat-vocab.on{background:#065f46;border-color:#065f46;}
+
+/* Lang Switch */
+.ls-label{font-size:10px;color:#a8916c;text-align:center;margin-bottom:5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;}
+.lang-switch{display:flex;background:#fff;border:1.5px solid #e8d8c4;border-radius:99px;padding:3px;gap:2px;margin-bottom:10px;}
+.lang-switch label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:99px;color:#a8916c;transition:all .2s;user-select:none;}
+.lang-switch label:hover{color:#8b5e3c;}
+.lang-switch input[type=radio]{display:none;}
+.lang-switch input[type=radio]:checked + label{background:linear-gradient(135deg,#8b5e3c,#c4965a);color:#fff;box-shadow:0 2px 8px rgba(139,94,60,.25);}
+
+/* Progress */
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge-ronde{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#fef3e2;color:#92400e;border:1px solid #f5c97a;}
+.ctr{font-size:13px;color:#a8916c;}
+.pbar-bg{height:5px;background:#e8d8c4;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:5px;background:linear-gradient(90deg,#92400e,#16a34a);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#a8916c;margin-bottom:.7rem;}
+
+/* Stats pills */
+.pills{display:flex;gap:6px;margin-bottom:.9rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#16a34a;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#92400e;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#16a34a;}.dh{background:#92400e;}.db{background:#dc2626;}
+
+/* Card */
+.card{background:#fff;border:1px solid #e8d8c4;border-radius:20px;box-shadow:0 4px 24px rgba(139,94,60,.10),0 1px 4px rgba(139,94,60,.06);min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.6rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent,linear-gradient(90deg,#92400e,#c4965a));border-radius:20px 20px 0 0;}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 32px rgba(139,94,60,.15);}
+
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;align-items:center;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#c4a882;background:#faf7f2;border:1px solid #e8d8c4;border-radius:99px;padding:2px 9px;}
+.type-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;letter-spacing:.5px;}
+.tb-sent{background:#fef3e2;color:#92400e;}
+.tb-vocab{background:#d1fae5;color:#065f46;}
+.ch-badge{font-size:9px;font-weight:600;color:#a8916c;background:#faf7f2;border:1px solid #e8d8c4;border-radius:99px;padding:2px 8px;}
+
+/* SENTENCE front */
+.sent-front{font-family:'Lora',serif;font-size:16px;font-style:italic;color:#3b2a1a;line-height:1.65;text-align:center;}
+
+/* VOCAB front */
+.vocab-front{text-align:center;}
+.vocab-word{font-family:'Lora',serif;font-size:36px;font-weight:700;color:#3b2a1a;line-height:1.2;margin-bottom:6px;}
+.vocab-word.long{font-size:24px;}
+.vocab-tag{font-size:10px;font-weight:600;color:#a8916c;letter-spacing:.5px;text-transform:uppercase;}
+
+/* Tap hint */
+.tap-hint{font-size:11px;color:#c4a882;margin-top:1.2rem;display:flex;align-items:center;gap:5px;}
+
+/* Answer */
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+.divline{width:36px;height:1px;background:#e8d8c4;margin:0 auto .8rem;}
+
+.ans-block{margin-bottom:.6rem;}
+.ans-tag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#c4a882;margin-bottom:4px;}
+.ans-sent-id{font-family:'Lora',serif;font-size:14px;color:#3b2a1a;line-height:1.6;font-style:italic;}
+.ans-sent-en{font-family:'Lora',serif;font-size:14px;color:#6b4c2a;line-height:1.6;font-style:italic;}
+.ans-vocab-id{font-size:18px;font-weight:700;color:#3b2a1a;font-family:'Lora',serif;}
+.ans-vocab-def{font-size:12px;color:#6b4c2a;margin-top:4px;line-height:1.5;}
+.ans-vocab-ex{font-size:11px;color:#a8916c;margin-top:5px;font-style:italic;padding:6px 10px;background:#faf7f2;border-radius:8px;border-left:2px solid #c4965a;}
+
+/* Hint popup */
+.hint-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border:1.5px dashed #c4a882;border-radius:12px;background:transparent;color:#8b5e3c;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;margin-bottom:.6rem;}
+.hint-btn:hover{background:#fef3e2;border-style:solid;border-color:#92400e;}
+.hint-popup{background:linear-gradient(135deg,#fef3e2,#fff8f0);border:1.5px solid #f5c97a;border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:.6rem;animation:fup .2s ease;}
+.hint-popup-txt{font-family:'Lora',serif;font-size:16px;font-weight:600;color:#3b2a1a;margin-bottom:2px;font-style:italic;}
+.hint-popup-sub{font-size:11px;color:#8b5e3c;font-weight:500;}
+
+/* Rating buttons */
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#16a34a;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#92400e;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+
+/* Result */
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-family:'Lora',serif;font-size:21px;font-weight:700;color:#3b2a1a;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a7060;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sbox .sn{font-size:22px;font-weight:700;font-family:'Lora',serif;}.sbox .sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#16a34a;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#92400e;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#a8916c;margin-bottom:6px;}
+.rlist{border:1px solid #e8d8c4;border-radius:13px;overflow:hidden;max-height:190px;overflow-y:auto;}
+.ri{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-bottom:1px solid #f0e8dc;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-badge{font-size:9px;font-weight:700;border-radius:99px;padding:2px 7px;min-width:46px;text-align:center;flex-shrink:0;margin-top:1px;}
+.ri-sent{background:#fef3e2;color:#92400e;}.ri-vocab{background:#d1fae5;color:#065f46;}
+.ri-text{font-size:11px;color:#3b2a1a;flex:1;line-height:1.4;}
+.ri-id{font-size:10px;color:#065f46;margin-left:auto;text-align:right;flex-shrink:0;max-width:130px;line-height:1.3;}
+
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-brown{background:linear-gradient(135deg,#8b5e3c,#c4965a);color:#fff;box-shadow:0 3px 10px rgba(139,94,60,.25);}
+.btn-brown:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8d8c4 !important;color:#a8916c;}
+.btn-ghost:hover{background:#faf0e6;}
+
+/* Final */
+.final{text-align:center;padding:2.5rem 0;}
+.final-ico{font-size:64px;margin-bottom:.8rem;}
+.final-title{font-family:'Lora',serif;font-size:22px;font-weight:700;color:#3b2a1a;margin-bottom:.4rem;}
+.final-sub{font-size:13px;color:#8a7060;margin-bottom:.4rem;line-height:1.6;}
+.final-quote{font-family:'Lora',serif;font-size:12px;font-style:italic;color:#a8916c;margin-bottom:1.4rem;padding:10px 14px;border-left:2px solid #c4965a;background:#faf7f2;border-radius:0 8px 8px 0;text-align:left;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>📖 Psychology of Money</h1>
+  <div class="sub" id="sub-label">Intro + Ch.1: No One's Crazy — memuat...</div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">📋 Semua</button>
+    <button class="fb cat-sent" onclick="setCat('SENTENCE')">📜 Sentences</button>
+    <button class="fb cat-vocab" onclick="setCat('VOCAB')">📚 Vocab</button>
+  </div>
+
+  <!-- Answer lang toggle -->
+  <div class="ls-label">Tampilan Jawaban</div>
+  <div class="lang-switch">
+    <input type="radio" name="ans-lang" id="aid" value="id" checked>
+    <label for="aid">🇮🇩 Indonesia</label>
+    <input type="radio" name="ans-lang" id="aen" value="en">
+    <label for="aen">🇬🇧 English</label>
+  </div>
+
+  <!-- Quiz View -->
+  <div id="qv">
+    <div class="topbar">
+      <span class="badge-ronde" id="rb">Ronde 1</span>
+      <span class="ctr" id="ctr">1/--</span>
+    </div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <div class="card-num" id="card-num">#1</div>
+        <div class="type-badge" id="type-badge"></div>
+        <div class="ch-badge" id="ch-badge"></div>
+      </div>
+
+      <!-- SENTENCE front -->
+      <div id="front-sent" style="display:none;width:100%;">
+        <div class="sent-front" id="sent-disp"></div>
+      </div>
+
+      <!-- VOCAB front -->
+      <div id="front-vocab" style="display:none;text-align:center;">
+        <div class="vocab-front">
+          <div class="vocab-word" id="vocab-word"></div>
+          <div class="vocab-tag">English Term</div>
+        </div>
+      </div>
+
+      <div class="tap-hint" id="tap-hint"><span>👆</span> Ketuk untuk jawaban</div>
+
+      <!-- Answer -->
+      <div class="ans" id="ans" style="display:none">
+        <div class="divline"></div>
+        <!-- SENTENCE answer -->
+        <div id="ans-sent-block" style="display:none">
+          <div class="ans-block" id="ans-id-block">
+            <div class="ans-tag">🇮🇩 Indonesia</div>
+            <div class="ans-sent-id" id="ans-sent-id"></div>
+          </div>
+          <div class="ans-block" id="ans-en-block" style="display:none">
+            <div class="ans-tag">🇬🇧 English</div>
+            <div class="ans-sent-en" id="ans-sent-en"></div>
+          </div>
+        </div>
+        <!-- VOCAB answer -->
+        <div id="ans-vocab-block" style="display:none">
+          <div class="ans-block" id="ans-vocab-id-block">
+            <div class="ans-tag">🇮🇩 Arti</div>
+            <div class="ans-vocab-id" id="ans-vocab-id"></div>
+            <div class="ans-vocab-def" id="ans-vocab-def"></div>
+          </div>
+          <div class="ans-block" id="ans-vocab-en-block" style="display:none">
+            <div class="ans-tag">🇬🇧 Definition</div>
+            <div class="ans-vocab-id" id="ans-vocab-en-word"></div>
+            <div class="ans-vocab-def" id="ans-vocab-en-def"></div>
+          </div>
+          <div class="ans-vocab-ex" id="ans-vocab-ex"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hint popup -->
+    <div id="hint-popup" class="hint-popup" style="display:none">
+      <div class="hint-popup-txt" id="hint-txt"></div>
+      <div class="hint-popup-sub" id="hint-sub"></div>
+    </div>
+    <button class="hint-btn" id="hint-btn" onclick="showHint(event)">💡 Hint — lihat terjemahan</button>
+
+    <!-- Rating buttons -->
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Muncul lagi</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">✓</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+
+  <!-- Result View -->
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-brown" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+
+  <!-- Final View -->
+  <div id="fv" style="display:none">
+    <div class="final">
+      <div class="final-ico">🏆</div>
+      <div class="final-title">Semua Kartu Dikuasai!</div>
+      <div class="final-sub">Luar biasa — kamu telah menyelesaikan semua kartu di ronde ini.</div>
+      <div class="final-quote">"Doing well with money has a little to do with how smart you are and a lot to do with how you behave." — Morgan Housel</div>
+      <button class="btnbig btn-brown" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V = [
+// INTRO SENTENCES
+{type:"SENTENCE",ch:"INTRO",q:"I spent my college years working as a valet at a nice hotel in Los Angeles.",id:"Saya menghabiskan tahun-tahun kuliah bekerja sebagai valet di hotel mewah di Los Angeles.",en:"I spent my college years working as a valet at a nice hotel in Los Angeles."},
+{type:"SENTENCE",ch:"INTRO",q:"One frequent guest was a technology executive.",id:"Salah satu tamu tetap adalah seorang eksekutif teknologi.",en:"One frequent guest was a technology executive."},
+{type:"SENTENCE",ch:"INTRO",q:"He was a genius, having designed and patented a key component in Wi-Fi routers in his 20s.",id:"Dia adalah seorang jenius, telah merancang dan mematenkan komponen kunci di router Wi-Fi di usianya yang ke-20.",en:"He was a genius, having designed and patented a key component in Wi-Fi routers in his 20s."},
+{type:"SENTENCE",ch:"INTRO",q:"He had started and sold several companies.",id:"Dia telah memulai dan menjual beberapa perusahaan.",en:"He had started and sold several companies."},
+{type:"SENTENCE",ch:"INTRO",q:"He was wildly successful.",id:"Dia sangat sukses.",en:"He was wildly successful."},
+{type:"SENTENCE",ch:"INTRO",q:"He also had a relationship with money I'd describe as a mix of insecurity and childish stupidity.",id:"Dia juga memiliki hubungan dengan uang yang akan saya gambarkan sebagai campuran ketidakamanan dan kebodohan kekanak-kanakan.",en:"He also had a relationship with money I'd describe as a mix of insecurity and childish stupidity."},
+{type:"SENTENCE",ch:"INTRO",q:"He carried a stack of hundred dollar bills several inches thick.",id:"Dia membawa setumpuk lembaran seratus dolar setebal beberapa inci.",en:"He carried a stack of hundred dollar bills several inches thick."},
+{type:"SENTENCE",ch:"INTRO",q:"He showed it to everyone who wanted to see it and many who didn't.",id:"Dia memperlihatkannya kepada semua orang yang ingin melihatnya dan banyak yang tidak.",en:"He showed it to everyone who wanted to see it and many who didn't."},
+{type:"SENTENCE",ch:"INTRO",q:"He bragged openly and loudly about his wealth, often while drunk and always apropos of nothing.",id:"Dia membanggakan kekayaannya secara terbuka dan keras, seringkali saat mabuk dan selalu tanpa alasan yang jelas.",en:"He bragged openly and loudly about his wealth, often while drunk and always apropos of nothing."},
+{type:"SENTENCE",ch:"INTRO",q:"They then proceeded to throw the coins into the sea, skipping them like rocks, cackling as they argued whose went furthest.",id:"Mereka kemudian melemparkan koin-koin itu ke laut, memantulkannya seperti batu, tertawa terbahak-bahak saat berdebat koin siapa yang paling jauh.",en:"They then proceeded to throw the coins into the sea, skipping them like rocks, cackling as they argued whose went furthest."},
+{type:"SENTENCE",ch:"INTRO",q:"You want five hundred dollars?",id:"Kamu mau lima ratus dolar?",en:"You want five hundred dollars?"},
+{type:"SENTENCE",ch:"INTRO",q:"Here's five thousand dollars.",id:"Ini lima ribu dolar.",en:"Here's five thousand dollars."},
+{type:"SENTENCE",ch:"INTRO",q:"Now get out of my face.",id:"Sekarang pergi dari hadapanku.",en:"Now get out of my face."},
+{type:"SENTENCE",ch:"INTRO",q:"And don't ever insult me like that again.",id:"Dan jangan pernah menghina saya seperti itu lagi.",en:"And don't ever insult me like that again."},
+{type:"SENTENCE",ch:"INTRO",q:"I learned years later that he went broke.",id:"Saya baru tahu bertahun-tahun kemudian bahwa dia bangkrut.",en:"I learned years later that he went broke."},
+{type:"SENTENCE",ch:"INTRO",q:"The premise of this book is that doing well with money has a little to do with how smart you are and a lot to do with how you behave.",id:"Premis buku ini adalah bahwa sukses dengan uang sedikit berkaitan dengan seberapa pintar kamu dan banyak berkaitan dengan bagaimana kamu berperilaku.",en:"The premise of this book is that doing well with money has a little to do with how smart you are and a lot to do with how you behave."},
+{type:"SENTENCE",ch:"INTRO",q:"And behavior is hard to teach, even to really smart people.",id:"Dan perilaku sulit diajarkan, bahkan kepada orang-orang yang sangat cerdas.",en:"And behavior is hard to teach, even to really smart people."},
+{type:"SENTENCE",ch:"INTRO",q:"A genius who loses control of their emotions can be a financial disaster.",id:"Seorang jenius yang kehilangan kendali atas emosinya bisa menjadi bencana keuangan.",en:"A genius who loses control of their emotions can be a financial disaster."},
+{type:"SENTENCE",ch:"INTRO",q:"The opposite is also true.",id:"Kebalikannya juga benar.",en:"The opposite is also true."},
+{type:"SENTENCE",ch:"INTRO",q:"Ordinary folks with no financial education can be wealthy if they have a handful of behavioral skills that have nothing to do with formal measures of intelligence.",id:"Orang biasa tanpa pendidikan keuangan bisa menjadi kaya jika mereka memiliki beberapa keterampilan perilaku yang tidak ada hubungannya dengan ukuran kecerdasan formal.",en:"Ordinary folks with no financial education can be wealthy if they have a handful of behavioral skills that have nothing to do with formal measures of intelligence."},
+{type:"SENTENCE",ch:"INTRO",q:"Ronald Read was born in rural Vermont.",id:"Ronald Read lahir di pedesaan Vermont.",en:"Ronald Read was born in rural Vermont."},
+{type:"SENTENCE",ch:"INTRO",q:"He was the first person in his family to graduate high school, made all the more impressive by the fact that he hitchhiked to campus each day.",id:"Dia adalah orang pertama dalam keluarganya yang lulus SMA, menjadi lebih mengesankan karena dia menumpang ke kampus setiap hari.",en:"He was the first person in his family to graduate high school, made all the more impressive by the fact that he hitchhiked to campus each day."},
+{type:"SENTENCE",ch:"INTRO",q:"Read fixed cars at a gas station for 25 years and swept floors at JCPenney for 17 years.",id:"Read memperbaiki mobil di pom bensin selama 25 tahun dan menyapu lantai di JCPenney selama 17 tahun.",en:"Read fixed cars at a gas station for 25 years and swept floors at JCPenney for 17 years."},
+{type:"SENTENCE",ch:"INTRO",q:"He bought a two-bedroom house for $12,000 at age 38 and lived there for the rest of his life.",id:"Dia membeli rumah dua kamar tidur seharga $12.000 pada usia 38 tahun dan tinggal di sana hingga akhir hayatnya.",en:"He bought a two-bedroom house for $12,000 at age 38 and lived there for the rest of his life."},
+{type:"SENTENCE",ch:"INTRO",q:"He was widowed at age 50 and never remarried.",id:"Dia menjanda di usia 50 tahun dan tidak pernah menikah lagi.",en:"He was widowed at age 50 and never remarried."},
+{type:"SENTENCE",ch:"INTRO",q:"A friend recalled that his main hobby was chopping firewood.",id:"Seorang teman mengingat bahwa hobi utamanya adalah membelah kayu bakar.",en:"A friend recalled that his main hobby was chopping firewood."},
+{type:"SENTENCE",ch:"INTRO",q:"Read died in 2014, age 92.",id:"Read meninggal pada tahun 2014, usia 92 tahun.",en:"Read died in 2014, age 92."},
+{type:"SENTENCE",ch:"INTRO",q:"In his will the former janitor left $2 million to his stepkids and more than $6 million to his local hospital and library.",id:"Dalam wasiatnya, mantan penjaga kebersihan itu meninggalkan $2 juta untuk anak tirinya dan lebih dari $6 juta untuk rumah sakit dan perpustakaan setempat.",en:"In his will the former janitor left $2 million to his stepkids and more than $6 million to his local hospital and library."},
+{type:"SENTENCE",ch:"INTRO",q:"Those who knew Read were baffled.",id:"Mereka yang mengenal Read kebingungan.",en:"Those who knew Read were baffled."},
+{type:"SENTENCE",ch:"INTRO",q:"Where did he get all that money?",id:"Dari mana semua uang itu?",en:"Where did he get all that money?"},
+{type:"SENTENCE",ch:"INTRO",q:"It turned out there was no secret.",id:"Ternyata tidak ada rahasia.",en:"It turned out there was no secret."},
+{type:"SENTENCE",ch:"INTRO",q:"There was no lottery win and no inheritance.",id:"Tidak ada kemenangan lotere dan tidak ada warisan.",en:"There was no lottery win and no inheritance."},
+{type:"SENTENCE",ch:"INTRO",q:"Read saved what little he could and invested it in blue chip stocks.",id:"Read menabung sebisanya dan menginvestasikannya di saham blue chip.",en:"Read saved what little he could and invested it in blue chip stocks."},
+{type:"SENTENCE",ch:"INTRO",q:"Then he waited, for decades on end, as tiny savings compounded into more than $8 million.",id:"Kemudian dia menunggu, selama beberapa dekade, saat tabungan kecilnya berbunga menjadi lebih dari $8 juta.",en:"Then he waited, for decades on end, as tiny savings compounded into more than $8 million."},
+{type:"SENTENCE",ch:"INTRO",q:"Richard Fuscone was everything Ronald Read was not.",id:"Richard Fuscone adalah segalanya yang bukan Ronald Read.",en:"Richard Fuscone was everything Ronald Read was not."},
+{type:"SENTENCE",ch:"INTRO",q:"A Harvard-educated Merrill Lynch executive with an MBA, Fuscone had such a successful career in finance that he retired in his 40s to become a philanthropist.",id:"Eksekutif Merrill Lynch berpendidikan Harvard dengan gelar MBA, Fuscone memiliki karier yang sangat sukses di bidang keuangan sehingga dia pensiun di usia 40-an untuk menjadi filantropis.",en:"A Harvard-educated Merrill Lynch executive with an MBA, Fuscone had such a successful career in finance that he retired in his 40s to become a philanthropist."},
+{type:"SENTENCE",ch:"INTRO",q:"In the mid-2000s Fuscone borrowed heavily to expand an 18,000-square foot home in Greenwich, Connecticut that had 11 bathrooms, two elevators, two pools, seven garages, and cost more than $90,000 a month to maintain.",id:"Pada pertengahan 2000-an, Fuscone meminjam besar-besaran untuk memperluas rumah seluas 18.000 kaki persegi di Greenwich, Connecticut yang memiliki 11 kamar mandi, dua lift, dua kolam renang, tujuh garasi, dan biaya perawatan lebih dari $90.000 per bulan.",en:"In the mid-2000s Fuscone borrowed heavily to expand an 18,000-square foot home in Greenwich, Connecticut that had 11 bathrooms, two elevators, two pools, seven garages, and cost more than $90,000 a month to maintain."},
+{type:"SENTENCE",ch:"INTRO",q:"Then the 2008 financial crisis hit.",id:"Kemudian krisis keuangan 2008 melanda.",en:"Then the 2008 financial crisis hit."},
+{type:"SENTENCE",ch:"INTRO",q:"High debt and illiquid assets left him bankrupt.",id:"Utang tinggi dan aset yang tidak likuid membuatnya bangkrut.",en:"High debt and illiquid assets left him bankrupt."},
+{type:"SENTENCE",ch:"INTRO",q:"Ronald Read was patient; Richard Fuscone was greedy.",id:"Ronald Read sabar; Richard Fuscone serakah.",en:"Ronald Read was patient; Richard Fuscone was greedy."},
+{type:"SENTENCE",ch:"INTRO",q:"That's all it took to eclipse the massive education and experience gap between the two.",id:"Hanya itu yang dibutuhkan untuk melampaui kesenjangan pendidikan dan pengalaman yang sangat besar di antara keduanya.",en:"That's all it took to eclipse the massive education and experience gap between the two."},
+{type:"SENTENCE",ch:"INTRO",q:"Finance is overwhelmingly taught as a math-based field, where you put data into a formula and the formula tells you what to do, and it's assumed that you'll just go do it.",id:"Keuangan sebagian besar diajarkan sebagai bidang berbasis matematika, di mana kamu memasukkan data ke dalam rumus dan rumus itu memberi tahu apa yang harus dilakukan, dan diasumsikan kamu akan langsung melakukannya.",en:"Finance is overwhelmingly taught as a math-based field, where you put data into a formula and the formula tells you what to do, and it's assumed that you'll just go do it."},
+{type:"SENTENCE",ch:"INTRO",q:"Money is everywhere, it affects all of us, and confuses most of us.",id:"Uang ada di mana-mana, mempengaruhi kita semua, dan membingungkan sebagian besar dari kita.",en:"Money is everywhere, it affects all of us, and confuses most of us."}
+,
+// CHAPTER 1 SENTENCES
+{type:"SENTENCE",ch:"CH1",q:"Let me tell you about a problem.",id:"Biarkan saya menceritakan sebuah masalah.",en:"Let me tell you about a problem."},
+{type:"SENTENCE",ch:"CH1",q:"It might make you feel better about what you do with your money, and less judgmental about what other people do with theirs.",id:"Ini mungkin membuat kamu merasa lebih baik tentang apa yang kamu lakukan dengan uangmu, dan tidak terlalu menghakimi tentang apa yang orang lain lakukan dengan milik mereka.",en:"It might make you feel better about what you do with your money, and less judgmental about what other people do with theirs."},
+{type:"SENTENCE",ch:"CH1",q:"People do some crazy things with money.",id:"Orang-orang melakukan hal-hal gila dengan uang.",en:"People do some crazy things with money."},
+{type:"SENTENCE",ch:"CH1",q:"But no one is crazy.",id:"Tapi tidak ada yang benar-benar gila.",en:"But no one is crazy."},
+{type:"SENTENCE",ch:"CH1",q:"People from different generations, raised by different parents who earned different incomes and held different values, in different parts of the world, born into different economies, experiencing different job markets with different incentives and different degrees of luck, learn very different lessons.",id:"Orang-orang dari generasi berbeda, dibesarkan oleh orang tua berbeda yang menghasilkan pendapatan berbeda dan memegang nilai berbeda, di bagian dunia yang berbeda, lahir ke dalam ekonomi yang berbeda, mengalami pasar kerja yang berbeda dengan insentif berbeda dan tingkat keberuntungan yang berbeda, belajar pelajaran yang sangat berbeda.",en:"People from different generations, raised by different parents who earned different incomes and held different values, in different parts of the world, born into different economies, experiencing different job markets with different incentives and different degrees of luck, learn very different lessons."},
+{type:"SENTENCE",ch:"CH1",q:"Everyone has their own unique experience with how the world works.",id:"Setiap orang memiliki pengalaman uniknya sendiri tentang bagaimana dunia bekerja.",en:"Everyone has their own unique experience with how the world works."},
+{type:"SENTENCE",ch:"CH1",q:"And what you've experienced is more compelling than what you learn second-hand.",id:"Dan apa yang telah kamu alami lebih meyakinkan daripada apa yang kamu pelajari secara tidak langsung.",en:"And what you've experienced is more compelling than what you learn second-hand."},
+{type:"SENTENCE",ch:"CH1",q:"So all of us—you, me, everyone—go through life anchored to a set of views about how money works that vary wildly from person to person.",id:"Jadi kita semua—kamu, aku, semua orang—menjalani hidup dengan terikat pada sekumpulan pandangan tentang cara kerja uang yang sangat bervariasi dari orang ke orang.",en:"So all of us—you, me, everyone—go through life anchored to a set of views about how money works that vary wildly from person to person."},
+{type:"SENTENCE",ch:"CH1",q:"What seems crazy to you might make sense to me.",id:"Apa yang tampak gila bagimu mungkin masuk akal bagiku.",en:"What seems crazy to you might make sense to me."},
+{type:"SENTENCE",ch:"CH1",q:"The person who grew up in poverty thinks about risk and reward in ways the child of a wealthy banker cannot fathom if he tried.",id:"Orang yang tumbuh dalam kemiskinan berpikir tentang risiko dan imbalan dengan cara yang tidak bisa dipahami oleh anak bankir kaya meski ia berusaha sekalipun.",en:"The person who grew up in poverty thinks about risk and reward in ways the child of a wealthy banker cannot fathom if he tried."},
+{type:"SENTENCE",ch:"CH1",q:"The person who grew up when inflation was high experienced something the person who grew up with stable prices never had to.",id:"Orang yang tumbuh saat inflasi tinggi mengalami sesuatu yang tidak pernah harus dialami oleh orang yang tumbuh dengan harga stabil.",en:"The person who grew up when inflation was high experienced something the person who grew up with stable prices never had to."},
+{type:"SENTENCE",ch:"CH1",q:"The stock broker who lost everything during the Great Depression experienced something the tech worker basking in the glory of the late 1990s can't imagine.",id:"Broker saham yang kehilangan segalanya saat Depresi Besar mengalami sesuatu yang tidak bisa dibayangkan oleh pekerja teknologi yang menikmati kejayaan akhir 1990-an.",en:"The stock broker who lost everything during the Great Depression experienced something the tech worker basking in the glory of the late 1990s can't imagine."},
+{type:"SENTENCE",ch:"CH1",q:"The Australian who hasn't seen a recession in 30 years has experienced something no American ever has.",id:"Orang Australia yang tidak pernah mengalami resesi selama 30 tahun telah mengalami sesuatu yang tidak pernah dialami orang Amerika mana pun.",en:"The Australian who hasn't seen a recession in 30 years has experienced something no American ever has."},
+{type:"SENTENCE",ch:"CH1",q:"On and on.",id:"Dan seterusnya.",en:"On and on."},
+{type:"SENTENCE",ch:"CH1",q:"The list of experiences is endless.",id:"Daftar pengalaman tidak ada habisnya.",en:"The list of experiences is endless."},
+{type:"SENTENCE",ch:"CH1",q:"You know stuff about money that I don't, and vice versa.",id:"Kamu tahu hal-hal tentang uang yang tidak aku ketahui, dan sebaliknya.",en:"You know stuff about money that I don't, and vice versa."},
+{type:"SENTENCE",ch:"CH1",q:"You go through life with different beliefs, goals, and forecasts, than I do.",id:"Kamu menjalani hidup dengan keyakinan, tujuan, dan perkiraan yang berbeda dari milikku.",en:"You go through life with different beliefs, goals, and forecasts, than I do."},
+{type:"SENTENCE",ch:"CH1",q:"That's not because one of us is smarter than the other, or has better information.",id:"Itu bukan karena salah satu dari kita lebih pintar dari yang lain, atau memiliki informasi yang lebih baik.",en:"That's not because one of us is smarter than the other, or has better information."},
+{type:"SENTENCE",ch:"CH1",q:"It's because we've had different lives shaped by different and equally persuasive experiences.",id:"Itu karena kita menjalani kehidupan yang berbeda yang dibentuk oleh pengalaman yang berbeda dan sama-sama meyakinkan.",en:"It's because we've had different lives shaped by different and equally persuasive experiences."}
+,
+// VOCAB CARDS
+{type:"VOCAB",word:"valet",id:"petugas parkir (di hotel)",en:"a person employed to park cars for hotel guests",example:"He worked as a valet at a nice hotel."},
+{type:"VOCAB",word:"patent",id:"mematenkan / hak paten",en:"to obtain exclusive rights to an invention",example:"He patented a key component in Wi-Fi routers."},
+{type:"VOCAB",word:"apropos of nothing",id:"tanpa alasan yang jelas / tiba-tiba saja",en:"with no connection to what was being discussed",example:"He bragged apropos of nothing."},
+{type:"VOCAB",word:"insecurity",id:"ketidakamanan / rasa tidak aman",en:"lack of confidence or certainty",example:"His relationship with money was a mix of insecurity and stupidity."},
+{type:"VOCAB",word:"philanthropist",id:"filantropis / dermawan",en:"a person who donates money to good causes",example:"Read left millions to charity, becoming a philanthropist."},
+{type:"VOCAB",word:"blue chip stocks",id:"saham unggulan / saham blue chip",en:"shares in large, stable, well-established companies",example:"Read invested in blue chip stocks."},
+{type:"VOCAB",word:"compounded",id:"berbunga-bunga / berlipat ganda",en:"interest calculated on both principal and accumulated interest",example:"Tiny savings compounded into more than $8 million."},
+{type:"VOCAB",word:"illiquid assets",id:"aset tidak likuid / aset yang sulit dijual cepat",en:"assets that cannot be quickly converted to cash",example:"High debt and illiquid assets left him bankrupt."},
+{type:"VOCAB",word:"foreclosed",id:"disita / dieksekusi (oleh bank)",en:"when a lender takes possession of a mortgaged property",example:"His Palm Beach house was foreclosed."},
+{type:"VOCAB",word:"baffled",id:"bingung / heran / tidak mengerti",en:"totally bewildered or perplexed",example:"Those who knew Read were baffled."},
+{type:"VOCAB",word:"fathom",id:"memahami / mengerti sepenuhnya",en:"to understand something after much thought",example:"The child of a wealthy banker cannot fathom it."},
+{type:"VOCAB",word:"compelling",id:"meyakinkan / sangat kuat pengaruhnya",en:"evoking interest or attention in a powerful way",example:"Experience is more compelling than second-hand knowledge."},
+{type:"VOCAB",word:"anchored",id:"terikat / tertambat",en:"firmly fixed to a particular viewpoint or belief",example:"We go through life anchored to views about money."},
+{type:"VOCAB",word:"recession",id:"resesi / penurunan ekonomi",en:"a period of temporary economic decline",example:"The Australian hasn't seen a recession in 30 years."},
+{type:"VOCAB",word:"incentives",id:"insentif / dorongan",en:"things that motivate or encourage certain behaviors",example:"Different job markets with different incentives."},
+{type:"VOCAB",word:"forecasts",id:"perkiraan / prediksi",en:"predictions about future events",example:"You go through life with different beliefs, goals, and forecasts."},
+{type:"VOCAB",word:"persuasive",id:"meyakinkan / persuasif",en:"good at convincing someone to believe something",example:"Different and equally persuasive experiences."},
+{type:"VOCAB",word:"wildly successful",id:"sangat sukses / luar biasa sukses",en:"extremely or remarkably successful",example:"He was wildly successful."},
+{type:"VOCAB",word:"hard science",id:"ilmu pasti / sains eksakta",en:"a natural science based on quantifiable data and laws",example:"Financial success is not a hard science."},
+{type:"VOCAB",word:"soft skill",id:"keterampilan lunak / soft skill",en:"interpersonal and behavioral skills rather than technical ones",example:"Financial success is a soft skill."},
+{type:"VOCAB",word:"second-hand",id:"tidak langsung / dari tangan kedua",en:"received from someone else rather than direct experience",example:"Experience is more compelling than what you learn second-hand."},
+{type:"VOCAB",word:"bragged",id:"membual / membanggakan diri",en:"talked with excessive pride about achievements",example:"He bragged openly about his wealth."},
+{type:"VOCAB",word:"vary wildly",id:"bervariasi sangat besar / berbeda jauh",en:"to differ greatly or dramatically",example:"Views about money vary wildly from person to person."},
+{type:"VOCAB",word:"vice versa",id:"begitu pula sebaliknya / dan sebaliknya",en:"with the main terms in the preceding statement the other way around",example:"You know stuff I don't, and vice versa."},
+{type:"VOCAB",word:"eclipse",id:"melampaui / mengungguli / mengalahkan",en:"to surpass or outshine significantly",example:"Patience eclipsed the massive education gap between the two."}
+];
+
+// ── State ──
+var deck, idx, ronde, cp, ch_cnt, cbv, rev, curCat;
+ronde = 1; curCat = "ALL";
+
+function getAnsLang() {
+  return document.querySelector('input[name="ans-lang"]:checked').value;
+}
+
+document.querySelectorAll('input[name="ans-lang"]').forEach(function(r) {
+  r.addEventListener('change', function() { if (rev) renderAns(); });
+});
+
+function shuffle(a) {
+  var b = a.slice();
+  for (var i = b.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = b[i]; b[i] = b[j]; b[j] = t;
+  }
+  return b;
+}
+
+function setCat(cat) {
+  curCat = cat;
+  document.querySelectorAll('.fb').forEach(function(b) { b.classList.remove('on'); });
+  if (cat === 'ALL') document.querySelectorAll('.fb')[0].classList.add('on');
+  else if (cat === 'SENTENCE') document.querySelectorAll('.fb')[1].classList.add('on');
+  else if (cat === 'VOCAB') document.querySelectorAll('.fb')[2].classList.add('on');
+  ronde = 1; fullRestart();
+}
+
+function getFiltered() {
+  if (curCat === 'ALL') return V.slice();
+  return V.filter(function(c) { return c.type === curCat; });
+}
+
+function fullRestart() {
+  ronde = 1; cp = 0; ch_cnt = 0; cbv = 0; rev = false;
+  document.getElementById('sp').textContent = '0';
+  document.getElementById('sh').textContent = '0';
+  document.getElementById('sb').textContent = '0';
+  var base = getFiltered();
+  deck = shuffle(base).map(function(c) { return Object.assign({}, c, {_r:''}); });
+  idx = 0;
+  document.getElementById('qv').style.display = '';
+  document.getElementById('rv').style.display = 'none';
+  document.getElementById('fv').style.display = 'none';
+  updateSub();
+  go();
+}
+
+function updateSub() {
+  var base = getFiltered();
+  var label = curCat === 'ALL' ? 'Semua ('+base.length+' kartu)' :
+    curCat === 'SENTENCE' ? '📜 Sentences ('+base.length+' kartu)' :
+    '📚 Vocab ('+base.length+' kartu)';
+  document.getElementById('sub-label').textContent = label;
+}
+
+function go() {
+  if (idx >= deck.length) { showResult(); return; }
+  rev = false;
+  document.getElementById('hint-popup').style.display = 'none';
+  document.getElementById('hint-btn').style.display = '';
+  document.getElementById('ans').style.display = 'none';
+  document.getElementById('ba').style.display = 'none';
+  document.getElementById('tap-hint').style.display = '';
+  showCard();
+  updateProgress();
+}
+
+function showCard() {
+  var c = deck[idx];
+  // badges
+  document.getElementById('card-num').textContent = '#' + (idx + 1);
+  var tb = document.getElementById('type-badge');
+  tb.textContent = c.type === 'SENTENCE' ? '📜 SENTENCE' : '📚 VOCAB';
+  tb.className = 'type-badge ' + (c.type === 'SENTENCE' ? 'tb-sent' : 'tb-vocab');
+  var chb = document.getElementById('ch-badge');
+  chb.textContent = c.ch === 'INTRO' ? 'Intro' : (c.ch === 'CH1' ? 'Ch.1' : '');
+  chb.style.display = c.ch ? '' : 'none';
+
+  // accent color
+  document.getElementById('card').style.setProperty('--accent',
+    c.type === 'SENTENCE' ? 'linear-gradient(90deg,#92400e,#c4965a)' : 'linear-gradient(90deg,#065f46,#059669)');
+
+  if (c.type === 'SENTENCE') {
+    document.getElementById('front-sent').style.display = '';
+    document.getElementById('front-vocab').style.display = 'none';
+    document.getElementById('sent-disp').textContent = c.q;
+  } else {
+    document.getElementById('front-sent').style.display = 'none';
+    document.getElementById('front-vocab').style.display = '';
+    var wEl = document.getElementById('vocab-word');
+    wEl.textContent = c.word;
+    wEl.className = 'vocab-word' + (c.word.length > 15 ? ' long' : '');
+  }
+}
+
+function renderAns() {
+  var c = deck[idx];
+  var lang = getAnsLang();
+  var ansEl = document.getElementById('ans');
+  var sentBlock = document.getElementById('ans-sent-block');
+  var vocabBlock = document.getElementById('ans-vocab-block');
+
+  if (c.type === 'SENTENCE') {
+    sentBlock.style.display = '';
+    vocabBlock.style.display = 'none';
+    if (lang === 'id') {
+      document.getElementById('ans-id-block').style.display = '';
+      document.getElementById('ans-en-block').style.display = 'none';
+      document.getElementById('ans-sent-id').textContent = c.id;
+    } else {
+      document.getElementById('ans-id-block').style.display = 'none';
+      document.getElementById('ans-en-block').style.display = '';
+      document.getElementById('ans-sent-en').textContent = c.en;
+    }
+  } else {
+    sentBlock.style.display = 'none';
+    vocabBlock.style.display = '';
+    if (lang === 'id') {
+      document.getElementById('ans-vocab-id-block').style.display = '';
+      document.getElementById('ans-vocab-en-block').style.display = 'none';
+      document.getElementById('ans-vocab-id').textContent = c.id;
+      document.getElementById('ans-vocab-def').textContent = c.en;
+    } else {
+      document.getElementById('ans-vocab-id-block').style.display = 'none';
+      document.getElementById('ans-vocab-en-block').style.display = '';
+      document.getElementById('ans-vocab-en-word').textContent = c.word;
+      document.getElementById('ans-vocab-en-def').textContent = c.en;
+    }
+    document.getElementById('ans-vocab-ex').textContent = '"' + c.example + '"';
+  }
+  ansEl.style.display = '';
+}
+
+function reveal() {
+  if (rev) return;
+  rev = true;
+  document.getElementById('tap-hint').style.display = 'none';
+  renderAns();
+  document.getElementById('ba').style.display = '';
+  document.getElementById('hint-popup').style.display = 'none';
+  document.getElementById('hint-btn').style.display = 'none';
+}
+
+function showHint(e) {
+  e.stopPropagation();
+  var c = deck[idx];
+  var hp = document.getElementById('hint-popup');
+  var ht = document.getElementById('hint-txt');
+  var hs = document.getElementById('hint-sub');
+  if (hp.style.display === 'none' || hp.style.display === '') {
+    if (c.type === 'SENTENCE') {
+      ht.textContent = c.id;
+      hs.textContent = 'Terjemahan Indonesia';
+    } else {
+      ht.textContent = c.id;
+      hs.textContent = c.en;
+    }
+    hp.style.display = '';
+  } else {
+    hp.style.display = 'none';
+  }
+}
+
+function rate(r) {
+  deck[idx]._r = r;
+  if (r === 'p') { cp++; document.getElementById('sp').textContent = cp; }
+  else if (r === 'h') { ch_cnt++; document.getElementById('sh').textContent = ch_cnt; }
+  else { cbv++; document.getElementById('sb').textContent = cbv; }
+  idx++;
+  go();
+}
+
+function updateProgress() {
+  var total = deck.length;
+  var done = cp;
+  var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('pb').style.width = pct + '%';
+  document.getElementById('ctr').textContent = (idx + 1) + '/' + total;
+  document.getElementById('pl').textContent = done + ' selesai';
+  document.getElementById('pr').textContent = total + ' kartu';
+  document.getElementById('rb').textContent = 'Ronde ' + ronde;
+}
+
+function showResult() {
+  document.getElementById('qv').style.display = 'none';
+  document.getElementById('rv').style.display = '';
+  var toRepeat = deck.filter(function(c) { return c._r === 'b' || c._r === 'h'; });
+  document.getElementById('rp').textContent = cp;
+  document.getElementById('rh').textContent = ch_cnt;
+  document.getElementById('rbb').textContent = cbv;
+
+  var ri = document.getElementById('ri');
+  var rt = document.getElementById('rt');
+  var rs = document.getElementById('rs');
+  if (toRepeat.length === 0) {
+    ri.textContent = '🎉';
+    rt.textContent = 'Sempurna!';
+    rs.textContent = 'Semua kartu dikuasai di ronde ini!';
+    document.getElementById('nb').textContent = '🏆 Selesai!';
+    document.getElementById('nb').onclick = function() { showFinal(); };
+    document.getElementById('rlw').style.display = 'none';
+  } else {
+    var pct = Math.round((cp / deck.length) * 100);
+    ri.textContent = pct >= 70 ? '📚' : '💪';
+    rt.textContent = 'Ronde ' + ronde + ' Selesai';
+    rs.textContent = cp + ' dari ' + deck.length + ' kartu dikuasai (' + pct + '%). ' + toRepeat.length + ' kartu perlu diulang.';
+    document.getElementById('nb').textContent = '▶ Ronde ' + (ronde + 1) + ' (' + toRepeat.length + ' kartu)';
+    document.getElementById('nb').onclick = nextRonde;
+    document.getElementById('rlw').style.display = '';
+    var rl = document.getElementById('rl');
+    rl.innerHTML = '';
+    toRepeat.forEach(function(c) {
+      var div = document.createElement('div');
+      div.className = 'ri';
+      var badge = document.createElement('span');
+      badge.className = 'ri-badge ' + (c.type === 'SENTENCE' ? 'ri-sent' : 'ri-vocab');
+      badge.textContent = c.type === 'SENTENCE' ? 'SENT' : 'VOCAB';
+      var txt = document.createElement('span');
+      txt.className = 'ri-text';
+      txt.textContent = c.type === 'SENTENCE' ? c.q.substring(0, 55) + (c.q.length > 55 ? '…' : '') : c.word;
+      var tid = document.createElement('span');
+      tid.className = 'ri-id';
+      tid.textContent = c.type === 'SENTENCE' ? c.id.substring(0, 35) + '…' : c.id;
+      div.appendChild(badge); div.appendChild(txt); div.appendChild(tid);
+      rl.appendChild(div);
+    });
+  }
+}
+
+function nextRonde() {
+  ronde++;
+  var toRepeat = deck.filter(function(c) { return c._r === 'b' || c._r === 'h'; });
+  if (toRepeat.length === 0) { showFinal(); return; }
+  cp = 0; ch_cnt = 0; cbv = 0;
+  document.getElementById('sp').textContent = '0';
+  document.getElementById('sh').textContent = '0';
+  document.getElementById('sb').textContent = '0';
+  deck = shuffle(toRepeat).map(function(c) { return Object.assign({}, c, {_r:''}); });
+  idx = 0;
+  document.getElementById('qv').style.display = '';
+  document.getElementById('rv').style.display = 'none';
+  go();
+}
+
+function showFinal() {
+  document.getElementById('rv').style.display = 'none';
+  document.getElementById('fv').style.display = '';
+}
+
+// Init
+fullRestart();
+</script>
+</body>
+</html>

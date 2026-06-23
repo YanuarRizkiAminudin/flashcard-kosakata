@@ -53,6 +53,16 @@ const flashcards = [
     route: '/game/psychology-of-money',
   },
   {
+    id: 'POM2',
+    category: 'English',
+    categoryColor: '#fef3e2', categoryTextColor: '#92400e',
+    icon: '📜',
+    title: 'PoM — Intro + Ch.1: No One\'s Crazy',
+    kartu: 87,
+    level: '62 Sentences · 25 Vocab · Terjemahan',
+    route: '/game/pom-chapter1',
+  },
+  {
     id: 1,
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
