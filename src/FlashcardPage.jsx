@@ -48,7 +48,7 @@ const flashcards = [
     categoryColor: '#fef3e2', categoryTextColor: '#92400e',
     icon: '📖',
     title: 'The Psychology of Money',
-    kartu: 25,
+    kartu: 35,
     level: 'Morgan Housel · Quotes & Lessons',
     route: '/game/psychology-of-money',
   },
