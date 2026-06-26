@@ -24,6 +24,7 @@ function App() {
       <Route path="/game/mandarin-mei-vocab" element={<GamePage file="flashcard_lengkap_intact/mandarin_mei_vocab.html" title="Mandarin — 沒 Phrases & Kosakata" />} />
       <Route path="/game/psychology-of-money" element={<GamePage file="flashcard_lengkap_intact/psychology_of_money.html" title="The Psychology of Money" />} />
       <Route path="/game/pom-chapter1" element={<GamePage file="flashcard_lengkap_intact/pom_chapter1.html" title="Psychology of Money — Intro + Ch.1" />} />
+      <Route path="/game/toeic-listening" element={<GamePage file="flashcard_lengkap_intact/toeic_listening_flashcard.html" title="TOEIC Listening Flashcard" />} />
       <Route path="/voice" element={<VoicePage />} />
       <Route path="/toeic-test" element={<ToeicTestPage />} />
       <Route path="/lessons" element={<LessonListPage />} />

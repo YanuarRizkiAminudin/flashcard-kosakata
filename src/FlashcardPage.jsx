@@ -63,6 +63,16 @@ const flashcards = [
     route: '/game/pom-chapter1',
   },
   {
+    id: 'TL1',
+    category: 'TOEIC',
+    categoryColor: '#dbeafe', categoryTextColor: '#1d4ed8',
+    icon: '🎧',
+    title: 'TOEIC Listening — Part 1–4',
+    kartu: 100,
+    level: 'Sentences · Vocabulary · Full Script',
+    route: '/game/toeic-listening',
+  },
+  {
     id: 1,
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',

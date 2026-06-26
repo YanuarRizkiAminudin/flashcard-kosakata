@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOEIC Listening — Sentence & Vocab Flashcard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:linear-gradient(135deg,#f0f4ff 0%,#f5fff8 100%);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 48px;}
+#app{width:100%;max-width:520px;}
+h1{font-family:'Lora',serif;font-size:17px;color:#1a2540;text-align:center;margin-bottom:3px;}
+.sub{font-size:11px;color:#6b7a99;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 13px;border-radius:99px;border:1.5px solid #dde3f0;background:#fff;color:#6b7a99;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#3b5bdb;color:#3b5bdb;}
+.fb.on{background:#3b5bdb;color:#fff;border-color:#3b5bdb;}
+.fb.cat-sent.on{background:#1971c2;border-color:#1971c2;}
+.fb.cat-vocab.on{background:#087f5b;border-color:#087f5b;}
+.fb.cat-part.on{background:#862e9c;border-color:#862e9c;}
+.ls-lbl{font-size:10px;color:#6b7a99;text-align:center;margin-bottom:5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
+.lang-sw{display:flex;background:#fff;border:1.5px solid #dde3f0;border-radius:99px;padding:3px;gap:2px;margin-bottom:10px;}
+.lang-sw label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:99px;color:#6b7a99;transition:all .2s;user-select:none;}
+.lang-sw input[type=radio]{display:none;}
+.lang-sw input[type=radio]:checked+label{background:linear-gradient(135deg,#1971c2,#087f5b);color:#fff;box-shadow:0 2px 8px rgba(25,113,194,.25);}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#dbeafe;color:#1d4ed8;}
+.ctr{font-size:13px;color:#6b7a99;}
+.pbar-bg{height:5px;background:#dde3f0;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:5px;background:linear-gradient(90deg,#1971c2,#087f5b);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#6b7a99;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:11px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fefce8;border-color:#fde047;color:#a16207;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a16207;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #dde3f0;border-radius:22px;box-shadow:0 4px 24px rgba(25,113,194,.09);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.5rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--acc,linear-gradient(90deg,#1971c2,#087f5b));border-radius:22px 22px 0 0;}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 32px rgba(25,113,194,.14);}
+.card-top{display:flex;gap:6px;margin-bottom:.7rem;align-items:center;justify-content:center;flex-wrap:wrap;}
+.cn{font-size:10px;font-weight:600;color:#adb5cc;background:#f1f3fa;border:1px solid #dde3f0;border-radius:99px;padding:2px 9px;}
+.tb{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;letter-spacing:.4px;}
+.tb-sent{background:#dbeafe;color:#1d4ed8;}
+.tb-vocab{background:#d1fae5;color:#065f46;}
+.tb-part{background:#f3e8ff;color:#6b21a8;}
+.pt-num{font-size:10px;font-weight:600;color:#6b7a99;background:#f1f3fa;border:1px solid #dde3f0;border-radius:99px;padding:2px 8px;}
+.sent-q{font-family:'Lora',serif;font-size:15px;font-style:italic;color:#1a2540;line-height:1.7;text-align:center;}
+.vocab-wrap{text-align:center;}
+.vocab-w{font-family:'Lora',serif;font-size:38px;font-weight:700;color:#1a2540;line-height:1.15;}
+.vocab-w.long{font-size:26px;}
+.vocab-w.xlong{font-size:20px;}
+.vocab-pos{font-size:10px;font-weight:700;color:#6b7a99;letter-spacing:.8px;text-transform:uppercase;margin-top:5px;}
+.tap{font-size:11px;color:#adb5cc;margin-top:1.1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#dde3f0;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#adb5cc;margin-bottom:3px;}
+.aid{font-family:'Lora',serif;font-size:14px;color:#1a2540;line-height:1.6;font-style:italic;}
+.aen{font-family:'Lora',serif;font-size:14px;color:#1d4ed8;line-height:1.6;}
+.vmean{font-size:19px;font-weight:700;color:#1a2540;font-family:'Lora',serif;}
+.vdef{font-size:12px;color:#4b5e82;line-height:1.5;margin-top:4px;}
+.vex{font-size:11px;color:#6b7a99;font-style:italic;margin-top:7px;padding:6px 10px;background:#f8faff;border-left:2px solid #60a5fa;border-radius:0 8px 8px 0;text-align:left;width:100%;}
+.hint-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border:1.5px dashed #93c5fd;border-radius:12px;background:transparent;color:#1971c2;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;margin-bottom:.5rem;}
+.hint-btn:hover{background:#eff6ff;border-style:solid;}
+.hint-pop{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1.5px solid #93c5fd;border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:.5rem;animation:fup .2s ease;}
+.hint-pop-t{font-family:'Lora',serif;font-size:15px;font-weight:600;color:#1a2540;font-style:italic;line-height:1.5;}
+.hint-pop-s{font-size:11px;color:#1971c2;font-weight:500;margin-top:3px;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 4px;border-radius:13px;border:1.5px solid;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fefce8;border-color:#fde047;color:#a16207;}.cb-h:hover{background:#fef9c3;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-family:'Lora',serif;font-size:20px;font-weight:700;color:#1a2540;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#6b7a99;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;font-family:'Lora',serif;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fefce8;border-color:#fde047;color:#a16207;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6b7a99;margin-bottom:6px;}
+.rlist{border:1px solid #dde3f0;border-radius:13px;overflow:hidden;max-height:190px;overflow-y:auto;}
+.ri{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-bottom:1px solid #f1f3fa;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-tb{font-size:9px;font-weight:700;border-radius:99px;padding:2px 7px;flex-shrink:0;margin-top:2px;}
+.ri-sent{background:#dbeafe;color:#1d4ed8;}.ri-vocab{background:#d1fae5;color:#065f46;}.ri-part{background:#f3e8ff;color:#6b21a8;}
+.ri-txt{font-size:11px;color:#1a2540;flex:1;line-height:1.4;}
+.ri-id{font-size:10px;color:#087f5b;flex-shrink:0;max-width:120px;text-align:right;line-height:1.3;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-main{background:linear-gradient(135deg,#1971c2,#087f5b);color:#fff;box-shadow:0 3px 10px rgba(25,113,194,.25);}
+.btn-main:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #dde3f0!important;color:#6b7a99;}
+.btn-ghost:hover{background:#f1f3fa;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🎧 TOEIC Listening Flashcard</h1>
+  <div class="sub" id="sub-lbl">Part 1–4 · Sentence & Vocabulary</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">📋 Semua</button>
+    <button class="fb cat-sent" onclick="setCat('SENT')">📝 Sentences</button>
+    <button class="fb cat-vocab" onclick="setCat('VOCAB')">📚 Vocab</button>
+    <button class="fb cat-part" onclick="setCat('P1')">P1</button>
+    <button class="fb cat-part" onclick="setCat('P2')">P2</button>
+    <button class="fb cat-part" onclick="setCat('P3')">P3</button>
+    <button class="fb cat-part" onclick="setCat('P4')">P4</button>
+  </div>
+  <div class="ls-lbl">Tampilan Jawaban</div>
+  <div class="lang-sw">
+    <input type="radio" name="al" id="aid" value="id" checked>
+    <label for="aid">🇮🇩 Indonesia</label>
+    <input type="radio" name="al" id="aen" value="en">
+    <label for="aen">🇬🇧 English</label>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-top">
+        <span class="cn" id="cn">#1</span>
+        <span class="tb" id="tb"></span>
+        <span class="pt-num" id="ptn"></span>
+      </div>
+      <div id="fs" style="display:none;width:100%"><div class="sent-q" id="sq"></div></div>
+      <div id="fv2" style="display:none;text-align:center">
+        <div class="vocab-w" id="vw"></div>
+        <div class="vocab-pos" id="vpos"></div>
+      </div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk jawaban</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div id="ab-sent-id" class="ans-block"><div class="atag">🇮🇩 Terjemahan</div><div class="aid" id="said"></div></div>
+        <div id="ab-sent-en" class="ans-block" style="display:none"><div class="atag">🇬🇧 English</div><div class="aen" id="saen"></div></div>
+        <div id="ab-vocab" style="display:none">
+          <div id="ab-vocab-id"><div class="atag">🇮🇩 Arti</div><div class="vmean" id="vmid"></div><div class="vdef" id="vdef-id"></div></div>
+          <div id="ab-vocab-en" style="display:none"><div class="atag">🇬🇧 Definition</div><div class="vmean" id="vmen"></div><div class="vdef" id="vdef-en"></div></div>
+          <div class="vex" id="vex"></div>
+        </div>
+      </div>
+    </div>
+    <div id="hp" class="hint-pop" style="display:none"><div class="hint-pop-t" id="hpt"></div><div class="hint-pop-s" id="hps"></div></div>
+    <button class="hint-btn" id="hb" onclick="doHint(event)">💡 Hint</button>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">😕</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">✓</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap"><div class="rlist-ttl">Kartu untuk ronde berikutnya</div><div class="rlist" id="rl"></div></div>
+      </div>
+      <button class="btnbig btn-main" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🏆</div>
+      <div class="res-title">Semua Dikuasai!</div>
+      <div style="font-size:13px;color:#6b7a99;margin:.5rem 0 1.4rem;line-height:1.6;">TOEIC Listening vocab & sentences kamu sudah siap!</div>
+      <button class="btnbig btn-main" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[// PART 1 � PHOTO DESCRIPTION
+{t:"SENT",p:"P1",q:"She's waiting in line at a food truck.",id:"Dia sedang mengantri di food truck.",en:"She's waiting in line at a food truck."},
+{t:"SENT",p:"P1",q:"The man is shoveling snow from a walkway.",id:"Pria itu sedang menyekop salju dari jalan setapak.",en:"The man is shoveling snow from a walkway."},
+{t:"SENT",p:"P1",q:"Two of the people are having a conversation.",id:"Dua orang di antara mereka sedang bercakap-cakap.",en:"Two of the people are having a conversation."},
+{t:"SENT",p:"P1",q:"Clothing is being displayed under a tent.",id:"Pakaian sedang dipajang di bawah tenda.",en:"Clothing is being displayed under a tent."},
+{t:"SENT",p:"P1",q:"A computer station has been set up on a desk.",id:"Stasiun komputer telah dipasang di atas meja.",en:"A computer station has been set up on a desk."},
+{t:"SENT",p:"P1",q:"A door has been taken off its frame.",id:"Pintu telah dilepas dari rangkanya.",en:"A door has been taken off its frame."},
+// PART 2 � QUESTIONS & RESPONSES
+{t:"SENT",p:"P2",q:"How old is this building?",id:"Sudah berapa lama bangunan ini?",en:"How old is this building?"},
+{t:"SENT",p:"P2",q:"Can you come to my jazz performance tonight?",id:"Bisakah kamu datang ke pertunjukan jazz saya malam ini?",en:"Can you come to my jazz performance tonight?"},
+{t:"SENT",p:"P2",q:"Which apartment submitted a work order?",id:"Apartemen mana yang mengajukan perintah kerja?",en:"Which apartment submitted a work order?"},
+{t:"SENT",p:"P2",q:"Will you contact the vendor about changing our delivery date?",id:"Bisakah kamu menghubungi vendor tentang perubahan tanggal pengiriman kita?",en:"Will you contact the vendor about changing our delivery date?"},
+{t:"SENT",p:"P2",q:"Why was the maintenance worker here?",id:"Mengapa petugas pemeliharaan ada di sini?",en:"Why was the maintenance worker here?"},
+{t:"SENT",p:"P2",q:"Did management make a hiring decision yet?",id:"Apakah manajemen sudah membuat keputusan rekrutmen?",en:"Did management make a hiring decision yet?"},
+{t:"SENT",p:"P2",q:"Do you want to eat here in our cafeteria or go out?",id:"Apakah kamu ingin makan di kafetaria kita atau keluar?",en:"Do you want to eat here in our cafeteria or go out?"},
+{t:"SENT",p:"P2",q:"Didn't you email the employment contract to Mr. Patel yesterday?",id:"Bukankah kamu sudah mengirim email kontrak kerja ke Pak Patel kemarin?",en:"Didn't you email the employment contract to Mr. Patel yesterday?"},
+{t:"SENT",p:"P2",q:"Our division's picnic is this Saturday, right?",id:"Piknik divisi kita hari Sabtu ini, kan?",en:"Our division's picnic is this Saturday, right?"},
+{t:"SENT",p:"P2",q:"Would you like coffee or tea?",id:"Apakah kamu mau kopi atau teh?",en:"Would you like coffee or tea?"},
+{t:"SENT",p:"P2",q:"We achieved our sales targets this month.",id:"Kita mencapai target penjualan bulan ini.",en:"We achieved our sales targets this month."},
+{t:"SENT",p:"P2",q:"How often do you travel for your job?",id:"Seberapa sering kamu bepergian untuk pekerjaan?",en:"How often do you travel for your job?"},
+{t:"SENT",p:"P2",q:"We should hike the Wildflower Trail today.",id:"Kita sebaiknya mendaki Jalur Wildflower hari ini.",en:"We should hike the Wildflower Trail today."},
+{t:"SENT",p:"P2",q:"You have booked a hotel in London, haven't you?",id:"Kamu sudah memesan hotel di London, bukan?",en:"You have booked a hotel in London, haven't you?"},
+{t:"SENT",p:"P2",q:"Are there any tickets left for tonight's concert?",id:"Apakah masih ada tiket untuk konser malam ini?",en:"Are there any tickets left for tonight's concert?"},
+{t:"SENT",p:"P2",q:"Haven't you used this software before?",id:"Bukankah kamu pernah menggunakan perangkat lunak ini sebelumnya?",en:"Haven't you used this software before?"},
+{t:"SENT",p:"P2",q:"When is the new blender going to be released?",id:"Kapan blender baru akan dirilis?",en:"When is the new blender going to be released?"},
+{t:"SENT",p:"P2",q:"Who's picking up our clients at the airport?",id:"Siapa yang akan menjemput klien kita di bandara?",en:"Who's picking up our clients at the airport?"},
+{t:"SENT",p:"P2",q:"Where are the red roses that came in this morning?",id:"Di mana mawar merah yang datang pagi ini?",en:"Where are the red roses that came in this morning?"},
+{t:"SENT",p:"P2",q:"This film has been nominated for several awards.",id:"Film ini telah dinominasikan untuk beberapa penghargaan.",en:"This film has been nominated for several awards."},
+{t:"SENT",p:"P2",q:"Who's interested in starting a carpool program?",id:"Siapa yang tertarik memulai program carpool?",en:"Who's interested in starting a carpool program?"},
+{t:"SENT",p:"P2",q:"Where will I teach my workshop this month?",id:"Di mana saya akan mengajar workshop bulan ini?",en:"Where will I teach my workshop this month?"},
+{t:"SENT",p:"P2",q:"Why are we moving these sweaters to the back of the store?",id:"Mengapa kita memindahkan sweater-sweater ini ke bagian belakang toko?",en:"Why are we moving these sweaters to the back of the store?"},
+{t:"SENT",p:"P2",q:"Would you be interested in working on some of these contracts?",id:"Apakah kamu tertarik untuk mengerjakan beberapa kontrak ini?",en:"Would you be interested in working on some of these contracts?"},
+{t:"SENT",p:"P2",q:"What type of job are you looking for?",id:"Jenis pekerjaan apa yang kamu cari?",en:"What type of job are you looking for?"},
+// PART 3 � CONVERSATIONS
+{t:"SENT",p:"P3",q:"Thank you so much for organizing the annual company picnic.",id:"Terima kasih banyak sudah mengorganisir piknik tahunan perusahaan.",en:"Thank you so much for organizing the annual company picnic."},
+{t:"SENT",p:"P3",q:"The food was great, especially the peach pie you made.",id:"Makanannya enak sekali, terutama pai persik yang kamu buat.",en:"The food was great, especially the peach pie you made."},
+{t:"SENT",p:"P3",q:"I found the recipe online. I'll send you a link to the web page.",id:"Saya menemukan resepnya secara online. Saya akan mengirimkan tautannya.",en:"I found the recipe online. I'll send you a link to the web page."},
+{t:"SENT",p:"P3",q:"I have a question about a hotel receipt from one of our employees.",id:"Saya punya pertanyaan tentang kwitansi hotel dari salah satu karyawan kita.",en:"I have a question about a hotel receipt from one of our employees."},
+{t:"SENT",p:"P3",q:"Our policy is for employees to stay at a hotel that's on our list of approved accommodations.",id:"Kebijakan kita adalah karyawan menginap di hotel yang ada dalam daftar akomodasi yang disetujui.",en:"Our policy is for employees to stay at a hotel that's on our list of approved accommodations."},
+{t:"SENT",p:"P3",q:"As a supervisor, I can approve the expense this one time.",id:"Sebagai supervisor, saya bisa menyetujui pengeluaran ini sekali ini.",en:"As a supervisor, I can approve the expense this one time."},
+{t:"SENT",p:"P3",q:"It was an uneventful night and our cargo ship still hasn't moved yet.",id:"Malam berjalan tanpa kejadian dan kapal kargo kita masih belum bergerak.",en:"It was an uneventful night and our cargo ship still hasn't moved yet."},
+{t:"SENT",p:"P3",q:"The ship won't be able to leave until the weather improves.",id:"Kapal tidak akan bisa berangkat sampai cuaca membaik.",en:"The ship won't be able to leave until the weather improves."},
+{t:"SENT",p:"P3",q:"I'll be sure to call the Port Authority soon for an update.",id:"Saya akan segera menghubungi Otoritas Pelabuhan untuk mendapatkan pembaruan.",en:"I'll be sure to call the Port Authority soon for an update."},
+{t:"SENT",p:"P3",q:"I know I asked to be seated on your beautiful terrace, but it's very hot today.",id:"Saya tahu saya minta duduk di teras yang indah, tapi hari ini sangat panas.",en:"I know I asked to be seated on your beautiful terrace, but it's very hot today."},
+{t:"SENT",p:"P3",q:"Our customers can park for free in the garage across the street.",id:"Pelanggan kami dapat parkir gratis di garasi di seberang jalan.",en:"Our customers can park for free in the garage across the street."},
+{t:"SENT",p:"P3",q:"Our printers are perfect for students or people with home offices who may have limited space.",id:"Printer kami sempurna untuk pelajar atau orang dengan kantor di rumah yang ruangnya terbatas.",en:"Our printers are perfect for students or people with home offices who may have limited space."},
+{t:"SENT",p:"P3",q:"The biggest trend right now is the reduction of sugar.",id:"Tren terbesar saat ini adalah pengurangan gula.",en:"The biggest trend right now is the reduction of sugar."},
+{t:"SENT",p:"P3",q:"The public wants healthier products, but the same great taste.",id:"Masyarakat menginginkan produk yang lebih sehat, tetapi dengan rasa yang sama enaknya.",en:"The public wants healthier products, but the same great taste."},
+{t:"SENT",p:"P3",q:"We have a new client in Brazil who's interested in creating a marketing campaign for social media sites.",id:"Kami memiliki klien baru di Brasil yang tertarik membuat kampanye pemasaran untuk media sosial.",en:"We have a new client in Brazil who's interested in creating a marketing campaign for social media sites."},
+{t:"SENT",p:"P3",q:"Why don't you send me a detailed description of the work?",id:"Mengapa tidak kamu kirimkan deskripsi pekerjaan yang rinci?",en:"Why don't you send me a detailed description of the work?"},
+{t:"SENT",p:"P3",q:"We're supposed to get there by 11 to set up lunch for the performers.",id:"Kita seharusnya tiba di sana pukul 11 untuk menyiapkan makan siang bagi para pemain.",en:"We're supposed to get there by 11 to set up lunch for the performers."},
+{t:"SENT",p:"P3",q:"The food's already in coolers, but everything's in the kitchen with the serving utensils and napkins.",id:"Makanan sudah ada dalam cooler, tapi semuanya masih ada di dapur bersama peralatan saji dan serbet.",en:"The food's already in coolers, but everything's in the kitchen with the serving utensils and napkins."},
+{t:"SENT",p:"P3",q:"At my university I joined the newspaper and eventually worked my way up to being an editor.",id:"Di universitas, saya bergabung dengan koran dan akhirnya naik jabatan menjadi editor.",en:"At my university I joined the newspaper and eventually worked my way up to being an editor."},
+{t:"SENT",p:"P3",q:"It looks like we're going ahead with the merger.",id:"Sepertinya kita akan melanjutkan merger tersebut.",en:"It looks like we're going ahead with the merger."},
+{t:"SENT",p:"P3",q:"Now it looks like we won't be relocating.",id:"Sekarang sepertinya kita tidak akan pindah.",en:"Now it looks like we won't be relocating."},
+{t:"SENT",p:"P3",q:"I recommend the metal bottle with the wide mouthed lid. It's easier to clean.",id:"Saya merekomendasikan botol logam dengan tutup bermulut lebar. Lebih mudah dibersihkan.",en:"I recommend the metal bottle with the wide mouthed lid. It's easier to clean."},
+{t:"SENT",p:"P3",q:"The drawing by Claudia Hoffman will no longer be in the exhibit.",id:"Gambar karya Claudia Hoffman tidak akan lagi ada dalam pameran.",en:"The drawing by Claudia Hoffman will no longer be in the exhibit."},
+{t:"SENT",p:"P3",q:"The offshore wind industry is going to transform the way this region gets its power.",id:"Industri angin lepas pantai akan mengubah cara wilayah ini mendapatkan energi.",en:"The offshore wind industry is going to transform the way this region gets its power."},
+// PART 4 � TALKS
+{t:"SENT",p:"P4",q:"All Cranberry residents should move their vehicles from their designated parking spots before 8:00 AM on Monday.",id:"Semua penghuni Cranberry harus memindahkan kendaraan dari tempat parkir yang ditentukan sebelum pukul 8 pagi hari Senin.",en:"All Cranberry residents should move their vehicles from their designated parking spots before 8:00 AM on Monday."},
+{t:"SENT",p:"P4",q:"Any vehicle still in its spot after 8:00 AM will be towed at the owner's expense.",id:"Kendaraan yang masih di tempatnya setelah pukul 8 pagi akan ditarik atas biaya pemiliknya.",en:"Any vehicle still in its spot after 8:00 AM will be towed at the owner's expense."},
+{t:"SENT",p:"P4",q:"With your trowel and some roof cement, you can seal any cracks or chips.",id:"Dengan sekop dan semen atap, kamu bisa menutup retakan atau pecahan.",en:"With your trowel and some roof cement, you can seal any cracks or chips."},
+{t:"SENT",p:"P4",q:"I highly recommend you take photos of your roof every year so that you can track its overall condition.",id:"Saya sangat menyarankan kamu memotret atap setiap tahun agar bisa memantau kondisi keseluruhannya.",en:"I highly recommend you take photos of your roof every year so that you can track its overall condition."},
+{t:"SENT",p:"P4",q:"Samantha Hughes will be giving a lecture on the care of flowering orchid plants at two o'clock.",id:"Samantha Hughes akan memberikan kuliah tentang perawatan tanaman anggrek berbunga pukul dua siang.",en:"Samantha Hughes will be giving a lecture on the care of flowering orchid plants at two o'clock."},
+{t:"SENT",p:"P4",q:"So far, we've raised $5,000 in ticket sales, but we haven't quite reached our goal yet.",id:"Sejauh ini, kita telah mengumpulkan $5.000 dari penjualan tiket, tetapi belum mencapai target.",en:"So far, we've raised $5,000 in ticket sales, but we haven't quite reached our goal yet."},
+{t:"SENT",p:"P4",q:"During the concert, I want to encourage you to buy food and drinks from the concession stand.",id:"Selama konser, saya ingin mendorong kamu membeli makanan dan minuman dari stan konsesi.",en:"During the concert, I want to encourage you to buy food and drinks from the concession stand."},
+{t:"SENT",p:"P4",q:"As a business owner, planning and spending your time wisely is a key factor to business success.",id:"Sebagai pemilik bisnis, merencanakan dan menggunakan waktu dengan bijak adalah faktor kunci keberhasilan.",en:"As a business owner, planning and spending your time wisely is a key factor to business success."},
+{t:"SENT",p:"P4",q:"To protect the mosaics, a roof has been constructed over the area and the lights are dim.",id:"Untuk melindungi mosaik, atap telah dibangun di atas area tersebut dan pencahayaannya redup.",en:"To protect the mosaics, a roof has been constructed over the area and the lights are dim."},
+{t:"SENT",p:"P4",q:"Taking photos is not allowed as the flash would damage the tiles.",id:"Mengambil foto tidak diperbolehkan karena kilatan bisa merusak ubin.",en:"Taking photos is not allowed as the flash would damage the tiles."},
+{t:"SENT",p:"P4",q:"We'll be developing two thirty-second ads for local radio stations to be released next month.",id:"Kita akan mengembangkan dua iklan berdurasi tiga puluh detik untuk stasiun radio lokal yang akan dirilis bulan depan.",en:"We'll be developing two thirty-second ads for local radio stations to be released next month."},
+{t:"SENT",p:"P4",q:"The client has actually started trying to work on this internally, so there's a rough ad we can start editing.",id:"Klien sebenarnya sudah mulai mengerjakan ini secara internal, jadi ada iklan kasar yang bisa kita mulai sunting.",en:"The client has actually started trying to work on this internally, so there's a rough ad we can start editing."},
+{t:"SENT",p:"P4",q:"Some people have said that they don't get to eat the snacks at all because they're gone by the time the evening shift starts.",id:"Beberapa orang bilang mereka tidak kebagian camilan sama sekali karena habis saat giliran malam dimulai.",en:"Some people have said that they don't get to eat the snacks at all because they're gone by the time the evening shift starts."},
+{t:"SENT",p:"P4",q:"We'll be walking around the pond and along the renovated walking trail.",id:"Kita akan berjalan mengelilingi kolam dan sepanjang jalur pejalan kaki yang direnovasi.",en:"We'll be walking around the pond and along the renovated walking trail."},
+{t:"SENT",p:"P4",q:"Since this is September, all soil samples in the next six weeks should be taken from the same depth.",id:"Karena ini bulan September, semua sampel tanah dalam enam minggu ke depan harus diambil dari kedalaman yang sama.",en:"Since this is September, all soil samples in the next six weeks should be taken from the same depth."},
+// VOCAB CARDS
+{t:"VOCAB",p:"ALL",word:"shoveling",pos:"verb",id:"menyekop / menyodok",en:"to move snow or soil with a shovel",ex:"The man is shoveling snow from a walkway."},
+{t:"VOCAB",p:"ALL",word:"maintenance",pos:"noun",id:"pemeliharaan / perawatan",en:"the process of keeping something in good condition",ex:"Why was the maintenance worker here?"},
+{t:"VOCAB",p:"ALL",word:"vendor",pos:"noun",id:"vendor / pemasok",en:"a company or person that sells goods or services",ex:"Will you contact the vendor about changing our delivery date?"},
+{t:"VOCAB",p:"ALL",word:"reimbursement",pos:"noun",id:"penggantian biaya / reimbursement",en:"money paid back to someone for expenses",ex:"I have a question about a travel reimbursement form."},
+{t:"VOCAB",p:"ALL",word:"accommodations",pos:"noun",id:"akomodasi / tempat menginap",en:"places to stay, such as hotels",ex:"Employees must stay at approved accommodations."},
+{t:"VOCAB",p:"ALL",word:"uneventful",pos:"adjective",id:"tanpa kejadian / biasa saja",en:"not marked by any notable events",ex:"It was an uneventful night on the cargo ship."},
+{t:"VOCAB",p:"ALL",word:"harbor",pos:"noun",id:"pelabuhan / teluk",en:"a sheltered body of water where ships can dock",ex:"The fog over the harbor hasn't lifted yet."},
+{t:"VOCAB",p:"ALL",word:"Port Authority",pos:"noun",id:"Otoritas Pelabuhan",en:"the organization managing a port or airport",ex:"I'll call the Port Authority for an update."},
+{t:"VOCAB",p:"ALL",word:"terrace",pos:"noun",id:"teras / beranda",en:"a flat outdoor area connected to a restaurant or building",ex:"I asked to be seated on your beautiful terrace."},
+{t:"VOCAB",p:"ALL",word:"concession stand",pos:"noun",id:"stan jajanan / kios makanan",en:"a booth selling food and drinks at events",ex:"Buy food and drinks from the concession stand."},
+{t:"VOCAB",p:"ALL",word:"merger",pos:"noun",id:"merger / penggabungan perusahaan",en:"when two companies combine into one",ex:"There would be a lot of advantages to merging operations."},
+{t:"VOCAB",p:"ALL",word:"relocating",pos:"verb",id:"pindah / relokasi",en:"moving to a different location",ex:"Now it looks like we won't be relocating."},
+{t:"VOCAB",p:"ALL",word:"mosaic",pos:"noun",id:"mosaik / seni ubin",en:"a picture or pattern made from small tiles",ex:"Archeologists uncovered walls with colorful mosaic tiles."},
+{t:"VOCAB",p:"ALL",word:"intricate",pos:"adjective",id:"rumit / detail / kompleks",en:"very detailed and complicated",ex:"You can still see intricate details in the artist's pictures."},
+{t:"VOCAB",p:"ALL",word:"carpool",pos:"noun/verb",id:"carpool / berbagi tumpangan",en:"sharing a car ride to work with others",ex:"Who's interested in starting a carpool program?"},
+{t:"VOCAB",p:"ALL",word:"prototype",pos:"noun",id:"prototipe / model awal",en:"the first version of a product before mass production",ex:"The prototype is still being tested."},
+{t:"VOCAB",p:"ALL",word:"trowel",pos:"noun",id:"sekop kecil / cetok",en:"a small handheld tool used for applying cement",ex:"With your trowel and some roof cement, you can seal cracks."},
+{t:"VOCAB",p:"ALL",word:"shingles",pos:"noun",id:"genteng / sirap atap",en:"flat tiles used to cover a roof",ex:"The crowbar will help you remove loose shingles."},
+{t:"VOCAB",p:"ALL",word:"botanist",pos:"noun",id:"ahli botani / ilmuwan tanaman",en:"a scientist who studies plants",ex:"World-renowned botanist Samantha Hughes will give a lecture."},
+{t:"VOCAB",p:"ALL",word:"offshore",pos:"adjective",id:"lepas pantai",en:"located or operating in the sea away from the coast",ex:"The offshore wind industry will transform how this region gets power."},
+{t:"VOCAB",p:"ALL",word:"turbines",pos:"noun",id:"turbin",en:"machines that generate electricity from wind or water",ex:"The largest cluster of wind turbines is already built."},
+{t:"VOCAB",p:"ALL",word:"designated",pos:"adjective",id:"yang ditentukan / yang ditetapkan",en:"officially chosen for a specific purpose",ex:"Move your vehicles from their designated parking spots."},
+{t:"VOCAB",p:"ALL",word:"towed",pos:"verb",id:"ditarik / diderek",en:"pulled by a vehicle or truck",ex:"Any vehicle still in its spot will be towed at the owner's expense."},
+{t:"VOCAB",p:"ALL",word:"proceeds",pos:"noun",id:"hasil / pendapatan (dari acara)",en:"money obtained from a sale or event",ex:"80% of the proceeds will go to construction."},
+{t:"VOCAB",p:"ALL",word:"renovated",pos:"adjective",id:"direnovasi / diperbaharui",en:"repaired and improved",ex:"We'll walk along the renovated walking trail."},
+{t:"VOCAB",p:"ALL",word:"approved",pos:"adjective",id:"disetujui / yang diizinkan",en:"officially accepted or permitted",ex:"Employees must stay at approved accommodations."},
+{t:"VOCAB",p:"ALL",word:"invoice",pos:"noun",id:"faktur / tagihan",en:"a document requesting payment for goods or services",ex:"Please send the invoice to the accounting department."},
+{t:"VOCAB",p:"ALL",word:"cargo",pos:"noun",id:"muatan / kargo",en:"goods carried by a ship, aircraft, or vehicle",ex:"Our cargo ship still hasn't moved yet."},
+{t:"VOCAB",p:"ALL",word:"exhibit",pos:"noun",id:"pameran",en:"a public display of art or items",ex:"The drawing will no longer be in the exhibit."},
+{t:"VOCAB",p:"ALL",word:"sweetener",pos:"noun",id:"pemanis",en:"a substance used instead of sugar to sweeten food",ex:"A sweetener made entirely from natural ingredients."}
+];
+
+var curCat="ALL", deck=[], idx=0, ronde=1, cp=0, ch=0, cbv=0, rev=false, toRev=[];
+
+function getAL(){return document.querySelector('input[name="al"]:checked').value;}
+
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('on');});
+  document.querySelectorAll('.fb').forEach(function(b){
+    if(b.getAttribute('onclick')==="setCat('"+c+"')") b.classList.add('on');
+  });
+  ronde=1; fullRestart();
+}
+
+function getFiltered(){
+  if(curCat==='ALL') return V.slice();
+  if(curCat==='SENT') return V.filter(function(c){return c.t==='SENT';});
+  if(curCat==='VOCAB') return V.filter(function(c){return c.t==='VOCAB';});
+  return V.filter(function(c){return c.p===curCat;});
+}
+
+function fullRestart(){
+  var src=getFiltered();
+  deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  document.getElementById('sub-lbl').textContent=
+    (curCat==='ALL'?'Semua':curCat)+' � '+deck.length+' kartu';
+  document.getElementById('qv').style.display='';
+  document.getElementById('rv').style.display='none';
+  document.getElementById('fv3').style.display='none';
+  document.getElementById('rb').textContent='Ronde '+ronde;
+  upStats(); showCard();
+}
+
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById('qv').style.display='';document.getElementById('rv').style.display='none';document.getElementById('rb').textContent='Ronde '+ronde;upStats();showCard();}
+
+function showCard(){
+  rev=false;
+  var c=deck[idx];
+  document.getElementById('cn').textContent='#'+(idx+1);
+  var tb=document.getElementById('tb');
+  if(c.t==='SENT'){tb.textContent='SENTENCE';tb.className='tb tb-sent';}
+  else{tb.textContent='VOCAB';tb.className='tb tb-vocab';}
+  var ptn=document.getElementById('ptn');
+  ptn.textContent=c.p==='ALL'?'':c.p;
+  ptn.style.display=c.p==='ALL'?'none':'';
+
+  var acc=c.t==='SENT'?'linear-gradient(90deg,#1971c2,#60a5fa)':'linear-gradient(90deg,#087f5b,#34d399)';
+  document.getElementById('card').style.setProperty('--acc',acc);
+
+  if(c.t==='SENT'){
+    document.getElementById('fs').style.display='';
+    document.getElementById('fv2').style.display='none';
+    document.getElementById('sq').textContent=c.q;
+  } else {
+    document.getElementById('fs').style.display='none';
+    document.getElementById('fv2').style.display='';
+    var wl=c.word.length;
+    var wEl=document.getElementById('vw');
+    wEl.textContent=c.word;
+    wEl.className='vocab-w'+(wl>18?' xlong':wl>12?' long':'');
+    document.getElementById('vpos').textContent=c.pos||'';
+  }
+
+  document.getElementById('ans').style.display='none';
+  document.getElementById('tap').style.display='';
+  document.getElementById('ba').style.display='none';
+  document.getElementById('card').className='card';
+  document.getElementById('hp').style.display='none';
+  document.getElementById('hb').style.display='';
+  document.getElementById('ctr').textContent=(idx+1)+'/'+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById('pb').style.width=pct+'%';
+  document.getElementById('pl').textContent=idx+' selesai';
+  document.getElementById('pr').textContent=deck.length+' kartu';
+}
+
+function renderAns(){
+  var c=deck[idx];
+  var al=getAL();
+  if(c.t==='SENT'){
+    document.getElementById('ab-sent-id').style.display=al==='id'?'':'none';
+    document.getElementById('ab-sent-en').style.display=al==='en'?'':'none';
+    document.getElementById('ab-vocab').style.display='none';
+    document.getElementById('said').textContent=c.id;
+    document.getElementById('saen').textContent=c.en;
+  } else {
+    document.getElementById('ab-sent-id').style.display='none';
+    document.getElementById('ab-sent-en').style.display='none';
+    document.getElementById('ab-vocab').style.display='';
+    if(al==='id'){
+      document.getElementById('ab-vocab-id').style.display='';
+      document.getElementById('ab-vocab-en').style.display='none';
+      document.getElementById('vmid').textContent=c.id;
+      document.getElementById('vdef-id').textContent=c.en;
+    } else {
+      document.getElementById('ab-vocab-id').style.display='none';
+      document.getElementById('ab-vocab-en').style.display='';
+      document.getElementById('vmen').textContent=c.word;
+      document.getElementById('vdef-en').textContent=c.en;
+    }
+    document.getElementById('vex').textContent='"'+c.ex+'"';
+  }
+  document.getElementById('ans').style.display='';
+}
+
+function reveal(){
+  if(rev)return; rev=true;
+  renderAns();
+  document.getElementById('tap').style.display='none';
+  document.getElementById('ba').style.display='';
+  document.getElementById('card').className='card done';
+  document.getElementById('hp').style.display='none';
+  document.getElementById('hb').style.display='none';
+}
+
+function doHint(e){
+  e.stopPropagation();
+  var c=deck[idx];
+  var hp=document.getElementById('hp');
+  if(hp.style.display==='none'){
+    var al=getAL();
+    document.getElementById('hpt').textContent=al==='id'?c.id:(c.t==='SENT'?c.en:c.word+' = '+c.id);
+    document.getElementById('hps').textContent=c.t==='SENT'?'Terjemahan Indonesia':'Arti kata';
+    hp.style.display='';
+  } else {
+    hp.style.display='none';
+  }
+}
+
+function rate(r){
+  if(r==='p') cp++;
+  else if(r==='h'){ch++;toRev.push(deck[idx]);}
+  else{cbv++;toRev.push(deck[idx]);}
+  upStats(); idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+
+function upStats(){
+  document.getElementById('sp').textContent=cp;
+  document.getElementById('sh').textContent=ch;
+  document.getElementById('sb').textContent=cbv;
+}
+
+function showResult(){
+  document.getElementById('pb').style.width='100%';
+  document.getElementById('qv').style.display='none';
+  if(toRev.length===0){document.getElementById('fv3').style.display='';return;}
+  document.getElementById('rv').style.display='';
+  document.getElementById('rp').textContent=cp;
+  document.getElementById('rh').textContent=ch;
+  document.getElementById('rbb').textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById('ri2').textContent=pct>=90?'??':pct>=70?'??':pct>=50?'??':'??';
+  document.getElementById('rt').textContent='Ronde '+ronde+' selesai!';
+  document.getElementById('rs').textContent=
+    pct>=90?'Hampir sempurna! '+toRev.length+' kartu tersisa.':
+    pct>=70?'Bagus! '+toRev.length+' kartu perlu diulang.':
+    pct>=50?'Lumayan! Ulangi '+toRev.length+' kartu.':
+    'Semangat! '+toRev.length+' kartu menunggumu.';
+  document.getElementById('nb').textContent='Lanjut Ronde '+(ronde+1)+' ? '+toRev.length+' kartu';
+  var rl=document.getElementById('rl');
+  rl.innerHTML='';
+  toRev.forEach(function(c){
+    var d=document.createElement('div'); d.className='ri';
+    var badge=document.createElement('span');
+    badge.className='ri-tb '+(c.t==='SENT'?'ri-sent':'ri-vocab');
+    badge.textContent=c.t==='SENT'?'SENT':'VOCAB';
+    var txt=document.createElement('span'); txt.className='ri-txt';
+    txt.textContent=c.t==='SENT'?(c.q.length>50?c.q.substring(0,50)+'�':c.q):c.word;
+    var rid=document.createElement('span'); rid.className='ri-id';
+    rid.textContent=c.t==='SENT'?(c.id.length>35?c.id.substring(0,35)+'�':c.id):c.id;
+    d.appendChild(badge); d.appendChild(txt); d.appendChild(rid);
+    rl.appendChild(d);
+  });
+  document.getElementById('rlw').style.display='';
+}
+
+document.querySelectorAll('input[name="al"]').forEach(function(r){
+  r.addEventListener('change',function(){if(rev)renderAns();});
+});
+
+ronde=1; fullRestart();
+</script>
+</body>
+</html>
