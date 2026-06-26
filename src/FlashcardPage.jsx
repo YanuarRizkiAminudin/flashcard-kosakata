@@ -68,7 +68,7 @@ const flashcards = [
     categoryColor: '#dbeafe', categoryTextColor: '#1d4ed8',
     icon: '🎧',
     title: 'TOEIC Listening — Part 1–4',
-    kartu: 100,
+    kartu: 170,
     level: 'Sentences · Vocabulary · Full Script',
     route: '/game/toeic-listening',
   },
