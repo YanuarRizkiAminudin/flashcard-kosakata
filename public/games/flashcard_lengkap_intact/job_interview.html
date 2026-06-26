@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Interview Flashcard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:linear-gradient(135deg,#f0fdf4 0%,#f0f4ff 100%);font-family:"Inter",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 48px;}
+#app{width:100%;max-width:520px;}
+h1{font-family:"Lora",serif;font-size:17px;color:#1a2540;text-align:center;margin-bottom:3px;}
+.sub{font-size:11px;color:#6b7a99;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 13px;border-radius:99px;border:1.5px solid #d1fae5;background:#fff;color:#6b7a99;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#059669;color:#059669;}
+.fb.on{background:#059669;color:#fff;border-color:#059669;}
+.fb.cat-ir.on{background:#1d4ed8;border-color:#1d4ed8;}
+.fb.cat-ie.on{background:#7c3aed;border-color:#7c3aed;}
+.fb.cat-vocab.on{background:#b45309;border-color:#b45309;}
+.ls-lbl{font-size:10px;color:#6b7a99;text-align:center;margin-bottom:5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
+.lang-sw{display:flex;background:#fff;border:1.5px solid #d1fae5;border-radius:99px;padding:3px;gap:2px;margin-bottom:10px;}
+.lang-sw label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:99px;color:#6b7a99;transition:all .2s;user-select:none;}
+.lang-sw input[type=radio]{display:none;}
+.lang-sw input[type=radio]:checked+label{background:linear-gradient(135deg,#059669,#1d4ed8);color:#fff;box-shadow:0 2px 8px rgba(5,150,105,.25);}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#d1fae5;color:#065f46;}
+.ctr{font-size:13px;color:#6b7a99;}
+.pbar-bg{height:5px;background:#d1fae5;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:5px;background:linear-gradient(90deg,#059669,#1d4ed8);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#6b7a99;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:11px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fefce8;border-color:#fde047;color:#a16207;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a16207;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #d1fae5;border-radius:22px;box-shadow:0 4px 24px rgba(5,150,105,.09);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.5rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--acc,linear-gradient(90deg,#059669,#1d4ed8));border-radius:22px 22px 0 0;}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 32px rgba(5,150,105,.14);}
+.card-top{display:flex;gap:6px;margin-bottom:.7rem;align-items:center;justify-content:center;flex-wrap:wrap;}
+.cn{font-size:10px;font-weight:600;color:#adb5cc;background:#f1f3fa;border:1px solid #d1fae5;border-radius:99px;padding:2px 9px;}
+.tb{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;letter-spacing:.4px;}
+.tb-ir{background:#dbeafe;color:#1d4ed8;}
+.tb-ie{background:#f3e8ff;color:#6b21a8;}
+.tb-vocab{background:#fef3c7;color:#b45309;}
+.sent-q{font-family:"Lora",serif;font-size:15px;font-style:italic;color:#1a2540;line-height:1.7;text-align:center;}
+.vocab-wrap{text-align:center;}
+.vocab-w{font-family:"Lora",serif;font-size:36px;font-weight:700;color:#1a2540;line-height:1.15;}
+.vocab-w.long{font-size:26px;}
+.vocab-w.xlong{font-size:20px;}
+.vocab-pos{font-size:10px;font-weight:700;color:#6b7a99;letter-spacing:.8px;text-transform:uppercase;margin-top:5px;}
+.tap{font-size:11px;color:#adb5cc;margin-top:1.1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#d1fae5;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#adb5cc;margin-bottom:3px;}
+.aid{font-family:"Lora",serif;font-size:14px;color:#1a2540;line-height:1.6;font-style:italic;}
+.aen{font-family:"Lora",serif;font-size:14px;color:#1d4ed8;line-height:1.6;}
+.vmean{font-size:19px;font-weight:700;color:#1a2540;font-family:"Lora",serif;}
+.vdef{font-size:12px;color:#4b5e82;line-height:1.5;margin-top:4px;}
+.vex{font-size:11px;color:#6b7a99;font-style:italic;margin-top:7px;padding:6px 10px;background:#f8fffc;border-left:2px solid #6ee7b7;border-radius:0 8px 8px 0;text-align:left;width:100%;}
+.hint-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border:1.5px dashed #6ee7b7;border-radius:12px;background:transparent;color:#059669;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:"Inter",sans-serif;margin-bottom:.5rem;}
+.hint-btn:hover{background:#f0fdf4;border-style:solid;}
+.hint-pop{background:linear-gradient(135deg,#f0fdf4,#eff6ff);border:1.5px solid #6ee7b7;border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:.5rem;animation:fup .2s ease;}
+.hint-pop-t{font-family:"Lora",serif;font-size:15px;font-weight:600;color:#1a2540;font-style:italic;line-height:1.5;}
+.hint-pop-s{font-size:11px;color:#059669;font-weight:500;margin-top:3px;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 4px;border-radius:13px;border:1.5px solid;font-family:"Inter",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fefce8;border-color:#fde047;color:#a16207;}.cb-h:hover{background:#fef9c3;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-family:"Lora",serif;font-size:20px;font-weight:700;color:#1a2540;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#6b7a99;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;font-family:"Lora",serif;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fefce8;border-color:#fde047;color:#a16207;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6b7a99;margin-bottom:6px;}
+.rlist{border:1px solid #d1fae5;border-radius:13px;overflow:hidden;max-height:190px;overflow-y:auto;}
+.ri{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-bottom:1px solid #f0fdf4;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-tb{font-size:9px;font-weight:700;border-radius:99px;padding:2px 7px;flex-shrink:0;margin-top:2px;}
+.ri-ir{background:#dbeafe;color:#1d4ed8;}.ri-ie{background:#f3e8ff;color:#6b21a8;}.ri-vocab{background:#fef3c7;color:#b45309;}
+.ri-txt{font-size:11px;color:#1a2540;flex:1;line-height:1.4;}
+.ri-id{font-size:10px;color:#059669;flex-shrink:0;max-width:120px;text-align:right;line-height:1.3;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"Inter",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-main{background:linear-gradient(135deg,#059669,#1d4ed8);color:#fff;box-shadow:0 3px 10px rgba(5,150,105,.25);}
+.btn-main:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #d1fae5!important;color:#6b7a99;}
+.btn-ghost:hover{background:#f0fdf4;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>?? Job Interview Flashcard</h1>
+  <div class="sub" id="sub-lbl">ABC Controls — David &amp; Tom · Sentences &amp; Vocab</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">?? Semua</button>
+    <button class="fb cat-ir" onclick="setCat('IR')">??? Interviewer</button>
+    <button class="fb cat-ie" onclick="setCat('IE')">?? Interviewee</button>
+    <button class="fb cat-vocab" onclick="setCat('VOCAB')">?? Vocab</button>
+  </div>
+  <div class="ls-lbl">Tampilan Jawaban</div>
+  <div class="lang-sw">
+    <input type="radio" name="al" id="aid" value="id" checked>
+    <label for="aid">???? Indonesia</label>
+    <input type="radio" name="al" id="aen" value="en">
+    <label for="aen">???? English</label>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-top">
+        <span class="cn" id="cn">#1</span>
+        <span class="tb" id="tb"></span>
+      </div>
+      <div id="fs" style="display:none;width:100%"><div class="sent-q" id="sq"></div></div>
+      <div id="fv2" style="display:none;text-align:center">
+        <div class="vocab-wrap">
+          <div class="vocab-w" id="vw"></div>
+          <div class="vocab-pos" id="vpos"></div>
+        </div>
+      </div>
+      <div class="tap" id="tap"><span>??</span>Ketuk untuk jawaban</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div id="ab-sent-id"><div class="atag">???? Terjemahan</div><div class="aid" id="said"></div></div>
+        <div id="ab-sent-en" style="display:none"><div class="atag">???? English</div><div class="aen" id="saen"></div></div>
+        <div id="ab-vocab" style="display:none">
+          <div id="ab-vocab-id"><div class="atag">???? Arti</div><div class="vmean" id="vmid"></div><div class="vdef" id="vdef-id"></div></div>
+          <div id="ab-vocab-en" style="display:none"><div class="atag">???? Definition</div><div class="vmean" id="vmen"></div><div class="vdef" id="vdef-en"></div></div>
+          <div class="vex" id="vex"></div>
+        </div>
+      </div>
+    </div>
+    <div id="hp" class="hint-pop" style="display:none"><div class="hint-pop-t" id="hpt"></div><div class="hint-pop-s" id="hps"></div></div>
+    <button class="hint-btn" id="hb" onclick="doHint(event)">?? Hint — lihat terjemahan</button>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate('b')"><span class="cb-ico">??</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate('h')"><span class="cb-ico">??</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate('p')"><span class="cb-ico">?</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap"><div class="rlist-ttl">Kartu untuk ronde berikutnya</div><div class="rlist" id="rl"></div></div>
+      </div>
+      <button class="btnbig btn-main" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">?? Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">??</div>
+      <div class="res-title">Semua Dikuasai!</div>
+      <div style="font-size:13px;color:#6b7a99;margin:.5rem 0 1.4rem;line-height:1.6;">Siap untuk job interview dalam bahasa Inggris!</div>
+      <button class="btnbig btn-main" onclick="fullRestart()">?? Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+{t:"IR",q:"Welcome to ABC Controls, David. I am Tom.",id:"Selamat datang di ABC Controls, David. Saya Tom.",en:"Welcome to ABC Controls, David. I am Tom."},
+{t:"IR",q:"Nice to meet you too, how are you doing today?",id:"Senang bertemu kamu juga, bagaimana kabarmu hari ini?",en:"Nice to meet you too, how are you doing today?"},
+{t:"IR",q:"Great, thanks. I hope we did not keep you waiting for long?",id:"Bagus, terima kasih. Saya harap kami tidak membuat kamu menunggu terlalu lama?",en:"Great, thanks. I hope we did not keep you waiting for long?"},
+{t:"IR",q:"That is good. David, shall we start?",id:"Bagus sekali. David, apakah kita mulai?",en:"That is good. David, shall we start?"},
+{t:"IR",q:"First of all, let me introduce myself. I am the manager of our engineering department here.",id:"Pertama-tama, perkenalkan diri saya. Saya adalah manajer departemen teknik di sini.",en:"First of all, let me introduce myself. I am the manager of our engineering department here."},
+{t:"IR",q:"We have an open position, so we have been interviewing applicants to fill the position as quickly as possible.",id:"Kami memiliki posisi yang kosong, jadi kami telah mewawancarai pelamar untuk mengisi posisi tersebut secepatnya.",en:"We have an open position, so we have been interviewing applicants to fill the position as quickly as possible."},
+{t:"IR",q:"We currently have several ongoing projects and the team is working hard.",id:"Kami saat ini memiliki beberapa proyek yang sedang berjalan dan tim bekerja keras.",en:"We currently have several ongoing projects and the team is working hard."},
+{t:"IR",q:"We are hoping to keep busy for a long time.",id:"Kami berharap untuk tetap sibuk dalam waktu yang lama.",en:"We are hoping to keep busy for a long time."},
+{t:"IR",q:"This is an entry-level engineering position, we do provide a lot of training here.",id:"Ini adalah posisi teknik tingkat awal, kami memang menyediakan banyak pelatihan di sini.",en:"This is an entry-level engineering position, we do provide a lot of training here."},
+{t:"IR",q:"But we do require that you have at least a bachelor degree in computer engineering.",id:"Tetapi kami memang mengharuskan kamu memiliki setidaknya gelar sarjana di bidang teknik komputer.",en:"But we do require that you have at least a bachelor degree in computer engineering."},
+{t:"IR",q:"Previous experience in the field is a plus.",id:"Pengalaman sebelumnya di bidang tersebut adalah nilai tambah.",en:"Previous experience in the field is a plus."},
+{t:"IR",q:"Even though we provide training, it would be great if you had some hands-on programming experience.",id:"Meskipun kami menyediakan pelatihan, akan sangat bagus jika kamu memiliki pengalaman pemrograman langsung.",en:"Even though we provide training, it would be great if you had some hands-on programming experience."},
+{t:"IR",q:"Knowledge of database systems or skills on developing applications would be helpful.",id:"Pengetahuan tentang sistem database atau keterampilan dalam mengembangkan aplikasi akan sangat membantu.",en:"Knowledge of database systems or skills on developing applications would be helpful."},
+{t:"IR",q:"That is good to hear, which school did you graduate from?",id:"Senang mendengarnya, kamu lulus dari sekolah mana?",en:"That is good to hear, which school did you graduate from?"},
+{t:"IR",q:"What are you looking for in a job?",id:"Apa yang kamu cari dalam sebuah pekerjaan?",en:"What are you looking for in a job?"},
+{t:"IR",q:"There is plenty of room for advancement in our company.",id:"Ada banyak ruang untuk kemajuan di perusahaan kami.",en:"There is plenty of room for advancement in our company."},
+{t:"IR",q:"What are your strengths? Why should I hire you?",id:"Apa kelebihan kamu? Mengapa saya harus merekrutmu?",en:"What are your strengths? Why should I hire you?"},
+{t:"IR",q:"Now, do you mind working overtime?",id:"Sekarang, apakah kamu keberatan bekerja lembur?",en:"Now, do you mind working overtime?"},
+{t:"IR",q:"Because, sometimes we get overwhelmed with heavy workload.",id:"Karena, terkadang kami kewalahan dengan beban kerja yang berat.",en:"Because, sometimes we get overwhelmed with heavy workload."},
+{t:"IR",q:"Do you have any questions for me?",id:"Apakah kamu memiliki pertanyaan untuk saya?",en:"Do you have any questions for me?"},
+{t:"IR",q:"I can tell that you are a good candidate.",id:"Saya bisa melihat bahwa kamu adalah kandidat yang baik.",en:"I can tell that you are a good candidate."},
+{t:"IR",q:"Expect to hear from us within a week or so about the job.",id:"Harapkan kabar dari kami dalam seminggu atau lebih tentang pekerjaan ini.",en:"Expect to hear from us within a week or so about the job."},
+{t:"IE",q:"Hello, it is nice to meet you.",id:"Halo, senang bertemu kamu.",en:"Hello, it is nice to meet you."},
+{t:"IE",q:"I am doing well, and yourself?",id:"Saya baik-baik saja, bagaimana dengan kamu?",en:"I am doing well, and yourself?"},
+{t:"IE",q:"No, I had the chance to talk to one of your engineers while waiting.",id:"Tidak, saya sempat berbicara dengan salah satu insinyur kamu sambil menunggu.",en:"No, I had the chance to talk to one of your engineers while waiting."},
+{t:"IE",q:"Yes sir, I read about the position on your website, and I think I am a good fit.",id:"Ya pak, saya membaca tentang posisi ini di website kamu, dan saya pikir saya cocok.",en:"Yes sir, I read about the position on your website, and I think I am a good fit."},
+{t:"IE",q:"What are the essential qualifications required for the position?",id:"Apa saja kualifikasi penting yang diperlukan untuk posisi ini?",en:"What are the essential qualifications required for the position?"},
+{t:"IE",q:"What kind of experience would you count as work in the field?",id:"Pengalaman seperti apa yang kamu anggap sebagai kerja di bidang tersebut?",en:"What kind of experience would you count as work in the field?"},
+{t:"IE",q:"My final school project was actually developing a mobile application.",id:"Proyek akhir sekolah saya sebenarnya mengembangkan aplikasi mobile.",en:"My final school project was actually developing a mobile application."},
+{t:"IE",q:"I am fairly competent in developing mobile and web applications.",id:"Saya cukup kompeten dalam mengembangkan aplikasi mobile dan web.",en:"I am fairly competent in developing mobile and web applications."},
+{t:"IE",q:"I was a student at DEF University, and I graduated with a bachelor degree in computer science.",id:"Saya adalah mahasiswa di Universitas DEF, dan saya lulus dengan gelar sarjana ilmu komputer.",en:"I was a student at DEF University, and I graduated with a bachelor degree in computer science."},
+{t:"IE",q:"I worked as a computer lab tutor in school for about 2 years.",id:"Saya bekerja sebagai tutor laboratorium komputer di sekolah selama sekitar 2 tahun.",en:"I worked as a computer lab tutor in school for about 2 years."},
+{t:"IE",q:"Guiding students through their projects helped me get experience in several programming languages.",id:"Membimbing mahasiswa dalam proyek mereka membantu saya mendapatkan pengalaman dalam beberapa bahasa pemrograman.",en:"Guiding students through their projects helped me get experience in several programming languages."},
+{t:"IE",q:"The job should definitely help me grow in my career.",id:"Pekerjaan ini pasti harus membantu saya berkembang dalam karier saya.",en:"The job should definitely help me grow in my career."},
+{t:"IE",q:"I will be happy to learn and grow as I work in a passionate company like yours.",id:"Saya akan senang belajar dan berkembang sambil bekerja di perusahaan bersemangat seperti milik kamu.",en:"I will be happy to learn and grow as I work in a passionate company like yours."},
+{t:"IE",q:"I am a diligent person and a fast learner. I am very eager to learn.",id:"Saya adalah orang yang rajin dan cepat belajar. Saya sangat ingin belajar.",en:"I am a diligent person and a fast learner. I am very eager to learn."},
+{t:"IE",q:"My friends also find me very easy to work with.",id:"Teman-teman saya juga merasa saya sangat mudah diajak bekerja sama.",en:"My friends also find me very easy to work with."},
+{t:"IE",q:"No, I do not mind working overtime.",id:"Tidak, saya tidak keberatan bekerja lembur.",en:"No, I do not mind working overtime."},
+{t:"IE",q:"I understand that is the nature of the job.",id:"Saya mengerti bahwa itulah sifat dari pekerjaan ini.",en:"I understand that is the nature of the job."},
+{t:"IE",q:"When I was going to school, I took quite a few courses each semester while working at least twenty hours every week.",id:"Ketika saya sekolah, saya mengambil cukup banyak mata kuliah setiap semester sambil bekerja setidaknya dua puluh jam setiap minggu.",en:"When I was going to school, I took quite a few courses each semester while working at least twenty hours every week."},
+{t:"IE",q:"I handled that situation very well.",id:"Saya menangani situasi itu dengan sangat baik.",en:"I handled that situation very well."},
+{t:"IE",q:"I think I have a pretty good understanding of the requirements.",id:"Saya pikir saya memiliki pemahaman yang cukup baik tentang persyaratannya.",en:"I think I have a pretty good understanding of the requirements."},
+{t:"IE",q:"I believe that I can handle it with ease.",id:"Saya percaya bahwa saya bisa menanganinya dengan mudah.",en:"I believe that I can handle it with ease."},
+{t:"IE",q:"The fact that you provide all the training sounds excellent.",id:"Fakta bahwa kamu menyediakan semua pelatihan terdengar sangat bagus.",en:"The fact that you provide all the training sounds excellent."},
+{t:"IE",q:"I hope to have the opportunity to work for you.",id:"Saya berharap mendapat kesempatan untuk bekerja untuk kamu.",en:"I hope to have the opportunity to work for you."},
+{t:"IE",q:"Nice meeting you too. Thank you for your time.",id:"Senang bertemu kamu juga. Terima kasih atas waktumu.",en:"Nice meeting you too. Thank you for your time."}
+,{t:"VOCAB",word:"keep waiting",pos:"phrase",id:"membuat menunggu / menahan seseorang menunggu",en:"to cause someone to wait",ex:"I hope we did not keep you waiting for long."},
+{t:"VOCAB",word:"open position",pos:"noun",id:"posisi yang kosong / lowongan kerja",en:"a job vacancy that needs to be filled",ex:"We have an open position."},
+{t:"VOCAB",word:"applicants",pos:"noun",id:"pelamar kerja",en:"people who apply for a job",ex:"We have been interviewing applicants."},
+{t:"VOCAB",word:"fill the position",pos:"phrase",id:"mengisi posisi / menduduki jabatan",en:"to take or assign a job role",ex:"Interviewing applicants to fill the position as quickly as possible."},
+{t:"VOCAB",word:"ongoing projects",pos:"noun",id:"proyek yang sedang berjalan",en:"projects currently in progress",ex:"We currently have several ongoing projects."},
+{t:"VOCAB",word:"entry-level",pos:"adjective",id:"tingkat pemula / entry level",en:"suitable for someone starting their career",ex:"This is an entry-level engineering position."},
+{t:"VOCAB",word:"training",pos:"noun",id:"pelatihan",en:"a process of teaching skills for a job",ex:"We do provide a lot of training here."},
+{t:"VOCAB",word:"bachelor degree",pos:"noun",id:"gelar sarjana / S1",en:"a university degree at undergraduate level",ex:"We require at least a bachelor degree in computer engineering."},
+{t:"VOCAB",word:"previous experience",pos:"noun",id:"pengalaman sebelumnya",en:"work done before the current job",ex:"Previous experience in the field is a plus."},
+{t:"VOCAB",word:"a plus",pos:"phrase",id:"nilai tambah / keuntungan tambahan",en:"an additional advantage or benefit",ex:"Previous experience in the field is a plus."},
+{t:"VOCAB",word:"hands-on experience",pos:"noun",id:"pengalaman langsung / praktik nyata",en:"direct practical experience doing something",ex:"It would be great if you had some hands-on programming experience."},
+{t:"VOCAB",word:"database systems",pos:"noun",id:"sistem basis data / sistem database",en:"organized collections of structured information",ex:"Knowledge of database systems would be helpful."},
+{t:"VOCAB",word:"developing applications",pos:"phrase",id:"mengembangkan aplikasi",en:"creating software programs or apps",ex:"Skills on developing applications would be helpful."},
+{t:"VOCAB",word:"fairly competent",pos:"phrase",id:"cukup kompeten / cukup terampil",en:"reasonably skilled or capable",ex:"I am fairly competent in developing mobile and web applications."},
+{t:"VOCAB",word:"computer lab tutor",pos:"noun",id:"tutor laboratorium komputer",en:"someone who helps students in a computer lab",ex:"I worked as a computer lab tutor for about 2 years."},
+{t:"VOCAB",word:"guiding",pos:"verb",id:"membimbing / memandu",en:"helping or directing someone through a process",ex:"Guiding students through their projects helped me."},
+{t:"VOCAB",word:"programming languages",pos:"noun",id:"bahasa pemrograman",en:"formal languages used to write computer programs",ex:"Experience in several programming languages."},
+{t:"VOCAB",word:"grow in my career",pos:"phrase",id:"berkembang dalam karier / naik jabatan",en:"to advance professionally over time",ex:"The job should help me grow in my career."},
+{t:"VOCAB",word:"passionate company",pos:"phrase",id:"perusahaan yang bersemangat / penuh dedikasi",en:"a company with strong enthusiasm and commitment",ex:"A passionate company like yours."},
+{t:"VOCAB",word:"room for advancement",pos:"phrase",id:"peluang untuk maju / kesempatan naik jabatan",en:"opportunities to be promoted or develop professionally",ex:"There is plenty of room for advancement in our company."},
+{t:"VOCAB",word:"strengths",pos:"noun",id:"kelebihan / kekuatan diri",en:"positive qualities or abilities a person has",ex:"What are your strengths?"},
+{t:"VOCAB",word:"diligent",pos:"adjective",id:"rajin / tekun / giat",en:"having and showing careful effort and hard work",ex:"I am a diligent person."},
+{t:"VOCAB",word:"fast learner",pos:"noun",id:"orang yang cepat belajar",en:"someone who learns new skills quickly",ex:"I am a diligent person and a fast learner."},
+{t:"VOCAB",word:"eager to learn",pos:"phrase",id:"bersemangat untuk belajar / antusias belajar",en:"enthusiastic and motivated to gain new knowledge",ex:"I am very eager to learn."},
+{t:"VOCAB",word:"easy to work with",pos:"phrase",id:"mudah diajak bekerja sama",en:"pleasant and cooperative as a colleague",ex:"My friends find me very easy to work with."},
+{t:"VOCAB",word:"overtime",pos:"noun",id:"lembur / kerja ekstra",en:"time worked beyond regular hours",ex:"Do you mind working overtime?"},
+{t:"VOCAB",word:"overwhelmed",pos:"adjective",id:"kewalahan / terlalu banyak tekanan",en:"having too much to deal with",ex:"Sometimes we get overwhelmed with heavy workload."},
+{t:"VOCAB",word:"heavy workload",pos:"noun",id:"beban kerja yang berat",en:"a large amount of work to be done",ex:"Sometimes we get overwhelmed with heavy workload."},
+{t:"VOCAB",word:"the nature of the job",pos:"phrase",id:"sifat dari pekerjaan / karakteristik pekerjaan",en:"the typical characteristics or demands of a job",ex:"I understand that is the nature of the job."},
+{t:"VOCAB",word:"quite a few courses",pos:"phrase",id:"cukup banyak mata kuliah",en:"a fairly large number of classes",ex:"I took quite a few courses each semester."},
+{t:"VOCAB",word:"handled",pos:"verb",id:"menangani / mengelola",en:"dealt with or managed a situation",ex:"I handled that situation very well."},
+{t:"VOCAB",word:"requirements",pos:"noun",id:"persyaratan / ketentuan",en:"conditions that must be met",ex:"I have a pretty good understanding of the requirements."},
+{t:"VOCAB",word:"handle with ease",pos:"phrase",id:"menangani dengan mudah / tidak kesulitan",en:"to deal with something without difficulty",ex:"I believe that I can handle it with ease."},
+{t:"VOCAB",word:"good candidate",pos:"noun",id:"kandidat yang baik / pelamar yang potensial",en:"a person well-suited for a job",ex:"I can tell that you are a good candidate."},
+{t:"VOCAB",word:"expect to hear from us",pos:"phrase",id:"harapkan kabar dari kami",en:"you will receive a response from us",ex:"Expect to hear from us within a week or so."},
+{t:"VOCAB",word:"within a week",pos:"phrase",id:"dalam seminggu / tidak lebih dari seminggu",en:"in no more than seven days",ex:"Expect to hear from us within a week or so."},
+{t:"VOCAB",word:"introduce myself",pos:"phrase",id:"memperkenalkan diri",en:"to tell others who you are",ex:"Let me introduce myself."},
+{t:"VOCAB",word:"essential qualifications",pos:"noun",id:"kualifikasi penting / syarat utama",en:"the key skills or credentials required for a role",ex:"What are the essential qualifications for the position?"},
+{t:"VOCAB",word:"good fit",pos:"phrase",id:"cocok / sesuai dengan posisi",en:"well-suited for a particular role or environment",ex:"I think I am a good fit."},
+{t:"VOCAB",word:"mobile application",pos:"noun",id:"aplikasi mobile / aplikasi ponsel",en:"a software program designed for smartphones",ex:"My final school project was developing a mobile application."},
+{t:"VOCAB",word:"final school project",pos:"noun",id:"proyek akhir sekolah / tugas akhir",en:"the last major assignment before graduating",ex:"My final school project was developing a mobile application."},
+{t:"VOCAB",word:"shall we start",pos:"phrase",id:"apakah kita mulai / mari kita mulai",en:"a polite way to suggest beginning",ex:"David, shall we start?"},
+{t:"VOCAB",word:"engineering department",pos:"noun",id:"departemen teknik / divisi rekayasa",en:"the section of a company focused on engineering work",ex:"I am the manager of our engineering department."},
+{t:"VOCAB",word:"computer science",pos:"noun",id:"ilmu komputer",en:"the study of computation and software",ex:"I graduated with a bachelor degree in computer science."},
+{t:"VOCAB",word:"web applications",pos:"noun",id:"aplikasi web / aplikasi berbasis web",en:"software programs that run in a web browser",ex:"I am fairly competent in developing web applications."},
+{t:"VOCAB",word:"opportunity",pos:"noun",id:"kesempatan / peluang",en:"a chance to do something",ex:"I hope to have the opportunity to work for you."}
+];
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function getAL(){return document.querySelector('input[name="al"]:checked').value;}
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){curCat=c;document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});ronde=1;fullRestart();}
+function getFiltered(){if(curCat==="ALL")return V.slice();if(curCat==="VOCAB")return V.filter(function(c){return c.t==="VOCAB";});return V.filter(function(c){return c.t===curCat;});}
+function fullRestart(){var src=getFiltered();deck=shuffle(src);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("sub-lbl").textContent=(curCat==="ALL"?"Semua":curCat)+" — "+deck.length+" kartu";document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){rev=false;var c=deck[idx];document.getElementById("cn").textContent="#"+(idx+1);var tb=document.getElementById("tb");if(c.t==="IR"){tb.textContent="Interviewer";tb.className="tb tb-ir";}else if(c.t==="IE"){tb.textContent="Interviewee";tb.className="tb tb-ie";}else{tb.textContent="VOCAB";tb.className="tb tb-vocab";}var acc=c.t==="IR"?"linear-gradient(90deg,#1d4ed8,#60a5fa)":c.t==="IE"?"linear-gradient(90deg,#7c3aed,#a78bfa)":"linear-gradient(90deg,#b45309,#f59e0b)";document.getElementById("card").style.setProperty("--acc",acc);if(c.t!=="VOCAB"){document.getElementById("fs").style.display="";document.getElementById("fv2").style.display="none";document.getElementById("sq").textContent=c.q;}else{document.getElementById("fs").style.display="none";document.getElementById("fv2").style.display="";var wl=c.word.length;var wEl=document.getElementById("vw");wEl.textContent=c.word;wEl.className="vocab-w"+(wl>20?" xlong":wl>13?" long":"");document.getElementById("vpos").textContent=c.pos||"";}document.getElementById("ans").style.display="none";document.getElementById("tap").style.display="";document.getElementById("ba").style.display="none";document.getElementById("card").className="card";document.getElementById("hp").style.display="none";document.getElementById("hb").style.display="";document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;var pct=Math.round(idx/deck.length*100);document.getElementById("pb").style.width=pct+"%";document.getElementById("pl").textContent=idx+" selesai";document.getElementById("pr").textContent=deck.length+" kartu";}
+function renderAns(){var c=deck[idx];var al=getAL();if(c.t!=="VOCAB"){document.getElementById("ab-sent-id").style.display=al==="id"?"":"none";document.getElementById("ab-sent-en").style.display=al==="en"?"":"none";document.getElementById("ab-vocab").style.display="none";document.getElementById("said").textContent=c.id;document.getElementById("saen").textContent=c.en;}else{document.getElementById("ab-sent-id").style.display="none";document.getElementById("ab-sent-en").style.display="none";document.getElementById("ab-vocab").style.display="";if(al==="id"){document.getElementById("ab-vocab-id").style.display="";document.getElementById("ab-vocab-en").style.display="none";document.getElementById("vmid").textContent=c.id;document.getElementById("vdef-id").textContent=c.en;}else{document.getElementById("ab-vocab-id").style.display="none";document.getElementById("ab-vocab-en").style.display="";document.getElementById("vmen").textContent=c.word;document.getElementById("vdef-en").textContent=c.en;}document.getElementById("vex").textContent='"'+c.ex+'"';}document.getElementById("ans").style.display="";}
+function reveal(){if(rev)return;rev=true;renderAns();document.getElementById("tap").style.display="none";document.getElementById("ba").style.display="";document.getElementById("card").className="card done";document.getElementById("hp").style.display="none";document.getElementById("hb").style.display="none";}
+function doHint(e){e.stopPropagation();var c=deck[idx];var hp=document.getElementById("hp");if(hp.style.display==="none"){var al=getAL();document.getElementById("hpt").textContent=al==="id"?c.id:(c.t!=="VOCAB"?c.en:c.word+" = "+c.id);document.getElementById("hps").textContent=c.t!=="VOCAB"?"Terjemahan Indonesia":"Arti kata";hp.style.display="";}else{hp.style.display="none";}}
+function rate(r){if(r==="p")cp++;else if(r==="h"){ch++;toRev.push(deck[idx]);}else{cbv++;toRev.push(deck[idx]);}upStats();idx++;if(idx>=deck.length){showResult();return;}showCard();}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){document.getElementById("pb").style.width="100%";document.getElementById("qv").style.display="none";if(toRev.length===0){document.getElementById("fv3").style.display="";return;}document.getElementById("rv").style.display="";document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;var pct=Math.round(cp/deck.length*100);document.getElementById("ri2").textContent=pct>=90?"??":pct>=70?"??":pct>=50?"??":"??";document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":pct>=50?"Lumayan! Ulangi "+toRev.length+" kartu.":"Semangat! "+toRev.length+" kartu menunggumu.";document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" ? "+toRev.length+" kartu";var rl=document.getElementById("rl");rl.innerHTML="";toRev.forEach(function(c){var d=document.createElement("div");d.className="ri";var badge=document.createElement("span");badge.className="ri-tb "+(c.t==="IR"?"ri-ir":c.t==="IE"?"ri-ie":"ri-vocab");badge.textContent=c.t==="IR"?"IR":c.t==="IE"?"IE":"VOCAB";var txt=document.createElement("span");txt.className="ri-txt";txt.textContent=c.t!=="VOCAB"?(c.q.length>50?c.q.substring(0,50)+"…":c.q):c.word;var rid=document.createElement("span");rid.className="ri-id";rid.textContent=c.t!=="VOCAB"?(c.id.length>35?c.id.substring(0,35)+"…":c.id):c.id;d.appendChild(badge);d.appendChild(txt);d.appendChild(rid);rl.appendChild(d);});document.getElementById("rlw").style.display="";}
+document.querySelectorAll('input[name="al"]').forEach(function(r){r.addEventListener("change",function(){if(rev)renderAns();});});
+ronde=1;fullRestart();
+</script>
+</body>
+</html>

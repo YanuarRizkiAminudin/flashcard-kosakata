@@ -73,6 +73,16 @@ const flashcards = [
     route: '/game/toeic-listening',
   },
   {
+    id: 'JI1',
+    category: 'English',
+    categoryColor: '#d1fae5', categoryTextColor: '#065f46',
+    icon: '💼',
+    title: 'Job Interview — ABC Controls',
+    kartu: 92,
+    level: 'Interviewer · Interviewee · Vocab',
+    route: '/game/job-interview',
+  },
+  {
     id: 1,
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
