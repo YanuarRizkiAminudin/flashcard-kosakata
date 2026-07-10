@@ -3,149 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Phrases Flashcard</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<title>English Phrases Test</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,sans-serif;background:linear-gradient(135deg,#f8faff 0%,#f0fdf4 100%);min-height:100vh;padding:16px}
-#app{max-width:520px;margin:0 auto}
-h1{text-align:center;font-size:22px;font-weight:700;color:#1e3a5f;margin-bottom:4px;letter-spacing:-.3px}
-.sub{text-align:center;font-size:12px;color:#6b7a99;margin-bottom:14px}
-.mode-wrap{margin-bottom:12px;text-align:center}
-.mode-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;color:#6b7a99;text-transform:uppercase;margin-bottom:6px}
-.mode-sw{display:flex;gap:8px}
-.mode-sw label{flex:1;padding:10px 8px;border-radius:14px;border:2px solid #dde3f0;background:#fff;cursor:pointer;text-align:center;font-size:12px;font-weight:700;color:#6b7a99;transition:all .2s;line-height:1.4}
-.mode-sw label span{font-size:10px;font-weight:400;display:block;margin-top:2px}
-.mode-sw input[type=radio]{display:none}
-.mode-sw input[type=radio]:checked+label{background:linear-gradient(135deg,#2563eb,#059669);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(37,99,235,.25)}
-.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;justify-content:center}
-.filters button{padding:5px 10px;border-radius:20px;border:1.5px solid #dde3f0;background:#fff;font-size:11px;font-weight:600;color:#6b7a99;cursor:pointer;transition:all .2s}
-.filters button.active{background:#2563eb;color:#fff;border-color:#2563eb}
-.progress{margin-bottom:10px}
-.prog-bar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:4px}
-.prog-fill{height:100%;background:linear-gradient(90deg,#2563eb,#059669);border-radius:3px;transition:width .4s}
-.prog-info{display:flex;justify-content:space-between;font-size:11px;color:#6b7a99}
-.card-wrap{perspective:800px;margin-bottom:14px;cursor:pointer;min-height:220px;}
-.card{position:relative;width:100%;height:220px;border-radius:20px;transform-style:preserve-3d;transition:transform .5s;box-shadow:0 4px 24px rgba(37,99,235,.10)}
-.card.flipped{transform:rotateY(180deg)}
-.card-face{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:20px;backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:32px 24px;text-align:center}
-.card-front{background:#fff;border:2px solid #e8edf8}
-.card-back{background:linear-gradient(135deg,#f0f7ff,#f0fdf4);border:2px solid #bfdbfe;transform:rotateY(180deg)}
-.cat-badge{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#2563eb;background:#eff6ff;padding:3px 10px;border-radius:10px;margin-bottom:14px}
-.card-phrase{font-family:Lora,serif;font-style:italic;font-size:22px;font-weight:600;color:#1e3a5f;line-height:1.45}
-.card-tap{font-size:11px;color:#a0aec0;margin-top:14px}
-.card-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#059669;margin-bottom:10px}
-.card-answer{font-family:Lora,serif;font-style:italic;font-size:20px;font-weight:600;color:#1e3a5f;line-height:1.45;margin-bottom:8px}
-.card-orig{font-size:13px;color:#6b7a99;margin-top:8px;font-style:normal}
-.hint-box{background:#fffbeb;border:1.5px solid #fcd34d;border-radius:10px;padding:8px 14px;font-size:13px;color:#92400e;margin-top:10px;display:none}
-.controls{display:flex;gap:8px;margin-bottom:14px;align-items:center;justify-content:center}
-.btn-hint{padding:8px 16px;border-radius:12px;border:1.5px solid #fcd34d;background:#fffbeb;font-size:12px;font-weight:600;color:#92400e;cursor:pointer;transition:all .2s}
-.btn-hint:hover{background:#fef3c7}
-.rating{display:none;gap:8px;margin-bottom:16px;justify-content:center;flex-wrap:wrap}
-.rating button{flex:1;min-width:90px;max-width:140px;padding:10px 6px;border-radius:14px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
-.btn-belum{background:#fee2e2;color:#dc2626}
-.btn-belum:hover{background:#fecaca}
-.btn-hampir{background:#fef3c7;color:#d97706}
-.btn-hampir:hover{background:#fde68a}
-.btn-paham{background:#dcfce7;color:#16a34a}
-.btn-paham:hover{background:#bbf7d0}
-.result-screen,.final-screen{display:none;text-align:center;background:#fff;border-radius:20px;padding:28px 20px;box-shadow:0 4px 24px rgba(37,99,235,.10)}
-.result-screen h2,.final-screen h2{font-size:20px;font-weight:700;color:#1e3a5f;margin-bottom:8px}
-.result-grid{display:flex;gap:10px;justify-content:center;margin:16px 0}
-.res-box{flex:1;max-width:100px;padding:12px 8px;border-radius:14px;text-align:center}
-.res-box .num{font-size:26px;font-weight:700;margin-bottom:2px}
-.res-box .lbl{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
-.rb-belum{background:#fee2e2;color:#dc2626}
-.rb-hampir{background:#fef3c7;color:#d97706}
-.rb-paham{background:#dcfce7;color:#16a34a}
-.btn-next-ronde,.btn-finish{padding:12px 28px;border-radius:14px;border:none;font-size:14px;font-weight:700;cursor:pointer;margin:6px;transition:all .2s}
-.btn-next-ronde{background:linear-gradient(135deg,#2563eb,#059669);color:#fff;box-shadow:0 3px 12px rgba(37,99,235,.25)}
-.btn-next-ronde:hover{opacity:.9}
-.btn-finish{background:#f1f5f9;color:#64748b}
-.btn-finish:hover{background:#e2e8f0}
-.final-emoji{font-size:52px;margin-bottom:10px}
-.final-msg{font-size:15px;color:#6b7a99;margin-bottom:20px}
-.btn-restart{padding:12px 32px;border-radius:14px;border:none;background:linear-gradient(135deg,#2563eb,#059669);color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 3px 12px rgba(37,99,235,.25)}
-.btn-restart:hover{opacity:.9}
-.hidden{display:none!important}
+body{font-family:sans-serif;padding:20px;background:#f0f9ff;}
+.card{background:#fff;border-radius:16px;padding:30px;margin:16px 0;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.1);min-height:120px;display:flex;align-items:center;justify-content:center;text-align:center;}
+.phrase{font-size:20px;font-style:italic;color:#1a2540;}
+.answer{font-size:18px;color:#059669;margin-top:12px;display:none;}
+.hint-bar{font-size:12px;color:#888;margin-top:8px;}
+.buttons{display:flex;gap:8px;margin-top:12px;display:none;}
+.btn{flex:1;padding:10px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;}
+.btn-b{background:#fee2e2;color:#dc2626;}
+.btn-h{background:#fef3c7;color:#d97706;}
+.btn-p{background:#dcfce7;color:#16a34a;}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.fb{padding:5px 12px;border-radius:99px;border:1.5px solid #dde3f0;background:#fff;font-size:11px;font-weight:600;cursor:pointer;}
+.fb.on{background:#2563eb;color:#fff;border-color:#2563eb;}
+.mode-sw{display:flex;gap:8px;margin-bottom:12px;}
+.ml{flex:1;padding:10px;border-radius:12px;border:2px solid #dde3f0;text-align:center;cursor:pointer;font-size:12px;font-weight:700;}
+.ml.on{background:linear-gradient(135deg,#2563eb,#059669);color:#fff;border-color:transparent;}
+.progress{font-size:12px;color:#888;margin-bottom:8px;}
+.result{display:none;background:#fff;border-radius:16px;padding:24px;text-align:center;}
 </style>
 </head>
 <body>
-<div id="app">
-  <h1>&#x1F4AC; English Phrases</h1>
-  <div class="sub" id="sub-lbl">Flashcard Frasa Bahasa Inggris</div>
-
-  <div class="mode-wrap">
-    <div class="mode-lbl">MODE TEBAK</div>
-    <div class="mode-sw">
-      <input type="radio" name="mode" id="men" value="en" checked>
-      <label for="men">&#x1F1EC;&#x1F1E7; &rarr; &#x1F1EE;&#x1F1E9;<br><span>Lihat Inggris, tebak Indonesia</span></label>
-      <input type="radio" name="mode" id="mid" value="id">
-      <label for="mid">&#x1F1EE;&#x1F1E9; &rarr; &#x1F1EC;&#x1F1E7;<br><span>Lihat Indonesia, tebak Inggris</span></label>
+<h2 style="text-align:center">?? English Phrases</h2>
+<div style="font-size:11px;font-weight:700;letter-spacing:.8px;color:#888;text-align:center;margin-bottom:6px">MODE TEBAK</div>
+<div class="mode-sw">
+  <div class="ml on" id="ml-en" onclick="setMode('en')">???? ? ????<br><span style="font-size:10px;font-weight:400">Lihat Inggris, tebak Indonesia</span></div>
+  <div class="ml" id="ml-id" onclick="setMode('id')">???? ? ????<br><span style="font-size:10px;font-weight:400">Lihat Indonesia, tebak Inggris</span></div>
+</div>
+<div class="filters" id="filters"></div>
+<div class="progress" id="prog"></div>
+<div id="qv">
+  <div class="card" id="card" onclick="reveal()">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.8px;color:#2563eb;margin-bottom:8px" id="cat-lbl"></div>
+      <div class="phrase" id="phrase"></div>
+      <div style="font-size:11px;color:#aaa;margin-top:10px" id="tap-hint">?? Tap untuk jawaban</div>
+      <div class="answer" id="answer"></div>
     </div>
   </div>
-
-  <div class="filters" id="filters"></div>
-
-  <div id="quiz-view">
-    <div class="progress">
-      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-      <div class="prog-info">
-        <span id="prog-text">0 / 0</span>
-        <span id="ronde-text">Ronde 1</span>
-      </div>
-    </div>
-
-    <div class="card-wrap" id="card-wrap" onclick="reveal()">
-      <div class="card" id="card" style="min-height:200px">
-        <div class="card-face card-front" style="min-height:200px">
-          <div class="cat-badge" id="cat-badge"></div>
-          <div class="card-phrase" id="card-phrase"></div>
-          <div class="card-tap">&#x1F447; Tap untuk lihat jawaban</div>
-        </div>
-        <div class="card-face card-back" style="min-height:200px">
-          <div class="card-lbl" id="card-lbl">JAWABAN</div>
-          <div class="card-answer" id="card-answer"></div>
-          <div class="card-orig" id="card-orig"></div>
-          <div class="hint-box" id="hint-box"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="controls">
-      <button class="btn-hint" onclick="showHint()">&#x1F4A1; Hint</button>
-    </div>
-
-    <div class="rating" id="rating" style="display:none">
-      <button class="btn-belum" onclick="rate(0)">&#x274C; Belum</button>
-      <button class="btn-hampir" onclick="rate(1)">&#x1F7E1; Hampir</button>
-      <button class="btn-paham" onclick="rate(2)">&#x2705; Paham</button>
-    </div>
-  </div>
-
-  <div class="result-screen" id="result-screen">
-    <h2>&#x1F4CA; Hasil Ronde</h2>
-    <p id="result-msg" style="font-size:13px;color:#6b7a99;margin-bottom:4px"></p>
-    <div class="result-grid">
-      <div class="res-box rb-belum"><div class="num" id="r-belum">0</div><div class="lbl">Belum</div></div>
-      <div class="res-box rb-hampir"><div class="num" id="r-hampir">0</div><div class="lbl">Hampir</div></div>
-      <div class="res-box rb-paham"><div class="num" id="r-paham">0</div><div class="lbl">Paham</div></div>
-    </div>
-    <button class="btn-next-ronde" onclick="nextRonde()">Ulangi yang Belum &amp; Hampir &#x27A1;</button>
-    <button class="btn-finish" onclick="showFinal()">Selesai &#x1F3C1;</button>
-  </div>
-
-  <div class="final-screen" id="final-screen">
-    <div class="final-emoji">&#x1F3C6;</div>
-    <h2>Luar Biasa!</h2>
-    <div class="final-msg" id="final-msg"></div>
-    <button class="btn-restart" onclick="restart()">&#x1F504; Mulai Lagi</button>
+  <button style="width:100%;padding:10px;border:1.5px dashed #6ee7b7;border-radius:12px;background:transparent;color:#059669;font-size:12px;font-weight:600;cursor:pointer;margin-bottom:8px" onclick="showHint()">?? Hint</button>
+  <div class="buttons" id="btns">
+    <button class="btn btn-b" onclick="rate(0)">? Belum</button>
+    <button class="btn btn-h" onclick="rate(1)">?? Hampir</button>
+    <button class="btn btn-p" onclick="rate(2)">? Paham</button>
   </div>
 </div>
+<div class="result" id="rv">
+  <div style="font-size:40px;margin-bottom:8px" id="ri"></div>
+  <div style="font-size:18px;font-weight:700;margin-bottom:8px" id="rt"></div>
+  <div style="font-size:13px;color:#888;margin-bottom:16px" id="rs"></div>
+  <div style="display:flex;gap:8px;margin-bottom:16px">
+    <div style="flex:1;background:#dcfce7;border-radius:12px;padding:12px;text-align:center"><div style="font-size:24px;font-weight:700;color:#16a34a" id="rp">0</div><div style="font-size:10px">Paham</div></div>
+    <div style="flex:1;background:#fef3c7;border-radius:12px;padding:12px;text-align:center"><div style="font-size:24px;font-weight:700;color:#d97706" id="rh">0</div><div style="font-size:10px">Hampir</div></div>
+    <div style="flex:1;background:#fee2e2;border-radius:12px;padding:12px;text-align:center"><div style="font-size:24px;font-weight:700;color:#dc2626" id="rbb">0</div><div style="font-size:10px">Belum</div></div>
+  </div>
+  <button id="next-btn" style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#2563eb,#059669);color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px" onclick="nextRonde()"></button>
+  <button style="width:100%;padding:12px;border-radius:12px;border:1.5px solid #dde3f0;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#888" onclick="fullRestart()">?? Mulai dari awal</button>
+</div>
+<div id="fv" style="display:none;background:#fff;border-radius:16px;padding:32px;text-align:center">
+  <div style="font-size:56px;margin-bottom:8px">??</div>
+  <div style="font-size:20px;font-weight:700;margin-bottom:8px">Semua Dikuasai!</div>
+  <div style="font-size:13px;color:#888;margin-bottom:16px">Luar biasa!</div>
+  <button style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#2563eb,#059669);color:#fff;font-size:14px;font-weight:700;cursor:pointer" onclick="fullRestart()">?? Ulangi</button>
+</div>
 <script>
-var V=[
-// GREETINGS
-{cat:"GREET",en:"Peace be upon you.",id:"Assalamu'alaikum."},
+var V=[{cat:"GREET",en:"Peace be upon you.",id:"Assalamu alaikum."},
 {cat:"GREET",en:"Hello.",id:"Hallo."},
 {cat:"GREET",en:"Good morning, Sir.",id:"Selamat pagi, Pak."},
 {cat:"GREET",en:"Good afternoon, Madam.",id:"Selamat siang/sore, Bu."},
@@ -156,28 +80,29 @@ var V=[
 {cat:"GREET",en:"Just fine, thanks.",id:"Baik-baik saja, terima kasih."},
 {cat:"GREET",en:"Very well, thanks.",id:"Baik-baik saja, terima kasih."},
 {cat:"GREET",en:"Pretty well, thanks.",id:"Baik-baik saja, terima kasih."},
-{cat:"GREET",en:"I'm fine, thank you.",id:"Saya baik-baik saja, terima kasih."},
-{cat:"GREET",en:"I'm very well, thank you.",id:"Saya baik-baik saja, terima kasih."},
 {cat:"GREET",en:"How do you do?",id:"Apa kabar? (Salam perkenalan)"},
-{cat:"GREET",en:"I'm glad to see you.",id:"Saya senang bertemu dengan Anda."},
-{cat:"GREET",en:"I'm happy to see you.",id:"Saya senang bertemu dengan Anda."},
-{cat:"GREET",en:"I'm pleased to see you.",id:"Saya senang bertemu dengan Anda."},
-{cat:"GREET",en:"I'm delighted to see you.",id:"Saya senang bertemu dengan Anda."},
-{cat:"GREET",en:"It's a pleasure to meet you.",id:"Adalah menyenangkan bertemu dengan Anda."},
-{cat:"GREET",en:"It's nice to meet you.",id:"Adalah menyenangkan bertemu dengan Anda."},
-{cat:"GREET",en:"It's nice to see you.",id:"Adalah menyenangkan bertemu dengan Anda."},
-{cat:"GREET",en:"It's nice to know you.",id:"Adalah menyenangkan bertemu dengan Anda."},
-{cat:"GREET",en:"Is anything the matter?",id:"Apa yang terjadi? (Ada apa)"},
-{cat:"GREET",en:"What's the matter?",id:"Apa yang terjadi?"},
+{cat:"GREET",en:"I am fine, thank you.",id:"Saya baik-baik saja, terima kasih."},
+{cat:"GREET",en:"I am very well, thank you.",id:"Saya baik-baik saja, terima kasih."},
+{cat:"GREET",en:"I am glad to see you.",id:"Saya senang bertemu dengan Anda."},
+{cat:"GREET",en:"I am happy to see you.",id:"Saya senang bertemu dengan Anda."},
+{cat:"GREET",en:"I am pleased to see you.",id:"Saya senang bertemu dengan Anda."},
+{cat:"GREET",en:"I am delighted to see you.",id:"Saya senang bertemu dengan Anda."},
+{cat:"GREET",en:"It is a pleasure to meet you.",id:"Adalah menyenangkan bertemu dengan Anda."},
+{cat:"GREET",en:"It is nice to meet you.",id:"Adalah menyenangkan bertemu dengan Anda."},
+{cat:"GREET",en:"It is nice to see you.",id:"Adalah menyenangkan bertemu dengan Anda."},
+{cat:"GREET",en:"It is nice to know you.",id:"Adalah menyenangkan bertemu dengan Anda."},
+{cat:"GREET",en:"Is anything the matter?",id:"Apa yang terjadi? Ada apa?"},
+{cat:"GREET",en:"What is the matter?",id:"Apa yang terjadi?"},
 {cat:"GREET",en:"What happened?",id:"Apa yang menyebabkan Anda datang kemari?"},
 {cat:"GREET",en:"What a surprise to see you!",id:"Sungguh mengharukan bertemu dengan Anda!"},
 {cat:"GREET",en:"What a surprise to meet you!",id:"Sungguh mengharukan bertemu dengan Anda!"},
+{cat:"GREET",en:"What a surprise to know you!",id:"Sungguh mengharukan bertemu dengan Anda!"},
 {cat:"GREET",en:"How long have you been here?",id:"Sudah berapa lama Anda berada di sini?"},
-{cat:"GREET",en:"I didn't expect to see you here.",id:"Saya tidak menyangka kita bertemu di sini."},
-{cat:"GREET",en:"I haven't seen you for a long time.",id:"Kita sudah lama tidak saling bertemu."},
+{cat:"GREET",en:"I did not expect to see you here.",id:"Saya tidak menyangka kita bertemu di sini."},
+{cat:"GREET",en:"I did not expect to meet you here.",id:"Saya tidak menyangka kita bertemu di sini."},
+{cat:"GREET",en:"I have not seen you for a long time.",id:"Kita sudah lama tidak saling bertemu."},
 {cat:"GREET",en:"We must keep in touch.",id:"Kita harus saling berhubungan."},
-{cat:"GREET",en:"Don't forget us.",id:"Jangan lupa kami."},
-// PARTINGS
+{cat:"GREET",en:"Do not forget us.",id:"Jangan lupa kami."},
 {cat:"PART",en:"Good bye.",id:"Selamat tinggal."},
 {cat:"PART",en:"Bye-bye.",id:"Selamat tinggal."},
 {cat:"PART",en:"Cheerio.",id:"Selamat tinggal."},
@@ -200,21 +125,25 @@ var V=[
 {cat:"PART",en:"I must be going now.",id:"Saya harus pergi sekarang."},
 {cat:"PART",en:"I must be leaving now.",id:"Saya harus berangkat sekarang."},
 {cat:"PART",en:"I must say good-bye.",id:"Saya mengucapkan selamat tinggal."},
-{cat:"PART",en:"I hope you'll come again.",id:"Saya mengharap Anda akan segera datang lagi."},
-{cat:"PART",en:"I'm glad you have come.",id:"Saya senang Anda telah datang."},
+{cat:"PART",en:"I hope you will come again.",id:"Saya mengharap Anda akan segera datang lagi."},
+{cat:"PART",en:"I hope I shan not miss you.",id:"Saya mengharap tidak akan gagal menjumpai Anda."},
+{cat:"PART",en:"I am glad you have come.",id:"Saya senang Anda telah datang."},
 {cat:"PART",en:"Come whenever you like.",id:"Datanglah bila ada waktu."},
 {cat:"PART",en:"Please come again soon.",id:"Datanglah dalam waktu dekat ini."},
 {cat:"PART",en:"Please come and see me sometimes.",id:"Datanglah kapan-kapan ke rumahku."},
 {cat:"PART",en:"Please remember me to your father.",id:"Sampaikan salam saya kepada ayah Anda."},
 {cat:"PART",en:"Please give my kind regards to your mother.",id:"Sampaikan salam saya kepada Ibu Anda."},
+{cat:"PART",en:"Please give my best regards to your parents.",id:"Sampaikan salam hangat saya kepada orang tua Anda."},
+{cat:"PART",en:"Please send my best love to your sister.",id:"Sampaikan salam mesraku kepada saudara perempuan Anda."},
 {cat:"PART",en:"Please say hello to your brother for me.",id:"Sampaikan salam saya kepada saudara laki-laki Anda."},
-{cat:"PART",en:"Don't keep me waiting too long.",id:"Jangan membuatku menunggu terlalu lama."},
+{cat:"PART",en:"Please give my kind remembrance to your family.",id:"Sampaikan salam saya kepada keluarga Anda."},
+{cat:"PART",en:"Do not keep me waiting too long.",id:"Jangan membuatku menunggu terlalu lama."},
 {cat:"PART",en:"Have a good time.",id:"Selamat bersenang-senang."},
 {cat:"PART",en:"Have a good journey.",id:"Selamat bepergian jauh."},
 {cat:"PART",en:"Thank you so much for coming.",id:"Terima kasih banyak atas kedatangannya."},
-// THANKS
 {cat:"THANK",en:"Thanks.",id:"Terima kasih."},
 {cat:"THANK",en:"Thank you.",id:"Terima kasih."},
+{cat:"THANK",en:"Thank very much.",id:"Terima kasih banyak."},
 {cat:"THANK",en:"Thank you very much.",id:"Terima kasih banyak."},
 {cat:"THANK",en:"Thanks a lot.",id:"Terima kasih banyak."},
 {cat:"THANK",en:"Thanks a million.",id:"Terima kasih banyak."},
@@ -223,60 +152,100 @@ var V=[
 {cat:"THANK",en:"Thank you so much.",id:"Terima kasih banyak."},
 {cat:"THANK",en:"Thanks for everything.",id:"Terima kasih atas segala sesuatu."},
 {cat:"THANK",en:"Thanks for your help.",id:"Terima kasih atas pertolongan Anda."},
+{cat:"THANK",en:"Thanks for all your trouble.",id:"Terima kasih atas segala jerih payah Anda."},
+{cat:"THANK",en:"Thank you for everything.",id:"Terima kasih atas segala sesuatu."},
+{cat:"THANK",en:"Thank you for your help.",id:"Terima kasih atas pertolongan Anda."},
+{cat:"THANK",en:"Thank you for all your trouble.",id:"Terima kasih atas segala susah payah Anda."},
 {cat:"THANK",en:"Thank you for your kindness.",id:"Terima kasih atas kebaikan hati Anda."},
-{cat:"THANK",en:"Thank you for the flowers.",id:"Terima kasih atas (pemberian) bunganya."},
+{cat:"THANK",en:"Thank you for the flowers.",id:"Terima kasih atas pemberian bunganya."},
 {cat:"THANK",en:"Thank you very much for your coming.",id:"Terima kasih banyak atas kedatangan Anda."},
+{cat:"THANK",en:"Thank you very much for lending me the magazine.",id:"Terima kasih banyak atas peminjaman majalahnya kepada saya."},
 {cat:"THANK",en:"Thank you just the same.",id:"Terima kasih juga saya ucapkan kepada Anda."},
 {cat:"THANK",en:"Many thanks for your hospitality.",id:"Terima kasih atas sambutan yang ramah tamah dari Anda."},
-{cat:"THANK",en:"I'm very grateful to you.",id:"Saya sangat berterima kasih kepada Anda."},
-{cat:"THANK",en:"I can't thank you enough.",id:"Saya mengucapkan terima kasih yang sedalam-dalamnya."},
-{cat:"THANK",en:"I don't know how to thank you.",id:"Saya tidak tahu bagaimana mengucapkan terima kasih saya kepada Anda."},
-{cat:"THANK",en:"I'll remember it forever.",id:"Saya akan mengingatnya selama-lamanya."},
-{cat:"THANK",en:"I'm deeply indebted to you.",id:"Saya sangat berhutang budi kepada Anda."},
-{cat:"THANK",en:"It's very kind of you.",id:"Baik benar hati Anda."},
-{cat:"THANK",en:"It's very nice of you.",id:"Baik benar hati Anda."},
-{cat:"THANK",en:"That's very kind of you.",id:"Baik benar hati Anda."},
-{cat:"THANK",en:"No, thanks.",id:"Tidak, terima kasih."}
-];
-V=V.concat([
-// EXCUSES
+{cat:"THANK",en:"I am very grateful to you.",id:"Saya sangat berterima kasih kepada Anda."},
+{cat:"THANK",en:"I cannot thank you enough.",id:"Saya mengucapkan terima kasih yang sedalam-dalamnya."},
+{cat:"THANK",en:"I cannot find words how to thank you.",id:"Saya tidak dapat mencari kata-kata bagaimana mengucapkan terima kasih."},
+{cat:"THANK",en:"I do not know how to thank you.",id:"Saya tidak tahu bagaimana mengucapkan terima kasih saya kepada Anda."},
+{cat:"THANK",en:"I shall not forget it, you may be sure!",id:"Saya tidak akan melupakannya, Percayalah!"},
+{cat:"THANK",en:"I will remember it till my dying day.",id:"Saya akan mengingatnya sampai mati."},
+{cat:"THANK",en:"I will remember it forever.",id:"Saya akan mengingatnya selama-lamanya."},
+{cat:"THANK",en:"I am deeply indebted.",id:"Saya sangat berhutang budi."},
+{cat:"THANK",en:"I am deeply indebted to you.",id:"Saya sangat berhutang budi kepada Anda."},
+{cat:"THANK",en:"I am deeply indebted to my parents.",id:"Saya sangat berhutang budi kepada orang tua saya."},
+{cat:"THANK",en:"It is very kind of you.",id:"Baik benar hati Anda."},
+{cat:"THANK",en:"It is very nice of you.",id:"Baik benar hati Anda."},
+{cat:"THANK",en:"It was very kind of you.",id:"Baik benar hati Anda."},
+{cat:"THANK",en:"It was very nice of you.",id:"Baik benar hati Anda."},
+{cat:"THANK",en:"That is very kind of you.",id:"Baik benar hati Anda."},
+{cat:"THANK",en:"That is very nice of you.",id:"Baik benar hati Anda."},
+{cat:"THANK",en:"No, thanks.",id:"Tidak, terima kasih."},
+{cat:"THANK",en:"No, thank you.",id:"Tidak, terima kasih."},
 {cat:"EXCUSE",en:"Excuse me.",id:"Maafkan saya."},
 {cat:"EXCUSE",en:"Excuse me for a moment.",id:"Maafkan saya sebentar."},
 {cat:"EXCUSE",en:"Excuse me for being late.",id:"Maafkan saya karena terlambat."},
+{cat:"EXCUSE",en:"Excuse me for coming late.",id:"Maafkan saya karena datang terlambat."},
+{cat:"EXCUSE",en:"Excuse me for not coming earlier.",id:"Maafkan saya karena tidak datang lebih cepat."},
 {cat:"EXCUSE",en:"Excuse my rudeness.",id:"Maafkan atas kekasaran saya."},
 {cat:"EXCUSE",en:"Forgive me.",id:"Maafkan saya."},
 {cat:"EXCUSE",en:"Pardon me.",id:"Maafkan saya."},
+{cat:"EXCUSE",en:"Forgive me for my rudeness.",id:"Maafkan saya atas kekasaran saya."},
+{cat:"EXCUSE",en:"Forgive my thoughtless remark.",id:"Kata-kata saya yang tidak dipikirkan terlebih dahulu."},
 {cat:"EXCUSE",en:"Please excuse me.",id:"Harap maafkan saya."},
+{cat:"EXCUSE",en:"Please excuse me for a moment.",id:"Harap maafkan saya sebentar."},
+{cat:"EXCUSE",en:"Please excuse me for being late.",id:"Harap maafkan saya karena terlambat."},
+{cat:"EXCUSE",en:"Please excuse me for coming late.",id:"Harap maafkan saya karena datang terlambat."},
+{cat:"EXCUSE",en:"Please excuse me for not coming earlier.",id:"Harap maafkan saya karena tidak datang lebih cepat."},
+{cat:"EXCUSE",en:"Please excuse my rudeness.",id:"Harap maafkan atas kekasaran saya."},
 {cat:"EXCUSE",en:"Please forgive me.",id:"Harap maafkan saya."},
+{cat:"EXCUSE",en:"Please forgive me for my rudeness.",id:"Harap maafkan saya atas kekasaran saya."},
+{cat:"EXCUSE",en:"Please forgive my thoughtless remark.",id:"Harap maafkan saya atas kata-kata yang tidak dipikirkan."},
 {cat:"EXCUSE",en:"Please pardon me.",id:"Harap maafkan saya."},
-{cat:"EXCUSE",en:"I'm sorry.",id:"Maaf (saya menyesal)."},
-{cat:"EXCUSE",en:"I'm so sorry.",id:"Saya sangat menyesal."},
-{cat:"EXCUSE",en:"I'm very sorry.",id:"Saya sangat menyesal."},
-{cat:"EXCUSE",en:"I'm sorry I can't help you.",id:"Maaf, saya tidak dapat menolong Anda."},
-{cat:"EXCUSE",en:"I'm sorry to have kept you waiting.",id:"Maaf, Anda sampai menunggu-nunggu kepada saya."},
-{cat:"EXCUSE",en:"I'm sorry to have troubled you.",id:"Maaf, saya telah mengganggu Anda."},
+{cat:"EXCUSE",en:"I am sorry.",id:"Maaf, saya menyesal."},
+{cat:"EXCUSE",en:"I am sorry indeed.",id:"Saya menyesal sekali."},
+{cat:"EXCUSE",en:"I am so sorry.",id:"Saya sangat menyesal."},
+{cat:"EXCUSE",en:"I am very sorry.",id:"Saya sangat menyesal."},
+{cat:"EXCUSE",en:"I am sorry I cannot help you.",id:"Maaf, saya tidak dapat menolong Anda."},
+{cat:"EXCUSE",en:"I am sorry to have kept you waiting.",id:"Maaf, Anda sampai menunggu-nunggu kepada saya."},
+{cat:"EXCUSE",en:"I am sorry to have troubled you.",id:"Maaf, saya telah mengganggu Anda."},
+{cat:"EXCUSE",en:"I am very sorry you are ill.",id:"Saya sangat sedih Anda sakit."},
+{cat:"EXCUSE",en:"I am sorry for you.",id:"Saya kecewa terhadap Anda."},
+{cat:"EXCUSE",en:"I am sorry you did not come to see me.",id:"Saya kecewa Anda tidak datang."},
 {cat:"EXCUSE",en:"I beg your pardon.",id:"Saya minta maaf."},
 {cat:"EXCUSE",en:"I apologize.",id:"Saya minta maaf."},
 {cat:"EXCUSE",en:"I must apologize to you.",id:"Saya harus minta maaf kepada Anda."},
-{cat:"EXCUSE",en:"I didn't want to hurt your feelings.",id:"Saya tidak bermaksud melukai perasaan Anda."},
+{cat:"EXCUSE",en:"I must apologize for what I said.",id:"Saya harus minta maaf atas apa yang saya ucapkan."},
+{cat:"EXCUSE",en:"I ought to apologize to you.",id:"Saya harus minta maaf kepada Anda."},
+{cat:"EXCUSE",en:"I did not want to hurt your feelings.",id:"Saya tidak bermaksud melukai perasaan Anda."},
 {cat:"EXCUSE",en:"I regret the misunderstanding.",id:"Saya menyesal kesalah pahaman kita."},
-{cat:"EXCUSE",en:"I hope you'll forgive me.",id:"Saya harap Anda memaafkan saya."},
-{cat:"EXCUSE",en:"I didn't do it on purpose.",id:"Saya tidak sengaja melakukannya."},
-{cat:"EXCUSE",en:"It's my fault.",id:"Itu kesalahan saya."},
-{cat:"EXCUSE",en:"It's my mistake.",id:"Itu kesalahan saya."},
-{cat:"EXCUSE",en:"It wasn't your fault.",id:"Itu bukan kesalahan Anda."},
-{cat:"EXCUSE",en:"It doesn't matter.",id:"Tidak apa."},
-{cat:"EXCUSE",en:"It's nothing at all.",id:"Tidak apa-apa."},
-{cat:"EXCUSE",en:"Don't be angry.",id:"Jangan marah."},
-{cat:"EXCUSE",en:"Don't think me rude.",id:"Jangan menganggap saya kasar."},
-// CONGRATULATIONS
+{cat:"EXCUSE",en:"I hope you will not be angry.",id:"Saya berharap Anda tidak marah."},
+{cat:"EXCUSE",en:"I hope you will forgive me.",id:"Saya harap Anda memaafkan saya."},
+{cat:"EXCUSE",en:"I hope you will not be offended.",id:"Saya harap Anda tidak kecil hati."},
+{cat:"EXCUSE",en:"I did not do it on purpose.",id:"Saya tidak sengaja melakukannya."},
+{cat:"EXCUSE",en:"May I be excused?",id:"Dapatkah saya dimaafkan?"},
+{cat:"EXCUSE",en:"May I be excused for being late?",id:"Dapatkah saya dimaafkan karena terlambat?"},
+{cat:"EXCUSE",en:"May I be excused for not attending the meeting?",id:"Dapatkah saya dimaafkan karena tidak menghadiri rapat itu?"},
+{cat:"EXCUSE",en:"May I express my regrets?",id:"Dapatkah saya menyatakan penyesalan saya?"},
+{cat:"EXCUSE",en:"It is my fault.",id:"Itu kesalahan saya."},
+{cat:"EXCUSE",en:"It is my mistake.",id:"Itu kesalahan saya."},
+{cat:"EXCUSE",en:"It was not your fault.",id:"Itu bukan kesalahan Anda."},
+{cat:"EXCUSE",en:"It was not your mistake.",id:"Itu bukan kesalahan Anda."},
+{cat:"EXCUSE",en:"It was very stupid of me.",id:"Adalah saya yang sangat bodoh."},
+{cat:"EXCUSE",en:"It does not matter.",id:"Tidak apa."},
+{cat:"EXCUSE",en:"It is nothing at all.",id:"Tidak apa-apa."},
+{cat:"EXCUSE",en:"It is very regretable.",id:"Adalah sangat disesalkan hal itu."},
+{cat:"EXCUSE",en:"How stupid of me.",id:"Alangkah bodohnya saya."},
+{cat:"EXCUSE",en:"Do not be angry.",id:"Jangan marah."},
+{cat:"EXCUSE",en:"Do not think me angry.",id:"Jangan menganggap saya marah."},
+{cat:"EXCUSE",en:"Do not think me rude.",id:"Jangan menganggap saya kasar."},
+{cat:"EXCUSE",en:"Do not think me impolite.",id:"Jangan menganggap saya kurang ajar."},
 {cat:"CONGRAT",en:"Happy Feast Day.",id:"Selamat Hari Raya."},
 {cat:"CONGRAT",en:"Happy New Year.",id:"Selamat Tahun Baru."},
 {cat:"CONGRAT",en:"Happy Birthday.",id:"Selamat Ulang Tahun."},
-{cat:"CONGRAT",en:"Happy Anniversary.",id:"Selamat Ulang Tahun (Peringatan)."},
+{cat:"CONGRAT",en:"Happy Anniversary.",id:"Selamat Ulang Tahun Peringatan."},
 {cat:"CONGRAT",en:"Merry Christmas.",id:"Selamat Hari Natal."},
 {cat:"CONGRAT",en:"Merry Christmas and Happy New Year.",id:"Selamat Hari Natal dan Tahun Baru."},
 {cat:"CONGRAT",en:"Congratulations.",id:"Selamat berbahagia."},
+{cat:"CONGRAT",en:"Congratulations on your engagement.",id:"Selamat bertunangan."},
 {cat:"CONGRAT",en:"Congratulations on your marriage.",id:"Selamat berbahagia atas perkawinan Anda."},
 {cat:"CONGRAT",en:"Congratulations on your success.",id:"Selamat atas kesuksesan Anda."},
 {cat:"CONGRAT",en:"Congratulations on your promotion.",id:"Selamat atas kenaikan pangkat Anda."},
@@ -284,352 +253,262 @@ V=V.concat([
 {cat:"CONGRAT",en:"Congratulations on getting a scholarship.",id:"Selamat mendapat beasiswa."},
 {cat:"CONGRAT",en:"Congratulations on passing your exams.",id:"Selamat atas kelulusan ujian Anda."},
 {cat:"CONGRAT",en:"Congratulations on the birth of your son.",id:"Selamat atas kelahiran putra Anda."},
+{cat:"CONGRAT",en:"Congratulations on your appointment as Minister.",id:"Selamat atas pengangkatan Anda sebagai Menteri."},
+{cat:"CONGRAT",en:"Congratulations on your appointment as President.",id:"Selamat atas pengangkatan Anda sebagai Presiden."},
+{cat:"CONGRAT",en:"Congratulations on your nomination as Headmaster.",id:"Selamat atas pengangkatan Anda sebagai Kepala Sekolah."},
+{cat:"CONGRAT",en:"Congratulations on your nomination as Captain.",id:"Selamat atas pengangkatan Anda sebagai Kapten."},
+{cat:"CONGRAT",en:"Congratulations on your escape.",id:"Selamat atas terhindarnya Anda dari bahaya maut."},
+{cat:"CONGRAT",en:"Let me congratulate you.",id:"Saya ucapkan selamat kepada Anda."},
 {cat:"CONGRAT",en:"Please accept my congratulations.",id:"Terimalah ucapan selamat saya."},
-{cat:"CONGRAT",en:"I wish you a Happy Birthday.",id:"Saya ucapkan kepada Anda Selamat Hari Ulang Tahun."},
-{cat:"CONGRAT",en:"I'm happy to hear of your success.",id:"Saya bahagia mendengar kesuksesan Anda."},
-{cat:"CONGRAT",en:"I'm sure you'll succeed.",id:"Saya yakin Anda akan sukses."},
-{cat:"CONGRAT",en:"How lucky you are.",id:"Alangkah beruntungnya Anda."}
-,
-// GREETINGS missing
-{cat:"GREET",en:"What a surpirse to know you!",id:"Sungguh mengharukan bertemu dengan Anda!"},
-{cat:"GREET",en:"I didn't expect to meet you here.",id:"Saya tidak menyangka kita bertemu di sini."},
-// PARTINGS missing
-{cat:"PART",en:"I hope I shan't miss you.",id:"Saya mengharap tidak akan gagal menjumpai Anda."},
-{cat:"PART",en:"Please give me kind regards to your mother.",id:"Sampaikan salam saya kepada Ibu Anda."},
-{cat:"PART",en:"Please give me best regards to your parents.",id:"Sampaikan salam hangat saya kepada orang tua Anda."},
-{cat:"PART",en:"Please send my best love to your sister.",id:"Sampaikan salam mesraku kepada saudara perempuan Anda."},
-{cat:"PART",en:"Please give my kind remembrance to your family.",id:"Sampaikan salam saya kepada keluarga Anda."},
-// THANKS missing
-{cat:"THANK",en:"Thank very much.",id:"Terima kasih banyak."},
-{cat:"THANK",en:"Thank a lot.",id:"Terima kasih banyak."},
-{cat:"THANK",en:"Thanks for all your trouble.",id:"Terima kasih atas segala jerih payah Anda."},
-{cat:"THANK",en:"Thank you for everything.",id:"Terima kasih atas segala sesuatu."},
-{cat:"THANK",en:"Thank you for your help.",id:"Terima kasih atas pertolongan Anda."},
-{cat:"THANK",en:"Thank you for all your trouble.",id:"Terima kasih atas segala susah payah Anda."},
-{cat:"THANK",en:"Thank you very much for lending me the magazine.",id:"Terima kasih banyak atas peminjaman majalahnya kepada saya."},
-{cat:"THANK",en:"I shan't forget it, you may be sure!",id:"Saya tidak akan melupakannya, Percayalah!"},
-{cat:"THANK",en:"I'll remember it till my dying day.",id:"Saya akan mengingatnya sampai mati."},
-{cat:"THANK",en:"I'm deeply indebted.",id:"Saya sangat berhutang budi."},
-{cat:"THANK",en:"I'm deeply indebted to my parents.",id:"Saya sangat berhutang budi kepada orang tua saya."},
-{cat:"THANK",en:"It was very kind of you.",id:"Baik benar hati Anda."},
-{cat:"THANK",en:"It was very nice of you.",id:"Baik benar hati Anda."},
-{cat:"THANK",en:"No, thank you.",id:"Tidak, terima kasih (Jawaban untuk menolak pemberian)."},
-// EXCUSES missing
-{cat:"EXCUSE",en:"Excuse me for coming late.",id:"Maafkan saya karena datang terlambat."},
-{cat:"EXCUSE",en:"Excuse me for not coming earlier.",id:"Maafkan saya karena tidak datang lebih cepat."},
-{cat:"EXCUSE",en:"Please excuse me for a moment.",id:"Harap maafkan saya sebentar."},
-{cat:"EXCUSE",en:"Please excuse me for being late.",id:"Harap maafkan saya karena terlambat."},
-{cat:"EXCUSE",en:"Please excuse me for coming late.",id:"Harap maafkan saya karena datang terlambat."},
-{cat:"EXCUSE",en:"Please excuse me for not coming earlier.",id:"Harap maafkan saya karena tidak datang lebih cepat."},
-{cat:"EXCUSE",en:"Please excuse my rudeness.",id:"Harap maafkan atas kekasaran saya."},
-{cat:"EXCUSE",en:"Please forgive me for my rudeness.",id:"Harap maafkan saya atas kekasaran saya."},
-{cat:"EXCUSE",en:"Please forgive my thoughtless remark.",id:"Harap maafkan saya atas kata-kata saya yang tidak di pikirkan terlebih dahulu."},
-{cat:"EXCUSE",en:"Forgive me for my rudeness.",id:"Maafkan saya atas kekasaran saya."},
-{cat:"EXCUSE",en:"Forgive my thoughtless remark.",id:"Kata-kata saya yang tidak dipikirkan terlebih dahulu."},
-{cat:"EXCUSE",en:"I'm sorry indeed.",id:"Saya menyesal sekali."},
-{cat:"EXCUSE",en:"I'm very sorry you're ill.",id:"Saya sangat sedih Anda sakit."},
-{cat:"EXCUSE",en:"I'm sorry for you.",id:"Saya kecewa terhadap Anda."},
-{cat:"EXCUSE",en:"I'm sorry you didn't come to see me.",id:"Saya kecewa Anda tidak datang."},
-{cat:"EXCUSE",en:"I must apologize for what I said.",id:"Saya harus minta maaf atas apa yang saya ucapkan."},
-{cat:"EXCUSE",en:"I ought to apologize to you.",id:"Saya harus minta maaf kepada Anda."},
-{cat:"EXCUSE",en:"I hope you'll not be angry.",id:"Saya berharap Anda tidak marah."},
-{cat:"EXCUSE",en:"I hope you'll not be offended.",id:"Saya harap Anda tidak kecil hati."},
-{cat:"EXCUSE",en:"May I be excused?",id:"Dapatkah saya dimaafkan? (Bolehkah saya tidak ikut)"},
-{cat:"EXCUSE",en:"May I be excused for being late?",id:"Dapatkah saya dimaafkan karena terlambat?"},
-{cat:"EXCUSE",en:"May I be excused for not attending the meeting?",id:"Dapatkah saya dimaafkan karena tidak menghadiri rapat itu?"},
-{cat:"EXCUSE",en:"May I express my regrets?",id:"Dapatkah saya menyatakan penyesalan saya?"},
-{cat:"EXCUSE",en:"It was very stupid of me.",id:"Adalah saya yang sangat bodoh."},
-{cat:"EXCUSE",en:"It's very regretable.",id:"Adalah sangat disesalkan hal itu."},
-{cat:"EXCUSE",en:"How stupid of me.",id:"Alangkah bodohnya saya."},
-{cat:"EXCUSE",en:"Don't think me angry.",id:"Jangan menganggap saya marah."},
-{cat:"EXCUSE",en:"Don't think me impolite.",id:"Jangan menganggap saya kurang ajar."},
-// CONGRATULATIONS missing
 {cat:"CONGRAT",en:"Heartiest congratulations to you.",id:"Ucapan selamat dari lubuk hatiku untukmu."},
-{cat:"CONGRAT",en:"My congratulations on your winning the scholarship.",id:"Ucapan selamat saya atas dapatnya Anda memenangkan beasiswa."},
-{cat:"CONGRAT",en:"My congratulations to you on your promotion.",id:"Ucapan selamat saya kepada Anda atas kenaikan pangkat Anda."},
-{cat:"CONGRAT",en:"I wish you a Happy Feast Day.",id:"Saya ucapkan kepada Anda Selamat Hari Raya."},
-{cat:"CONGRAT",en:"I wish you a Merry Christmas and a Happy New Year.",id:"Saya ucapkan kepada Anda Selamat Hari Raya Natal dan Tahun Baru."},
+{cat:"CONGRAT",en:"My congratulations on your winning the scholarship.",id:"Ucapan selamat saya atas kemenangan beasiswa Anda."},
+{cat:"CONGRAT",en:"My congratulations to you on your promotion.",id:"Ucapan selamat saya atas kenaikan pangkat Anda."},
+{cat:"CONGRAT",en:"I wish you a Happy Feast Day.",id:"Saya ucapkan Selamat Hari Raya."},
+{cat:"CONGRAT",en:"I wish you a Happy Birthday.",id:"Saya ucapkan Selamat Hari Ulang Tahun."},
+{cat:"CONGRAT",en:"I wish you a Merry Christmas and Happy New Year.",id:"Saya ucapkan Selamat Hari Natal dan Tahun Baru."},
 {cat:"CONGRAT",en:"I hope you had a nice Feast Day.",id:"Saya harap Anda telah ber-Hari Raya yang menyenangkan."},
 {cat:"CONGRAT",en:"I hope you had a nice Christmas.",id:"Saya harap Anda telah ber-Hari Natal yang menyenangkan."},
 {cat:"CONGRAT",en:"I hope you enjoyed your holidays.",id:"Saya harap Anda menikmati liburan Anda."},
 {cat:"CONGRAT",en:"I convey my congratulations.",id:"Saya sampaikan ucapan selamat saya kepada Anda."},
 {cat:"CONGRAT",en:"I congratulate you on winning the election.",id:"Saya ucapkan selamat atas kemenangan Anda dalam pemilihan."},
-{cat:"CONGRAT",en:"I'm happy to hear of your success.",id:"Saya bahagia mendengar kesuksesan Anda."},
-{cat:"CONGRAT",en:"Congratulations on your engagement.",id:"Selamat bertunangan."},
-{cat:"CONGRAT",en:"Congratulations on your appointment as Minister.",id:"Selamat atas pengangkatan Anda sebagai Menteri."},
-{cat:"CONGRAT",en:"Congratulations on your appointment as President.",id:"Selamat atas pengangkatan Anda sebagai Presiden."},
-{cat:"CONGRAT",en:"Congratulations on your nomination as Headmaster.",id:"Selamat atas pengangkatan Anda sebagai Kepala Sekolah."},
-{cat:"CONGRAT",en:"Congratulations on your nomination as Chief of village.",id:"Selamat atas pengangkatan Anda sebagai kepala kampung."},
-{cat:"CONGRAT",en:"Congratulations on your nomination as Captain.",id:"Selamat atas pengangkatan Anda sebagai Kapten."},
-{cat:"CONGRAT",en:"Congratulations on your escape.",id:"Selamat atas terhindarnya Anda dari bahaya maut."},
-{cat:"CONGRAT",en:"Let me congratulate you.",id:"Saya ucapkan selamat kepada Anda."},
-// REQUEST missing
+{cat:"CONGRAT",en:"I am happy to hear of your success.",id:"Saya bahagia mendengar kesuksesan Anda."},
+{cat:"CONGRAT",en:"I am sure you will succeed.",id:"Saya yakin Anda akan sukses."},
+{cat:"CONGRAT",en:"How lucky you are.",id:"Alangkah beruntungnya Anda."}
+,{cat:"REQ",en:"Wait a minute.",id:"Tunggu sebentar."},
+{cat:"REQ",en:"Wait a moment.",id:"Tunggu sebentar."},
+{cat:"REQ",en:"Please wait a minute.",id:"Silahkan tunggu sebentar."},
+{cat:"REQ",en:"Please come in.",id:"Silahkan masuk."},
+{cat:"REQ",en:"Please go out.",id:"Silahkan keluar."},
+{cat:"REQ",en:"Please sit down.",id:"Silahkan duduk."},
+{cat:"REQ",en:"Please take a seat.",id:"Silahkan duduk."},
+{cat:"REQ",en:"Please have a seat.",id:"Silahkan duduk."},
+{cat:"REQ",en:"Please come again.",id:"Silahkan datang lagi."},
+{cat:"REQ",en:"Please stand up.",id:"Silahkan berdiri."},
+{cat:"REQ",en:"Close the door, please.",id:"Harap tutup pintu."},
+{cat:"REQ",en:"Open the door, please.",id:"Harap buka pintu."},
+{cat:"REQ",en:"Have a drink, please.",id:"Silahkan minum."},
 {cat:"REQ",en:"Have a pat luck, please.",id:"Silahkan makan seadanya."},
 {cat:"REQ",en:"Have a taste, please.",id:"Silahkan dicicipi."},
 {cat:"REQ",en:"Have some more cake, please.",id:"Silahkan ditambah kuenya."},
+{cat:"REQ",en:"Be careful, please.",id:"Berhati-hatilah."},
+{cat:"REQ",en:"Be patient, please.",id:"Bersabarlah."},
 {cat:"REQ",en:"Be happy, please.",id:"Berbahagialah."},
-{cat:"REQ",en:"Won't you please sit down?",id:"Mengapa Anda tidak duduk?"},
+{cat:"REQ",en:"Won not you please sit down?",id:"Mengapa Anda tidak duduk?"},
+{cat:"REQ",en:"Would you mind opening the door?",id:"Apakah Anda keberatan membukakan pintu?"},
+{cat:"REQ",en:"Would you wait a minute, please?",id:"Maukah Anda menunggu sebentar?"},
 {cat:"REQ",en:"Would you mind waiting a minute?",id:"Anda menunggu sebentar tidak apa-apa, kan?"},
+{cat:"REQ",en:"May I borrow this book?",id:"Bolehkah saya pinjam buku ini?"},
 {cat:"REQ",en:"Could I borrow this magazine?",id:"Dapatkah kiranya saya meminjam majalah ini?"},
-{cat:"REQ",en:"I wonder if I could borrow this magazine?",id:"Apa bisa saya meminjam majalah ini, ya?"},
-{cat:"REQ",en:"I'd like to borrow this magazine if I may.",id:"Saya ingin meminjam majalah ini jika boleh."},
-{cat:"REQ",en:"If you don't mind, I'd like to borrow this magazine.",id:"Sekiranya Anda tidak apa-apa, saya ingin meminjam majalah ini."},
-{cat:"REQ",en:"Do you mind if I ask you a question?",id:"Tidak apa-apakah jika saya mengajukan sesuatu pertanyaan kepada Anda?"},
+{cat:"REQ",en:"I wonder if I could borrow this magazine?",id:"Apa bisa saya meminjam majalah ini?"},
+{cat:"REQ",en:"I would like to borrow this magazine if I may.",id:"Saya ingin meminjam majalah ini jika boleh."},
+{cat:"REQ",en:"If you do not mind, I would like to borrow this magazine.",id:"Sekiranya Anda tidak apa-apa, saya ingin meminjam majalah ini."},
+{cat:"REQ",en:"Do you mind if I ask you a question?",id:"Tidak apa-apakah jika saya mengajukan pertanyaan kepada Anda?"},
+{cat:"REQ",en:"Do you mind if I smoke?",id:"Apakah Anda keberatan jika saya merokok?"},
 {cat:"REQ",en:"Will you open the door, please.",id:"Bukalah pintu itu, ya."},
 {cat:"REQ",en:"Yes, I will.",id:"Baiklah."},
 {cat:"REQ",en:"Sure, I will.",id:"Baiklah."},
 {cat:"REQ",en:"Okay, I will.",id:"Baiklah."},
 {cat:"REQ",en:"Certainly, I will.",id:"Baiklah."},
-{cat:"REQ",en:"Don't smoke here, please.",id:"Jangan merokok di sini, ya."},
-{cat:"REQ",en:"No, I won't.",id:"Baiklah."},
-{cat:"REQ",en:"Sure, I won't.",id:"Baiklah."},
-{cat:"REQ",en:"Okay, I won't.",id:"Baiklah."},
-{cat:"REQ",en:"Certainly, I won't.",id:"Baiklah."},
-{cat:"REQ",en:"All right, I won't.",id:"Baiklah."},
+{cat:"REQ",en:"Of course, I will.",id:"Baiklah."},
+{cat:"REQ",en:"Do not smoke here, please.",id:"Jangan merokok di sini, ya."},
+{cat:"REQ",en:"No, I will not.",id:"Baiklah."},
+{cat:"REQ",en:"Sure, I will not.",id:"Baiklah."},
+{cat:"REQ",en:"Okay, I will not.",id:"Baiklah."},
+{cat:"REQ",en:"Certainly, I will not.",id:"Baiklah."},
+{cat:"REQ",en:"All right, I will not.",id:"Baiklah."},
+{cat:"REQ",en:"Would you like something to drink?",id:"Mau minum?"},
 {cat:"REQ",en:"Yes, please.",id:"Ya."},
 {cat:"REQ",en:"Yes, thank you.",id:"Ya, terima kasih."},
-{cat:"REQ",en:"Let's not stop here.",id:"Mari jangan berhenti di sini."},
+{cat:"REQ",en:"Would you like some coffee?",id:"Anda ingin kopi?"},
+{cat:"REQ",en:"No, thanks.",id:"Tidak, terima kasih."},
+{cat:"REQ",en:"Let us not stop here.",id:"Mari jangan berhenti di sini."},
+{cat:"REQ",en:"Let us begin the lesson now.",id:"Marilah kita mulai pelajaran itu sekarang."},
+{cat:"REQ",en:"Let us go to school together.",id:"Mari kita pergi ke sekolah bersama-sama."},
 {cat:"REQ",en:"Let us begin the meeting.",id:"Mari kita mulai rapat ini."},
 {cat:"REQ",en:"Let me love you.",id:"Biarkanlah saya mencintai Anda."},
 {cat:"REQ",en:"Let him come in.",id:"Biarkanlah dia masuk."},
-{cat:"REQ",en:"Don't let her come out.",id:"Jangan biarkan dia keluar."},
-{cat:"REQ",en:"Don't let them go.",id:"Jangan biarkan mereka pergi."},
-{cat:"REQ",en:"Let's think about it for a few days.",id:"Mari kita pikirkan hal itu selama beberapa hari."},
-{cat:"REQ",en:"It's all right.",id:"Baik-baik saja."},
-{cat:"REQ",en:"That's all right.",id:"Tidak apa-apa."},
-{cat:"REQ",en:"That's right.",id:"Itu betul."},
-{cat:"REQ",en:"Good! That's all right.",id:"Bagus! Cukuplah itu."},
+{cat:"REQ",en:"Do not let her come out.",id:"Jangan biarkan dia keluar."},
+{cat:"REQ",en:"Do not let them go.",id:"Jangan biarkan mereka pergi."},
+{cat:"REQ",en:"Let us think about it for a few days.",id:"Mari kita pikirkan hal itu selama beberapa hari."},
+{cat:"REQ",en:"All right.",id:"Baiklah."},
+{cat:"REQ",en:"It is all right.",id:"Baik-baik saja."},
+{cat:"REQ",en:"That is all right.",id:"Tidak apa-apa."},
+{cat:"REQ",en:"That is right.",id:"Itu betul."},
 {cat:"REQ",en:"Are you all right?",id:"Anda tidak apa-apa bukan?"},
-{cat:"REQ",en:"You're quite right.",id:"Anda memang benar."},
+{cat:"REQ",en:"You are quite right.",id:"Anda memang benar."},
 {cat:"REQ",en:"Right you are!",id:"Anda benar."},
-{cat:"REQ",en:"That's nice.",id:"Itulah yang baik."},
+{cat:"REQ",en:"That is nice.",id:"Itulah yang baik."},
+{cat:"REQ",en:"Of course.",id:"Tentu saja."},
+{cat:"REQ",en:"Certainly.",id:"Tentu saja."},
+{cat:"REQ",en:"Sure.",id:"Tentu saja."},
 {cat:"REQ",en:"Surely.",id:"Tentu saja."},
-{cat:"REQ",en:"Here it is.",id:"Ini dia (Barang yang dicari; dipinjam; atau diminta)"},
-{cat:"REQ",en:"There it is.",id:"Itu dia (Barang yang dicari; dipinjam; atau diminta)."},
-{cat:"REQ",en:"Here he is.",id:"Ini dia (Orang yang diingini)."},
-{cat:"REQ",en:"There he is.",id:"Itu dia (Orang yang diingini)."},
+{cat:"REQ",en:"Here it is.",id:"Ini dia."},
+{cat:"REQ",en:"There it is.",id:"Itu dia."},
+{cat:"REQ",en:"Here he is.",id:"Ini dia orangnya."},
+{cat:"REQ",en:"There he is.",id:"Itu dia orangnya."},
 {cat:"REQ",en:"On the way.",id:"Dalam perjalanan."},
 {cat:"REQ",en:"In this way.",id:"Dengan cara ini."},
-// INVITATION missing
-{cat:"INVITE",en:"I'd like to ask you to go swimming.",id:"Saya ingin mengajak Anda pergi berenang."},
+{cat:"REQ",en:"By the way.",id:"O, ya (memotong percakapan)."},
+{cat:"INVITE",en:"Please come to my house tonight.",id:"Harap datang ke rumah saya malam ini."},
+{cat:"INVITE",en:"I would like to invite you to come to dinner.",id:"Saya ingin mengundang Anda ke rumah saya untuk makan malam."},
+{cat:"INVITE",en:"I would like to invite you to come to a party.",id:"Saya ingin mengundang Anda datang ke pesta."},
+{cat:"INVITE",en:"I would like to ask you to go swimming.",id:"Saya ingin mengajak Anda pergi berenang."},
+{cat:"INVITE",en:"Are you free tonight?",id:"Apakah Anda malam ini tidak ada kesibukan?"},
+{cat:"INVITE",en:"Would you like to go to the football match with me next Sunday?",id:"Maukah Anda pergi menonton pertandingan sepak bola dengan saya Minggu depan?"},
 {cat:"INVITE",en:"Would you like to go to the pictures with me Saturday night?",id:"Maukah Anda pergi nonton film bersama saya Sabtu malam?"},
-{cat:"INVITE",en:"Let's go to a cinema show.",id:"Mari kita pergi nonton film."},
+{cat:"INVITE",en:"Let us go to the movies.",id:"Mari kita nonton bioskop."},
+{cat:"INVITE",en:"Let us go to a cinema show.",id:"Mari kita pergi nonton film."},
+{cat:"INVITE",en:"Let us meet in front of the bookstore.",id:"Kita jumpa saja di depan toko buku."},
+{cat:"INVITE",en:"How about going to the movies tonight?",id:"Bagaimana kalau pergi ke bioskop dengan saya malam ini?"},
 {cat:"INVITE",en:"How about going to the football match with me tomorrow afternoon?",id:"Bagaimana kalau pergi ke pertandingan sepak bola bersama saya besok sore?"},
-{cat:"INVITE",en:"If you have nothing planned for Sunday morning, I'd like to invite you to a party.",id:"Jika Anda tidak ada rencana apa-apa pada hari Minggu pagi, saya ingin mengundang Anda ke suatu pesta."},
+{cat:"INVITE",en:"If you have nothing planned for Sunday morning, I would like to invite you to a party.",id:"Jika Anda tidak ada rencana apa-apa pada hari Minggu pagi, saya ingin mengundang Anda ke pesta."},
 {cat:"INVITE",en:"Are you going to be busy on Sunday morning?",id:"Apakah Anda akan sibuk pada hari Minggu pagi?"},
-{cat:"INVITE",en:"I'm sorry, but I have to go tonight.",id:"Maafkan saya, karena saya harus pergi malam ini."},
-{cat:"INVITE",en:"I'm awfully sorry, but I have to attend a meeting tonight.",id:"Saya sangat menyesal, karena saya harus menghadiri suatu rapat malam ini."},
-{cat:"INVITE",en:"I'm sorry, I'd love to come but I've already accepted another invitation.",id:"Saya menyesal, saya ingin datang tetapi telah saya terima undangan lain untuk sore itu juga."},
-{cat:"INVITE",en:"Thank you. That's very kind of you.",id:"Terima kasih. Alangkah baik hati Anda."},
-{cat:"INVITE",en:"We're going to a party tonight.",id:"Kami akan mengunjungi pesta malam ini."},
+{cat:"INVITE",en:"I hope you can come.",id:"Saya berharap Anda dapat datang."},
+{cat:"INVITE",en:"I am sorry, but I have to go tonight.",id:"Maafkan saya, karena saya harus pergi malam ini."},
+{cat:"INVITE",en:"I am sorry, but I have to attend a meeting tonight.",id:"Maafkan saya, karena saya harus menghadiri suatu rapat nanti malam."},
+{cat:"INVITE",en:"I will come to your house.",id:"Saya akan datang ke rumah Anda."},
+{cat:"INVITE",en:"I am awfully sorry, but I have to attend a meeting tonight.",id:"Saya sangat menyesal, karena saya harus menghadiri suatu rapat malam ini."},
+{cat:"INVITE",en:"I am sorry, I would love to come but I have already accepted another invitation.",id:"Saya menyesal, saya ingin datang tetapi telah saya terima undangan lain untuk sore itu juga."},
+{cat:"INVITE",en:"Thank you. I would be happy to come.",id:"Terima kasih. Saya akan datang dengan senang hati."},
+{cat:"INVITE",en:"Thank you. I will be glad to go.",id:"Terima kasih. Saya akan pergi dengan hati gembira."},
+{cat:"INVITE",en:"Thank you. That is very kind of you.",id:"Terima kasih. Alangkah baik hati Anda."},
+{cat:"INVITE",en:"It is nice of you to invite me.",id:"Alangkah baiknya Anda mengundang saya."},
+{cat:"INVITE",en:"We are going to a party tonight.",id:"Kami akan mengunjungi pesta malam ini."},
+{cat:"INVITE",en:"Where shall we meet?",id:"Dimanakah kita akan berjumpa?"},
+{cat:"INVITE",en:"Are you free this morning?",id:"Apakah Anda tidak ada kesibukan pada pagi ini?"},
 {cat:"INVITE",en:"Please come to my house tomorrow.",id:"Harap datang ke rumah saya besok."},
 {cat:"INVITE",en:"Thank you so much for inviting me.",id:"Terima kasih banyak atas undangannya kepada saya."},
-// PERMISSION missing
+{cat:"INVITE",en:"Thank you for the invitation.",id:"Terima kasih atas undangan Anda itu."}
+,{cat:"PERM",en:"May I come in?",id:"Bolehkah saya masuk?"},
+{cat:"PERM",en:"May I take a seat?",id:"Bolehkah saya duduk?"},
+{cat:"PERM",en:"May I know your name?",id:"Bolehkah saya mengetahui nama Anda?"},
+{cat:"PERM",en:"May I smoke here?",id:"Bolehkah saya merokok di sini?"},
+{cat:"PERM",en:"May I offer you a cigarette?",id:"Bolehkah saya menawarkan rokok kepada Anda?"},
+{cat:"PERM",en:"May I speak to you a moment?",id:"Bolehkah saya berbicara dengan Anda sebentar?"},
 {cat:"PERM",en:"May I see her for a moment?",id:"Bolehkah saya menemuinya sebentar?"},
+{cat:"PERM",en:"May I read your magazine?",id:"Bolehkah saya membaca majalah Anda?"},
 {cat:"PERM",en:"May I disturb you for a minute?",id:"Bolehkah saya mengganggu Anda sebentar?"},
+{cat:"PERM",en:"May I borrow your book?",id:"Bolehkah saya meminjam buku Anda?"},
 {cat:"PERM",en:"May I copy the lesson?",id:"Bolehkah saya menyalin pelajaran ini?"},
+{cat:"PERM",en:"May I take you home?",id:"Bolehkah saya mengantarkan Anda pulang?"},
 {cat:"PERM",en:"May I pass her your message?",id:"Bolehkah saya menyampaikan pesan Anda kepadanya?"},
 {cat:"PERM",en:"May I invite her?",id:"Bolehkah saya mengundangnya?"},
 {cat:"PERM",en:"May I trust her?",id:"Bolehkah saya mempercayainya?"},
 {cat:"PERM",en:"May I take a seat next to you?",id:"Bolehkah saya duduk di sampingmu?"},
+{cat:"PERM",en:"May I accompany you to the bookstore?",id:"Bolehkah saya menemani Anda ke toko buku?"},
+{cat:"PERM",en:"May I tell you something?",id:"Bolehkah saya memberitahukan sesuatu kepada Anda?"},
+{cat:"PERM",en:"May I help you?",id:"Bolehkah saya menolong Anda?"},
+{cat:"PERM",en:"May I wait for you?",id:"Bolehkah saya menunggu Anda?"},
 {cat:"PERM",en:"May I accompany you for a walk?",id:"Bolehkah saya menemani Anda berjalan-jalan?"},
 {cat:"PERM",en:"May I talk to you personally?",id:"Bolehkah saya berbicara empat mata dengan Anda?"},
 {cat:"PERM",en:"May I turn down the TV?",id:"Bolehkah saya mengecilkan suara TV?"},
 {cat:"PERM",en:"May I turn up the radio?",id:"Bolehkah saya mengeraskan suara radio?"},
 {cat:"PERM",en:"May I ask you some questions?",id:"Bolehkah saya menanyakan beberapa pertanyaan kepadamu?"},
-{cat:"PERM",en:"May I answer your question?",id:"Bolehkah saya menjawab pertanyaan-pertanyaan Anda?"},
+{cat:"PERM",en:"May I answer your question?",id:"Bolehkah saya menjawab pertanyaan Anda?"},
+{cat:"PERM",en:"May I take part in the game?",id:"Bolehkah saya ikut serta dalam permainan?"},
+{cat:"PERM",en:"May I participate in the discussion?",id:"Bolehkah saya mengambil bagian dalam diskusi?"},
+{cat:"PERM",en:"May I pick you up tonight?",id:"Bolehkah saya menjemput Anda nanti malam?"},
 {cat:"PERM",en:"May I help you to solve the problem?",id:"Bolehkah saya menolong Anda memecahkan persoalan itu?"},
 {cat:"PERM",en:"May I talk over the problem with you?",id:"Bolehkah saya merundingkan problem itu kepada Anda?"},
+{cat:"PERM",en:"May I leave you?",id:"Bolehkah saya meninggalkan Anda?"},
 {cat:"PERM",en:"May I send her away?",id:"Bolehkah saya menyuruhnya pergi?"},
+{cat:"PERM",en:"May I write down your name and address?",id:"Bolehkah saya mencatat nama dan alamat Anda?"},
 {cat:"PERM",en:"May I call for your book?",id:"Bolehkah saya mengambil buku Anda?"},
 {cat:"PERM",en:"May I call on you a moment?",id:"Bolehkah saya singgah kepadamu sebentar?"},
 {cat:"PERM",en:"May I call at your home now?",id:"Bolehkah saya singgah ke rumahmu sekarang?"},
 {cat:"PERM",en:"May I translate the letter for you?",id:"Bolehkah saya menerjemahkan surat ini untuk Anda?"},
 {cat:"PERM",en:"May I believe what she said?",id:"Bolehkah saya mempercayai apa yang ia katakan?"},
-{cat:"PERM",en:"May I pay for you?",id:"Bolehkah saya membayar untuk Anda?"},
-{cat:"PERM",en:"May I know where you live?",id:"Bolehkah saya mengetahui dimana Anda tinggal?"},
-{cat:"PERM",en:"May I hand the letter?",id:"Bolehkah saya menyampaikan surat ini kepadanya?"},
-{cat:"PERM",en:"May I change place with you?",id:"Bolehkah saya tukar tempat dengan Anda?"},
-{cat:"PERM",en:"May I come into the hall?",id:"Bolehkah saya masuk ke dalam ruangan?"},
-{cat:"PERM",en:"May I be your guide?",id:"Bolehkah saya menjadi penunjuk jalan bagi Anda?"},
-{cat:"PERM",en:"May I lock the door?",id:"Bolehkah saya mengunci pintu?"},
-{cat:"PERM",en:"May I hold you up a moment?",id:"Bolehkah saya menahan Anda sebentar?"},
-// PROHIBIT missing
-{cat:"PROHIB",en:"Don't keep your eye on me!",id:"Jangan mengawasiku!"},
-{cat:"PROHIB",en:"Don't ruin him!",id:"Jangan merusak akhlaknya!"},
-{cat:"PROHIB",en:"Don't be obstinate!",id:"Jangan berkeras kepala!"},
-{cat:"PROHIB",en:"Don't leave her alone!",id:"Jangan meninggalkan dia sendirian!"},
-{cat:"PROHIB",en:"Don't disappoint her!",id:"Jangan mengecewakan dia!"},
-{cat:"PROHIB",en:"Don't stand on my way!",id:"Jangan menghalang-halangiku!"},
-{cat:"PROHIB",en:"Don't get mixed with her!",id:"Jangan bergaul dengan dia!"},
-{cat:"PROHIB",en:"Don't change your mind!",id:"Jangan merubah pendirian Anda!"},
-{cat:"PROHIB",en:"Don't let me alone!",id:"Jangan membiarkan saya sendirian!"},
-{cat:"PROHIB",en:"Don't kid her!",id:"Jangan mempermainkan dia!"},
-{cat:"PROHIB",en:"Don't put off your plan!",id:"Jangan membatalkan rencanamu!"},
-{cat:"PROHIB",en:"Don't try frightening me!",id:"Jangan mencoba menakut-nakuti saya!"},
-{cat:"PROHIB",en:"Don't be set up!",id:"Jangan putus asa!"},
-{cat:"PROHIB",en:"Don't think bad of me!",id:"Jangan menganggap diriku yang tidak-tidak!"},
-{cat:"PROHIB",en:"Don't abuse me!",id:"Jangan menghinaku!"}]);
-V=V.concat([
-// REQUEST
-{cat:"REQ",en:"Wait a minute.",id:"Tunggu sebentar."},
-{cat:"REQ",en:"Please wait a minute.",id:"Silahkan tunggu sebentar."},
-{cat:"REQ",en:"Please come in.",id:"Silahkan masuk."},
-{cat:"REQ",en:"Please sit down.",id:"Silahkan duduk."},
-{cat:"REQ",en:"Please take a seat.",id:"Silahkan duduk."},
-{cat:"REQ",en:"Please have a seat.",id:"Silahkan duduk."},
-{cat:"REQ",en:"Please come again.",id:"Silahkan datang lagi."},
-{cat:"REQ",en:"Close the door, please.",id:"Harap tutup pintu."},
-{cat:"REQ",en:"Open the door, please.",id:"Harap buka pintu."},
-{cat:"REQ",en:"Have a drink, please.",id:"Silahkan minum."},
-{cat:"REQ",en:"Be careful, please.",id:"Berhati-hatilah."},
-{cat:"REQ",en:"Be patient, please.",id:"Bersabarlah."},
-{cat:"REQ",en:"Would you mind opening the door?",id:"Apakah Anda keberatan membukakan pintu?"},
-{cat:"REQ",en:"Would you wait a minute, please?",id:"Maukah Anda menunggu sebentar?"},
-{cat:"REQ",en:"May I borrow this book?",id:"Bolehkah saya pinjam buku ini?"},
-{cat:"REQ",en:"Do you mind if I smoke?",id:"Apakah Anda keberatan jika saya merokok?"},
-{cat:"REQ",en:"Would you like something to drink?",id:"Mau minum?"},
-{cat:"REQ",en:"Would you like some coffee?",id:"Anda ingin kopi?"},
-{cat:"REQ",en:"Let's begin the lesson now.",id:"Marilah kita mulai pelajaran itu sekarang."},
-{cat:"REQ",en:"Let's go to school together.",id:"Mari kita pergi ke sekolah bersama-sama."},
-{cat:"REQ",en:"Let's begin the meeting.",id:"Mari kita mulai rapat ini."},
-{cat:"REQ",en:"All right.",id:"Baiklah."},
-{cat:"REQ",en:"Of course.",id:"Tentu saja."},
-{cat:"REQ",en:"Certainly.",id:"Tentu saja."},
-{cat:"REQ",en:"By the way.",id:"O, ya (memotong percakapan)."},
-// INVITATION
-{cat:"INVITE",en:"Please come to my house tonight.",id:"Harap datang ke rumah saya malam ini."},
-{cat:"INVITE",en:"I'd like to invite you to come to dinner.",id:"Saya ingin mengundang Anda ke rumah saya untuk makan malam."},
-{cat:"INVITE",en:"I'd like to invite you to come to a party.",id:"Saya ingin mengundang Anda datang ke pesta."},
-{cat:"INVITE",en:"Are you free tonight?",id:"Apakah Anda malam ini tidak ada kesibukan?"},
-{cat:"INVITE",en:"Would you like to go to the football match with me?",id:"Maukah Anda pergi menonton pertandingan sepak bola dengan saya?"},
-{cat:"INVITE",en:"Let's go to the movies.",id:"Mari kita nonton bioskop."},
-{cat:"INVITE",en:"Let's meet in front of the bookstore.",id:"Kita jumpa saja di depan toko buku."},
-{cat:"INVITE",en:"How about going to the movies tonight?",id:"Bagaimana kalau pergi ke bioskop dengan saya malam ini?"},
-{cat:"INVITE",en:"I hope you can come.",id:"Saya berharap Anda dapat datang."},
-{cat:"INVITE",en:"I'll come to your house.",id:"Saya akan datang ke rumah Anda."},
-{cat:"INVITE",en:"Thank you. I'd be happy to come.",id:"Terima kasih. Saya akan datang dengan senang hati."},
-{cat:"INVITE",en:"It's nice of you to invite me.",id:"Alangkah baiknya Anda mengundang saya."},
-{cat:"INVITE",en:"Where shall we meet?",id:"Dimanakah kita akan berjumpa?"},
-{cat:"INVITE",en:"Are you free this morning?",id:"Apakah Anda tidak ada kesibukan pada pagi ini?"},
-{cat:"INVITE",en:"Thank you for the invitation.",id:"Terima kasih atas undangan Anda itu."},
-{cat:"INVITE",en:"I'm sorry, but I have to attend a meeting tonight.",id:"Maafkan saya, karena saya harus menghadiri suatu rapat nanti malam."}
-]);
-V=V.concat([
-// PERMISSION
-{cat:"PERM",en:"May I come in?",id:"Bolehkah saya masuk?"},
-{cat:"PERM",en:"May I take a seat?",id:"Bolehkah saya duduk?"},
-{cat:"PERM",en:"May I know your name?",id:"Bolehkah saya mengetahui nama Anda?"},
-{cat:"PERM",en:"May I smoke here?",id:"Bolehkah saya merokok di sini?"},
-{cat:"PERM",en:"May I speak to you a moment?",id:"Bolehkah saya berbicara dengan Anda sebentar?"},
-{cat:"PERM",en:"May I read your magazine?",id:"Bolehkah saya membaca majalah Anda?"},
-{cat:"PERM",en:"May I borrow your book?",id:"Bolehkah saya meminjam buku Anda?"},
-{cat:"PERM",en:"May I help you?",id:"Bolehkah saya menolong Anda?"},
-{cat:"PERM",en:"May I take you home?",id:"Bolehkah saya mengantarkan Anda pulang?"},
-{cat:"PERM",en:"May I accompany you to the bookstore?",id:"Bolehkah saya menemani Anda ke toko buku?"},
-{cat:"PERM",en:"May I tell you something?",id:"Bolehkah saya memberitahukan sesuatu kepada Anda?"},
-{cat:"PERM",en:"May I wait for you?",id:"Bolehkah saya menunggu Anda?"},
-{cat:"PERM",en:"May I take part in the game?",id:"Bolehkah saya ikut serta dalam permainan?"},
-{cat:"PERM",en:"May I participate in the discussion?",id:"Bolehkah saya mengambil bagian dalam diskusi?"},
-{cat:"PERM",en:"May I pick you up tonight?",id:"Bolehkah saya menjemput Anda nanti malam?"},
-{cat:"PERM",en:"May I leave you?",id:"Bolehkah saya meninggalkan Anda?"},
-{cat:"PERM",en:"May I write down your name and address?",id:"Bolehkah saya mencatat nama dan alamat Anda?"},
 {cat:"PERM",en:"May I treat you?",id:"Bolehkah saya mentraktir Anda?"},
 {cat:"PERM",en:"May I show you the way?",id:"Bolehkah saya menunjukkan jalan kepada Anda?"},
 {cat:"PERM",en:"May I stay here for a while?",id:"Bolehkah saya tinggal di sini sebentar?"},
-{cat:"PERM",en:"May I have your address?",id:"Bolehkah saya mendapatkan alamat Anda?"},
+{cat:"PERM",en:"May I pay for you?",id:"Bolehkah saya membayar untuk Anda?"},
+{cat:"PERM",en:"May I have your address?",id:"Bolehkan saya mendapatkan alamat Anda?"},
+{cat:"PERM",en:"May I know where you live?",id:"Bolehkah saya mengetahui dimana Anda tinggal?"},
+{cat:"PERM",en:"May I hand the letter?",id:"Bolehkah saya menyampaikan surat ini kepadanya?"},
+{cat:"PERM",en:"May I change place with you?",id:"Bolehkah saya tukar tempat dengan Anda?"},
 {cat:"PERM",en:"May I open the door?",id:"Bolehkah saya membukakan pintu?"},
+{cat:"PERM",en:"May I come into the hall?",id:"Bolehkah saya masuk ke dalam ruangan?"},
+{cat:"PERM",en:"May I be your guide?",id:"Bolehkah saya menjadi penunjuk jalan bagi Anda?"},
 {cat:"PERM",en:"May I use the motorcycle?",id:"Bolehkah saya memakai sepeda motor?"},
 {cat:"PERM",en:"May I take your picture?",id:"Bolehkah saya mengambil gambar Anda?"},
+{cat:"PERM",en:"May I lock the door?",id:"Bolehkah saya mengunci pintu?"},
 {cat:"PERM",en:"May I take off my coat?",id:"Bolehkah saya menanggalkan jas?"},
 {cat:"PERM",en:"May I try on the coat?",id:"Bolehkah saya mencoba baju jas ini?"},
+{cat:"PERM",en:"May I hold you up a moment?",id:"Bolehkah saya menahan Anda sebentar?"},
 {cat:"PERM",en:"May I take her to the party?",id:"Bolehkah saya mengajaknya ke pesta?"},
 {cat:"PERM",en:"May I take my bath first?",id:"Bolehkah saya mandi dahulu?"},
-// PROHIBIT
-{cat:"PROHIB",en:"Don't give up!",id:"Jangan menyerah!"},
-{cat:"PROHIB",en:"Don't keep quiet!",id:"Jangan tinggal diam!"},
-{cat:"PROHIB",en:"Don't be jealous!",id:"Jangan cemburu!"},
-{cat:"PROHIB",en:"Don't deceive me!",id:"Jangan menipuku!"},
-{cat:"PROHIB",en:"Don't be desperate!",id:"Jangan putus asa!"},
-{cat:"PROHIB",en:"Don't confuse me!",id:"Jangan membingungkan saya!"},
-{cat:"PROHIB",en:"Don't be so rude!",id:"Jangan kurang ajar!"},
-{cat:"PROHIB",en:"Don't be careless!",id:"Jangan lengah!"},
-{cat:"PROHIB",en:"Don't make me angry!",id:"Jangan membuatku marah!"},
-{cat:"PROHIB",en:"Don't be too hasty!",id:"Jangan terlalu berburu-buru!"},
-{cat:"PROHIB",en:"Don't bother me!",id:"Jangan merepotiku!"},
-{cat:"PROHIB",en:"Don't be afraid!",id:"Jangan takut!"},
-{cat:"PROHIB",en:"Don't trust her!",id:"Jangan mempercayainya!"},
-{cat:"PROHIB",en:"Don't worry about me!",id:"Jangan khawatir terhadap diriku!"},
-{cat:"PROHIB",en:"Don't worry, be happy!",id:"Jangan khawatir, bahagia!"},
-{cat:"PROHIB",en:"Don't pretend to be busy!",id:"Jangan pura-pura sibuk!"},
-{cat:"PROHIB",en:"Don't try to fool me!",id:"Jangan mencoba mempermainkan saya!"},
-{cat:"PROHIB",en:"Don't tell me a lie!",id:"Jangan mendustaiku!"},
-{cat:"PROHIB",en:"Don't let me be alone!",id:"Jangan membiarkan saya sendirian!"},
-{cat:"PROHIB",en:"Don't waste your time!",id:"Jangan menyia-nyiakan waktu Anda!"},
-{cat:"PROHIB",en:"Don't rely on others!",id:"Jangan mengandalkan kepada orang lain!"},
-{cat:"PROHIB",en:"Don't betray your friends!",id:"Jangan mengkhianati teman-teman Anda!"},
-{cat:"PROHIB",en:"Don't move and be calm!",id:"Jangan bergerak dan tenanglah!"},
-{cat:"PROHIB",en:"Don't be nervous!",id:"Jangan bertegang syarat!"},
-{cat:"PROHIB",en:"Don't try to frighten me!",id:"Jangan mencoba menakut-nakuti saya!"}
-]);
-
-// ---- CATEGORY CONFIG ----
+{cat:"PROHIB",en:"Do not give up!",id:"Jangan menyerah!"},
+{cat:"PROHIB",en:"Do not keep quiet!",id:"Jangan tinggal diam!"},
+{cat:"PROHIB",en:"Do not be jealous!",id:"Jangan cemburu!"},
+{cat:"PROHIB",en:"Do not deceive me!",id:"Jangan menipuku!"},
+{cat:"PROHIB",en:"Do not abuse me!",id:"Jangan menghinaku!"},
+{cat:"PROHIB",en:"Do not be set up!",id:"Jangan putus asa!"},
+{cat:"PROHIB",en:"Do not be desperate!",id:"Jangan putus asa!"},
+{cat:"PROHIB",en:"Do not confuse me!",id:"Jangan membingungkan saya!"},
+{cat:"PROHIB",en:"Do not think bad of me!",id:"Jangan menganggap diriku yang tidak-tidak!"},
+{cat:"PROHIB",en:"Do not change your mind!",id:"Jangan merubah pendirian Anda!"},
+{cat:"PROHIB",en:"Do not be so rude!",id:"Jangan kurang ajar!"},
+{cat:"PROHIB",en:"Do not be careless!",id:"Jangan lengah!"},
+{cat:"PROHIB",en:"Do not make me angry!",id:"Jangan membuatku marah!"},
+{cat:"PROHIB",en:"Do not get mixed with her!",id:"Jangan bergaul dengan dia!"},
+{cat:"PROHIB",en:"Do not be too hasty!",id:"Jangan terlalu berburu-buru!"},
+{cat:"PROHIB",en:"Do not keep your eye on me!",id:"Jangan mengawasiku!"},
+{cat:"PROHIB",en:"Do not ruin him!",id:"Jangan merusak akhlaknya!"},
+{cat:"PROHIB",en:"Do not be obstinate!",id:"Jangan berkeras kepala!"},
+{cat:"PROHIB",en:"Do not leave her alone!",id:"Jangan meninggalkan dia sendirian!"},
+{cat:"PROHIB",en:"Do not disappoint her!",id:"Jangan mengecewakan dia!"},
+{cat:"PROHIB",en:"Do not bother me!",id:"Jangan merepotiku!"},
+{cat:"PROHIB",en:"Do not stand on my way!",id:"Jangan menghalang-halangiku!"},
+{cat:"PROHIB",en:"Do not be afraid!",id:"Jangan takut!"},
+{cat:"PROHIB",en:"Do not trust her!",id:"Jangan mempercayainya!"},
+{cat:"PROHIB",en:"Do not worry about me!",id:"Jangan khawatir terhadap diriku!"},
+{cat:"PROHIB",en:"Do not worry, be happy!",id:"Jangan khawatir, bahagia!"},
+{cat:"PROHIB",en:"Do not pretend to be busy!",id:"Jangan pura-pura sibuk!"},
+{cat:"PROHIB",en:"Do not try to fool me!",id:"Jangan mencoba mempermainkan saya!"},
+{cat:"PROHIB",en:"Do not tell me a lie!",id:"Jangan mendustaiku!"},
+{cat:"PROHIB",en:"Do not let me be alone!",id:"Jangan membiarkan saya sendirian!"},
+{cat:"PROHIB",en:"Do not waste your time!",id:"Jangan menyia-nyiakan waktu Anda!"},
+{cat:"PROHIB",en:"Do not rely on others!",id:"Jangan mengandalkan kepada orang lain!"},
+{cat:"PROHIB",en:"Do not kid her!",id:"Jangan mempermainkan dia!"},
+{cat:"PROHIB",en:"Do not betray your friends!",id:"Jangan mengkhianati teman-teman Anda!"},
+{cat:"PROHIB",en:"Do not put off your plan!",id:"Jangan membatalkan rencanamu!"},
+{cat:"PROHIB",en:"Do not move and be calm!",id:"Jangan bergerak dan tenanglah!"},
+{cat:"PROHIB",en:"Do not be nervous!",id:"Jangan bertegang syarat!"},
+{cat:"PROHIB",en:"Do not try to frighten me!",id:"Jangan mencoba menakut-nakuti saya!"}
+];
 var CATS=[
-  {key:"ALL",  label:"Semua"},
+  {key:"ALL",label:"Semua"},
   {key:"GREET",label:"Greetings"},
-  {key:"PART", label:"Partings"},
+  {key:"PART",label:"Partings"},
   {key:"THANK",label:"Thanks"},
   {key:"EXCUSE",label:"Excuses"},
   {key:"CONGRAT",label:"Congratulations"},
-  {key:"REQ",  label:"Request"},
+  {key:"REQ",label:"Request"},
   {key:"INVITE",label:"Invitation"},
-  {key:"PERM", label:"Permission"},
+  {key:"PERM",label:"Permission"},
   {key:"PROHIB",label:"Prohibit"}
 ];
+var curCat="ALL", curMode="en";
+var deck=[], idx=0, ronde=1, cp=0, ch=0, cbv=0, rev=false, toRev=[];
 
-// ---- STATE ----
-var curCat="ALL";
-var deck=[];
-var idx=0;
-var ronde=1;
-var ratings=[];
-var revealed=false;
-var hintShown=false;
+function catLabel(k){for(var i=0;i<CATS.length;i++)if(CATS[i].key===k)return CATS[i].label;return k;}
+function getQ(c){return curMode==="en"?c.en:c.id;}
+function getA(c){return curMode==="en"?c.id:c.en;}
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
 
-function getMode(){
-  return document.querySelector('input[name=mode]:checked').value;
+function setMode(m){
+  curMode=m;
+  document.getElementById("ml-en").className="ml"+(m==="en"?" on":"");
+  document.getElementById("ml-id").className="ml"+(m==="id"?" on":"");
+  fullRestart();
 }
 
-function getFilteredCards(){
-  if(curCat==="ALL") return V.slice();
-  return V.filter(function(c){return c.cat===curCat;});
-}
-
-function shuffle(arr){
-  for(var i=arr.length-1;i>0;i--){
-    var j=Math.floor(Math.random()*(i+1));
-    var tmp=arr[i];arr[i]=arr[j];arr[j]=tmp;
-  }
-  return arr;
-}
-
-function getAnswer(c){
-  return getMode()==="en" ? c.id : c.en;
-}
-
-function getQuestion(c){
-  return getMode()==="en" ? c.en : c.id;
-}
-
-function catLabel(cat){
-  for(var i=0;i<CATS.length;i++) if(CATS[i].key===cat) return CATS[i].label;
-  return cat;
-}
-
-function updateSub(){
-  var total=getFilteredCards().length;
-  var label=curCat==="ALL"?"Semua Kategori":catLabel(curCat);
-  document.getElementById("sub-lbl").textContent=label+" \u2022 "+total+" frasa";
+function setCat(k){
+  curCat=k;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+k+"')")b.classList.add("on");});
+  fullRestart();
 }
 
 function buildFilters(){
@@ -637,150 +516,93 @@ function buildFilters(){
   el.innerHTML="";
   CATS.forEach(function(c){
     var btn=document.createElement("button");
+    btn.className="fb"+(c.key===curCat?" on":"");
+    btn.setAttribute("onclick","setCat('"+c.key+"')");
     btn.textContent=c.label;
-    btn.className=c.key===curCat?"active":"";
-    btn.onclick=function(){setCat(c.key);};
     el.appendChild(btn);
   });
 }
 
-function setCat(c){
-  curCat=c;
-  buildFilters();
-  updateSub();
-  startQuiz();
-}
-
-function startQuiz(){
-  deck=shuffle(getFilteredCards());
-  idx=0;
+function fullRestart(){
   ronde=1;
-  ratings=new Array(deck.length).fill(-1);
-  showQuizView();
+  deck=shuffle(getFiltered());
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  document.getElementById("qv").style.display="";
+  document.getElementById("rv").style.display="none";
+  document.getElementById("fv").style.display="none";
+  buildFilters();
   showCard();
-}
-
-function showQuizView(){
-  document.getElementById("quiz-view").style.display="";
-  document.getElementById("result-screen").style.display="none";
-  document.getElementById("final-screen").style.display="none";
 }
 
 function showCard(){
   if(idx>=deck.length){showResult();return;}
-  revealed=false;
-  hintShown=false;
+  rev=false;
   var c=deck[idx];
-  var card=document.getElementById("card");
-  card.style.transition="none";
-  card.classList.remove("flipped");
-  setTimeout(function(){card.style.transition="";},20);
-  document.getElementById("cat-badge").textContent=catLabel(c.cat);
-  document.getElementById("card-phrase").textContent=getQuestion(c);
-  var ansLbl=getMode()==="en"?"TERJEMAHAN INDONESIA":"TERJEMAHAN INGGRIS";
-  document.getElementById("card-lbl").textContent=ansLbl;
-  document.getElementById("card-answer").textContent=getAnswer(c);
-  document.getElementById("card-orig").textContent="\u2014 "+getQuestion(c);
-  document.getElementById("hint-box").style.display="none";
-  document.getElementById("hint-box").textContent="";
-  document.getElementById("rating").style.display="none";
-  updateProgress();
+  document.getElementById("cat-lbl").textContent=catLabel(c.cat);
+  document.getElementById("phrase").textContent=getQ(c);
+  document.getElementById("answer").textContent=getA(c);
+  document.getElementById("answer").style.display="none";
+  document.getElementById("tap-hint").style.display="";
+  document.getElementById("btns").style.display="none";
+  document.getElementById("prog").textContent=(idx+1)+"/"+deck.length+" — Ronde "+ronde;
 }
 
 function reveal(){
-  if(revealed) return;
-  revealed=true;
-  document.getElementById("card").classList.add("flipped");
-  setTimeout(function(){
-    document.getElementById("rating").style.display="flex";
-  },300);
+  if(rev)return;rev=true;
+  document.getElementById("answer").style.display="block";
+  document.getElementById("tap-hint").style.display="none";
+  document.getElementById("btns").style.display="flex";
 }
 
 function showHint(){
-  if(revealed) return;
+  if(rev)return;
   var c=deck[idx];
-  var ans=getAnswer(c);
-  var words=ans.split(" ");
-  var hint=words.slice(0,3).join(" ")+(words.length>3?"...":"");
-  var hb=document.getElementById("hint-box");
-  hb.textContent="\u1F4A1 Hint: "+hint;
-  hb.style.display="block";
-  hintShown=true;
+  var words=getA(c).split(" ");
+  alert("Hint: "+words.slice(0,3).join(" ")+(words.length>3?"...":""));
 }
 
-function rate(score){
-  ratings[idx]=score;
+function rate(r){
+  if(r===2)cp++;
+  else if(r===1){ch++;toRev.push(deck[idx]);}
+  else{cbv++;toRev.push(deck[idx]);}
   idx++;
+  if(idx>=deck.length){showResult();return;}
   showCard();
 }
 
-function updateProgress(){
-  var total=deck.length;
-  var done=idx;
-  var pct=total>0?Math.round(done/total*100):0;
-  document.getElementById("prog-fill").style.width=pct+"%";
-  document.getElementById("prog-text").textContent=done+" / "+total;
-  document.getElementById("ronde-text").textContent="Ronde "+ronde;
-}
-
 function showResult(){
-  document.getElementById("quiz-view").style.display="none";
-  document.getElementById("result-screen").style.display="";
-  var belum=ratings.filter(function(r){return r===0;}).length;
-  var hampir=ratings.filter(function(r){return r===1;}).length;
-  var paham=ratings.filter(function(r){return r===2;}).length;
-  document.getElementById("r-belum").textContent=belum;
-  document.getElementById("r-hampir").textContent=hampir;
-  document.getElementById("r-paham").textContent=paham;
-  document.getElementById("result-msg").textContent="Ronde "+ronde+" selesai! Total: "+deck.length+" kartu";
-  var repeatBtn=document.querySelector(".btn-next-ronde");
-  if(belum+hampir===0){
-    repeatBtn.style.display="none";
-  } else {
-    repeatBtn.style.display="";
-    repeatBtn.textContent="Ulangi yang Belum & Hampir ("+( belum+hampir)+") \u27A1";
-  }
+  document.getElementById("qv").style.display="none";
+  document.getElementById("rv").style.display="block";
+  document.getElementById("rp").textContent=cp;
+  document.getElementById("rh").textContent=ch;
+  document.getElementById("rbb").textContent=cbv;
+  var pct=deck.length>0?Math.round(cp/deck.length*100):0;
+  document.getElementById("ri").textContent=pct>=90?"??":pct>=70?"??":pct>=50?"??":"??";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=cp+" paham dari "+deck.length+" kartu.";
+  var nb=document.getElementById("next-btn");
+  if(toRev.length===0){nb.style.display="none";}
+  else{nb.style.display="";nb.textContent="Ulangi "+toRev.length+" kartu ?";}
 }
 
 function nextRonde(){
-  var repeat=[];
-  for(var i=0;i<deck.length;i++){
-    if(ratings[i]===0||ratings[i]===1) repeat.push(deck[i]);
-  }
-  if(repeat.length===0){showFinal();return;}
-  deck=shuffle(repeat);
-  idx=0;
+  if(toRev.length===0){showFinal();return;}
   ronde++;
-  ratings=new Array(deck.length).fill(-1);
-  document.getElementById("prog-fill").style.width="0%";
-  showQuizView();
+  deck=shuffle(toRev);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  document.getElementById("qv").style.display="";
+  document.getElementById("rv").style.display="none";
   showCard();
 }
 
 function showFinal(){
-  document.getElementById("quiz-view").style.display="none";
-  document.getElementById("result-screen").style.display="none";
-  document.getElementById("final-screen").style.display="";
-  var total=getFilteredCards().length;
-  document.getElementById("final-msg").textContent=
-    "Selesai dalam "+ronde+" ronde! Kamu mempelajari "+total+" frasa bahasa Inggris. Luar biasa!";
+  document.getElementById("rv").style.display="none";
+  document.getElementById("fv").style.display="block";
 }
 
-function restart(){
-  startQuiz();
-}
-
-// ---- MODE CHANGE ----
-document.querySelectorAll("input[name=mode]").forEach(function(el){
-  el.addEventListener("change",function(){
-    startQuiz();
-  });
-});
-
-// ---- INIT ----
+// Init
 buildFilters();
-updateSub();
-startQuiz();
+fullRestart();
 </script>
 </body>
 </html>
