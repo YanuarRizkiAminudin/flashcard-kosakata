@@ -88,7 +88,7 @@ const flashcards = [
     categoryColor: '#d1fae5', categoryTextColor: '#065f46',
     icon: '💬',
     title: 'English Phrases — Greetings to Prohibit',
-    kartu: 232,
+    kartu: 403,
     level: '🇬🇧→🇮🇩 / 🇮🇩→🇬🇧 · 9 Kategori',
     route: '/game/english-phrases',
   },
