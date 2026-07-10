@@ -83,6 +83,16 @@ const flashcards = [
     route: '/game/job-interview',
   },
   {
+    id: 'EP1',
+    category: 'English',
+    categoryColor: '#d1fae5', categoryTextColor: '#065f46',
+    icon: '💬',
+    title: 'English Phrases — Greetings to Prohibit',
+    kartu: 232,
+    level: '🇬🇧→🇮🇩 / 🇮🇩→🇬🇧 · 9 Kategori',
+    route: '/game/english-phrases',
+  },
+  {
     id: 1,
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
