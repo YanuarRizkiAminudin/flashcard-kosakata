@@ -672,7 +672,9 @@ function showCard(){
   hintShown=false;
   var c=deck[idx];
   var card=document.getElementById("card");
+  card.style.transition="none";
   card.classList.remove("flipped");
+  setTimeout(function(){card.style.transition="";},20);
   document.getElementById("cat-badge").textContent=catLabel(c.cat);
   document.getElementById("card-phrase").textContent=getQuestion(c);
   var ansLbl=getMode()==="en"?"TERJEMAHAN INDONESIA":"TERJEMAHAN INGGRIS";
@@ -750,6 +752,7 @@ function nextRonde(){
   idx=0;
   ronde++;
   ratings=new Array(deck.length).fill(-1);
+  document.getElementById("prog-fill").style.width="0%";
   showQuizView();
   showCard();
 }
