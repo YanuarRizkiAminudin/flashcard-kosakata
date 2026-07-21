@@ -918,8 +918,17 @@ function showArti(e){
   document.getElementById('arti-btn').style.display='none';
 }
 
+function updateAnsLang(){
+  if(!deck||deck.length===0)return;
+  var q=deck[idx];
+  var al=document.querySelector('input[name="ans-lang"]:checked').value;
+  document.getElementById('ent').style.display=al==='en'?'block':'none';
+  document.getElementById('idt').style.display=al==='id'?'block':'none';
+}
+
 function reveal(){
   if(rev)return;rev=true;
+  updateAnsLang();
   document.getElementById('ans').style.display='block';
   document.getElementById('hint').style.display='none';
   document.getElementById('ba').style.display='flex';
@@ -927,6 +936,15 @@ function reveal(){
   document.getElementById('arti-popup').style.display='none';
   document.getElementById('arti-btn').style.display='none';
 }
+
+document.querySelectorAll('input[name="ans-lang"]').forEach(function(r){
+  r.addEventListener('change',function(){
+    updateAnsLang();
+    if(rev){
+      document.getElementById('ans').style.display='block';
+    }
+  });
+});
 
 function rate(r){
   var q=deck[idx];
