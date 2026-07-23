@@ -77,6 +77,11 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
 .ri-py{font-size:11px;font-weight:600;color:#2d7a4f;}
 .ri-cat{font-size:10px;color:#8a8478;}
 .ri-id{font-size:11px;color:#8a8478;margin-left:auto;text-align:right;max-width:140px;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;}
+.ri-b{background:#fdf0f0;color:#b83232;}
+.ri-h{background:#fef3e2;color:#a05c00;}
+.rlist-ttl-wrap{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.rlist-note{font-size:10px;color:#a05c00;font-weight:500;}
 .btnbig{width:100%;padding:13px;border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
 .btn-green{background:linear-gradient(135deg,#2d7a4f,#3da866);color:#fff;box-shadow:0 3px 10px rgba(45,122,79,.25);}
 .btn-green:hover{opacity:.9;}
@@ -151,7 +156,10 @@ h1{font-family:'Noto Serif TC',serif;font-size:16px;color:#1a1814;text-align:cen
       </div>
       <div id="rlw" style="display:none">
         <div class="rlist-wrap">
-          <div class="rlist-ttl">Kartu untuk ronde berikutnya</div>
+          <div class="rlist-ttl-wrap">
+            <div class="rlist-ttl">Yang perlu diperkuat 🔥</div>
+            <div class="rlist-note">Hampir paham tidak ditampilkan</div>
+          </div>
           <div class="rlist" id="rl"></div>
         </div>
       </div>
@@ -949,8 +957,8 @@ document.querySelectorAll('input[name="ans-lang"]').forEach(function(r){
 function rate(r){
   var q=deck[idx];
   if(r==='p') cp++;
-  else if(r==='h'){ch++;toRev.push(q);}
-  else{cbv++;toRev.push(q);}
+  else if(r==='h'){ch++;q._h=(q._h||0)+1;toRev.push(q);}
+  else{cbv++;q._b=(q._b||0)+1;toRev.push(q);}
   upStats();idx++;
   if(idx>=deck.length){showResult();return;}
   showCard();
@@ -981,11 +989,20 @@ function showResult(){
   document.getElementById('nb').textContent='Lanjut Ronde '+(ronde+1)+' → '+toRev.length+' kartu';
   var rl=document.getElementById('rl');
   rl.innerHTML='';
-  toRev.forEach(function(v){
-    var d=document.createElement('div');d.className='ri';
-    d.innerHTML='<span class="ri-zh">'+v.z+'</span><div><div class="ri-py">'+v.p+'</div><div class="ri-cat">'+v.l+'</div></div><span class="ri-id">'+v.i+'</span>';
-    rl.appendChild(d);
-  });
+  // Only show "Belum" cards in list, sorted by most failed first
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML='<div style="padding:10px 12px;font-size:12px;color:#8a8478;text-align:center;">Tidak ada kartu yang benar-benar sulit 👏</div>';
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement('div');d.className='ri';
+      var score=v._b||0;
+      var scoreHtml='<span class="ri-score ri-b">✕'+score+'</span>';
+      d.innerHTML='<span class="ri-zh">'+v.z+'</span><div style="flex:1"><div class="ri-py">'+v.p+'</div><div class="ri-cat">'+v.l+'</div></div><span class="ri-id">'+v.i+'</span>'+scoreHtml;
+      rl.appendChild(d);
+    });
+  }
   document.getElementById('rlw').style.display='';
 }
 
