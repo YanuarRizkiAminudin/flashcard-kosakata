@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandarin L11 — ?? ?? ??</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:500px;}
+h1{font-family:"Noto Serif TC",serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-vocab.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-sent.on{background:#059669;border-color:#059669;}
+.fb.c-dial.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-qa.on{background:#d97706;border-color:#d97706;}
+.ls-lbl{font-size:10px;color:#8a8478;text-align:center;margin-bottom:5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
+.lang-sw{display:flex;background:#fff;border:1px solid #e8e4dc;border-radius:99px;padding:3px;gap:2px;margin-bottom:10px;}
+.lang-sw label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:99px;color:#8a8478;transition:all .2s;user-select:none;}
+.lang-sw input[type=radio]{display:none;}
+.lang-sw input[type=radio]:checked+label{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.3);}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.6rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.zh-main{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;line-height:1.2;text-align:center;}
+.zh-main.big{font-size:64px;}.zh-main.med{font-size:44px;}.zh-main.sm{font-size:28px;}.zh-main.xs{font-size:20px;}.zh-main.xxs{font-size:16px;}
+.py-sub{font-size:14px;color:#7c3aed;font-weight:600;margin-top:6px;}
+.sent-front{font-family:"Noto Serif TC",serif;font-size:18px;color:#1a1814;line-height:1.6;text-align:center;font-weight:600;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:3px;}
+.ans-py{font-size:16px;font-weight:700;color:#7c3aed;margin-bottom:4px;}
+.ans-id{font-size:16px;font-weight:700;color:#1a1814;line-height:1.5;}
+.ans-en{font-size:14px;color:#2563eb;font-weight:500;line-height:1.5;}
+.ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:5px 10px;margin-top:6px;font-style:italic;}
+.hint-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border:1.5px dashed #c4b5fd;border-radius:12px;background:transparent;color:#7c3aed;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:"DM Sans",sans-serif;margin-bottom:.5rem;}
+.hint-btn:hover{background:#f5f3ff;border-style:solid;}
+.hint-pop{background:linear-gradient(135deg,#f5f3ff,#eff6ff);border:1.5px solid #c4b5fd;border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:.5rem;animation:fup .2s ease;}
+.hint-pop-t{font-size:16px;font-weight:700;color:#1a1814;line-height:1.5;}
+.hint-pop-s{font-size:11px;color:#7c3aed;font-weight:500;margin-top:2px;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-family:"Noto Serif TC",serif;font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:"Noto Serif TC",serif;font-size:15px;color:#1a1814;min-width:60px;}
+.ri-id{font-size:11px;color:#7c3aed;margin-left:auto;text-align:right;max-width:180px;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>???? — ?? ?? ??</h1>
+  <div class="sub" id="sub-lbl">Bab 11 · Vocab + Kalimat + Dialog</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">?? Semua</button>
+    <button class="fb c-vocab" onclick="setCat('VOCAB')">?? Vocab</button>
+    <button class="fb c-sent" onclick="setCat('SENT')">?? Kalimat</button>
+    <button class="fb c-dial" onclick="setCat('DIAL')">?? Dialog</button>
+    <button class="fb c-qa" onclick="setCat('QA')">? Soal</button>
+  </div>
+  <div class="ls-lbl">Tampilan Jawaban</div>
+  <div class="lang-sw">
+    <input type="radio" name="al" id="aid" value="id" checked>
+    <label for="aid">???? Indonesia</label>
+    <input type="radio" name="al" id="aen" value="en">
+    <label for="aen">???? English</label>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div id="fv-vocab" style="display:none;text-align:center">
+        <div class="zh-main" id="zh-disp"></div>
+        <div class="py-sub" id="py-disp"></div>
+      </div>
+      <div id="fv-sent" style="display:none;width:100%">
+        <div class="sent-front" id="sent-disp"></div>
+      </div>
+      <div class="tap" id="tap"><span>??</span>Ketuk untuk jawaban</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div id="ab-id"><div class="atag">???? Indonesia</div><div class="ans-id" id="ans-id-txt"></div></div>
+        <div id="ab-en" style="display:none"><div class="atag">???? English</div><div class="ans-en" id="ans-en-txt"></div></div>
+        <div class="ans-note" id="ans-note" style="display:none"></div>
+      </div>
+    </div>
+    <div id="hp" class="hint-pop" style="display:none"><div class="hint-pop-t" id="hpt"></div><div class="hint-pop-s" id="hps"></div></div>
+    <button class="hint-btn" id="hb" onclick="doHint(event)">?? Hint</button>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">??</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">??</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">?</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Yang perlu diperkuat ??</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">?? Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">??</div>
+      <div class="res-title">????!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua kartu Bab 11 dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">?? Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+
+{t:"VOCAB",zh:"??",py:"yiqian",id:"sebelumnya / dulu / dahulu",en:"before / in the past",note:"Dipakai sebelum atau sesudah subjek"},
+{t:"VOCAB",zh:"??",py:"jingyAn",id:"pengalaman",en:"experience",note:"????? = punya pengalaman kerja"},
+{t:"VOCAB",zh:"??",py:"zhEyang",id:"seperti ini / begini",en:"like this / in this way"},
+{t:"VOCAB",zh:"??",py:"qiguai",id:"aneh / ganjil",en:"strange / weird / odd"},
+{t:"VOCAB",zh:"??",py:"banfa",id:"cara / jalan keluar / solusi",en:"method / solution / way"},
+{t:"VOCAB",zh:"??",py:"bangmang",id:"membantu / bantuan",en:"to help / to give a hand",note:"bangmang = ????"},
+{t:"VOCAB",zh:"??",py:"dasuan",id:"berencana / bermaksud",en:"to plan / to intend"},
+{t:"VOCAB",zh:"??",py:"keneng",id:"mungkin / kemungkinan",en:"maybe / possible"},
+{t:"VOCAB",zh:"?",py:"yue",id:"membuat janji / janjian",en:"to make an appointment"},
+{t:"VOCAB",zh:"??",py:"danshi",id:"tetapi / namun",en:"but / however"},
+{t:"VOCAB",zh:"??",py:"jueding",id:"memutuskan",en:"to decide"},
+{t:"VOCAB",zh:"??",py:"danxin",id:"khawatir / cemas",en:"to worry"},
+{t:"VOCAB",zh:"??",py:"jinzhang",id:"gugup / tegang",en:"nervous / tense"},
+{t:"VOCAB",zh:"??",py:"zhEzhong",id:"jenis ini / semacam ini",en:"this kind of"},
+{t:"SENT",zh:"???????????",py:"Wo yiqian zai chuantong yiyuan gongzuo.",id:"Saya dulu bekerja di rumah sakit tradisional.",en:"I used to work at a traditional hospital."},
+{t:"SENT",zh:"???????",py:"Wo yiqian shi xuesheng.",id:"Saya dulu adalah pelajar.",en:"I was a student before."},
+{t:"SENT",zh:"????????",py:"Ta yiqian zhu zai Taibei.",id:"Dia dulu tinggal di Taipei.",en:"He used to live in Taipei."},
+{t:"SENT",zh:"????????",py:"Yiqian wo zhu zai Taibei.",id:"Dulu saya tinggal di Taipei.",en:"Before, I lived in Taipei."},
+{t:"SENT",zh:"?????????,?????????",py:"Wo yiqian bu xihuan xue Zhongwen, xianzai xihuan le.",id:"Dulu tidak suka belajar Mandarin, sekarang sudah suka.",en:"I used to not like Chinese, now I do.",note:"? = perubahan keadaan"},
+{t:"SENT",zh:"??????????,?????????",py:"Wo yiqian bu xihuan xuexi Zhongwen, danshi xianzai hen xihuan le.",id:"Dulu tidak suka belajar Mandarin, tapi sekarang sangat suka.",en:"I used to not like studying Chinese, but now I do."},
+{t:"SENT",zh:"??????????",py:"Wo chifan yiqian bixu xi shou.",id:"Sebelum makan, saya harus cuci tangan.",en:"Before eating, I must wash my hands."},
+{t:"SENT",zh:"????,??????",py:"Chifan yiqian, wo bixu xi shou.",id:"Sebelum makan, saya harus cuci tangan.",en:"Before eating, I must wash my hands.",note:"?? bisa di awal atau akhir klausa"},
+{t:"SENT",zh:"??????,???????",py:"Wo qu Taiwan yiqian, xiang xian qu Riben wan.",id:"Sebelum ke Taiwan, ingin ke Jepang dulu.",en:"Before going to Taiwan, I want to visit Japan first."},
+{t:"SENT",zh:"?????,????????",py:"Qu Taiwan yiqian, wo yao xian qu Riben wan.",id:"Sebelum ke Taiwan, saya mau ke Jepang dulu.",en:"Before going to Taiwan, I will go to Japan first."},
+{t:"SENT",zh:"????????",py:"Ni you gongzuo jingyAn ma?",id:"Apakah kamu punya pengalaman kerja?",en:"Do you have work experience?"},
+{t:"SENT",zh:"????????",py:"Wo meiyou gongzuo jingyAn.",id:"Saya tidak punya pengalaman kerja.",en:"I have no work experience."},
+{t:"SENT",zh:"?????????????",py:"Wo zai xuexiao you wu nian de gongzuo jingyAn.",id:"Saya punya 5 tahun pengalaman kerja di sekolah.",en:"I have five years of work experience at school."},
+{t:"SENT",zh:"???????????",py:"Ni yiqian you shenme gongzuo jingyAn?",id:"Kamu dulu punya pengalaman kerja apa?",en:"What work experience did you have before?"},
+{t:"SENT",zh:"?????????",py:"Wo yiqian you jiaoshi jingyAn.",id:"Saya dulu punya pengalaman mengajar.",en:"I had teaching experience before."},
+{t:"SENT",zh:"??????",py:"Mingtian wo bang ni.",id:"Besok saya bantu kamu.",en:"I will help you tomorrow."},
+{t:"SENT",zh:"???????????",py:"Qing ni bang wo na zhuozi shang de shu.",id:"Tolong ambilkan buku di atas meja untukku.",en:"Please help me get the book on the table."},
+{t:"SENT",zh:"????????",py:"Xiexie ni bang wo de mang.",id:"Terima kasih sudah membantu saya.",en:"Thank you for helping me.",note:"???? = membantu saya"},
+{t:"SENT",zh:"??????",py:"Wo meiyou banfa.",id:"Saya tidak punya cara.",en:"I have no solution."},
+{t:"SENT",zh:"????,???????",py:"Wo you banfa, wo gen ni yiqi qu.",id:"Saya punya caranya, saya akan pergi bersamamu.",en:"I have a solution, I will go with you."},
+{t:"SENT",zh:"????????",py:"Zhege difang hen qiguai.",id:"Tempat ini sangat aneh.",en:"This place is very strange."},
+{t:"SENT",zh:"??????????",py:"Wo juede zhejian shi hen qiguai.",id:"Saya merasa hal ini sangat aneh.",en:"I think this matter is very strange."},
+{t:"SENT",zh:"???,????????",py:"Zhen qiguai, wo de shouji zai nali?",id:"Sungguh aneh, HP saya ada di mana?",en:"How strange, where is my phone?"},
+{t:"SENT",zh:"???,?????????,??????",py:"Zhen qiguai, wo de shouji gangcai zai zheli, xianzai bu jian le.",id:"Sungguh aneh, HP saya tadi ada di sini, sekarang hilang.",en:"How strange, my phone was just here but now it is gone.",note:"?? = baru saja / tadi"},
+{t:"SENT",zh:"??????????",py:"Zhe ji tian de tianqi hen qiguai.",id:"Cuaca beberapa hari ini sangat aneh.",en:"The weather these past few days is very strange."},
+{t:"SENT",zh:"???????,??????",py:"Ta de faxing hen qiguai, danshi wo xihuan.",id:"Gaya rambutnya sangat aneh, tapi saya suka.",en:"Her hairstyle is very strange, but I like it."},
+{t:"SENT",zh:"?????????",py:"Ni zhoumo you shenme dasuan?",id:"Kamu punya rencana apa untuk akhir pekan?",en:"What are your plans for the weekend?"},
+{t:"SENT",zh:"????????",py:"Keneng zhege zhoumo ba.",id:"Mungkin akhir pekan ini.",en:"Maybe this weekend.",note:"? = partikel dugaan"},
+{t:"SENT",zh:"?????,????????",py:"Deng ni jueding le, zai gei wo da dianhua ba.",id:"Setelah kamu memutuskan, telepon saya ya.",en:"After you decide, give me a call."},
+{t:"SENT",zh:"?????????,????????",py:"Qingwen ni de youxiang shi shenme, wo yao gei ni fa wenjian.",id:"Permisi, email kamu apa? Saya ingin mengirim dokumen.",en:"Excuse me, what is your email? I want to send you a document."},
+{t:"SENT",zh:"????????????????",py:"Ni you meiyou shoudao wo gei ni fa de dianziyoujian?",id:"Apakah kamu sudah menerima email yang saya kirimkan?",en:"Did you receive the email I sent you?"},
+{t:"DIAL",zh:"?????????????",py:"Ni gen na wei xin pengyou jianmian le meiyou?",id:"Apakah kamu sudah bertemu dengan teman baru itu?",en:"Have you met that new friend yet?"},
+{t:"DIAL",zh:"?????????????",py:"Wo hai mei jueding yao bu yao gen ta jianmian.",id:"Saya belum memutuskan mau bertemu dengannya atau tidak.",en:"I have not decided whether to meet him or not."},
+{t:"DIAL",zh:"??????",py:"Ni danxin shenme?",id:"Kamu khawatir tentang apa?",en:"What are you worried about?"},
+{t:"DIAL",zh:"???????,?????????,?????????????",py:"Wo you yidianr jinzhang, wo yiqian meiyou zhEzhong jingyAn, suoyi juede zheyang you yidianr qiguai.",id:"Saya sedikit gugup, sebelumnya tidak punya pengalaman seperti ini, jadi merasa agak aneh.",en:"I am a bit nervous. I have never had this kind of experience, so it feels a bit strange."},
+{t:"DIAL",zh:"?????,????,???????",py:"Ni bu yao jinzhang, wo you banfa, wo gen ni yiqi qu.",id:"Jangan gugup, saya punya caranya, saya akan pergi bersamamu.",en:"Do not be nervous. I have a solution. I will go with you."},
+{t:"DIAL",zh:"???,????????",py:"Tai hao le, xiexie ni bang wo de mang.",id:"Bagus sekali, terima kasih sudah membantu saya.",en:"Great, thank you for your help.",note:"???? = ??"},
+{t:"DIAL",zh:"????????????????",py:"Bu keqi. Ni dasuan shenme shihou gen ta jianmian?",id:"Sama-sama. Kamu berencana kapan mau bertemu dengannya?",en:"You are welcome. When are you planning to meet him?"},
+{t:"DIAL",zh:"?????????????,????????",py:"Keneng zhege zhoumo ba. Ruguo ni you kong, wo zai gen ta yue shijian.",id:"Mungkin akhir pekan ini. Kalau kamu ada waktu, saya akan janjian waktu dengannya.",en:"Maybe this weekend. If you are free, I will arrange a time with him."},
+{t:"DIAL",zh:"???,??????????,?????,????????",py:"You kong a, danshi wo mingtian bu hui lai xuexiao, deng ni jueding le, zai gei wo da dianhua ba.",id:"Ada waktu, tapi besok saya tidak ke sekolah. Setelah memutuskan, telepon saya ya.",en:"I am free, but I will not come to school tomorrow. After you decide, give me a call."},
+{t:"QA",zh:"????????",py:"YouMei yao gen shei jianmian?",id:"Dengan siapa Yumei ingin bertemu? ? Dengan teman baru itu.",en:"Who does Youmei want to meet? ? She wants to meet that new friend."},
+{t:"QA",zh:"???????????",py:"YouMei dasuan shenme shihou jianmian?",id:"Kapan Yumei berencana bertemu? ? Akhir pekan ini.",en:"When does Youmei plan to meet? ? This weekend."},
+{t:"QA",zh:"?????????????",py:"Weishenme YouMei juede you dianr qiguai?",id:"Kenapa Yumei merasa agak aneh? ? Karena gugup dan belum pernah punya pengalaman seperti ini.",en:"Why does Youmei feel strange? ? Because she is nervous and has never had this kind of experience."},
+{t:"QA",zh:"??????????",py:"YiWen gei YouMei shenme banfa?",id:"Apa solusi Yiwen? ? Yiwen mau pergi bersama Yumei.",en:"What solution did Yiwen give? ? Yiwen will go together with Youmei."},
+{t:"QA",zh:"??????????",py:"Mingtian YiWen hui lai xuexiao ma?",id:"Apakah besok Yiwen ke sekolah? ? Tidak, Yiwen tidak akan ke sekolah.",en:"Will Yiwen come to school tomorrow? ? No, she will not."},
+{t:"QA",zh:"??????????????",py:"YouMei he YiWen shi tongguo shenme lai lianxi?",id:"Bagaimana mereka berkomunikasi? ? Melalui telepon.",en:"How do they keep in contact? ? Through phone calls."},
+{t:"QA",zh:"????????????",py:"YouMei xianzai gen ta yue shijian le ma?",id:"Apakah Yumei sudah janjian? ? Belum, tunggu keputusan dulu.",en:"Has Youmei arranged a time? ? Not yet, she will wait until she decides."}
+];
+
+var CAT_CFG={
+  VOCAB:{label:"Vocab",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  SENT:{label:"Kalimat",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  DIAL:{label:"Dialog",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  QA:{label:"Soal",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#dc2626)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function getAL(){return document.querySelector('input[name="al"]:checked').value;}
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.t===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  document.getElementById("sub-lbl").textContent=(curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat)+" — "+deck.length+" kartu";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.t]||CAT_CFG.VOCAB;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  if(c.t==="VOCAB"){
+    document.getElementById("fv-vocab").style.display="";
+    document.getElementById("fv-sent").style.display="none";
+    var wl=c.zh.length;
+    var wEl=document.getElementById("zh-disp");
+    wEl.textContent=c.zh;
+    wEl.className="zh-main"+(wl<=2?" big":wl<=4?" med":wl<=6?" sm":wl<=10?" xs":" xxs");
+    document.getElementById("py-disp").textContent=c.py||"";
+  } else {
+    document.getElementById("fv-vocab").style.display="none";
+    document.getElementById("fv-sent").style.display="";
+    document.getElementById("sent-disp").textContent=c.zh;
+  }
+  document.getElementById("ans-id-txt").textContent=c.id;
+  document.getElementById("ans-en-txt").textContent=c.en;
+  var note=document.getElementById("ans-note");
+  if(c.note){note.textContent=c.note;note.style.display="";}else{note.style.display="none";}
+  var al=getAL();
+  document.getElementById("ab-id").style.display=al==="id"?"":"none";
+  document.getElementById("ab-en").style.display=al==="en"?"":"none";
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("hp").style.display="none";
+  document.getElementById("hb").style.display="";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  var al=getAL();
+  document.getElementById("ab-id").style.display=al==="id"?"":"none";
+  document.getElementById("ab-en").style.display=al==="en"?"":"none";
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+  document.getElementById("hp").style.display="none";
+  document.getElementById("hb").style.display="none";
+}
+document.querySelectorAll('input[name="al"]').forEach(function(r){
+  r.addEventListener("change",function(){
+    var al=getAL();
+    document.getElementById("ab-id").style.display=al==="id"?"":"none";
+    document.getElementById("ab-en").style.display=al==="en"?"":"none";
+  });
+});
+function doHint(e){
+  e.stopPropagation();if(rev)return;
+  var c=deck[idx];var hp=document.getElementById("hp");
+  if(hp.style.display==="none"){
+    var al=getAL();
+    document.getElementById("hpt").textContent=al==="id"?c.id:c.en;
+    document.getElementById("hps").textContent=c.zh;
+    hp.style.display="";
+  } else {hp.style.display="none";}
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"??":pct>=70?"??":pct>=50?"??":"??";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":pct>=50?"Lumayan! Ulangi "+toRev.length+" kartu.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" ? "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style=\"padding:10px 12px;font-size:12px;color:#8a8478;text-align:center\">Tidak ada yang benar-benar sulit ??</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class=\"ri-score\">?"+(v._b||0)+"</span>";
+      d.innerHTML="<span class=\"ri-zh\">"+v.zh+"</span><div style=\"flex:1\"><div style=\"font-size:11px;font-weight:600;color:#7c3aed\">"+v.py+"</div></div><span class=\"ri-id\">"+v.id.substring(0,35)+"</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+function show(id){document.getElementById(id).style.display="";}
+function hide(id){document.getElementById(id).style.display="none";}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
