@@ -127,7 +127,7 @@ h1{font-family:"Noto Serif TC",serif;font-size:16px;color:#1a1814;text-align:cen
       </div>
       <div id="fv-vocab" style="display:none;text-align:center">
         <div class="zh-main" id="zh-disp"></div>
-        <div class="py-sub" id="py-disp"></div>
+        
       </div>
       <div id="fv-sent" style="display:none;width:100%">
         <div class="sent-front" id="sent-disp"></div>
@@ -135,6 +135,7 @@ h1{font-family:"Noto Serif TC",serif;font-size:16px;color:#1a1814;text-align:cen
       <div class="tap" id="tap"><span>??</span>Ketuk untuk jawaban</div>
       <div class="ans" id="ans" style="display:none">
         <div class="dl"></div>
+        <div class="atag" style="margin-bottom:2px">PINYIN</div><div class="ans-py" id="py-disp" style="margin-bottom:8px;font-size:18px;font-weight:700;color:#7c3aed;text-align:center"></div>
         <div id="ab-id"><div class="atag">???? Indonesia</div><div class="ans-id" id="ans-id-txt"></div></div>
         <div id="ab-en" style="display:none"><div class="atag">???? English</div><div class="ans-en" id="ans-en-txt"></div></div>
         <div class="ans-note" id="ans-note" style="display:none"></div>
@@ -179,20 +180,20 @@ h1{font-family:"Noto Serif TC",serif;font-size:16px;color:#1a1814;text-align:cen
 </div>
 <script>
 var V=[
-{t:"VOCAB",zh:"以前",py:"yiqian",id:"sebelumnya / dulu / dahulu",en:"before / in the past",note:"Dipakai sebelum atau sesudah subjek"},
-{t:"VOCAB",zh:"經驗",py:"jingyAn",id:"pengalaman",en:"experience"},
-{t:"VOCAB",zh:"這樣",py:"zhEyang",id:"seperti ini / begini",en:"like this / in this way"},
-{t:"VOCAB",zh:"奇怪",py:"qiguai",id:"aneh / ganjil",en:"strange / weird / odd"},
-{t:"VOCAB",zh:"辦法",py:"banfa",id:"cara / jalan keluar / solusi",en:"method / solution / way"},
-{t:"VOCAB",zh:"幫忙",py:"bangmang",id:"membantu / bantuan",en:"to help",note:"幫你的忙 = membantu kamu"},
-{t:"VOCAB",zh:"打算",py:"dasuan",id:"berencana / bermaksud",en:"to plan / to intend"},
+{t:"VOCAB",zh:"以前",py:"yǐqián",id:"sebelumnya / dulu / dahulu",en:"before / in the past",note:"Dipakai sebelum atau sesudah subjek"},
+{t:"VOCAB",zh:"經驗",py:"jīngyàn",id:"pengalaman",en:"experience"},
+{t:"VOCAB",zh:"這樣",py:"zhèyàng",id:"seperti ini / begini",en:"like this / in this way"},
+{t:"VOCAB",zh:"奇怪",py:"qíguài",id:"aneh / ganjil",en:"strange / weird / odd"},
+{t:"VOCAB",zh:"辦法",py:"bànfǎ",id:"cara / jalan keluar / solusi",en:"method / solution / way"},
+{t:"VOCAB",zh:"幫忙",py:"bāngmáng",id:"membantu / bantuan",en:"to help",note:"幫你的忙 = membantu kamu"},
+{t:"VOCAB",zh:"打算",py:"dǎsuàn",id:"berencana / bermaksud",en:"to plan / to intend"},
 {t:"VOCAB",zh:"可能",py:"keneng",id:"mungkin / kemungkinan",en:"maybe / possible"},
 {t:"VOCAB",zh:"約",py:"yue",id:"membuat janji / janjian",en:"to make an appointment"},
 {t:"VOCAB",zh:"但是",py:"danshi",id:"tetapi / namun",en:"but / however"},
 {t:"VOCAB",zh:"決定",py:"jueding",id:"memutuskan",en:"to decide"},
 {t:"VOCAB",zh:"擔心",py:"danxin",id:"khawatir / cemas",en:"to worry"},
 {t:"VOCAB",zh:"緊張",py:"jinzhang",id:"gugup / tegang",en:"nervous / tense"},
-{t:"VOCAB",zh:"這種",py:"zhEzhong",id:"jenis ini / semacam ini",en:"this kind of"},
+{t:"VOCAB",zh:"這種",py:"zhèzhǒng",id:"jenis ini / semacam ini",en:"this kind of"},
 {t:"SENT",zh:"我以前在傳統醫院工作。",py:"Wo yiqian zai chuantong yiyuan gongzuo.",id:"Saya dulu bekerja di rumah sakit tradisional.",en:"I used to work at a traditional hospital."},
 {t:"SENT",zh:"我以前是學生。",py:"Wo yiqian shi xuesheng.",id:"Saya dulu adalah pelajar.",en:"I was a student before."},
 {t:"SENT",zh:"他以前住在台北。",py:"Ta yiqian zhu zai Taibei.",id:"Dia dulu tinggal di Taipei.",en:"He used to live in Taipei."},
@@ -241,20 +242,20 @@ var V=[
 {t:"QA",zh:"友美和宜文是通過什麼來聯繫？",py:"YouMei he YiWen shi tongguo shenme lai lianxi?",id:"通過打電話來聯繫。 Melalui telepon.",en:"Through phone calls."},
 {t:"QA",zh:"友美現在跟他約時間了嗎？",py:"YouMei xianzai gen ta yue shijian le ma?",id:"還沒，等友美決定了以後才跟他約時間。 Belum, tunggu Yumei memutuskan dulu.",en:"Not yet, she will wait until she decides."},
 // ── VOCAB NEW ──────────────────────────────────────────────────────
-{t:"VOCAB",zh:"認識",py:"renshi",id:"mengenal / mengetahui (seseorang)",en:"to know / to recognize (a person)",note:"認識 = mengenal orang. 知道 = mengetahui fakta"},
-{t:"VOCAB",zh:"已經",py:"yijing",id:"sudah / telah",en:"already"},
-{t:"VOCAB",zh:"卡片",py:"kapian",id:"kartu",en:"card (greeting card, etc.)"},
-{t:"VOCAB",zh:"看到",py:"kan dao",id:"melihat / terlihat",en:"to see / to catch sight of",note:"看到 = melihat (hasil). 看 = melihat (proses)"},
-{t:"VOCAB",zh:"文章",py:"wenzhang",id:"artikel / tulisan / karangan",en:"article / essay / written piece"},
-{t:"VOCAB",zh:"然後",py:"ranhou",id:"kemudian / lalu / setelah itu",en:"then / after that / subsequently"},
-{t:"VOCAB",zh:"留言",py:"liuyan",id:"meninggalkan pesan / berkomentar",en:"to leave a message / to comment"},
-{t:"VOCAB",zh:"回答",py:"huida",id:"menjawab / jawaban",en:"to answer / answer"},
-{t:"VOCAB",zh:"聊天兒",py:"liao tian er",id:"mengobrol / ngobrol",en:"to chat / to have a conversation"},
-{t:"VOCAB",zh:"差不多",py:"cha bu duo",id:"hampir / kira-kira / lebih kurang",en:"almost / approximately / more or less"},
-{t:"VOCAB",zh:"見面",py:"jianmian",id:"bertemu / jumpa",en:"to meet (face to face)"},
-{t:"VOCAB",zh:"還沒",py:"hai mei",id:"belum",en:"not yet"},
-{t:"VOCAB",zh:"幽默",py:"youmo",id:"lucu / humoris",en:"humorous / funny"},
-{t:"VOCAB",zh:"回復",py:"huifu",id:"membalas / membalas pesan",en:"to reply / to respond"},
+{t:"VOCAB",zh:"認識",py:"rènshi",id:"mengenal / mengetahui (seseorang)",en:"to know / to recognize (a person)",note:"認識 = mengenal orang. 知道 = mengetahui fakta"},
+{t:"VOCAB",zh:"已經",py:"yǐjīng",id:"sudah / telah",en:"already"},
+{t:"VOCAB",zh:"卡片",py:"kǎpiàn",id:"kartu",en:"card (greeting card, etc.)"},
+{t:"VOCAB",zh:"看到",py:"kàn dào",id:"melihat / terlihat",en:"to see / to catch sight of",note:"看到 = melihat (hasil). 看 = melihat (proses)"},
+{t:"VOCAB",zh:"文章",py:"wénzhāng",id:"artikel / tulisan / karangan",en:"article / essay / written piece"},
+{t:"VOCAB",zh:"然後",py:"rán hòu",id:"kemudian / lalu / setelah itu",en:"then / after that / subsequently"},
+{t:"VOCAB",zh:"留言",py:"liúyán",id:"meninggalkan pesan / berkomentar",en:"to leave a message / to comment"},
+{t:"VOCAB",zh:"回答",py:"huídá",id:"menjawab / jawaban",en:"to answer / answer"},
+{t:"VOCAB",zh:"聊天兒",py:"liáo tiānr",id:"mengobrol / ngobrol",en:"to chat / to have a conversation"},
+{t:"VOCAB",zh:"差不多",py:"chà bu duō",id:"hampir / kira-kira / lebih kurang",en:"almost / approximately / more or less"},
+{t:"VOCAB",zh:"見面",py:"jiànmiàn",id:"bertemu / jumpa",en:"to meet (face to face)"},
+{t:"VOCAB",zh:"還沒",py:"hái méi",id:"belum",en:"not yet"},
+{t:"VOCAB",zh:"幽默",py:"yōumò",id:"lucu / humoris",en:"humorous / funny"},
+{t:"VOCAB",zh:"回復",py:"huífù",id:"membalas / membalas pesan",en:"to reply / to respond"},
 // ── 差不多 SENTENCES ──────────────────────────────────────────────
 {t:"SENT",zh:"差不多先生",py:"Cha bu duo xiansheng.",id:"Tuan Hampir / Tuan Kira-kira (tokoh cerita terkenal)",en:"Mr. Close Enough (famous Chinese literary character)"},
 {t:"SENT",zh:"米飯差不多快做好了。",py:"Mifan cha bu duo kuai zuo hao le.",id:"Nasinya hampir selesai dimasak.",en:"The rice is almost done cooking."},
@@ -277,8 +278,8 @@ var V=[
 {t:"SENT",zh:"昨天我看到你的文章，你寫的文章很有趣，所以我很喜歡。",py:"Zuotian wo kan dao ni de wenzhang, ni xie de wenzhang hen youqu, suoyi wo hen xihuan.",id:"Kemarin saya melihat artikel kamu, artikel yang kamu tulis sangat menarik, jadi saya sangat suka.",en:"Yesterday I saw your article. The article you wrote is very interesting, so I liked it a lot."},
 // ── 本/篇/段 ─────────────────────────────────────────────────────
 {t:"VOCAB",zh:"本",py:"ben",id:"kata pengukur untuk buku",en:"measure word for books",note:"一本書 = satu buku"},
-{t:"VOCAB",zh:"篇",py:"pian",id:"kata pengukur untuk artikel / tulisan",en:"measure word for articles / essays",note:"一篇文章 = satu artikel"},
-{t:"VOCAB",zh:"段",py:"duan",id:"kata pengukur untuk paragraf / bagian",en:"measure word for paragraphs / sections",note:"一段文章 = satu paragraf. 第一段 = paragraf pertama"},
+{t:"VOCAB",zh:"篇",py:"piān",id:"kata pengukur untuk artikel / tulisan",en:"measure word for articles / essays",note:"一篇文章 = satu artikel"},
+{t:"VOCAB",zh:"段",py:"duàn",id:"kata pengukur untuk paragraf / bagian",en:"measure word for paragraphs / sections",note:"一段文章 = satu paragraf. 第一段 = paragraf pertama"},
 {t:"SENT",zh:"一篇文章",py:"yi pian wenzhang",id:"satu artikel / satu tulisan",en:"one article / one essay"},
 {t:"SENT",zh:"一段文章",py:"yi duan wenzhang",id:"satu paragraf",en:"one paragraph"},
 {t:"SENT",zh:"第一段",py:"di yi duan",id:"paragraf pertama",en:"the first paragraph"},
