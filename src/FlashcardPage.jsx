@@ -28,7 +28,7 @@ const flashcards = [
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
     icon: '🔮',
     title: 'L11 — 以前 經驗 奇怪',
-    kartu: 61,
+    kartu: 122,
     level: 'Vocab · Kalimat · Dialog · Soal',
     route: '/game/mandarin-l11',
   },
