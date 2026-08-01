@@ -53,6 +53,16 @@ const flashcards = [
     route: '/game/mandarin-mei-vocab',
   },
   {
+    id: 'AYI1',
+    category: 'Mandarin',
+    categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
+    icon: '😂',
+    title: '阿姨！· Video Viral',
+    kartu: 51,
+    level: 'Vocab · Kalimat · Video Seru',
+    route: '/game/ayi-video',
+  },
+  {
     id: 'POM1',
     category: 'English',
     categoryColor: '#fef3e2', categoryTextColor: '#92400e',
