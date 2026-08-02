@@ -22,6 +22,7 @@ function App() {
       <Route path="/game/mandarin-l10" element={<GamePage file="flashcard_lengkap_intact/mandarin_l10.html" title="Mandarin L10 — 看醫生" />} />
       <Route path="/game/mandarin-l11" element={<GamePage file="flashcard_lengkap_intact/mandarin_l11.html" title="Mandarin L11 — 以前 經驗 奇怪" />} />
       <Route path="/game/ayi-video" element={<GamePage file="flashcard_lengkap_intact/ayi_video.html" title="阿姨！Video Viral Mandarin" />} />
+      <Route path="/game/waimai-video" element={<GamePage file="flashcard_lengkap_intact/waimai_video.html" title="外賣員 · Video Sosial" />} />
       <Route path="/game/mandarin-adverbs" element={<GamePage file="flashcard_lengkap_intact/mandarin_adverbs_3lang.html" title="Kata Keterangan Mandarin 3 Bahasa" />} />
       <Route path="/game/mandarin-mei-vocab" element={<GamePage file="flashcard_lengkap_intact/mandarin_mei_vocab.html" title="Mandarin — 沒 Phrases & Kosakata" />} />
       <Route path="/game/psychology-of-money" element={<GamePage file="flashcard_lengkap_intact/psychology_of_money.html" title="The Psychology of Money" />} />
