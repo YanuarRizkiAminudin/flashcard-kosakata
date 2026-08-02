@@ -73,6 +73,16 @@ const flashcards = [
     route: '/game/waimai-video',
   },
   {
+    id: 'WM1',
+    category: 'Mandarin',
+    categoryColor: '#fef3e2', categoryTextColor: '#92400e',
+    icon: '🛵',
+    title: '外賣員 · Video Sosial',
+    kartu: 50,
+    level: 'Vocab · Kalimat · Empati',
+    route: '/game/waimai-video',
+  },
+  {
     id: 'POM1',
     category: 'English',
     categoryColor: '#fef3e2', categoryTextColor: '#92400e',
