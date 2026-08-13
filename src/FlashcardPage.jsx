@@ -33,6 +33,16 @@ const flashcards = [
     route: '/game/mandarin-l11',
   },
   {
+    id: 'NFU1',
+    category: 'English',
+    categoryColor: '#e0f2fe', categoryTextColor: '#075985',
+    icon: '📱',
+    title: 'NFU Internship Group Chat',
+    kartu: 28,
+    level: 'Aug 6–13, 2026 · Real Messages',
+    route: '/game/nfu-group-chat',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
