@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NFU Internship Group Chat Flashcard</title>
+<title>NFU Group Chat — English Sentences</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -15,8 +15,10 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 .fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
 .fb:hover{border-color:#7c3aed;color:#7c3aed;}
 .fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
-.fb.c-STUDENT.on{background:#2563eb;border-color:#2563eb;}
-.fb.c-ADMIN.on{background:#059669;border-color:#059669;}
+.fb.c-DOC.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-COURSE.on{background:#059669;border-color:#059669;}
+.fb.c-TRAVEL.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-DEPT.on{background:#d97706;border-color:#d97706;}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
 .badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
 .ctr{font-size:13px;color:#8a8478;}
@@ -36,17 +38,14 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 .card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
 .card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
 .cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
-.sender-name{font-size:20px;font-weight:700;color:#1a1814;text-align:center;line-height:1.3;margin-bottom:4px;}
-.sender-meta{font-size:12px;color:#8a8478;text-align:center;}
+.en-front{font-size:17px;font-weight:600;color:#1a1814;line-height:1.65;text-align:center;}
 .tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
-.ans{margin-top:.8rem;text-align:left;animation:fup .25s ease;width:100%;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
 @keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .8rem;}
-.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:5px;text-align:center;}
-.msg-bubble{background:#f5f3ff;border:1px solid #e0d9ff;border-radius:14px;padding:12px 16px;font-size:14px;color:#1a1814;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
-.msg-bubble.admin{background:#f0fdf4;border-color:#bbf7d0;color:#14532d;}
-.msg-time{font-size:11px;color:#a0aec0;margin-top:6px;text-align:right;}
-.ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:5px 10px;margin-top:8px;font-style:italic;text-align:center;}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:3px;}
+.ans-id{font-size:16px;font-weight:700;color:#1a1814;line-height:1.6;}
+.ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:5px 10px;margin-top:6px;font-style:italic;}
 .btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
 .cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
 .cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
@@ -66,10 +65,10 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 .rlist-wrap{text-align:left;margin-bottom:1rem;}
 .rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
 .rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
-.ri{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
 .ri:last-child{border-bottom:none;}
-.ri-name{font-size:12px;font-weight:700;color:#1a1814;min-width:80px;}
-.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:auto;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.ri-en{font-size:12px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
 .btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
 .btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
 .btn-purple:hover{opacity:.9;}
@@ -80,42 +79,42 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 </head>
 <body>
 <div id="app">
-  <h1>📱 NFU Internship Group Chat</h1>
-  <div class="sub" id="sub-lbl">Aug 6–13, 2026 · 20 messages</div>
+  <h1>📱 NFU Group Chat — Kalimat Bahasa Inggris</h1>
+  <div class="sub" id="sub-lbl">53 kalimat · Ketuk untuk terjemahan</div>
   <div class="filters">
-    <button class="fb on" onclick="setCat('ALL')">🗂 All</button>
-    <button class="fb c-STUDENT" onclick="setCat('STUDENT')">🎓 Student</button>
-    <button class="fb c-ADMIN" onclick="setCat('ADMIN')">🏫 Admin</button>
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-DEPT" onclick="setCat('DEPT')">🏛 Jurusan</button>
+    <button class="fb c-DOC" onclick="setCat('DOC')">📄 Dokumen</button>
+    <button class="fb c-COURSE" onclick="setCat('COURSE')">📚 Kursus</button>
+    <button class="fb c-TRAVEL" onclick="setCat('TRAVEL')">✈️ Perjalanan</button>
   </div>
   <div id="qv">
-    <div class="topbar"><span class="badge" id="rb">Round 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
     <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
-    <div class="plabels"><span id="pl">0 done</span><span id="pr">-- cards</span></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
     <div class="pills">
-      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Got it</div>
-      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Almost</div>
-      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Again</div>
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
     </div>
     <div class="card" id="card" onclick="reveal()">
       <div class="card-badges">
         <span class="card-num" id="cn">#1</span>
         <span class="cat-badge" id="ctb"></span>
       </div>
-      <div class="sender-name" id="sender-disp"></div>
-      <div class="sender-meta" id="meta-disp"></div>
-      <div class="tap" id="tap"><span>👆</span>Tap to reveal message</div>
+      <div class="en-front" id="en-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk terjemahan</div>
       <div class="ans" id="ans" style="display:none">
         <div class="dl"></div>
-        <div class="atag">MESSAGE</div>
-        <div class="msg-bubble" id="msg-bubble"></div>
-        <div class="msg-time" id="msg-time"></div>
+        <div class="atag">🇮🇩 Indonesia</div>
+        <div class="ans-id" id="ans-id-txt"></div>
         <div class="ans-note" id="ans-note" style="display:none"></div>
       </div>
     </div>
     <div class="btnrow" id="ba" style="display:none">
-      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Again</span><span class="cb-sub">Repeat</span></button>
-      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Almost</span><span class="cb-sub">Repeat</span></button>
-      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Got it</span><span class="cb-sub">Done</span></button>
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
     </div>
   </div>
   <div id="rv" style="display:none">
@@ -124,237 +123,94 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
       <div class="res-title" id="rt"></div>
       <div class="res-sub" id="rs"></div>
       <div class="srow">
-        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Got it</div></div>
-        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Almost</div></div>
-        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Again</div></div>
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
       </div>
       <div id="rlw" style="display:none">
         <div class="rlist-wrap">
-          <div class="rlist-ttl">Need more review 📌</div>
+          <div class="rlist-ttl">Perlu diulang 📌</div>
           <div class="rlist" id="rl"></div>
         </div>
       </div>
       <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
-      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Start over</button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
     </div>
   </div>
   <div id="fv3" style="display:none">
     <div class="final">
       <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
-      <div class="res-title">All done!</div>
-      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">You've reviewed all messages.</div>
-      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Restart</button>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua kalimat sudah dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
     </div>
   </div>
 </div>
 <script>
 var V=[
-  {
-    role:"STUDENT",
-    sender:"Lucas Roth",
-    date:"2026.08.06 Thursday",
-    time:"17:08",
-    msg:"My Health certificate could take a few more weeks and there is a chance I could send it after the Deadline."
-  },
-  {
-    role:"STUDENT",
-    sender:"Phạm Tô Tuấn Kiệt",
-    date:"2026.08.07 Friday",
-    time:"01:25",
-    msg:"Hi there! I'm Pham To Tuan Kiet. I'm reaching out because there seems to be a mix-up with my department assignment. I applied for the Department of Applied Foreign Languages (which is my major at my home university), but I've been placed in the Department of Electrical Engineering by mistake. May I please receive help regarding this issue?\nThank you!"
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.07 Friday",
-    time:"15:56",
-    msg:"Hi @Phạm Tô Tuấn Kiệt, well noted. We will also discuss your case further with our director. Thanks!"
-  },
-  {
-    role:"STUDENT",
-    sender:"Prerana Limbani",
-    date:"2026.08.08 Saturday",
-    time:"17:22",
-    msg:"Hi, I just wanted to follow up on my previous message regarding the department and course allocation. Since I applied for Biotechnology but have been assigned to Electro-Optical Engineering, I'm a little concerned about whether the courses and research project will be relevant to my field. Could you please let me know if there has been any update or if this can be looked into? I would really appreciate your help with this. Thank you!"
-  },
-  {
-    role:"STUDENT",
-    sender:"Dương Đức Nhật Anh",
-    date:"2026.08.09 Sunday",
-    time:"12:12",
-    msg:"Hello, I'm Duong Duc Nhat Anh. I'm sorry, but I would like to ask if it would be possible for me and my friend from ISTNU to delay the submission a little. My health certificate may take a few weeks to be issued, and unfortunately, the processing of the other required documents also takes some time. It may take up to a week.\nI'm currently trying to complete everything as soon as possible, but some parts of the process are beyond my control, so I'm worried that I may not be able to prepare all the documents by the original deadline. I'm really sorry for the inconvenience, and I hope you could kindly give us a little more time to complete everything properly.\nThank you very much for your understanding and patience!"
-  },
-  {
-    role:"STUDENT",
-    sender:"Trịnh Ngọc - Jade",
-    date:"2026.08.09 Sunday",
-    time:"12:22",
-    msg:"From our side, we are also required to have some of our documents legalized by the Consular Department before submitting them. Unfortunately, this process takes quite a lot of time, as we need to go through several procedures and wait for the documents to be processed. That is why we may need some additional time to complete the submission."
-  },
-  {
-    role:"STUDENT",
-    sender:"Nguyen Thi Minh Quy",
-    date:"2026.08.09 Sunday",
-    time:"18:33",
-    msg:"Hello, my name is Minh Quý. I'm very sorry to inform you that the students from Thai Nguyen University of Economics and Business (TUEBA), including myself, may need to complete the survey after the August 21 deadline.\nThe reason is that we still have some documents that need to be certified and legalized at the Consulate. Unfortunately, there are currently no available appointments, so our visa application process will be delayed.\nWe expect to complete the survey about 7–8 days after the August 21 deadline. Once we have all the necessary information, the TUEBA students and I will complete the survey and inform you as soon as possible.\nWe sincerely apologize for the inconvenience and hope you can understand our situation. Thank you very much for your patience and understanding."
-  },
-  {
-    role:"STUDENT",
-    sender:"Lucas Roth",
-    date:"2026.08.09 Sunday",
-    time:"23:07",
-    msg:"Same here for Germany."
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.10 Monday",
-    time:"09:31",
-    msg:"Hi @Prerana Limbani Thank you for the follow-up message. We will try to provide an update regarding your advising professor as soon as possible. In the meantime, please choose the six courses that best align with your interests first.\nAs this is during the summer holiday period and our director is currently abroad, the process may take a little longer than usual. We appreciate your patience and understanding!"
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.10 Monday",
-    time:"09:38",
-    msg:"Hi @Dương Đức Nhật Anh @Trịnh Ngọc - Jade @Nguyen Thi Minh Quy @Lucas Roth Thank you for informing us of your situations. To ensure the administration process at NFU continues smoothly, please submit all the available data and documents (such as your Chinese name, flight ticket, flight number, expected date of arrival, digital headshot, etc.) through the Final Information Form by August 21.\nFor any documents that are not yet ready, kindly upload a PDF note indicating the expected date when each document will be available for submission. Please make sure to complete and submit all required documents by the end of August, before your arrival in Taiwan.\nWe appreciate your cooperation and patience, and we understand the challenges you are facing with the legalization and certification processes. Thanks a lot!"
-  },
-  {
-    role:"STUDENT",
-    sender:"Prerana Limbani",
-    date:"2026.08.10 Monday",
-    time:"13:42",
-    msg:"Hello, thank you for the update. I understand that I should select the six courses first, but the list of courses provided does not seem to include any courses related to my field of interest, which is Biotechnology. Since I applied specifically under Biotechnology, I'm concerned that I may not be able to select courses that are relevant to my academic background. Could you please look into this and advise me on what I should do in this situation? Thank you for your help."
-  },
-  {
-    role:"STUDENT",
-    sender:"Kaveri Mishra",
-    date:"2026.08.10 Monday",
-    time:"14:39",
-    msg:"I have the same concern. Could you please guide us with the course selection. Thank you for your assistance."
-  },
-  {
-    role:"STUDENT",
-    sender:"Kaveri Mishra",
-    date:"2026.08.10 Monday",
-    time:"21:19",
-    msg:"Hello there, I have a few queries regarding the upcoming process and would be grateful for your guidance:\n1. Course Selection: Regarding the course selection, I was going through the available course list but I'm unable to find subjects/electives relevant to my course. Since the form also requires us to mention our advising Professor and their department, I'm a little unsure about how to proceed. The deadline for submission is 12th August, so I'm concerned that it may be difficult for me to complete it on time. Hence, I may not be able to fill the course selection form until this issue is clarified. I would be really grateful if you could kindly look into this at the earliest.\n2. End Date of the Internship: Could you please let me know the date on which the internship program will end? I need to book my return ticket for my visa application.\nThank you so much for your help!"
-  },
-  {
-    role:"STUDENT",
-    sender:"Phan Thanh Long",
-    date:"2026.08.11 Tuesday",
-    time:"18:32",
-    msg:"I have the same problem. I've just found 2 courses regarding Multimedia Design. Therefore, I'm unable to choose six courses. Could you please guide us through this problem? Thanks for your help."
-  },
-  {
-    role:"STUDENT",
-    sender:"Vương Yến Vy",
-    date:"2026.08.11 Tuesday",
-    time:"22:06",
-    msg:"Hello, my name is Vuong Yen Vy. I have a question regarding the airport pickup arrangement.\nAccording to the guideline, the airport pickup service is scheduled at noon on September 2-4, 2026. However, the available flights I'm currently finding do not arrive at TPE around noon.\nI understand that if a student arrives outside the pickup time, they may need to travel to NFU by themselves. However, if I arrive at TPE on September 2–4 but after the scheduled pickup time, is there any alternative transportation arrangement or assistance that NFU can provide?\nI would like to confirm whether self-arrangement is the only option in this situation before booking my flight.\nThank you so much for your help!"
-  },
-  {
-    role:"STUDENT",
-    sender:"Nguyen Thi Minh Quy",
-    date:"2026.08.12 Wednesday",
-    time:"09:29",
-    msg:"I have a similar concern as well, as we also could not find any flights arriving at Taoyuan International Airport before 12:00 noon.\nI also have one more question I would like to ask you. The visa processing office on our side would like to confirm whether the original MOE and LOA documents have been sent to TECO Hanoi, where we will apply for our visas.\nI would like to make sure that the entire process is smooth, reasonable, properly arranged, and in accordance with the relevant procedures and legal requirements.\nI would greatly appreciate it if you could get back to me as soon as possible.\nThank you very much for your assistance."
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.12 Wednesday",
-    time:"11:29",
-    msg:"Hi @Prerana Limbani @Kaveri Mishra @Phan Thanh Long,\nThank you for your questions regarding the course selection and internship end date.\nIf there are not enough courses available within your department, you may select courses from any other departments that are relevant to your academic background or personal research interests.\nTo give everyone more time to review the available courses and complete the form, we will extend the course selection deadline to Sunday, August 16, 2026.\nRegarding the internship end date, the FTIP Fall 2026 Closing Ceremony will be held on January 4, 2027, and students must complete the dormitory check-out process by January 8, 2027.\nThank you for your patience and cooperation!"
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.12 Wednesday",
-    time:"11:30",
-    msg:"Hello @Vương Yến Vy @Nguyen Thi Minh Quy,\nThank you for your questions regarding the airport pickup arrangement.\nDue to the dormitory check-in arrangements, NFU can only provide the airport pickup service around noon (12:00–13:00) on September 2–4, 2026 (3 days).\nIf you would like to use the NFU airport pickup service, we recommend arriving in Taiwan in the morning or one day earlier, staying overnight in the Taoyuan/Taipei area, and returning to Taoyuan International Airport before noon the following day to join the pickup.\nIf you arrive after the scheduled pickup date, you will need to arrange your own transportation to NFU. Please refer to the guideline for the available transportation options.\nThanks!"
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.12 Wednesday",
-    time:"11:39",
-    msg:"Regarding the visa documents, the MOE has already CC'ed the Approval Letter to the relevant representative offices (including Hanoi, HCMC, Jakarta, Surabaya, and Chennai). Therefore, the representative offices should already have a copy from the MOE for verification.\nNFU will not send separate paper copies of the Approval Letter and LoA. However, you may print the Approval Letter together with the student name list (Attachment 01) and the LoA NFU sent to your home university (Attachment 02), and highlight your name on the list for the TECO staff to verify against their records.\nWe hope this will help ensure a smooth visa application process. Thank you!\n\nNote: The list includes Germany and Thailand as well."
-  },
-  {
-    role:"STUDENT",
-    sender:"Nguyen Thi Thanh Tam",
-    date:"2026.08.12 Wednesday",
-    time:"12:14",
-    msg:"Dear @龍安旺 Aswin Putra, my name is Nguyen Thi Thanh Tam, student from TUEBA, Vietnam.\nSince all our flights to Taiwan land in the afternoon, we are considering flying directly to Taichung Airport instead of Taipei. If we hire a car ourselves from Taichung Airport to the campus, could the university kindly assist or guide us through the dormitory check-in process upon arrival?\nThank you very much for your time and support!"
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.12 Wednesday",
-    time:"13:13",
-    msg:"Hi @Nguyen Thi Thanh Tam,\nYes, this arrangement is possible. If you and other TUEBA students are planning to arrive at Taichung Airport and arrange your own transportation to NFU, please provide the list of all students who will be joining this arrangement so that we can prepare accordingly.\nPlease also make sure to arrive at the NFU dormitory by 3:00 PM at the latest, on a weekday (Monday–Friday), so that we can assist you with the dormitory check-in process.\nThanks for asking!"
-  },
-  {
-    role:"STUDENT",
-    sender:"Trịnh Ngọc - Jade",
-    date:"2026.08.12 Wednesday",
-    time:"13:57",
-    msg:"Hi @龍安旺 Aswin A. Putra I would like to ask about the \"Decision No.\" Which decision number should we provide to the Vietnamese side for the required paperwork? I checked my Letter of Admission and the MOE documents, but I could not find a specific decision number. Could you please clarify which one we should use?\nThank you!"
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.12 Wednesday",
-    time:"15:59",
-    msg:"Hi @Trịnh Ngọc - Jade,\nCould you please clarify what you mean by \"Decision No.\" and where this information is required? Is it a requirement for the visa application process?\nIf possible, please send a screenshot of the section where the \"Decision No.\" is requested to my DM so we can check it for you.\nThank you!"
-  },
-  {
-    role:"STUDENT",
-    sender:"Vương Yến Vy",
-    date:"2026.08.13 Thursday",
-    time:"07:13",
-    msg:"Hello @龍安旺 Aswin A. Putra, I'd like to inform you about my visa application.\nDue to the legalization and certification process required for the visa application, my visa may not be completed by the August 21 deadline.\nMay I confirm if I can submit the Final Information Form by August 21 with all the other required documents, and upload a PDF note indicating the expected date when my visa will be available?\nI will submit the visa as soon as it is available and make sure to complete all the required documents before the end of August.\nThank you very much for your understanding and support!"
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.13 Thursday",
-    time:"08:20",
-    msg:"Hi @Vương Yến Vy,\nYes. You may submit the Final Information Form by August 21 with all the other required information and documents first.\nFor the visa document, you can upload a JPG/PDF note indicating the expected date when you will be able to submit your visa. Once your visa is available, please resubmit the form with the updated document.\nThank you for letting us know in advance!"
-  },
-  {
-    role:"STUDENT",
-    sender:"erik putra pratama",
-    date:"2026.08.13 Thursday",
-    time:"09:38",
-    msg:"Hello @龍安旺 Aswin A. Putra. I'd like to ask regarding course selection form.\nIf I have submitted the form, is it possible to change, or resubmit?\nAs my home uni require certain course to be taken.\nThank you 🙏"
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.13 Thursday",
-    time:"09:49",
-    msg:"Hi @erik putra pratama\nYes, you can still update and resubmit the form until Sunday, August 16. Thanks."
-  },
-  {
-    role:"ADMIN",
-    sender:"龍安旺 Aswin A. Putra",
-    date:"2026.08.13 Thursday",
-    time:"10:31",
-    msg:"Hi @All,\nIf you plan to use the NFU Taoyuan International Airport (TPE) pickup service, please vote your expected date in the poll so we can arrange the transportation accordingly.\nIf you plan to travel to NFU on your own, please select \"Self-arranged.\"\nThank you!"
-  }
+  {cat:"DOC",en:"My health certificate could take a few more weeks and there is a chance I could send it after the deadline.",id:"Sertifikat kesehatan saya mungkin butuh beberapa minggu lagi dan ada kemungkinan saya bisa mengirimnya setelah tenggat waktu."},
+  {cat:"DEPT",en:"I am reaching out because there seems to be a mix-up with my department assignment.",id:"Saya menghubungi karena sepertinya ada kekeliruan pada penempatan jurusan saya."},
+  {cat:"DEPT",en:"I applied for the Department of Applied Foreign Languages but I have been placed in the Department of Electrical Engineering by mistake.",id:"Saya mendaftar ke Jurusan Bahasa Asing Terapan tetapi saya ditempatkan di Jurusan Teknik Elektro karena kesalahan."},
+  {cat:"DEPT",en:"May I please receive help regarding this issue?",id:"Bisakah saya mendapatkan bantuan mengenai masalah ini?"},
+  {cat:"DEPT",en:"We will also discuss your case further with our director.",id:"Kami juga akan mendiskusikan kasus Anda lebih lanjut dengan direktur kami."},
+  {cat:"DEPT",en:"I just wanted to follow up on my previous message regarding the department and course allocation.",id:"Saya hanya ingin menindaklanjuti pesan saya sebelumnya mengenai penempatan jurusan dan mata kuliah."},
+  {cat:"DEPT",en:"Since I applied for Biotechnology but have been assigned to Electro-Optical Engineering, I am a little concerned about whether the courses and research project will be relevant to my field.",id:"Karena saya mendaftar untuk Bioteknologi tetapi ditempatkan di Teknik Elektro-Optik, saya sedikit khawatir apakah mata kuliah dan proyek penelitian akan relevan dengan bidang saya."},
+  {cat:"DEPT",en:"Could you please let me know if there has been any update or if this can be looked into?",id:"Bisakah Anda memberi tahu saya apakah ada pembaruan atau apakah ini bisa ditindaklanjuti?"},
+  {cat:"DOC",en:"I would like to ask if it would be possible to delay the submission a little.",id:"Saya ingin bertanya apakah mungkin untuk menunda pengiriman sedikit."},
+  {cat:"DOC",en:"My health certificate may take a few weeks to be issued and unfortunately the processing of the other required documents also takes some time.",id:"Sertifikat kesehatan saya mungkin membutuhkan beberapa minggu untuk diterbitkan dan sayangnya pemrosesan dokumen yang diperlukan lainnya juga membutuhkan waktu."},
+  {cat:"DOC",en:"Some parts of the process are beyond my control so I am worried that I may not be able to prepare all the documents by the original deadline.",id:"Beberapa bagian dari proses ini di luar kendali saya sehingga saya khawatir tidak dapat menyiapkan semua dokumen sebelum tenggat waktu semula."},
+  {cat:"DOC",en:"We are also required to have some of our documents legalized by the Consular Department before submitting them.",id:"Kami juga diwajibkan untuk melegalisir beberapa dokumen kami oleh Departemen Konsuler sebelum menyerahkannya."},
+  {cat:"DOC",en:"This process takes quite a lot of time as we need to go through several procedures and wait for the documents to be processed.",id:"Proses ini membutuhkan cukup banyak waktu karena kami harus melewati beberapa prosedur dan menunggu dokumen diproses."},
+  {cat:"DOC",en:"The students from Thai Nguyen University of Economics and Business including myself may need to complete the survey after the August 21 deadline.",id:"Para mahasiswa dari Universitas Ekonomi dan Bisnis Thai Nguyen termasuk saya mungkin perlu menyelesaikan survei setelah tenggat waktu 21 Agustus."},
+  {cat:"DOC",en:"We still have some documents that need to be certified and legalized at the Consulate.",id:"Kami masih memiliki beberapa dokumen yang perlu disertifikasi dan dilegalisir di Konsulat."},
+  {cat:"DOC",en:"There are currently no available appointments so our visa application process will be delayed.",id:"Saat ini tidak ada janji yang tersedia sehingga proses pengajuan visa kami akan tertunda."},
+  {cat:"DOC",en:"We expect to complete the survey about 7 to 8 days after the August 21 deadline.",id:"Kami memperkirakan akan menyelesaikan survei sekitar 7 hingga 8 hari setelah tenggat waktu 21 Agustus."},
+  {cat:"DOC",en:"Please submit all the available data and documents through the Final Information Form by August 21.",id:"Harap kirimkan semua data dan dokumen yang tersedia melalui Formulir Informasi Akhir sebelum 21 Agustus."},
+  {cat:"DOC",en:"For any documents that are not yet ready, kindly upload a PDF note indicating the expected date when each document will be available for submission.",id:"Untuk dokumen yang belum siap, mohon unggah catatan PDF yang menunjukkan perkiraan tanggal kapan setiap dokumen akan tersedia untuk dikirim."},
+  {cat:"DOC",en:"Please make sure to complete and submit all required documents by the end of August, before your arrival in Taiwan.",id:"Pastikan untuk melengkapi dan mengirimkan semua dokumen yang diperlukan sebelum akhir Agustus, sebelum kedatangan Anda di Taiwan."},
+  {cat:"COURSE",en:"The list of courses provided does not seem to include any courses related to my field of interest, which is Biotechnology.",id:"Daftar mata kuliah yang diberikan tampaknya tidak mencakup mata kuliah yang berkaitan dengan bidang minat saya yaitu Bioteknologi."},
+  {cat:"COURSE",en:"I am concerned that I may not be able to select courses that are relevant to my academic background.",id:"Saya khawatir tidak dapat memilih mata kuliah yang relevan dengan latar belakang akademis saya."},
+  {cat:"COURSE",en:"I was going through the available course list but I am unable to find subjects relevant to my course.",id:"Saya melihat daftar mata kuliah yang tersedia tetapi tidak dapat menemukan mata pelajaran yang relevan dengan jurusan saya."},
+  {cat:"COURSE",en:"The deadline for submission is 12th August so I am concerned that it may be difficult for me to complete it on time.",id:"Tenggat waktu pengiriman adalah 12 Agustus sehingga saya khawatir mungkin sulit bagi saya untuk menyelesaikannya tepat waktu."},
+  {cat:"COURSE",en:"Could you please let me know the date on which the internship program will end?",id:"Bisakah Anda memberi tahu saya tanggal berakhirnya program magang?"},
+  {cat:"COURSE",en:"I have just found 2 courses regarding Multimedia Design so I am unable to choose six courses.",id:"Saya baru menemukan 2 mata kuliah tentang Desain Multimedia sehingga saya tidak dapat memilih enam mata kuliah."},
+  {cat:"TRAVEL",en:"The airport pickup service is scheduled at noon on September 2 to 4, 2026.",id:"Layanan penjemputan bandara dijadwalkan pada tengah hari tanggal 2 hingga 4 September 2026."},
+  {cat:"TRAVEL",en:"The available flights I am currently finding do not arrive at TPE around noon.",id:"Penerbangan yang tersedia yang sedang saya cari tidak tiba di TPE sekitar tengah hari."},
+  {cat:"TRAVEL",en:"If I arrive at TPE on September 2 to 4 but after the scheduled pickup time, is there any alternative transportation arrangement or assistance that NFU can provide?",id:"Jika saya tiba di TPE pada 2 hingga 4 September tetapi setelah waktu penjemputan yang dijadwalkan, apakah ada pengaturan transportasi alternatif atau bantuan yang dapat disediakan NFU?"},
+  {cat:"TRAVEL",en:"I would like to confirm whether self-arrangement is the only option in this situation before booking my flight.",id:"Saya ingin memastikan apakah pengaturan mandiri adalah satu-satunya pilihan dalam situasi ini sebelum memesan tiket pesawat."},
+  {cat:"TRAVEL",en:"We also could not find any flights arriving at Taoyuan International Airport before 12 noon.",id:"Kami juga tidak dapat menemukan penerbangan yang tiba di Bandara Internasional Taoyuan sebelum pukul 12 siang."},
+  {cat:"DOC",en:"The visa processing office on our side would like to confirm whether the original MOE and LOA documents have been sent to TECO Hanoi.",id:"Kantor pemrosesan visa di pihak kami ingin memastikan apakah dokumen asli MOE dan LOA telah dikirim ke TECO Hanoi."},
+  {cat:"COURSE",en:"If there are not enough courses available within your department, you may select courses from any other departments that are relevant to your academic background or personal research interests.",id:"Jika tidak ada cukup mata kuliah yang tersedia di jurusan Anda, Anda dapat memilih mata kuliah dari jurusan lain yang relevan dengan latar belakang akademis atau minat penelitian pribadi Anda."},
+  {cat:"COURSE",en:"We will extend the course selection deadline to Sunday, August 16, 2026.",id:"Kami akan memperpanjang tenggat waktu pemilihan mata kuliah hingga Minggu, 16 Agustus 2026."},
+  {cat:"COURSE",en:"The FTIP Fall 2026 Closing Ceremony will be held on January 4, 2027, and students must complete the dormitory check-out process by January 8, 2027.",id:"Upacara Penutupan FTIP Fall 2026 akan diadakan pada 4 Januari 2027 dan mahasiswa harus menyelesaikan proses check-out asrama sebelum 8 Januari 2027."},
+  {cat:"TRAVEL",en:"NFU can only provide the airport pickup service around noon from 12:00 to 13:00 on September 2 to 4, 2026.",id:"NFU hanya dapat menyediakan layanan penjemputan bandara sekitar tengah hari pukul 12:00 hingga 13:00 pada 2 hingga 4 September 2026."},
+  {cat:"TRAVEL",en:"If you would like to use the NFU airport pickup service, we recommend arriving in Taiwan in the morning or one day earlier.",id:"Jika Anda ingin menggunakan layanan penjemputan bandara NFU, kami menyarankan untuk tiba di Taiwan pada pagi hari atau satu hari lebih awal."},
+  {cat:"TRAVEL",en:"If you arrive after the scheduled pickup date, you will need to arrange your own transportation to NFU.",id:"Jika Anda tiba setelah tanggal penjemputan yang dijadwalkan, Anda perlu mengatur transportasi sendiri ke NFU."},
+  {cat:"DOC",en:"The MOE has already copied the Approval Letter to the relevant representative offices including Hanoi, HCMC, Jakarta, Surabaya, and Chennai.",id:"MOE sudah mengirimkan salinan Surat Persetujuan ke kantor perwakilan terkait termasuk Hanoi, HCMC, Jakarta, Surabaya, dan Chennai."},
+  {cat:"DOC",en:"NFU will not send separate paper copies of the Approval Letter and LoA.",id:"NFU tidak akan mengirimkan salinan kertas terpisah dari Surat Persetujuan dan LoA."},
+  {cat:"DOC",en:"You may print the Approval Letter together with the student name list and highlight your name on the list for the TECO staff to verify against their records.",id:"Anda dapat mencetak Surat Persetujuan beserta daftar nama mahasiswa dan menandai nama Anda di daftar tersebut agar staf TECO dapat memverifikasi dengan catatan mereka."},
+  {cat:"TRAVEL",en:"We are considering flying directly to Taichung Airport instead of Taipei.",id:"Kami mempertimbangkan untuk terbang langsung ke Bandara Taichung alih-alih Taipei."},
+  {cat:"TRAVEL",en:"If we hire a car ourselves from Taichung Airport to the campus, could the university kindly assist with the dormitory check-in process upon arrival?",id:"Jika kami menyewa mobil sendiri dari Bandara Taichung ke kampus, bisakah universitas membantu proses check-in asrama saat tiba?"},
+  {cat:"TRAVEL",en:"Please make sure to arrive at the NFU dormitory by 3:00 PM at the latest, on a weekday Monday to Friday.",id:"Pastikan untuk tiba di asrama NFU paling lambat pukul 15:00 pada hari kerja Senin hingga Jumat."},
+  {cat:"DOC",en:"I would like to ask about the Decision No. — which decision number should we provide to the Vietnamese side for the required paperwork?",id:"Saya ingin bertanya tentang Nomor Keputusan — nomor keputusan mana yang harus kami berikan ke pihak Vietnam untuk dokumen yang diperlukan?"},
+  {cat:"DOC",en:"I could not find a specific decision number in my Letter of Admission and the MOE documents.",id:"Saya tidak dapat menemukan nomor keputusan tertentu di Surat Penerimaan dan dokumen MOE saya."},
+  {cat:"DOC",en:"My visa may not be completed by the August 21 deadline due to the legalization and certification process.",id:"Visa saya mungkin tidak selesai sebelum tenggat waktu 21 Agustus karena proses legalisasi dan sertifikasi."},
+  {cat:"DOC",en:"May I confirm if I can submit the Final Information Form by August 21 with all the other required documents and upload a PDF note indicating the expected date when my visa will be available?",id:"Bolehkah saya konfirmasi apakah saya dapat mengirimkan Formulir Informasi Akhir pada 21 Agustus dengan semua dokumen yang diperlukan lainnya dan mengunggah catatan PDF yang menunjukkan perkiraan tanggal visa saya tersedia?"},
+  {cat:"DOC",en:"You may submit the Final Information Form by August 21 with all the other required information and documents first.",id:"Anda dapat mengirimkan Formulir Informasi Akhir sebelum 21 Agustus dengan semua informasi dan dokumen yang diperlukan lainnya terlebih dahulu."},
+  {cat:"DOC",en:"Once your visa is available, please resubmit the form with the updated document.",id:"Setelah visa Anda tersedia, harap kirim ulang formulir dengan dokumen yang diperbarui."},
+  {cat:"COURSE",en:"If I have submitted the form, is it possible to change or resubmit?",id:"Jika saya sudah mengirimkan formulir, apakah mungkin untuk mengubah atau mengirim ulang?"},
+  {cat:"COURSE",en:"You can still update and resubmit the form until Sunday, August 16.",id:"Anda masih dapat memperbarui dan mengirim ulang formulir hingga Minggu, 16 Agustus."},
+  {cat:"TRAVEL",en:"If you plan to use the NFU Taoyuan International Airport pickup service, please vote your expected date in the poll so we can arrange the transportation accordingly.",id:"Jika Anda berencana menggunakan layanan penjemputan Bandara Internasional Taoyuan NFU, harap pilih tanggal yang Anda harapkan dalam polling agar kami dapat mengatur transportasinya."}
 ];
 
 var CAT_CFG={
-  STUDENT:{label:"Student",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
-  ADMIN:{label:"Admin",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"}
+  DEPT:{label:"Jurusan",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#dc2626)"},
+  DOC:{label:"Dokumen",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  COURSE:{label:"Kursus",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  TRAVEL:{label:"Perjalanan",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"}
 };
 
 var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
-
-function getAL(){return "en";}
 function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
 function setCat(c){
   curCat=c;
@@ -362,28 +218,25 @@ function setCat(c){
   document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
   ronde=1;fullRestart();
 }
-function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.role===curCat;});}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
 function fullRestart(){
   var src=getFiltered();deck=shuffle(src);
   cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
-  document.getElementById("sub-lbl").textContent=(curCat==="ALL"?"All messages":CAT_CFG[curCat]?CAT_CFG[curCat].label+" messages":curCat)+" · "+deck.length+" cards";
+  var lbl=curCat==="ALL"?"Semua kategori":CAT_CFG[curCat]?CAT_CFG[curCat].label:"?";
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kalimat";
   document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
-  document.getElementById("rb").textContent="Round "+ronde;
+  document.getElementById("rb").textContent="Ronde "+ronde;
   upStats();showCard();
 }
-function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Round "+ronde;upStats();showCard();}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
 function showCard(){
   rev=false;var c=deck[idx];
-  var cfg=CAT_CFG[c.role]||CAT_CFG.STUDENT;
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.DOC;
   document.getElementById("card").style.setProperty("--acc",cfg.acc);
   document.getElementById("cn").textContent="#"+(idx+1);
   var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
-  document.getElementById("sender-disp").textContent=c.sender;
-  document.getElementById("meta-disp").textContent=c.date+" · "+c.time;
-  var bubble=document.getElementById("msg-bubble");
-  bubble.textContent=c.msg;
-  bubble.className="msg-bubble"+(c.role==="ADMIN"?" admin":"");
-  document.getElementById("msg-time").textContent=c.time+" · "+c.date;
+  document.getElementById("en-disp").textContent=c.en;
+  document.getElementById("ans-id-txt").textContent=c.id;
   var note=document.getElementById("ans-note");
   if(c.note){note.textContent=c.note;note.style.display="";}else{note.style.display="none";}
   document.getElementById("ans").style.display="none";
@@ -393,8 +246,8 @@ function showCard(){
   document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
   var pct=Math.round(idx/deck.length*100);
   document.getElementById("pb").style.width=pct+"%";
-  document.getElementById("pl").textContent=idx+" done";
-  document.getElementById("pr").textContent=deck.length+" cards";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
 }
 function reveal(){
   if(rev)return;rev=true;
@@ -421,19 +274,19 @@ function showResult(){
   document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
   var pct=Math.round(cp/deck.length*100);
   document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
-  document.getElementById("rt").textContent="Round "+ronde+" done!";
-  document.getElementById("rs").textContent=pct>=90?"Almost perfect! "+toRev.length+" cards left.":pct>=70?"Good! "+toRev.length+" cards to review.":pct>=50?"Not bad! Repeat "+toRev.length+" cards.":"Keep going! "+toRev.length+" cards waiting.";
-  document.getElementById("nb").textContent="Round "+(ronde+1)+" → "+toRev.length+" cards";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":pct>=50?"Lumayan! Ulangi "+toRev.length+" kartu.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
   var rl=document.getElementById("rl");rl.innerHTML="";
   var belumList=toRev.filter(function(v){return (v._b||0)>0;});
   belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
   if(belumList.length===0){
-    rl.innerHTML="<div style=\"padding:10px 12px;font-size:12px;color:#8a8478;text-align:center\">No difficult cards! 🎉</div>";
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang benar-benar sulit 🎉</div>";
   } else {
     belumList.forEach(function(v){
       var d=document.createElement("div");d.className="ri";
-      var score="<span class=\"ri-score\">✗"+(v._b||0)+"</span>";
-      d.innerHTML="<span class=\"ri-name\">"+v.sender+"</span><span style=\"font-size:11px;color:#8a8478;flex:1\">"+v.date+"</span>"+score;
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-en'>"+v.en.substring(0,60)+"…</span>"+score;
       rl.appendChild(d);
     });
   }
