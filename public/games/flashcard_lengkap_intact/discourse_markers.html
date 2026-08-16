@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discourse Markers — Kata Penghubung Bahasa Inggris</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-AWAL.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-TENGAH.on{background:#059669;border-color:#059669;}
+.fb.c-SAMBUNG.on{background:#d97706;border-color:#d97706;}
+.fb.c-AKHIR.on{background:#dc2626;border-color:#dc2626;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.8rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.word-main{font-size:52px;font-weight:700;color:#1a1814;text-align:center;line-height:1.1;margin-bottom:4px;}
+.word-pos{font-size:11px;color:#8a8478;text-align:center;letter-spacing:.8px;text-transform:uppercase;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .8rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;}
+.ans-id{font-size:20px;font-weight:700;color:#7c3aed;margin-bottom:10px;}
+.ans-ex{font-size:14px;color:#1a1814;line-height:1.65;background:#f5f3ff;border-radius:12px;padding:10px 14px;text-align:left;}
+.ans-ex-id{font-size:13px;color:#6b7280;line-height:1.6;margin-top:6px;text-align:left;}
+.ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:5px 10px;margin-top:8px;font-style:italic;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:220px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-w{font-size:15px;font-weight:700;color:#1a1814;min-width:90px;}
+.ri-id{font-size:11px;color:#7c3aed;margin-left:auto;text-align:right;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+mark{background:#fef08a;border-radius:3px;padding:0 2px;font-weight:700;color:#1a1814;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>💬 Discourse Markers — Kata Penghubung</h1>
+  <div class="sub" id="sub-lbl">50 kata · Depan = kata, Belakang = arti + contoh</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-AWAL" onclick="setCat('AWAL')">🔵 Di Awal</button>
+    <button class="fb c-TENGAH" onclick="setCat('TENGAH')">🟢 Di Tengah</button>
+    <button class="fb c-SAMBUNG" onclick="setCat('SAMBUNG')">🟡 Penyambung</button>
+    <button class="fb c-AKHIR" onclick="setCat('AKHIR')">🔴 Di Akhir</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="word-main" id="word-disp"></div>
+      <div class="word-pos" id="pos-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk arti &amp; contoh</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">🇮🇩 Arti</div>
+        <div class="ans-id" id="ans-id-txt"></div>
+        <div class="atag">💬 Contoh</div>
+        <div class="ans-ex" id="ans-ex-txt"></div>
+        <div class="ans-ex-id" id="ans-ex-id-txt"></div>
+        <div class="ans-note" id="ans-note" style="display:none"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua kata penghubung dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+  // ── BAGIAN 1: DI AWAL KALIMAT ──
+  {cat:"AWAL",w:"Well...",id:"Nah / Jadi begini",pos:"Pembuka",
+   ex:"Well, we should start the research tomorrow.",
+   ex_id:"Nah, kita harus mulai penelitiannya besok."},
+  {cat:"AWAL",w:"Actually...",id:"Sebenarnya",pos:"Pembuka",
+   ex:"Actually, I prefer the white aluminum body.",
+   ex_id:"Sebenarnya, saya lebih suka bodi aluminium putih."},
+  {cat:"AWAL",w:"Basically...",id:"Pada dasarnya",pos:"Pembuka",
+   ex:"Basically, this application is for elderly users.",
+   ex_id:"Pada dasarnya, aplikasi ini untuk pengguna lansia."},
+  {cat:"AWAL",w:"Honestly...",id:"Sejujurnya",pos:"Pembuka",
+   ex:"Honestly, I don't really like this button placement.",
+   ex_id:"Sejujurnya, saya kurang suka penempatan tombol ini."},
+  {cat:"AWAL",w:"Anyway...",id:"Ngomong-ngomong",pos:"Pembuka",
+   ex:"Anyway, let's look at the new prototype.",
+   ex_id:"Ngomong-ngomong, mari kita lihat prototipe barunya."},
+  {cat:"AWAL",w:"Seriously...",id:"Serius / Sungguh",pos:"Pembuka",
+   ex:"Seriously, this phone design is very ergonomic.",
+   ex_id:"Sungguh, desain ponsel ini sangat ergonomis."},
+  {cat:"AWAL",w:"Clearly...",id:"Jelas sekali",pos:"Pembuka",
+   ex:"Clearly, the user cannot find the menu button.",
+   ex_id:"Jelas sekali, pengguna tidak bisa menemukan tombol menu."},
+  {cat:"AWAL",w:"Ideally...",id:"Idealnya",pos:"Pembuka",
+   ex:"Ideally, the smartphone battery should last two days.",
+   ex_id:"Idealnya, baterai smartphone harus tahan dua hari."},
+  {cat:"AWAL",w:"Obviously...",id:"Tentu saja / Sudah jelas",pos:"Pembuka",
+   ex:"Obviously, we need to fix this system error.",
+   ex_id:"Sudah jelas, kita perlu memperbaiki error sistem ini."},
+  {cat:"AWAL",w:"Personally...",id:"Secara pribadi / Menurut saya",pos:"Pembuka",
+   ex:"Personally, I think the screen is too big.",
+   ex_id:"Menurut saya, layarnya terlalu besar."},
+  {cat:"AWAL",w:"Fortunately...",id:"Untungnya",pos:"Pembuka",
+   ex:"Fortunately, our team has a good programmer.",
+   ex_id:"Untungnya, tim kita punya programmer yang bagus."},
+  {cat:"AWAL",w:"Unfortunately...",id:"Sayangnya",pos:"Pembuka",
+   ex:"Unfortunately, we don't have enough data yet.",
+   ex_id:"Sayangnya, kita belum punya data yang cukup."},
+  {cat:"AWAL",w:"Frankly...",id:"Terus terang",pos:"Pembuka",
+   ex:"Frankly, this project is quite difficult for me.",
+   ex_id:"Terus terang, proyek ini cukup sulit bagi saya."},
+  {cat:"AWAL",w:"Ultimately...",id:"Pada akhirnya",pos:"Pembuka",
+   ex:"Ultimately, the user experience is the most important thing.",
+   ex_id:"Pada akhirnya, pengalaman pengguna adalah hal terpenting."},
+  {cat:"AWAL",w:"Technically...",id:"Secara teknis",pos:"Pembuka",
+   ex:"Technically, we can use this sensor for the camera.",
+   ex_id:"Secara teknis, kita bisa menggunakan sensor ini untuk kamera."},
+
+  // ── BAGIAN 2: DI TENGAH KALIMAT (PENJEDA) ──
+  {cat:"TENGAH",w:"Mean...",id:"Maksudnya / Arti kata lain",pos:"Penjeda",
+   ex:"The phone is very light, mean, easy to carry.",
+   ex_id:"Ponselnya sangat ringan, maksudnya, mudah dibawa."},
+  {cat:"TENGAH",w:"Yeah...",id:"Ya...",pos:"Penjeda",
+   ex:"We need to, yeah, adjust the volume button.",
+   ex_id:"Kita perlu, ya, menyesuaikan tombol volume.",
+   note:"Diucapkan agak panjang saat berpikir sejenak"},
+  {cat:"TENGAH",w:"Right...",id:"Benar / Oke",pos:"Penjeda",
+   ex:"The user screen is, right, 6 inches wide.",
+   ex_id:"Layar penggunanya, benar, lebarnya 6 inci."},
+  {cat:"TENGAH",w:"True...",id:"Betul",pos:"Penjeda",
+   ex:"This feature is, true, very useful for students.",
+   ex_id:"Fitur ini, betul, sangat berguna untuk mahasiswa."},
+  {cat:"TENGAH",w:"Okay...",id:"Oke / Baik",pos:"Penjeda",
+   ex:"We can, okay, change the color to dark mode.",
+   ex_id:"Kita bisa, oke, mengubah warnanya ke mode gelap."},
+  {cat:"TENGAH",w:"Sure...",id:"Tentu / Pasti",pos:"Penjeda",
+   ex:"The design is, sure, modern and minimalist.",
+   ex_id:"Desainnya, tentu, modern dan minimalis."},
+  {cat:"TENGAH",w:"Fine...",id:"Bagus / Baik",pos:"Penjeda",
+   ex:"The prototype looks, fine, but needs more testing.",
+   ex_id:"Prototipenya terlihat, bagus, tapi perlu lebih banyak pengujian."},
+  {cat:"TENGAH",w:"Maybe...",id:"Mungkin",pos:"Penjeda",
+   ex:"We can, maybe, add a fingerprint sensor here.",
+   ex_id:"Kita bisa, mungkin, menambahkan sensor sidik jari di sini."},
+  {cat:"TENGAH",w:"Probably...",id:"Kemungkinan besar",pos:"Penjeda",
+   ex:"The users are, probably, confused by this icon.",
+   ex_id:"Penggunanya, kemungkinan besar, bingung dengan ikon ini."},
+  {cat:"TENGAH",w:"Exactly...",id:"Tepat sekali",pos:"Penjeda",
+   ex:"That is, exactly, what I want to change.",
+   ex_id:"Itulah, tepat sekali, yang ingin saya ubah."},
+  {cat:"TENGAH",w:"Just...",id:"Hanya / Cuma",pos:"Penjeda",
+   ex:"I want to, just, make the corner more rounded.",
+   ex_id:"Saya hanya ingin, cuma, membuat sudutnya lebih membulat."},
+  {cat:"TENGAH",w:"Almost...",id:"Hampir",pos:"Penjeda",
+   ex:"The 3D model is, almost, finished today.",
+   ex_id:"Model 3D-nya, hampir, selesai hari ini."},
+  {cat:"TENGAH",w:"Sorta...",id:"Semacam / Agak",pos:"Penjeda",
+   ex:"The interface looks, sorta, outdated.",
+   ex_id:"Tampilannya terlihat, agak, ketinggalan zaman.",
+   note:"Bentuk santai dari 'sort of'"},
+  {cat:"TENGAH",w:"Kinda...",id:"Agak / Sedikit",pos:"Penjeda",
+   ex:"The new titanium body is, kinda, heavy.",
+   ex_id:"Bodi titanium baru ini, agak, berat.",
+   note:"Bentuk santai dari 'kind of'"},
+
+  // ── BAGIAN 3: PENYAMBUNG IDE & KESIMPULAN ──
+  {cat:"SAMBUNG",w:"Plus...",id:"Lagipula / Tambahan lagi",pos:"Penyambung",
+   ex:"The screen is bright, plus, it saves energy.",
+   ex_id:"Layarnya terang, lagipula, hemat energi."},
+  {cat:"SAMBUNG",w:"Also...",id:"Juga",pos:"Penyambung",
+   ex:"We designed the body. Also, we created the logo.",
+   ex_id:"Kami mendesain bodinya. Juga, kami membuat logonya."},
+  {cat:"SAMBUNG",w:"Yet...",id:"Namun / Tapi",pos:"Penyambung",
+   ex:"The phone is expensive, yet, many people buy it.",
+   ex_id:"Ponselnya mahal, namun, banyak orang membelinya."},
+  {cat:"SAMBUNG",w:"But...",id:"Tapi",pos:"Penyambung",
+   ex:"The application is fast, but, the font is too small.",
+   ex_id:"Aplikasinya cepat, tapi, fontnya terlalu kecil."},
+  {cat:"SAMBUNG",w:"Still...",id:"Namun tetap saja",pos:"Penyambung",
+   ex:"It has some bugs. Still, it is a good product.",
+   ex_id:"Ada beberapa bug. Namun tetap saja, ini produk yang bagus."},
+  {cat:"SAMBUNG",w:"Therefore...",id:"Oleh karena itu",pos:"Penyambung",
+   ex:"The user failed the test. Therefore, we must redesign it.",
+   ex_id:"Pengguna gagal dalam tes. Oleh karena itu, kita harus mendesain ulang."},
+  {cat:"SAMBUNG",w:"Meanwhile...",id:"Sementara itu",pos:"Penyambung",
+   ex:"I am doing the UI. Meanwhile, he is writing the code.",
+   ex_id:"Saya mengerjakan UI. Sementara itu, dia menulis kode."},
+  {cat:"SAMBUNG",w:"However...",id:"Namun",pos:"Penyambung",
+   ex:"The camera is great. However, the battery is small.",
+   ex_id:"Kameranya bagus. Namun, baterainya kecil."},
+  {cat:"SAMBUNG",w:"Besides...",id:"Selain itu",pos:"Penyambung",
+   ex:"It is beautiful. Besides, the material is strong.",
+   ex_id:"Tampilannya indah. Selain itu, materialnya kuat."},
+  {cat:"SAMBUNG",w:"Instead...",id:"Sebagai gantinya",pos:"Penyambung",
+   ex:"Don't use plastic. Use glass instead.",
+   ex_id:"Jangan pakai plastik. Gunakan kaca sebagai gantinya."},
+  {cat:"SAMBUNG",w:"Indeed...",id:"Memang / Sungguh",pos:"Penyambung",
+   ex:"The Taiwanese market is indeed very competitive.",
+   ex_id:"Pasar Taiwan memang sangat kompetitif."},
+  {cat:"SAMBUNG",w:"Moreover...",id:"Terlebih lagi",pos:"Penyambung",
+   ex:"The design is cheap. Moreover, it breaks easily.",
+   ex_id:"Desainnya murah. Terlebih lagi, mudah rusak."},
+  {cat:"SAMBUNG",w:"Otherwise...",id:"Jika tidak",pos:"Penyambung",
+   ex:"We must hurry, otherwise, we will miss the deadline.",
+   ex_id:"Kita harus bergegas, jika tidak, akan melewati tenggat waktu."},
+  {cat:"SAMBUNG",w:"Next...",id:"Selanjutnya",pos:"Penyambung",
+   ex:"Next, let's discuss the user research method.",
+   ex_id:"Selanjutnya, mari bahas metode riset pengguna."},
+  {cat:"SAMBUNG",w:"Finally...",id:"Akhirnya / Terakhir",pos:"Penyambung",
+   ex:"Finally, this is our final smartphone design.",
+   ex_id:"Akhirnya, ini adalah desain smartphone terakhir kita."},
+
+  // ── BAGIAN 4: DI AKHIR KALIMAT ──
+  {cat:"AKHIR",w:"Though...",id:"Tapi / Sih",pos:"Penutup",
+   ex:"The phone has good quality. It is expensive, though.",
+   ex_id:"Ponselnya berkualitas bagus. Tapi mahal sih.",
+   note:"Diletakkan di paling akhir untuk kontras"},
+  {cat:"AKHIR",w:"Anyway...",id:"Sudahlah / Bagaimanapun",pos:"Penutup",
+   ex:"The test failed, but we learned a lot anyway.",
+   ex_id:"Tesnya gagal, tapi kita belajar banyak bagaimanapun."},
+  {cat:"AKHIR",w:"Instead...",id:"Malahan",pos:"Penutup",
+   ex:"I didn't choose Java, I used Python instead.",
+   ex_id:"Saya tidak memilih Java, saya malahan menggunakan Python."},
+  {cat:"AKHIR",w:"Period...",id:"Titik / Tidak ada tawar-menawar",pos:"Penutup",
+   ex:"Good UI/UX requires user research, period.",
+   ex_id:"UI/UX yang baik membutuhkan riset pengguna, titik.",
+   note:"Menegaskan tidak ada diskusi lagi"},
+  {cat:"AKHIR",w:"Regardless...",id:"Terlepas dari itu",pos:"Penutup",
+   ex:"The coding is hard, but we must finish it regardless.",
+   ex_id:"Codingnya sulit, tapi kita harus menyelesaikannya terlepas dari itu."}
+];
+
+var CAT_CFG={
+  AWAL:{label:"Di Awal",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  TENGAH:{label:"Di Tengah",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  SAMBUNG:{label:"Penyambung",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#dc2626)"},
+  AKHIR:{label:"Di Akhir",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#7c3aed)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:"?";
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kata";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.AWAL;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label+" · "+c.pos;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("word-disp").textContent=c.w;
+  document.getElementById("pos-disp").textContent=c.pos+" · posisi "+cfg.label.toLowerCase();
+  document.getElementById("ans-id-txt").textContent=c.id;
+  // highlight the keyword in example
+  var highlighted = c.ex.replace(new RegExp('('+c.w.replace('...','').trim()+')', 'gi'), '<mark>$1</mark>');
+  document.getElementById("ans-ex-txt").innerHTML=highlighted;
+  document.getElementById("ans-ex-id-txt").textContent=c.ex_id;
+  var note=document.getElementById("ans-note");
+  if(c.note){note.textContent=c.note;note.style.display="";}else{note.style.display="none";}
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":pct>=50?"Lumayan! Ulangi "+toRev.length+" kartu.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-w'>"+v.w+"</span><span class='ri-id'>"+v.id+"</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
