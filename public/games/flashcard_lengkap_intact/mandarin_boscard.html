@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>要怎麼說 — Flashcard</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c3aed,#2563eb);}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;margin-bottom:.8rem;}
+.zh-main{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;line-height:1.4;font-size:28px;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .8rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:3px;text-align:center;}
+.ans-py{font-size:17px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:10px;line-height:1.5;}
+.ans-id{font-size:16px;font-weight:700;color:#1a1814;text-align:center;line-height:1.6;margin-bottom:8px;}
+.ans-note{font-size:12px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:6px 12px;margin-top:4px;font-style:italic;text-align:center;}
+.word-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px;}
+.word-chip{background:#f5f3ff;border:1px solid #e0d9ff;border-radius:8px;padding:4px 10px;text-align:center;}
+.wc-zh{font-family:"Noto Serif TC",serif;font-size:15px;font-weight:700;color:#1a1814;}
+.wc-py{font-size:11px;color:#7c3aed;font-weight:600;}
+.wc-id{font-size:11px;color:#6b7280;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🗣️ 要怎麼說 — Percakapan Sehari-hari</h1>
+  <div class="sub" id="sub-lbl">Ketuk untuk pinyin + arti</div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-num" id="cn">#1</div>
+      <div class="zh-main" id="zh-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk pinyin + arti</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">PINYIN</div>
+        <div class="ans-py" id="ans-py"></div>
+        <div class="atag">🇮🇩 Arti</div>
+        <div class="ans-id" id="ans-id"></div>
+        <div class="ans-note" id="ans-note" style="display:none"></div>
+        <div class="word-row" id="word-row"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua kartu dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+  {
+    zh:"要怎麼說",
+    py:"Yào zěnme shuō",
+    id:"Bagaimana cara bilangnya / Gimana ya ngomongnya",
+    note:"Dipakai saat bingung mau mengungkapkan sesuatu",
+    words:[
+      {zh:"要",py:"yào",id:"mau / akan"},
+      {zh:"怎麼",py:"zěnme",id:"bagaimana"},
+      {zh:"說",py:"shuō",id:"bicara / bilang"}
+    ]
+  },
+  {
+    zh:"他也知道錯了啦",
+    py:"Tā yě zhīdào cuò le la",
+    id:"Dia juga sudah tahu dia salah kok",
+    note:"啦 = partikel penegas, agak melunak/merayu",
+    words:[
+      {zh:"他",py:"tā",id:"dia (laki-laki)"},
+      {zh:"也",py:"yě",id:"juga"},
+      {zh:"知道",py:"zhīdào",id:"tahu / mengetahui"},
+      {zh:"錯",py:"cuò",id:"salah"},
+      {zh:"了",py:"le",id:"sudah (perubahan keadaan)"},
+      {zh:"啦",py:"la",id:"kok / dong (penegas)"}
+    ]
+  },
+  {
+    zh:"希望老闆可以再給他一次機會",
+    py:"Xīwàng lǎobǎn kěyǐ zài gěi tā yīcì jīhuì",
+    id:"Berharap bos bisa beri dia satu kesempatan lagi",
+    note:"一次機會 = satu kali kesempatan",
+    words:[
+      {zh:"希望",py:"xīwàng",id:"berharap / harapan"},
+      {zh:"老闆",py:"lǎobǎn",id:"bos / atasan"},
+      {zh:"可以",py:"kěyǐ",id:"bisa / boleh"},
+      {zh:"再",py:"zài",id:"lagi"},
+      {zh:"給",py:"gěi",id:"beri / kasih"},
+      {zh:"一次",py:"yīcì",id:"satu kali"},
+      {zh:"機會",py:"jīhuì",id:"kesempatan / peluang"}
+    ]
+  },
+  {
+    zh:"阿媽也是不忍",
+    py:"Āmā yě shì bùrěn",
+    id:"Nenek juga tidak sampai hati / ikut kasihan",
+    note:"不忍 = tidak tega / tidak sampai hati melihatnya",
+    words:[
+      {zh:"阿媽",py:"āmā",id:"nenek (panggilan akrab)"},
+      {zh:"也是",py:"yě shì",id:"juga / ikut-ikutan"},
+      {zh:"不忍",py:"bùrěn",id:"tidak tega / tidak sampai hati"}
+    ]
+  },
+  {
+    zh:"那些就是因為情緒的問題",
+    py:"Nàxiē jiùshì yīnwèi qíngxù de wèntí",
+    id:"Itu semua memang karena masalah emosi",
+    note:"就是 = memang / itu karena",
+    words:[
+      {zh:"那些",py:"nàxiē",id:"itu semua / hal-hal itu"},
+      {zh:"就是",py:"jiùshì",id:"memang / itu karena"},
+      {zh:"因為",py:"yīnwèi",id:"karena"},
+      {zh:"情緒",py:"qíngxù",id:"emosi / perasaan"},
+      {zh:"問題",py:"wèntí",id:"masalah"}
+    ]
+  },
+  {
+    zh:"造成他可能會脾氣有點爆發",
+    py:"Zàochéng tā kěnéng huì píqì yǒudiǎn bàofā",
+    id:"Menyebabkan dia mungkin emosinya agak meledak",
+    note:"脾氣爆發 = emosi meledak / naik pitam",
+    words:[
+      {zh:"造成",py:"zàochéng",id:"menyebabkan / mengakibatkan"},
+      {zh:"可能",py:"kěnéng",id:"mungkin"},
+      {zh:"脾氣",py:"píqì",id:"emosi / temperamen"},
+      {zh:"有點",py:"yǒudiǎn",id:"agak / sedikit"},
+      {zh:"爆發",py:"bàofā",id:"meledak / meledakkan"}
+    ]
+  },
+  {
+    zh:"他也認錯了吧",
+    py:"Tā yě rèncuò le ba",
+    id:"Dia juga sudah mengakui kesalahannya kan",
+    note:"吧 = kan / ya (mencari persetujuan)",
+    words:[
+      {zh:"他",py:"tā",id:"dia"},
+      {zh:"也",py:"yě",id:"juga"},
+      {zh:"認錯",py:"rèncuò",id:"mengakui kesalahan"},
+      {zh:"了",py:"le",id:"sudah"},
+      {zh:"吧",py:"ba",id:"kan / ya (partikel konfirmasi)"}
+    ]
+  },
+  {
+    zh:"他也知道錯了啦，希望老闆可以再給他一次機會",
+    py:"Tā yě zhīdào cuò le la, xīwàng lǎobǎn kěyǐ zài gěi tā yīcì jīhuì",
+    id:"Dia juga sudah tahu salah kok, berharap bos bisa beri dia satu kesempatan lagi",
+    note:"Kalimat lengkap — kombinasi permohonan maaf dan harapan"
+  },
+  {
+    zh:"那些就是因為情緒的問題，造成他可能會脾氣有點爆發，他也認錯了吧",
+    py:"Nàxiē jiùshì yīnwèi qíngxù de wèntí, zàochéng tā kěnéng huì píqì yǒudiǎn bàofā, tā yě rèncuò le ba",
+    id:"Itu memang karena masalah emosi, menyebabkan dia emosinya agak meledak, tapi dia juga sudah mengakui kesalahannya kan",
+    note:"Kalimat lengkap — penjelasan situasi kepada bos"
+  }
+];
+
+var deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function fullRestart(){
+  deck=shuffle(V.slice());
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  document.getElementById("sub-lbl").textContent=deck.length+" kartu · Ketuk untuk pinyin + arti";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  document.getElementById("cn").textContent="#"+(idx+1);
+  document.getElementById("zh-disp").textContent=c.zh;
+  document.getElementById("ans-py").textContent=c.py;
+  document.getElementById("ans-id").textContent=c.id;
+  var note=document.getElementById("ans-note");
+  if(c.note){note.textContent=c.note;note.style.display="";}else{note.style.display="none";}
+  var wr=document.getElementById("word-row");
+  wr.innerHTML="";
+  if(c.words){
+    c.words.forEach(function(w){
+      var d=document.createElement("div");d.className="word-chip";
+      d.innerHTML="<div class='wc-zh'>"+w.zh+"</div><div class='wc-py'>"+w.py+"</div><div class='wc-id'>"+w.id+"</div>";
+      wr.appendChild(d);
+    });
+  }
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>

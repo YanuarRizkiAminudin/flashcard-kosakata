@@ -83,6 +83,16 @@ const flashcards = [
     route: '/game/polite-english',
   },
   {
+    id: 'BC1',
+    category: 'Mandarin',
+    categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
+    icon: '🗣️',
+    title: '要怎麼說 — Percakapan Sehari-hari',
+    kartu: 9,
+    level: '情緒 · 認錯 · 機會 · Minta Maaf ke Bos',
+    route: '/game/mandarin-boscard',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
