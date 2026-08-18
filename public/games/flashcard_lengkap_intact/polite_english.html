@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polite English — Prof. Shen</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-C1.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-C2.on{background:#059669;border-color:#059669;}
+.fb.c-C3.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-C4.on{background:#d97706;border-color:#d97706;}
+.fb.c-C5.on{background:#7c3aed;border-color:#7c3aed;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.rude-tag{font-size:10px;color:#dc2626;font-weight:700;margin-bottom:6px;text-align:center;letter-spacing:.5px;}
+.en-front{font-size:16px;font-weight:600;color:#1a1814;line-height:1.65;text-align:center;}
+.id-front{font-size:13px;color:#6b7280;margin-top:6px;text-align:center;line-height:1.5;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;}
+.polite-tag{font-size:11px;color:#059669;font-weight:700;margin-bottom:6px;}
+.ans-polite{font-size:15px;font-weight:600;color:#1a1814;line-height:1.7;background:#f0fdf4;border:1px solid #86efac;border-radius:12px;padding:12px 14px;text-align:left;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-en{font-size:12px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🎓 Polite English — Prof. Shen</h1>
+  <div class="sub" id="sub-lbl">Depan = kalimat kasar · Belakang = versi sopan</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-C1" onclick="setCat('C1')">💻 Desain</button>
+    <button class="fb c-C2" onclick="setCat('C2')">📄 Jurnal</button>
+    <button class="fb c-C3" onclick="setCat('C3')">🎓 Ujian</button>
+    <button class="fb c-C4" onclick="setCat('C4')">💰 Dana</button>
+    <button class="fb c-C5" onclick="setCat('C5')">📞 Kontak</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="rude-tag">❌ Jangan katakan ini:</div>
+      <div class="en-front" id="en-disp"></div>
+      <div class="id-front" id="id-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk versi sopan</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="polite-tag">✨ Versi Sopan:</div>
+        <div class="ans-polite" id="ans-polite-txt"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua kalimat sopan dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+// C1 — Desain & Pengajaran
+{cat:"C1",rude:"I want you to check my UI design.",id:"Saya mau Anda periksa desain UI saya.",polite:"Professor Shen, would you happen to have some time to provide your valuable feedback on my UI design?"},
+{cat:"C1",rude:"Your cross-cultural research is confusing.",id:"Penelitian lintas budaya Anda membingungkan.",polite:"I am highly interested in your cross-cultural research, but I would appreciate some further clarification on a few points."},
+{cat:"C1",rude:"Tell me how to use personality types for my team.",id:"Kasih tahu saya cara pakai tipe kepribadian untuk tim saya.",polite:"Could you please guide me on how to effectively integrate personality types into design team formation, based on your expertise?"},
+{cat:"C1",rude:"I don't like user-centred design.",id:"Saya tidak suka desain berbasis pengguna.",polite:"While I see the merits of user-centred design, I am curious about how we can balance it with other emerging methodologies."},
+{cat:"C1",rude:"Is cognitive psychology really important for design?",id:"Memangnya psikologi kognitif penting buat desain?",polite:"Could you please help me understand how cognitive psychology deeply influences modern emerging technologies?"},
+{cat:"C1",rude:"Look at my multimedia project now.",id:"Lihat proyek multimedia saya sekarang.",polite:"Whenever your schedule permits, could you please kindly review my latest multimedia project?"},
+{cat:"C1",rude:"Give me a creative thinking method.",id:"Kasih saya satu metode berpikir kreatif.",polite:"I am looking to improve my methodology. Which creative thinking frameworks would you highly recommend for this project?"},
+{cat:"C1",rude:"Your HCI concept is too old.",id:"Konsep HCI Anda terlalu jadul.",polite:"How do you think this foundational HCI concept adapts to the latest shifts in emerging technologies?"},
+{cat:"C1",rude:"Teach me about emerging technology.",id:"Ajarin saya tentang teknologi masa kini.",polite:"I would be deeply honored if you could share some insights on the current trends in emerging technology."},
+{cat:"C1",rude:"I don't know anything about user interfaces, explain it.",id:"Saya tidak tahu apa-apa soal UI, jelasin dong.",polite:"As I am currently expanding my knowledge in user interface design, could you please suggest the best starting points for my study?"},
+// C2 — Jurnal & Publikasi
+{cat:"C2",rude:"Publish my paper in your journal.",id:"Terbitkan naskah saya di jurnal Anda.",polite:"I would be honored to submit my manuscript to your journal. Could you please advise if it aligns with the current scope?"},
+{cat:"C2",rude:"Why is my paper rejected?",id:"Kenapa tulisan saya ditolak?",polite:"Could you please provide some feedback on how I can improve my paper to meet the high standards of your journal?"},
+{cat:"C2",rude:"Review my paper fast.",id:"Tolong tinjau kertas kerja saya dengan cepat.",polite:"I understand you have a demanding schedule, but I would be grateful for any updates on the review timeline when possible."},
+{cat:"C2",rude:"Put me in your Smart Science book series.",id:"Masukkan saya ke dalam seri buku Smart Science Anda.",polite:"I have a research proposal that might fit the 'Smart Science, Design, & Technology' series. May I know the submission process?"},
+{cat:"C2",rude:"Your journal guidelines are too complicated.",id:"Panduan jurnal Anda ribet banget.",polite:"I want to ensure absolute compliance with the journal's formatting. Could you please clarify a few specific points in the guidelines?"},
+{cat:"C2",rude:"Can you make me a co-author?",id:"Bisa jadikan saya penulis pendamping?",polite:"I would be deeply privileged to contribute to your upcoming research project, if there is an opportunity to collaborate."},
+{cat:"C2",rude:"I want to see your citation record.",id:"Saya mau lihat rekam jejak sitasi Anda.",polite:"Your extensive publication record is highly inspiring. Which of your key papers should I read first for my thesis?"},
+{cat:"C2",rude:"Is your IEEE conference good?",id:"Apakah konferensi IEEE Anda bagus?",polite:"I am highly interested in submitting to the IEEE conference you chair. Could you share the core focus for this year's event?"},
+{cat:"C2",rude:"Fix the typo in your journal website.",id:"Betulkan salah ketik di situs jurnal Anda.",polite:"I noticed a small update might be needed on the journal's webpage, and I wanted to quietly bring it to your attention."},
+{cat:"C2",rude:"I want to bypass the peer-review.",id:"Saya mau melewati proses peninjauan sejawat.",polite:"I am fully committed to refining my paper through the rigorous peer-review process of your journal."},
+// C3 — Ujian
+{cat:"C3",rude:"Pass me in my PhD viva.",id:"Luluskan saya di ujian doktoral saya.",polite:"I will do my utmost to address all your academic questions and constructive criticisms during my viva examination."},
+{cat:"C3",rude:"Don't ask hard questions during my MA exam.",id:"Jangan tanya yang susah-susah pas ujian S2 saya.",polite:"I am preparing thoroughly for the examination and would greatly value your academic perspective on my defense."},
+{cat:"C3",rude:"Your exam feedback is too harsh.",id:"Masukan ujian dari Anda terlalu kejam.",polite:"Thank you for the rigorous critique, Professor Shen. It really helps me see the blind spots in my research design."},
+{cat:"C3",rude:"I don't agree with your exam evaluation.",id:"Saya tidak setuju dengan nilai ujian dari Anda.",polite:"Could you please help me understand this specific criterion so I can better align my work with academic standards?"},
+{cat:"C3",rude:"Tell me the exam questions beforehand.",id:"Bocorkan pertanyaan ujiannya dong sebelum mulai.",polite:"Could you please guide me on which core areas or methodology chapters I should focus on most for my preparation?"},
+{cat:"C3",rude:"Why did you fail my friend?",id:"Kenapa Anda tidak meluluskan teman saya?",polite:"I want to ensure I fully comprehend the academic expectations required to successfully pass this rigorous examination."},
+{cat:"C3",rude:"I didn't read the papers you suggested for the exam.",id:"Saya tidak membaca artikel ilmiah yang Anda sarankan untuk ujian.",polite:"I am currently catching up on the literature you recommended to ensure my theoretical framework is robust."},
+{cat:"C3",rude:"Change my exam schedule now.",id:"Ubah jadwal ujian saya sekarang.",polite:"Due to an unavoidable circumstance, would it be at all possible to explore an alternative time slot for my examination?"},
+{cat:"C3",rude:"Is an MA degree from Eindhoven better than your PhD from London?",id:"Apakah gelar S2 dari Eindhoven lebih bagus dari S3 Anda di London?",polite:"Your educational background in both the UK and the Netherlands is fascinating. How did those distinct design philosophies shape your career?"},
+{cat:"C3",rude:"You won the best teaching award in 2015, are you still good now?",id:"Anda menang penghargaan dosen terbaik tahun 2015, apa sekarang masih bagus?",polite:"Your legacy of teaching excellence since winning the award in 2015 is highly inspiring to all of us in the department."},
+// C4 — Dana & Hibah
+{cat:"C4",rude:"Give me some of your one-million-pound grant.",id:"Bagi dong dana hibah satu juta poundsterling Anda.",polite:"Professor Shen, are there any funded research assistant positions available under your current MOST grant project?"},
+{cat:"C4",rude:"How much money do you make from commercial companies?",id:"Berapa banyak uang yang Anda dapat dari perusahaan swasta?",polite:"Your role as a corporate design consultant is impressive. How do you bridge academic research with industrial commercial needs?"},
+{cat:"C4",rude:"Write a recommendation letter so I can get a grant.",id:"Tuliskan surat rekomendasi agar saya dapat dana hibah.",polite:"I am applying for a research grant, and it would mean a great deal if you would consider writing a recommendation letter on my behalf."},
+{cat:"C4",rude:"Your MOST project looks too difficult, make it easier.",id:"Proyek MOST Anda kelihatan terlalu susah, gampangkan saja.",polite:"The scope of this MOST project is very rigorous. Could you please advise on how we can break down the milestones efficiently?"},
+{cat:"C4",rude:"I don't want to do corporate consultancy work.",id:"Saya tidak mau mengerjakan tugas konsultasi perusahaan swasta.",polite:"I am currently fully extended with my academic coursework, so I am afraid I might not give the consultancy project the focus it deserves."},
+{cat:"C4",rude:"Did you secure the grant money yourself?",id:"Apakah Anda sendiri yang mendapatkan uang hibah itu?",polite:"Securing over one million pounds in funding is a major achievement. What key advice do you have for drafting successful grant proposals?"},
+{cat:"C4",rude:"Use my idea for your company consultancy.",id:"Pakai ide saya untuk konsultasi perusahaan Anda.",polite:"I have drafted a small concept that might be relevant to the industrial application you discussed. May I share it for your review?"},
+{cat:"C4",rude:"The government wasted money on this research.",id:"Pemerintah membuang-buang uang untuk penelitian ini.",polite:"Could you please help me appreciate the long-term societal and technological impact of this government-funded research?"},
+{cat:"C4",rude:"Buy this equipment using your grant budget.",id:"Beli alat ini pakai anggaran hibah Anda.",polite:"Would it be within the budgetary framework of the project to consider allocating resources for this specific research tool?"},
+{cat:"C4",rude:"I am only joining your lab for the grant money.",id:"Saya masuk lab Anda cuma demi uang hibah.",polite:"I am highly motivated to join your lab to contribute to high-impact research under your esteemed leadership."},
+// C5 — Kontak & Etika
+{cat:"C5",rude:"I am calling your mobile number at midnight because I need help.",id:"Menelpon nomor HP beliau jam 12 malam karena butuh bantuan.",polite:"Dear Professor Shen, I apologize for the intrusion. Please let me know when you might have a few minutes for a brief phone call."},
+{cat:"C5",rude:"Answer my email stshen@nfu.edu.tw right now.",id:"Balas email saya di alamat Anda sekarang juga.",polite:"I sent an inquiry to your university email regarding the thesis. Please kindly review it whenever you have a free moment."},
+{cat:"C5",rude:"Why didn't you pick up my phone?",id:"Kenapa tidak angkat telepon saya?",polite:"I am sorry for missing you earlier. Please let me know the most convenient time for me to call you back."},
+{cat:"C5",rude:"I just texted your ORCID ID.",id:"Saya baru saja mengirim pesan ke ID ORCID Anda.",polite:"I have updated my academic profile on ORCID to reflect our recent collaboration, as per university requirements."},
+{cat:"C5",rude:"Hey Shen, are you in the office?",id:"Hei Shen, ada di ruangan nggak?",polite:"Good morning, Professor Shen. I hope you are having a productive week. May I check if you have any office hours available today?"},
+{cat:"C5",rude:"I lost your email address.",id:"Saya kehilangan alamat email Anda.",polite:"To ensure my messages reach you securely, could you please confirm if stshen@nfu.edu.tw is the best address for our correspondence?"},
+{cat:"C5",rude:"You are from NFU, right? Where is that?",id:"Anda dari NFU kan? Itu di mana?",polite:"I am very proud to study under your guidance here at NFU, given the university's strong reputation in advanced engineering and design."},
+{cat:"C5",rude:"I missed your deadline, just accept my file anyway.",id:"Saya kelewatan batas waktu, terima saja file saya ya.",polite:"Please accept my sincerest apologies for the delay. I have attached the file and will ensure this does not happen again."},
+{cat:"C5",rude:"Can I add your personal Line/WeChat app?",id:"Bisa minta akun Line/WeChat pribadi Anda?",polite:"What is your preferred channel for academic updates, Professor? Should I strictly utilize official university email?"},
+{cat:"C5",rude:"Your class was boring today.",id:"Kelas Anda membosankan hari ini.",polite:"Thank you for today's lecture, Professor. The concepts on emerging technologies were quite challenging; I will review them further."}
+];
+
+var CAT_CFG={
+  C1:{label:"💻 Desain",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  C2:{label:"📄 Jurnal",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  C3:{label:"🎓 Ujian",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  C4:{label:"💰 Dana",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#059669)"},
+  C5:{label:"📞 Kontak",bg:"#f3e8ff",fg:"#6d28d9",acc:"linear-gradient(90deg,#7c3aed,#2563eb)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua kategori":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kartu";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.C1;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("en-disp").textContent=c.rude;
+  document.getElementById("id-disp").textContent="("+c.id+")";
+  document.getElementById("ans-polite-txt").textContent=c.polite;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-en'>"+v.rude.substring(0,55)+"…</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
