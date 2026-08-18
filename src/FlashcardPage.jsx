@@ -53,6 +53,16 @@ const flashcards = [
     route: '/game/discourse-markers',
   },
   {
+    id: 'BLUF1',
+    category: 'English',
+    categoryColor: '#e0f2fe', categoryTextColor: '#075985',
+    icon: '🎯',
+    title: 'Bottom Line Up Front (BLUF)',
+    kartu: 40,
+    level: 'Konsep · Contoh · Tips · Komunikasi Kerja',
+    route: '/game/bluf-communication',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
