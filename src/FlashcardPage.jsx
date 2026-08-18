@@ -63,6 +63,16 @@ const flashcards = [
     route: '/game/bluf-communication',
   },
   {
+    id: 'CS1',
+    category: 'English',
+    categoryColor: '#e0f2fe', categoryTextColor: '#075985',
+    icon: '🎤',
+    title: 'Communication Skills — 7 Videos',
+    kartu: 55,
+    level: 'P1 BLUF · P2 3-2-1 Framework · P3–P7 coming',
+    route: '/game/communication-skills',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',

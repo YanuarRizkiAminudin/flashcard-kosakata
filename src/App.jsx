@@ -24,6 +24,7 @@ function App() {
       <Route path="/game/nfu-group-chat" element={<GamePage file="flashcard_lengkap_intact/nfu_group_chat.html" title="NFU Internship Group Chat" />} />
       <Route path="/game/discourse-markers" element={<GamePage file="flashcard_lengkap_intact/discourse_markers.html" title="Discourse Markers — Kata Penghubung" />} />
       <Route path="/game/bluf-communication" element={<GamePage file="flashcard_lengkap_intact/bluf_communication.html" title="Bottom Line Up Front — BLUF" />} />
+      <Route path="/game/communication-skills" element={<GamePage file="flashcard_lengkap_intact/communication_skills.html" title="Communication Skills — 7 Videos" />} />
       <Route path="/game/ayi-video" element={<GamePage file="flashcard_lengkap_intact/ayi_video.html" title="阿姨！Video Viral Mandarin" />} />
       <Route path="/game/waimai-video" element={<GamePage file="flashcard_lengkap_intact/waimai_video.html" title="外賣員 · Video Sosial Mandarin" />} />
       <Route path="/game/waimai-video" element={<GamePage file="flashcard_lengkap_intact/waimai_video.html" title="外賣員 · Video Sosial" />} />
