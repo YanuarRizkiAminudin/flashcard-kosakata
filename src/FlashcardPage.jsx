@@ -93,6 +93,16 @@ const flashcards = [
     route: '/game/mandarin-boscard',
   },
   {
+    id: 'WYCYY1',
+    category: 'Music',
+    categoryColor: '#f3e8ff', categoryTextColor: '#6d28d9',
+    icon: '🎵',
+    title: '我越挫越勇 — 張惠妹 A-Mei',
+    kartu: 25,
+    level: '詞: 小蟲 · 曲: 織田哲郎 · Lirik + Terjemahan',
+    route: '/game/wo-yue-cuo-yue-yong',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',

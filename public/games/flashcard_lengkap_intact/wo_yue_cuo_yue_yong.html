@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我越挫越勇 — 張惠妹</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#1a0a2e;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#e9d5ff;text-align:center;margin-bottom:2px;}
+.subtitle{font-size:11px;color:#9f6dc4;text-align:center;margin-bottom:10px;}
+.sub{font-size:12px;color:#9f6dc4;text-align:center;margin-bottom:10px;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#4c1d95;color:#e9d5ff;}
+.ctr{font-size:13px;color:#9f6dc4;}
+.pbar-bg{height:4px;background:#2d1b4e;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#db2777);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#9f6dc4;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#14532d;border-color:#166534;color:#86efac;}
+.pl-h{background:#451a03;border-color:#78350f;color:#fcd34d;}
+.pl-b{background:#450a0a;border-color:#7f1d1d;color:#fca5a5;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#86efac;}.dh{background:#fcd34d;}.db{background:#fca5a5;}
+.card{background:linear-gradient(135deg,#1e0a3c,#2d1060);border:1px solid #4c1d95;border-radius:20px;box-shadow:0 4px 30px rgba(124,58,237,.4);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c3aed,#db2777);}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 36px rgba(124,58,237,.5);}
+.card-num{font-size:10px;font-weight:600;color:#9f6dc4;background:#2d1060;border:1px solid #4c1d95;border-radius:99px;padding:2px 8px;margin-bottom:.8rem;}
+.zh-main{font-family:"Noto Serif TC",serif;font-weight:700;color:#e9d5ff;text-align:center;line-height:1.6;font-size:22px;}
+.tap{font-size:12px;color:#7c5aab;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#4c1d95;margin:0 auto .8rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#7c5aab;margin-bottom:3px;text-align:center;}
+.ans-py{font-size:16px;font-weight:700;color:#c084fc;text-align:center;margin-bottom:10px;line-height:1.6;}
+.ans-id{font-size:15px;font-weight:600;color:#e9d5ff;text-align:center;line-height:1.7;margin-bottom:6px;}
+.ans-note{font-size:11px;color:#fcd34d;background:#451a03;border-radius:8px;padding:6px 12px;margin-top:6px;font-style:italic;text-align:center;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#14532d;border-color:#166534;color:#86efac;}.cb-p:hover{background:#166534;}
+.cb-h{background:#451a03;border-color:#78350f;color:#fcd34d;}.cb-h:hover{background:#78350f;}
+.cb-b{background:#450a0a;border-color:#7f1d1d;color:#fca5a5;}.cb-b:hover{background:#7f1d1d;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#e9d5ff;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#9f6dc4;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#14532d;border-color:#166534;color:#86efac;}
+.sbh{background:#451a03;border-color:#78350f;color:#fcd34d;}
+.sbb{background:#450a0a;border-color:#7f1d1d;color:#fca5a5;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.4);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #4c1d95!important;color:#9f6dc4;}
+.btn-ghost:hover{background:#2d1060;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🎵 我越挫越勇</h1>
+  <div class="subtitle">張惠妹 A-Mei · 詞: 小蟲 · 曲: 織田哲郎</div>
+  <div class="sub" id="sub-lbl">Ketuk untuk pinyin + arti</div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-num" id="cn">#1</div>
+      <div class="zh-main" id="zh-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk pinyin + arti</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">PINYIN</div>
+        <div class="ans-py" id="ans-py"></div>
+        <div class="atag">🇮🇩 Arti</div>
+        <div class="ans-id" id="ans-id"></div>
+        <div class="ans-note" id="ans-note" style="display:none"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title" style="color:#e9d5ff">Selesai!</div>
+      <div style="font-size:13px;color:#9f6dc4;margin:.5rem 0 1.4rem">Semua lirik dikuasai! 💪</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+  {zh:"就算我現在什麼都沒有",py:"Jiùsuàn wǒ xiànzài shénme dōu méiyǒu",id:"Meskipun sekarang aku tidak punya apa-apa",note:"就算 = meskipun / sekalipun"},
+  {zh:"擦掉了眼淚還是抬頭要挺胸",py:"Cā diào le yǎnlèi háishì táitóu yào tǐng xiōng",id:"Hapus air mata tapi tetap angkat kepala dan tegakkan dada",note:"挺胸 = tegakkan dada / tunjukkan keberanian"},
+  {zh:"面帶笑容不氣餒往前衝",py:"Miàn dài xiàoróng bù qìněi wǎng qián chōng",id:"Wajah tersenyum tidak putus asa terus maju ke depan",note:"不氣餒 = tidak patah semangat / tidak menyerah"},
+  {zh:"我越挫越勇",py:"Wǒ yuè cuò yuè yǒng",id:"Aku semakin berani saat semakin banyak rintangan",note:"越...越... = semakin...semakin... | 挫 = rintangan/kegagalan | 勇 = berani"},
+  {zh:"我永遠不退縮",py:"Wǒ yǒngyuǎn bù tuìsuō",id:"Aku tidak akan pernah mundur",note:"永遠 = selamanya | 退縮 = mundur / menyerah"},
+  {zh:"不要小看我 別問我有幾兩重",py:"Bùyào xiǎokàn wǒ, bié wèn wǒ yǒu jǐ liǎng zhòng",id:"Jangan remehkan aku, jangan tanya aku beratnya berapa",note:"小看 = meremehkan | 幾兩重 = idiom: seberapa besar kemampuannya"},
+  {zh:"風再凍 雨再猛 我會站著像英雄",py:"Fēng zài dòng, yǔ zài měng, wǒ huì zhàn zhe xiàng yīngxióng",id:"Angin semakin dingin, hujan semakin deras, aku akan berdiri seperti pahlawan",note:"英雄 = pahlawan / hero"},
+  {zh:"腳踏一陣風 肩上扛著一條龍",py:"Jiǎo tà yī zhèn fēng, jiān shàng káng zhe yī tiáo lóng",id:"Kaki menginjak angin, bahu memanggul seekor naga",note:"意象詩 — gambaran kuat dan gagah perkasa"},
+  {zh:"任你笑我作夢 就算難過也不痛",py:"Rèn nǐ xiào wǒ zuòmèng, jiùsuàn nánguò yě bù tòng",id:"Biar kamu tertawa bilang aku mimpi, meski sedih tidak terasa sakit",note:"任 = biar saja / biarkan | 作夢 = bermimpi (dianggap tidak realistis)"},
+  {zh:"把傷心的碎片包一包帶走",py:"Bǎ shāngxīn de suìpiàn bāo yī bāo dài zǒu",id:"Kumpulkan serpihan kesedihan, bungkus lalu bawa pergi",note:"碎片 = serpihan / pecahan | gambaran luka yang dikemas dan dibawa pulang"},
+  {zh:"回家慢慢黏好再來過",py:"Huí jiā màn màn nián hǎo zài lái guò",id:"Pulang ke rumah, perlahan rekatkan lagi, lalu kembali menjalani hidup",note:"黏好 = merekatkan kembali (hati yang pecah)"},
+  {zh:"我會讓你拍拍我的肩膀說",py:"Wǒ huì ràng nǐ pāi pāi wǒ de jiānbǎng shuō",id:"Aku akan buat kamu menepuk bahuku sambil berkata",note:"拍肩膀 = menepuk bahu = tanda pengakuan / pujian"},
+  {zh:"看不出來你還不錯",py:"Kàn bu chūlái nǐ hái bùcuò",id:"Tidak disangka kamu ternyata tidak buruk juga",note:"看不出來 = tidak disangka / tidak terlihat sebelumnya"},
+  {zh:"我相信有一天你會回到我的身邊",py:"Wǒ xiāngxìn yǒu yītiān nǐ huì huí dào wǒ de shēnbiān",id:"Aku percaya suatu hari kamu akan kembali ke sisiku",note:"身邊 = di sisi / di samping seseorang"},
+  {zh:"看看一個沒有走的我",py:"Kàn kàn yīgè méiyǒu zǒu de wǒ",id:"Lihatlah aku yang tidak pernah pergi",note:"沒有走 = tidak pergi / tetap bertahan"},
+  {zh:"這痛算什麼 讓你趕也趕不走",py:"Zhè tòng suàn shénme, ràng nǐ gǎn yě gǎn bù zǒu",id:"Rasa sakit ini bukan apa-apa, membuatmu mengusirpun aku tidak akan pergi",note:"趕也趕不走 = diusir pun tidak bisa pergi — ungkapan kesetiaan"},
+  {zh:"將來的每一天會是晴朗的天空",py:"Jiānglái de měi yītiān huì shì qínglǎng de tiānkōng",id:"Setiap hari di masa depan akan menjadi langit yang cerah",note:"晴朗 = cerah / terang benderang"},
+  {zh:"握住我拳頭要忍耐過每分鐘",py:"Wò zhù wǒ quántóu yào rěnnài guò měi fēnzhōng",id:"Kepalkan tinjuku, harus bersabar melewati setiap menit",note:"握拳 = mengepalkan tinju = simbol tekad kuat"},
+  {zh:"我知道在前方有人會等著我",py:"Wǒ zhīdào zài qiánfāng yǒurén huì děng zhe wǒ",id:"Aku tahu di depan sana ada orang yang menungguku",note:"前方 = di depan / masa depan"},
+  {zh:"希望我的努力能讓你感動",py:"Xīwàng wǒ de nǔlì néng ràng nǐ gǎndòng",id:"Berharap kerja kerasku bisa membuatmu tersentuh",note:"感動 = tersentuh / terharu"},
+  {zh:"我仍會默默地站在你背後",py:"Wǒ réng huì mòmò de zhàn zài nǐ bèihòu",id:"Aku tetap akan diam-diam berdiri di belakangmu",note:"默默地 = diam-diam / tanpa suara"},
+  {zh:"喜怒哀樂都會陪著你渡過",py:"Xǐ nù āi lè dōu huì péi zhe nǐ dùguò",id:"Suka duka gembira marah semua akan aku lalui bersamamu",note:"喜怒哀樂 = empat emosi: gembira, marah, sedih, senang"},
+  {zh:"你會看到我的愛永不退縮",py:"Nǐ huì kàndào wǒ de ài yǒng bù tuìsuō",id:"Kamu akan melihat cintaku tidak pernah mundur",note:"永不退縮 = selamanya tidak mundur / cinta yang teguh"},
+  {zh:"就算我現在已經什麼都沒有",py:"Jiùsuàn wǒ xiànzài yǐjīng shénme dōu méiyǒu",id:"Meskipun sekarang aku sudah benar-benar tidak punya apa-apa",note:"已經 = sudah / telah (lebih kuat dari 現在)"},
+  {zh:"希望在明天還是抬頭要挺胸",py:"Xīwàng zài míngtiān háishì táitóu yào tǐng xiōng",id:"Berharap di hari esok tetap mengangkat kepala dan tegakkan dada",note:"明天 di sini = masa depan / harapan ke depan"}
+];
+
+var deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function fullRestart(){
+  deck=shuffle(V.slice());
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  document.getElementById("sub-lbl").textContent=deck.length+" baris lirik · Ketuk untuk pinyin + arti";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  document.getElementById("cn").textContent="#"+(idx+1);
+  document.getElementById("zh-disp").textContent=c.zh;
+  document.getElementById("ans-py").textContent=c.py;
+  document.getElementById("ans-id").textContent=c.id;
+  var note=document.getElementById("ans-note");
+  if(c.note){note.textContent=c.note;note.style.display="";}else{note.style.display="none";}
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
