@@ -103,6 +103,16 @@ const flashcards = [
     route: '/game/wo-yue-cuo-yue-yong',
   },
   {
+    id: 'KP1',
+    category: 'Grammar',
+    categoryColor: '#fef9c3', categoryTextColor: '#854d0e',
+    icon: '🔗',
+    title: 'Kata Penghubung — Mandarin & English',
+    kartu: 50,
+    level: '但是 · 因為 · however · although · whereas…',
+    route: '/game/kata-penghubung',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',

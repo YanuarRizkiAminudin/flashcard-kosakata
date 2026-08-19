@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kata Penghubung — Chinese & English Connectors</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-ZH.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-EN.on{background:#2563eb;border-color:#2563eb;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.8rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.word-main{font-size:56px;font-weight:700;color:#1a1814;text-align:center;line-height:1.1;font-family:"Noto Serif TC",serif;}
+.word-main.en{font-family:"DM Sans",sans-serif;font-size:42px;}
+.word-py{font-size:16px;color:#7c3aed;font-weight:600;margin-top:4px;text-align:center;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .8rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-id{font-size:20px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:12px;}
+.ans-ex-zh{font-family:"Noto Serif TC",serif;font-size:15px;color:#1a1814;background:#f5f3ff;border-radius:10px;padding:10px 14px;text-align:center;line-height:1.7;margin-bottom:6px;}
+.ans-ex-en{font-size:13px;color:#2563eb;text-align:center;line-height:1.6;padding:0 4px;}
+.ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:5px 10px;margin-top:8px;font-style:italic;text-align:center;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-w{font-size:16px;font-weight:700;color:#1a1814;min-width:70px;}
+.ri-id{font-size:11px;color:#7c3aed;margin-left:auto;text-align:right;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🔗 Kata Penghubung — Mandarin & English</h1>
+  <div class="sub" id="sub-lbl">Depan = kata · Belakang = arti + contoh</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-ZH" onclick="setCat('ZH')">🇹🇼 Mandarin</button>
+    <button class="fb c-EN" onclick="setCat('EN')">🇬🇧 English</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="word-main" id="word-disp"></div>
+      <div class="word-py" id="py-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk arti + contoh</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">🇮🇩 Arti</div>
+        <div class="ans-id" id="ans-id"></div>
+        <div class="atag">💬 Contoh</div>
+        <div class="ans-ex-zh" id="ans-ex-zh"></div>
+        <div class="ans-ex-en" id="ans-ex-en"></div>
+        <div class="ans-note" id="ans-note" style="display:none"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua kata penghubung dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+// ══════════════════════ MANDARIN 🇹🇼 ══════════════════════
+{cat:"ZH",w:"但是",py:"dànshì",id:"tapi / tetapi / namun",
+ ex:"她的髮型很奇怪，但是我喜歡。",en:"Her hairstyle is strange, but I like it.",
+ note:"Menghubungkan dua hal yang bertentangan"},
+{cat:"ZH",w:"可是",py:"kěshì",id:"tapi / namun (lebih ringan dari 但是)",
+ ex:"我想去，可是我沒有時間。",en:"I want to go, but I don't have time.",
+ note:"Lebih ringan/santai dibanding 但是"},
+{cat:"ZH",w:"因為",py:"yīnwèi",id:"karena",
+ ex:"因為她緊張，所以說話很快。",en:"Because she is nervous, she speaks very fast.",
+ note:"Selalu berpasangan: 因為…所以…"},
+{cat:"ZH",w:"所以",py:"suǒyǐ",id:"jadi / oleh karena itu / makanya",
+ ex:"我沒有工作，所以沒有錢。",en:"I don't have a job, so I have no money.",
+ note:"Selalu berpasangan: 因為…所以…"},
+{cat:"ZH",w:"如果",py:"rúguǒ",id:"kalau / jika / seandainya",
+ ex:"如果明天下雨，我們就不去了。",en:"If it rains tomorrow, we won't go.",
+ note:"Berpasangan dengan 就: 如果…就…"},
+{cat:"ZH",w:"要是",py:"yàoshi",id:"kalau / jika (lebih santai)",
+ ex:"要是你有空，就來找我吧。",en:"If you're free, come find me.",
+ note:"Lebih santai/percakapan dibanding 如果，berpasangan dengan 就"},
+{cat:"ZH",w:"就",py:"jiù",id:"maka / lalu (hasil dari kondisi)",
+ ex:"如果你來，我就很高興。",en:"If you come, I will be very happy.",
+ note:"Dipakai bersama 如果/要是 untuk menyatakan hasil kondisi"},
+{cat:"ZH",w:"而且",py:"érqiě",id:"dan juga / bahkan / selain itu",
+ ex:"他聰明，而且很努力。",en:"He is smart, and also very hardworking.",
+ note:"Menambahkan informasi yang memperkuat poin sebelumnya"},
+{cat:"ZH",w:"雖然",py:"suīrán",id:"meskipun / walaupun",
+ ex:"雖然很累，但是他還是繼續工作。",en:"Although he is tired, he still continues to work.",
+ note:"Berpasangan dengan 但是/可是: 雖然…但是…"},
+{cat:"ZH",w:"不過",py:"búguò",id:"tapi / namun (sedikit berbeda)",
+ ex:"這個蛋糕很甜，不過我喜歡。",en:"This cake is very sweet, but I like it.",
+ note:"Lebih ringan dari 但是, sering di awal kalimat baru"},
+{cat:"ZH",w:"還是",py:"háishi",id:"atau (untuk pertanyaan pilihan)",
+ ex:"你要咖啡還是茶？",en:"Do you want coffee or tea?",
+ note:"Khusus untuk pertanyaan pilihan A atau B"},
+{cat:"ZH",w:"或者",py:"huòzhě",id:"atau (untuk pernyataan, bukan pertanyaan)",
+ ex:"你可以坐捷運或者坐公車。",en:"You can take the MRT or take the bus.",
+ note:"Dipakai dalam kalimat pernyataan, bukan pertanyaan"},
+{cat:"ZH",w:"然後",py:"rán hòu",id:"kemudian / setelah itu / lalu",
+ ex:"我先吃飯，然後去洗澡。",en:"I eat first, then take a shower.",
+ note:"Menyatakan urutan kejadian"},
+{cat:"ZH",w:"不但",py:"bùdàn",id:"tidak hanya / bukan saja",
+ ex:"他不但會說中文，也會說日文。",en:"He not only speaks Chinese, but also Japanese.",
+ note:"Berpasangan: 不但…也/還… (not only…but also…)"},
+{cat:"ZH",w:"除了",py:"chúle",id:"selain / kecuali",
+ ex:"除了他，大家都來了。",en:"Everyone came except him.",
+ note:"除了…以外/都… (except for / besides)"},
+{cat:"ZH",w:"只要",py:"zhǐyào",id:"asalkan / selama / asal",
+ ex:"只要你努力，就一定可以成功。",en:"As long as you work hard, you will definitely succeed.",
+ note:"Berpasangan dengan 就: 只要…就…"},
+{cat:"ZH",w:"即使",py:"jíshǐ",id:"meskipun / sekalipun (kondisi ekstrem)",
+ ex:"即使下雨，他也要去。",en:"Even if it rains, he will still go.",
+ note:"Lebih kuat dari 雖然, untuk kondisi yang sangat ekstrem"},
+{cat:"ZH",w:"既然",py:"jìrán",id:"karena sudah / karena memang begitu",
+ ex:"既然你不喜歡，就別買了。",en:"Since you don't like it, just don't buy it.",
+ note:"Menyatakan alasan yang sudah pasti/jelas"},
+{cat:"ZH",w:"於是",py:"yúshì",id:"maka / kemudian (akibat logis)",
+ ex:"他覺得累了，於是回家休息。",en:"He felt tired, so he went home to rest.",
+ note:"Mirip 所以 tapi lebih formal/naratif"},
+{cat:"ZH",w:"因此",py:"yīncǐ",id:"oleh karena itu / maka (formal)",
+ ex:"他生病了，因此沒來上課。",en:"He was sick, therefore he didn't come to class.",
+ note:"Lebih formal dari 所以"},
+{cat:"ZH",w:"否則",py:"fǒuzé",id:"kalau tidak / jika tidak / jika tidak begitu",
+ ex:"你要快點，否則會遲到。",en:"You need to hurry, otherwise you will be late.",
+ note:"Menyatakan konsekuensi negatif jika kondisi tidak dipenuhi"},
+{cat:"ZH",w:"以及",py:"yǐjí",id:"dan / serta (formal)",
+ ex:"請帶護照以及簽證來。",en:"Please bring your passport and visa.",
+ note:"Digunakan dalam tulisan formal / daftar"},
+{cat:"ZH",w:"並且",py:"bìngqiě",id:"dan juga / serta (formal)",
+ ex:"他聰明並且有禮貌。",en:"He is smart and also polite.",
+ note:"Lebih formal dari 而且"},
+{cat:"ZH",w:"不管",py:"bùguǎn",id:"tidak peduli / bagaimanapun",
+ ex:"不管天氣怎樣，他都要去。",en:"No matter what the weather is like, he will go.",
+ note:"Berpasangan dengan 都: 不管…都…"},
+{cat:"ZH",w:"只有",py:"zhǐyǒu",id:"hanya dengan / hanya jika",
+ ex:"只有努力，才能成功。",en:"Only by working hard can you succeed.",
+ note:"Berpasangan dengan 才: 只有…才…"},
+// ══════════════════════ ENGLISH 🇬🇧 ══════════════════════
+{cat:"EN",w:"but",py:"",id:"tapi / tetapi",
+ ex:"The phone is fast, but the battery is small.",en:"Ponselnya cepat, tapi baterainya kecil.",
+ note:"Menghubungkan dua hal yang bertentangan"},
+{cat:"EN",w:"however",py:"",id:"namun / akan tetapi",
+ ex:"The camera is great. However, the battery is small.",en:"Kameranya bagus. Namun, baterainya kecil.",
+ note:"Lebih formal dari 'but', biasanya di awal kalimat baru"},
+{cat:"EN",w:"although",py:"",id:"meskipun / walaupun",
+ ex:"Although he is tired, he still continues to work.",en:"Meskipun dia lelah, dia tetap terus bekerja.",
+ note:"Sama dengan 'even though' — menyatakan kontras"},
+{cat:"EN",w:"because",py:"",id:"karena",
+ ex:"I stayed home because it was raining.",en:"Saya di rumah karena hujan.",
+ note:"Menyatakan alasan/penyebab"},
+{cat:"EN",w:"so",py:"",id:"jadi / makanya / sehingga",
+ ex:"I was tired, so I went to bed early.",en:"Saya lelah, jadi saya tidur lebih awal.",
+ note:"Menyatakan akibat dari sebab sebelumnya"},
+{cat:"EN",w:"therefore",py:"",id:"oleh karena itu / maka",
+ ex:"He was sick. Therefore, he didn't come to class.",en:"Dia sakit. Oleh karena itu, dia tidak masuk kelas.",
+ note:"Lebih formal dari 'so'"},
+{cat:"EN",w:"if",py:"",id:"jika / kalau / apabila",
+ ex:"If it rains tomorrow, we won't go.",en:"Jika besok hujan, kita tidak akan pergi.",
+ note:"Menyatakan kondisi"},
+{cat:"EN",w:"unless",py:"",id:"kecuali jika / kalau tidak",
+ ex:"I won't go unless you come with me.",en:"Saya tidak akan pergi kecuali kamu ikut.",
+ note:"Unless = if not (kecuali jika)"},
+{cat:"EN",w:"while",py:"",id:"sementara / sedangkan / selagi",
+ ex:"I am doing the UI, while he is writing the code.",en:"Saya mengerjakan UI, sementara dia menulis kode.",
+ note:"Menyatakan dua hal terjadi bersamaan atau kontras"},
+{cat:"EN",w:"when",py:"",id:"ketika / saat / waktu",
+ ex:"When someone asks you a question, what do you do?",en:"Ketika seseorang bertanya, apa yang kamu lakukan?",
+ note:"Menyatakan waktu terjadinya sesuatu"},
+{cat:"EN",w:"since",py:"",id:"karena / sejak (sudah diketahui)",
+ ex:"Since you don't like it, just don't buy it.",en:"Karena kamu tidak suka, ya jangan beli.",
+ note:"Mirip 'because' tapi alasannya sudah diketahui bersama"},
+{cat:"EN",w:"though",py:"",id:"meskipun / tapi (di akhir kalimat)",
+ ex:"The phone has good quality. It is expensive, though.",en:"Ponselnya berkualitas bagus. Tapi mahal sih.",
+ note:"Sering diletakkan di akhir kalimat untuk kontras ringan"},
+{cat:"EN",w:"yet",py:"",id:"namun / tapi (kontras mengejutkan)",
+ ex:"The phone is expensive, yet many people buy it.",en:"Ponselnya mahal, namun banyak yang membelinya.",
+ note:"Lebih formal dari 'but', menekankan kejutan/ironi"},
+{cat:"EN",w:"moreover",py:"",id:"terlebih lagi / lebih dari itu",
+ ex:"The design is cheap. Moreover, it breaks easily.",en:"Desainnya murah. Terlebih lagi, mudah rusak.",
+ note:"Menambahkan informasi yang memperkuat atau memperburuk"},
+{cat:"EN",w:"furthermore",py:"",id:"lebih jauh lagi / selain itu",
+ ex:"The app is fast. Furthermore, it uses less battery.",en:"Aplikasinya cepat. Lebih jauh lagi, hemat baterai.",
+ note:"Lebih formal dari 'moreover'"},
+{cat:"EN",w:"meanwhile",py:"",id:"sementara itu / di sisi lain",
+ ex:"I am doing the UI. Meanwhile, he is writing the code.",en:"Saya mengerjakan UI. Sementara itu, dia menulis kode.",
+ note:"Dua hal terjadi pada waktu yang sama"},
+{cat:"EN",w:"otherwise",py:"",id:"kalau tidak / jika tidak begitu",
+ ex:"We must hurry, otherwise we will miss the deadline.",en:"Kita harus bergegas, kalau tidak akan melewati tenggat.",
+ note:"Menyatakan konsekuensi negatif jika sesuatu tidak dilakukan"},
+{cat:"EN",w:"besides",py:"",id:"selain itu / lagipula",
+ ex:"It is beautiful. Besides, the material is strong.",en:"Tampilannya indah. Selain itu, materialnya kuat.",
+ note:"Menambahkan alasan tambahan yang mendukung"},
+{cat:"EN",w:"instead",py:"",id:"sebagai gantinya / malahan",
+ ex:"Don't use plastic. Use glass instead.",en:"Jangan pakai plastik. Gunakan kaca sebagai gantinya.",
+ note:"Menggantikan pilihan sebelumnya dengan yang baru"},
+{cat:"EN",w:"indeed",py:"",id:"memang / sungguh / benar-benar",
+ ex:"The market is indeed very competitive.",en:"Pasarnya memang sangat kompetitif.",
+ note:"Memperkuat atau mengkonfirmasi pernyataan sebelumnya"},
+{cat:"EN",w:"hence",py:"",id:"oleh karena itu / maka (sangat formal)",
+ ex:"He was ill, hence he could not attend.",en:"Dia sakit, oleh karena itu tidak bisa hadir.",
+ note:"Sangat formal, sering dalam tulisan akademis"},
+{cat:"EN",w:"thus",py:"",id:"dengan demikian / jadi (formal)",
+ ex:"He studied hard and thus passed the exam.",en:"Dia belajar keras dan dengan demikian lulus ujian.",
+ note:"Formal, menyatakan hasil logis dari sesuatu"},
+{cat:"EN",w:"consequently",py:"",id:"akibatnya / sebagai hasilnya",
+ ex:"He didn't prepare. Consequently, he failed.",en:"Dia tidak mempersiapkan diri. Akibatnya, dia gagal.",
+ note:"Formal, menekankan akibat dari tindakan sebelumnya"},
+{cat:"EN",w:"nevertheless",py:"",id:"namun demikian / meskipun begitu",
+ ex:"It was raining. Nevertheless, he went out.",en:"Hujan turun. Namun demikian, dia tetap keluar.",
+ note:"Formal, mirip 'however' tapi lebih kuat"},
+{cat:"EN",w:"provided",py:"",id:"asalkan / dengan syarat",
+ ex:"You can go, provided you finish your work first.",en:"Kamu boleh pergi, asalkan kamu selesaikan pekerjaan dulu.",
+ note:"Mirip 'if' tapi menekankan syarat yang harus dipenuhi"},
+{cat:"EN",w:"whereas",py:"",id:"sedangkan / sementara (kontras)",
+ ex:"He is rich, whereas his brother is poor.",en:"Dia kaya, sedangkan saudaranya miskin.",
+ note:"Membandingkan dua hal yang berbeda/bertentangan"}
+];
+
+var CAT_CFG={
+  ZH:{label:"🇹🇼 Mandarin",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#7c3aed)"},
+  EN:{label:"🇬🇧 English",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kata penghubung";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.ZH;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  var wEl=document.getElementById("word-disp");
+  wEl.textContent=c.w;
+  wEl.className=c.cat==="EN"?"word-main en":"word-main";
+  var pyEl=document.getElementById("py-disp");
+  pyEl.textContent=c.py||"";
+  pyEl.style.display=c.py?"":"none";
+  document.getElementById("ans-id").textContent=c.id;
+  document.getElementById("ans-ex-zh").textContent=c.ex;
+  document.getElementById("ans-ex-en").textContent=c.en;
+  var note=document.getElementById("ans-note");
+  if(c.note){note.textContent=c.note;note.style.display="";}else{note.style.display="none";}
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-w'>"+v.w+"</span><span class='ri-id'>"+v.id+"</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
