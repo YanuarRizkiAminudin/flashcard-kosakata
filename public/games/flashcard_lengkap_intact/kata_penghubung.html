@@ -344,8 +344,8 @@ function showCard(){
   wEl.textContent=c.w;
   wEl.className=c.cat==="EN"?"word-main en":"word-main";
   var pyEl=document.getElementById("py-disp");
-  pyEl.textContent=c.py||"";
-  pyEl.style.display=c.py?"":"none";
+  pyEl.textContent="";
+  pyEl.style.display="none";
   document.getElementById("ans-id").textContent=c.id;
   document.getElementById("ans-ex-zh").textContent=c.ex;
   document.getElementById("ans-ex-en").textContent=c.en;
