@@ -113,6 +113,16 @@ const flashcards = [
     route: '/game/kata-penghubung',
   },
   {
+    id: 'LSA1',
+    category: 'Mandarin',
+    categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
+    icon: '🏔️',
+    title: '拉薩對話 — Percakapan di Lhasa',
+    kartu: 30,
+    level: 'Perkenalan · Bahasa · Kota · Harga',
+    route: '/game/lhasa-conversation',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',

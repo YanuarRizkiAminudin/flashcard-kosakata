@@ -29,6 +29,7 @@ function App() {
       <Route path="/game/mandarin-boscard" element={<GamePage file="flashcard_lengkap_intact/mandarin_boscard.html" title="要怎麼說 — Percakapan Sehari-hari" />} />
       <Route path="/game/wo-yue-cuo-yue-yong" element={<GamePage file="flashcard_lengkap_intact/wo_yue_cuo_yue_yong.html" title="我越挫越勇 — 張惠妹" />} />
       <Route path="/game/kata-penghubung" element={<GamePage file="flashcard_lengkap_intact/kata_penghubung.html" title="Kata Penghubung — Mandarin & English" />} />
+      <Route path="/game/lhasa-conversation" element={<GamePage file="flashcard_lengkap_intact/lhasa_conversation.html" title="拉薩對話 — Percakapan di Lhasa" />} />
       <Route path="/game/ayi-video" element={<GamePage file="flashcard_lengkap_intact/ayi_video.html" title="阿姨！Video Viral Mandarin" />} />
       <Route path="/game/waimai-video" element={<GamePage file="flashcard_lengkap_intact/waimai_video.html" title="外賣員 · Video Sosial Mandarin" />} />
       <Route path="/game/waimai-video" element={<GamePage file="flashcard_lengkap_intact/waimai_video.html" title="外賣員 · Video Sosial" />} />
