@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survival English — Taiwan Internship</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-C1.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-C2.on{background:#059669;border-color:#059669;}
+.fb.c-C3.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-C4.on{background:#d97706;border-color:#d97706;}
+.fb.c-C5.on{background:#7c3aed;border-color:#7c3aed;}
+.fb.c-C6.on{background:#0891b2;border-color:#0891b2;}
+.fb.c-C7.on{background:#be185d;border-color:#be185d;}
+.fb.c-C8.on{background:#15803d;border-color:#15803d;}
+.fb.c-C9.on{background:#6d28d9;border-color:#6d28d9;}
+.fb.c-C10.on{background:#b45309;border-color:#b45309;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.en-front{font-size:16px;font-weight:600;color:#1a1814;line-height:1.7;text-align:center;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;}
+.ans-id{font-size:15px;font-weight:600;color:#1a1814;line-height:1.7;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-en{font-size:12px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>✈️ Survival English — Taiwan Internship</h1>
+  <div class="sub" id="sub-lbl">Depan = Inggris · Belakang = Indonesia</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-C1" onclick="setCat('C1')">👋 Kenalan</button>
+    <button class="fb c-C2" onclick="setCat('C2')">🎓 Dosen</button>
+    <button class="fb c-C3" onclick="setCat('C3')">🏫 Admin</button>
+    <button class="fb c-C4" onclick="setCat('C4')">💰 Asuransi</button>
+    <button class="fb c-C5" onclick="setCat('C5')">✈️ Bandara</button>
+    <button class="fb c-C6" onclick="setCat('C6')">🏠 Sehari-hari</button>
+    <button class="fb c-C7" onclick="setCat('C7')">🚌 Transport</button>
+    <button class="fb c-C8" onclick="setCat('C8')">🏥 Kesehatan</button>
+    <button class="fb c-C9" onclick="setCat('C9')">👫 Sosial</button>
+    <button class="fb c-C10" onclick="setCat('C10')">💼 Magang</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="en-front" id="en-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk terjemahan</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">🇮🇩 Indonesia</div>
+        <div class="ans-id" id="ans-id-txt"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua kalimat dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+// C1 — Perkenalan & Basa-Basi
+{cat:"C1",en:"Hi, nice to meet you! My name is Yanuar, I'm from Indonesia.",id:"Hai, senang bertemu denganmu! Nama saya Yanuar, saya dari Indonesia."},
+{cat:"C1",en:"I'm a student from POLINEMA, majoring in Multimedia Design.",id:"Saya mahasiswa dari POLINEMA, jurusan Desain Multimedia."},
+{cat:"C1",en:"This is my first time in Taiwan.",id:"Ini pertama kali saya ke Taiwan."},
+{cat:"C1",en:"How long have you been staying here?",id:"Sudah berapa lama kamu tinggal di sini?"},
+{cat:"C1",en:"What's your major or department?",id:"Jurusan atau departemen kamu apa?"},
+{cat:"C1",en:"Where are you from originally?",id:"Aslinya kamu dari mana?"},
+{cat:"C1",en:"How do you find studying here so far?",id:"Bagaimana menurutmu belajar di sini sejauh ini?"},
+{cat:"C1",en:"Sorry, could you repeat that please?",id:"Maaf, bisakah kamu mengulang itu?"},
+{cat:"C1",en:"Sorry, my English isn't very good, please bear with me.",id:"Maaf, bahasa Inggris saya kurang bagus, mohon bersabar."},
+{cat:"C1",en:"It's great to finally meet you in person!",id:"Senang sekali akhirnya bisa bertemu langsung!"},
+// C2 — Akademik & Dosen Pembimbing
+{cat:"C2",en:"Good morning, Professor. Do you have a moment to talk?",id:"Selamat pagi, Profesor. Apakah Anda punya waktu sebentar untuk berbicara?"},
+{cat:"C2",en:"I would like to discuss my project topic with you.",id:"Saya ingin mendiskusikan topik proyek saya dengan Anda."},
+{cat:"C2",en:"Could you please clarify the requirements for this assignment?",id:"Bisakah Anda menjelaskan persyaratan untuk tugas ini?"},
+{cat:"C2",en:"When is the deadline for submitting this report?",id:"Kapan batas waktu pengumpulan laporan ini?"},
+{cat:"C2",en:"I'm not sure I understood the instructions correctly.",id:"Saya tidak yakin saya memahami instruksinya dengan benar."},
+{cat:"C2",en:"Could you give me some feedback on my work?",id:"Bisakah Anda memberi saya masukan tentang pekerjaan saya?"},
+{cat:"C2",en:"I'm sorry, I might be a bit late for our meeting.",id:"Maaf, saya mungkin sedikit terlambat untuk pertemuan kita."},
+{cat:"C2",en:"Is it possible to reschedule our meeting to another time?",id:"Apakah mungkin untuk mengubah jadwal pertemuan kita ke waktu lain?"},
+{cat:"C2",en:"Thank you for your guidance, Professor.",id:"Terima kasih atas bimbingan Anda, Profesor."},
+{cat:"C2",en:"I really appreciate your help with this.",id:"Saya sangat menghargai bantuan Anda dengan ini."},
+{cat:"C2",en:"Could you recommend any references for this topic?",id:"Bisakah Anda merekomendasikan referensi untuk topik ini?"},
+{cat:"C2",en:"I'll make sure to have it ready by the deadline.",id:"Saya akan memastikan selesai sebelum tenggat waktu."},
+// C3 — Administrasi Kampus / OIA
+{cat:"C3",en:"Excuse me, where is the Office of International Affairs?",id:"Permisi, di mana kantor Urusan Internasional?"},
+{cat:"C3",en:"I need to submit some documents, is this the right place?",id:"Saya perlu mengumpulkan beberapa dokumen, apakah ini tempatnya?"},
+{cat:"C3",en:"Could you help me with my course registration?",id:"Bisakah Anda membantu saya dengan pendaftaran mata kuliah?"},
+{cat:"C3",en:"I haven't received the confirmation email yet.",id:"Saya belum menerima email konfirmasi."},
+{cat:"C3",en:"Is there a deadline I should be aware of?",id:"Apakah ada tenggat waktu yang harus saya perhatikan?"},
+{cat:"C3",en:"Could you check if my application has been processed?",id:"Bisakah Anda memeriksa apakah lamaran saya sudah diproses?"},
+{cat:"C3",en:"I'm having trouble uploading this document to the form.",id:"Saya kesulitan mengunggah dokumen ini ke formulir."},
+{cat:"C3",en:"What documents do I need to prepare for this?",id:"Dokumen apa yang perlu saya siapkan untuk ini?"},
+{cat:"C3",en:"Sorry to bother you, but I have a question about the form.",id:"Maaf mengganggu, tapi saya punya pertanyaan tentang formulirnya."},
+{cat:"C3",en:"Thank you for your help, I really appreciate it.",id:"Terima kasih atas bantuan Anda, saya sangat menghargainya."},
+// C4 — Asuransi & Keuangan
+{cat:"C4",en:"I would like to ask about travel insurance coverage.",id:"Saya ingin bertanya tentang cakupan asuransi perjalanan."},
+{cat:"C4",en:"Does this policy cover medical expenses overseas?",id:"Apakah polis ini mencakup biaya medis di luar negeri?"},
+{cat:"C4",en:"What's the process for filing a claim?",id:"Bagaimana prosesnya untuk mengajukan klaim?"},
+{cat:"C4",en:"Is there a discount for group purchases?",id:"Apakah ada diskon untuk pembelian kelompok?"},
+{cat:"C4",en:"How long does it take to process a refund?",id:"Berapa lama proses pengembalian dana?"},
+{cat:"C4",en:"Can I extend the coverage period later?",id:"Bisakah saya memperpanjang periode perlindungan nanti?"},
+{cat:"C4",en:"I need a receipt or invoice for this payment.",id:"Saya memerlukan tanda terima atau faktur untuk pembayaran ini."},
+{cat:"C4",en:"Could you send me the policy document via email?",id:"Bisakah Anda mengirimkan dokumen polis melalui email?"},
+// C5 — Bandara & Perjalanan
+{cat:"C5",en:"Excuse me, where is the check-in counter for this airline?",id:"Permisi, di mana konter check-in untuk maskapai ini?"},
+{cat:"C5",en:"Could you tell me where the boarding gate is?",id:"Bisakah Anda memberi tahu saya di mana gerbang keberangkatan?"},
+{cat:"C5",en:"I have a connecting flight, where should I go next?",id:"Saya punya penerbangan transit, saya harus ke mana selanjutnya?"},
+{cat:"C5",en:"Is this the correct queue for immigration?",id:"Apakah ini antrean yang benar untuk imigrasi?"},
+{cat:"C5",en:"Yes, here you go.",id:"Ya, ini dia."},
+{cat:"C5",en:"How much luggage am I allowed to bring?",id:"Berapa banyak bagasi yang boleh saya bawa?"},
+{cat:"C5",en:"My flight is delayed, what should I do now?",id:"Penerbangan saya ditunda, apa yang harus saya lakukan sekarang?"},
+{cat:"C5",en:"Where can I find the baggage claim area?",id:"Di mana saya bisa menemukan area pengambilan bagasi?"},
+{cat:"C5",en:"Is there a shuttle bus to the city center?",id:"Apakah ada bus antar-jemput ke pusat kota?"},
+{cat:"C5",en:"Could you help me find my gate? I think I'm lost.",id:"Bisakah Anda membantu saya menemukan gerbang saya? Saya rasa saya tersesat."},
+// C6 — Tempat Tinggal & Kehidupan Sehari-hari
+{cat:"C6",en:"Excuse me, where is the nearest convenience store?",id:"Permisi, di mana minimarket terdekat?"},
+{cat:"C6",en:"How much does this cost?",id:"Ini harganya berapa?"},
+{cat:"C6",en:"Do you accept credit card or Easy Card?",id:"Apakah Anda menerima kartu kredit atau Easy Card?"},
+{cat:"C6",en:"Could you recommend a good place to eat nearby?",id:"Bisakah Anda merekomendasikan tempat makan yang bagus di sekitar sini?"},
+{cat:"C6",en:"Is this water safe to drink?",id:"Apakah air ini aman untuk diminum?"},
+{cat:"C6",en:"Where can I do my laundry around here?",id:"Di mana saya bisa mencuci pakaian di sekitar sini?"},
+{cat:"C6",en:"How do I get to the train station from here?",id:"Bagaimana cara ke stasiun kereta dari sini?"},
+{cat:"C6",en:"Could you write down the address for me?",id:"Bisakah Anda menuliskan alamatnya untuk saya?"},
+{cat:"C6",en:"What time does this store close?",id:"Jam berapa toko ini tutup?"},
+{cat:"C6",en:"Do you have Wi-Fi here?",id:"Apakah ada Wi-Fi di sini?"},
+{cat:"C6",en:"Is there a pharmacy nearby?",id:"Apakah ada apotek di dekat sini?"},
+{cat:"C6",en:"Could you help me, I think I'm lost.",id:"Bisakah Anda membantu saya, saya rasa saya tersesat."},
+// C7 — Transportasi
+{cat:"C7",en:"How do I get to National Formosa University from here?",id:"Bagaimana cara ke Universitas Formosa Nasional dari sini?"},
+{cat:"C7",en:"Which bus goes to the city center?",id:"Bus mana yang menuju pusat kota?"},
+{cat:"C7",en:"How much is the fare to this station?",id:"Berapa ongkosnya ke stasiun ini?"},
+{cat:"C7",en:"Could you tell me when to get off?",id:"Bisakah Anda memberi tahu saya kapan harus turun?"},
+{cat:"C7",en:"Is this the right platform for the train to Taipei?",id:"Apakah ini peron yang benar untuk kereta ke Taipei?"},
+{cat:"C7",en:"How long does it take to get there?",id:"Berapa lama perjalanan ke sana?"},
+{cat:"C7",en:"Could you call a taxi for me, please?",id:"Bisakah Anda memanggilkan taksi untuk saya?"},
+{cat:"C7",en:"Where can I top up my transportation card?",id:"Di mana saya bisa mengisi ulang kartu transportasi saya?"},
+// C8 — Kesehatan & Darurat
+{cat:"C8",en:"I need to see a doctor, could you recommend a nearby clinic?",id:"Saya perlu menemui dokter, bisakah Anda merekomendasikan klinik terdekat?"},
+{cat:"C8",en:"I'm not feeling well, I think I need to rest.",id:"Saya tidak enak badan, saya rasa perlu istirahat."},
+{cat:"C8",en:"Do you have any medicine for a headache or fever?",id:"Apakah ada obat untuk sakit kepala atau demam?"},
+{cat:"C8",en:"I'm allergic to certain foods, could you help me check the ingredients?",id:"Saya alergi makanan tertentu, bisakah Anda membantu saya memeriksa bahan-bahannya?"},
+{cat:"C8",en:"Please call an ambulance, this is an emergency!",id:"Tolong panggil ambulans, ini keadaan darurat!"},
+{cat:"C8",en:"I need to file an insurance claim for a medical expense.",id:"Saya perlu mengajukan klaim asuransi untuk biaya medis."},
+{cat:"C8",en:"Could you help me find the nearest hospital?",id:"Bisakah Anda membantu saya menemukan rumah sakit terdekat?"},
+{cat:"C8",en:"I lost my passport, what should I do?",id:"Paspor saya hilang, apa yang harus saya lakukan?"},
+{cat:"C8",en:"Could I get a copy of the medical report, please?",id:"Bisakah saya mendapatkan salinan laporan medisnya?"},
+{cat:"C8",en:"Is there someone here who speaks English?",id:"Apakah ada orang di sini yang bisa berbahasa Inggris?"},
+// C9 — Sosial / Grup Chat / Teman
+{cat:"C9",en:"Welcome to the group, nice to meet you all!",id:"Selamat datang di grup, senang bertemu kalian semua!"},
+{cat:"C9",en:"Let's exchange contact information.",id:"Ayo tukar informasi kontak."},
+{cat:"C9",en:"Are you free this weekend? Let's hang out.",id:"Apakah kamu bebas akhir pekan ini? Ayo nongkrong."},
+{cat:"C9",en:"Thank you so much for helping me earlier.",id:"Terima kasih banyak sudah membantu saya tadi."},
+{cat:"C9",en:"Sorry for the late reply, I just saw your message.",id:"Maaf baru balas, baru saja lihat pesanmu."},
+{cat:"C9",en:"Could you explain that again? I didn't quite catch it.",id:"Bisakah kamu jelaskan lagi? Saya kurang menangkap."},
+{cat:"C9",en:"I really enjoyed spending time with you all.",id:"Saya benar-benar menikmati waktu bersama kalian semua."},
+{cat:"C9",en:"Let's stay in touch after the program ends!",id:"Ayo tetap berhubungan setelah program selesai!"},
+{cat:"C9",en:"Do you want to join us for dinner tonight?",id:"Apakah kamu mau bergabung dengan kami untuk makan malam malam ini?"},
+{cat:"C9",en:"Congratulations! I'm really happy for you.",id:"Selamat! Saya sangat senang untukmu."},
+// C10 — Situasi Kerja / Magang
+{cat:"C10",en:"I'm still learning, please correct me if I make a mistake.",id:"Saya masih belajar, tolong koreksi saya jika saya membuat kesalahan."},
+{cat:"C10",en:"Could you show me how to do this?",id:"Bisakah Anda menunjukkan cara melakukan ini kepada saya?"},
+{cat:"C10",en:"I'll try my best to complete this task.",id:"Saya akan berusaha sebaik mungkin untuk menyelesaikan tugas ini."},
+{cat:"C10",en:"Is there anything else you'd like me to do?",id:"Apakah ada hal lain yang ingin Anda minta saya lakukan?"},
+{cat:"C10",en:"I've finished the task, could you please review it?",id:"Saya sudah menyelesaikan tugasnya, bisakah Anda meninjauanya?"},
+{cat:"C10",en:"I have a question about this project.",id:"Saya punya pertanyaan tentang proyek ini."},
+{cat:"C10",en:"Thank you for the opportunity to learn from you.",id:"Terima kasih atas kesempatan untuk belajar dari Anda."},
+{cat:"C10",en:"I apologize for the delay in completing this.",id:"Saya mohon maaf atas keterlambatan dalam menyelesaikan ini."},
+{cat:"C10",en:"Could we go over this together, step by step?",id:"Bisakah kita membahas ini bersama, langkah demi langkah?"},
+{cat:"C10",en:"I'm grateful for this experience, thank you very much.",id:"Saya sangat bersyukur atas pengalaman ini, terima kasih banyak."}
+];
+
+var CAT_CFG={
+  C1:{label:"👋 Kenalan",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  C2:{label:"🎓 Dosen",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  C3:{label:"🏫 Admin",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  C4:{label:"💰 Asuransi",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#059669)"},
+  C5:{label:"✈️ Bandara",bg:"#f3e8ff",fg:"#6d28d9",acc:"linear-gradient(90deg,#7c3aed,#2563eb)"},
+  C6:{label:"🏠 Sehari-hari",bg:"#cffafe",fg:"#0e7490",acc:"linear-gradient(90deg,#0891b2,#059669)"},
+  C7:{label:"🚌 Transport",bg:"#fce7f3",fg:"#9d174d",acc:"linear-gradient(90deg,#be185d,#7c3aed)"},
+  C8:{label:"🏥 Kesehatan",bg:"#dcfce7",fg:"#166534",acc:"linear-gradient(90deg,#15803d,#059669)"},
+  C9:{label:"👫 Sosial",bg:"#ede9fe",fg:"#5b21b6",acc:"linear-gradient(90deg,#6d28d9,#2563eb)"},
+  C10:{label:"💼 Magang",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#b45309,#dc2626)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua kategori":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kalimat";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.C1;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("en-disp").textContent=c.en;
+  document.getElementById("ans-id-txt").textContent=c.id;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-en'>"+v.en.substring(0,60)+"…</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>

@@ -123,6 +123,16 @@ const flashcards = [
     route: '/game/lhasa-conversation',
   },
   {
+    id: 'SE1',
+    category: 'English',
+    categoryColor: '#e0f2fe', categoryTextColor: '#075985',
+    icon: '✈️',
+    title: 'Survival English — Taiwan Internship',
+    kartu: 100,
+    level: 'Kenalan · Dosen · Admin · Bandara · Darurat…',
+    route: '/game/survival-english',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
