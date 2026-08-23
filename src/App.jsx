@@ -32,6 +32,7 @@ function App() {
       <Route path="/game/lhasa-conversation" element={<GamePage file="flashcard_lengkap_intact/lhasa_conversation.html" title="拉薩對話 — Percakapan di Lhasa" />} />
       <Route path="/game/survival-english" element={<GamePage file="flashcard_lengkap_intact/survival_english.html" title="Survival English — Taiwan Internship" />} />
       <Route path="/game/sentence-starters" element={<GamePage file="flashcard_lengkap_intact/sentence_starters.html" title="Sentence Starters — Academic English" />} />
+      <Route path="/game/polite-phrases" element={<GamePage file="flashcard_lengkap_intact/polite_phrases.html" title="Polite Phrases — Formal English" />} />
       <Route path="/game/ayi-video" element={<GamePage file="flashcard_lengkap_intact/ayi_video.html" title="阿姨！Video Viral Mandarin" />} />
       <Route path="/game/waimai-video" element={<GamePage file="flashcard_lengkap_intact/waimai_video.html" title="外賣員 · Video Sosial Mandarin" />} />
       <Route path="/game/waimai-video" element={<GamePage file="flashcard_lengkap_intact/waimai_video.html" title="外賣員 · Video Sosial" />} />

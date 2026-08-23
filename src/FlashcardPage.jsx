@@ -143,6 +143,16 @@ const flashcards = [
     route: '/game/sentence-starters',
   },
   {
+    id: 'PP1',
+    category: 'English',
+    categoryColor: '#e0f2fe', categoryTextColor: '#075985',
+    icon: '🎩',
+    title: 'Polite Phrases — Formal English',
+    kartu: 100,
+    level: 'Meminta · Izin · Klarifikasi · Maaf · Penutup…',
+    route: '/game/polite-phrases',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
