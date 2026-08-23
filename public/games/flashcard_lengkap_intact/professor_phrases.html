@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professor Phrases — 20 Pola Wajib</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-WAJIB.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-SEMUA.on{background:#2563eb;border-color:#2563eb;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.pola-main{font-size:20px;font-weight:700;color:#1a1814;text-align:center;line-height:1.5;margin-bottom:8px;}
+.pola-ex{font-size:13px;color:#6b7280;text-align:center;line-height:1.6;font-style:italic;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .8rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;}
+.ans-id{font-size:18px;font-weight:700;color:#7c3aed;line-height:1.5;margin-bottom:10px;}
+.ans-ex-id{font-size:13px;color:#6b7280;font-style:italic;line-height:1.6;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-pola{font-size:13px;font-weight:600;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🎓 Professor Phrases — 20 Pola Wajib</h1>
+  <div class="sub" id="sub-lbl">Depan = pola + contoh · Belakang = arti Indonesia</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua 20</button>
+    <button class="fb c-WAJIB" onclick="setCat('WAJIB')">🔥 5 Wajib</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="pola-main" id="pola-disp"></div>
+      <div class="pola-ex" id="ex-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk arti</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">🇮🇩 Arti Pola</div>
+        <div class="ans-id" id="ans-id"></div>
+        <div class="atag">💬 Arti Contoh</div>
+        <div class="ans-ex-id" id="ans-ex-id"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua pola dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+  {cat:"WAJIB",no:1,
+   pola:"Could you please...?",id:"Bisakah Anda...?",
+   ex:"Could you please explain this assignment?",
+   ex_id:"Bisakah Anda menjelaskan tugas ini?"},
+  {cat:"ALL",no:2,
+   pola:"May I...?",id:"Bolehkah saya...?",
+   ex:"May I ask a question about the project?",
+   ex_id:"Bolehkah saya mengajukan pertanyaan tentang proyek ini?"},
+  {cat:"ALL",no:3,
+   pola:"Would it be possible to...?",id:"Apakah memungkinkan untuk...?",
+   ex:"Would it be possible to reschedule our meeting?",
+   ex_id:"Apakah memungkinkan untuk menjadwal ulang pertemuan kita?"},
+  {cat:"WAJIB",no:4,
+   pola:"I would like to...",id:"Saya ingin...",
+   ex:"I would like to ask about the course.",
+   ex_id:"Saya ingin bertanya tentang mata kuliah ini."},
+  {cat:"ALL",no:5,
+   pola:"I would like to ask about...",id:"Saya ingin bertanya tentang...",
+   ex:"I would like to ask about the submission requirements.",
+   ex_id:"Saya ingin bertanya tentang persyaratan pengumpulan."},
+  {cat:"WAJIB",no:6,
+   pola:"Could you let me know...?",id:"Bisakah Anda memberi tahu saya...?",
+   ex:"Could you let me know the deadline for this report?",
+   ex_id:"Bisakah Anda memberi tahu saya batas waktu laporan ini?"},
+  {cat:"ALL",no:7,
+   pola:"May I ask...?",id:"Bolehkah saya bertanya...?",
+   ex:"May I ask when the results will be announced?",
+   ex_id:"Bolehkah saya bertanya kapan hasilnya akan diumumkan?"},
+  {cat:"ALL",no:8,
+   pola:"I was wondering if...",id:"Saya ingin menanyakan apakah...",
+   ex:"I was wondering if I could submit the form tomorrow.",
+   ex_id:"Saya ingin menanyakan apakah saya bisa mengumpulkan formulirnya besok."},
+  {cat:"ALL",no:9,
+   pola:"Could you please clarify...?",id:"Bisakah Anda menjelaskan lebih jelas...?",
+   ex:"Could you please clarify the grading criteria?",
+   ex_id:"Bisakah Anda menjelaskan lebih jelas kriteria penilaiannya?"},
+  {cat:"ALL",no:10,
+   pola:"I'm not sure I understood...",id:"Saya kurang yakin sudah memahami...",
+   ex:"I'm not sure I understood the instructions correctly.",
+   ex_id:"Saya kurang yakin sudah memahami instruksinya dengan benar."},
+  {cat:"ALL",no:11,
+   pola:"Could you please explain...?",id:"Bisakah Anda menjelaskan...?",
+   ex:"Could you please explain this concept in more detail?",
+   ex_id:"Bisakah Anda menjelaskan konsep ini lebih detail?"},
+  {cat:"ALL",no:12,
+   pola:"Just to confirm,...",id:"Untuk memastikan,...",
+   ex:"Just to confirm, the deadline is next Friday, right?",
+   ex_id:"Untuk memastikan, batas waktunya Jumat depan, benar?"},
+  {cat:"WAJIB",no:13,
+   pola:"I would like to confirm...",id:"Saya ingin mengonfirmasi...",
+   ex:"I would like to confirm my arrival date at the university.",
+   ex_id:"Saya ingin mengonfirmasi tanggal kedatangan saya di universitas."},
+  {cat:"ALL",no:14,
+   pola:"I really appreciate...",id:"Saya sangat menghargai...",
+   ex:"I really appreciate your feedback on my draft.",
+   ex_id:"Saya sangat menghargai masukan Anda tentang draf saya."},
+  {cat:"ALL",no:15,
+   pola:"Thank you for...",id:"Terima kasih atas...",
+   ex:"Thank you for your guidance throughout this project.",
+   ex_id:"Terima kasih atas bimbingan Anda selama proyek ini."},
+  {cat:"ALL",no:16,
+   pola:"I'm sorry for...",id:"Saya mohon maaf atas...",
+   ex:"I'm sorry for submitting the assignment late.",
+   ex_id:"Saya mohon maaf atas keterlambatan mengumpulkan tugas."},
+  {cat:"ALL",no:17,
+   pola:"I apologize for...",id:"Saya mohon maaf atas...",
+   ex:"I apologize for the delayed response.",
+   ex_id:"Saya mohon maaf atas keterlambatan balasan."},
+  {cat:"ALL",no:18,
+   pola:"I'll make sure to...",id:"Saya akan memastikan untuk...",
+   ex:"I'll make sure to have everything ready by the deadline.",
+   ex_id:"Saya akan memastikan semuanya siap sebelum batas waktu."},
+  {cat:"WAJIB",no:19,
+   pola:"Please let me know if...",id:"Mohon beri tahu saya jika...",
+   ex:"Please let me know if I need to prepare anything else.",
+   ex_id:"Mohon beri tahu saya jika saya perlu menyiapkan hal lain."},
+  {cat:"ALL",no:20,
+   pola:"I look forward to...",id:"Saya menantikan...",
+   ex:"I look forward to your feedback on my presentation.",
+   ex_id:"Saya menantikan masukan Anda tentang presentasi saya."}
+];
+
+var CAT_CFG={
+  WAJIB:{label:"🔥 Wajib",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  ALL:{label:"📚 Reguler",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"}
+};
+
+var curCat="ALL_SHOW",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){
+  if(curCat==="WAJIB") return V.filter(function(v){return v.cat==="WAJIB";});
+  return V.slice(); // ALL_SHOW = semua 20
+}
+function fullRestart(){
+  var src=getFiltered();
+  // Sort by no when not wajib
+  src.sort(function(a,b){return a.no-b.no;});
+  deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="WAJIB"?"🔥 5 Pola Wajib":"Semua 20 Pola";
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kartu";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var isWajib=c.cat==="WAJIB";
+  var cfg=isWajib?CAT_CFG.WAJIB:CAT_CFG.ALL;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+c.no;
+  var ctb=document.getElementById("ctb");
+  ctb.textContent=isWajib?"🔥 Wajib Hafal":"📚 Pola "+c.no;
+  ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("pola-disp").textContent=c.pola;
+  document.getElementById("ex-disp").textContent='e.g. "'+c.ex+'"';
+  document.getElementById("ans-id").textContent=c.id;
+  document.getElementById("ans-ex-id").textContent='"'+c.ex_id+'"';
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-pola'>"+(v.cat==="WAJIB"?"🔥 ":"")+v.pola+"</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+curCat="ALL_SHOW";
+document.querySelector(".fb.on").classList.remove("on");
+document.querySelectorAll(".fb")[0].classList.add("on");
+fullRestart();
+</script>
+</body>
+</html>
