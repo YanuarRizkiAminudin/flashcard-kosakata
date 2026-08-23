@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentence Starters — Academic English</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-S1.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-S2.on{background:#059669;border-color:#059669;}
+.fb.c-S3.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-S4.on{background:#d97706;border-color:#d97706;}
+.fb.c-S5.on{background:#7c3aed;border-color:#7c3aed;}
+.fb.c-S6.on{background:#0891b2;border-color:#0891b2;}
+.fb.c-S7.on{background:#15803d;border-color:#15803d;}
+.fb.c-S8.on{background:#be185d;border-color:#be185d;}
+.fb.c-S9.on{background:#6d28d9;border-color:#6d28d9;}
+.fb.c-S10.on{background:#b45309;border-color:#b45309;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.en-front{font-size:17px;font-weight:700;color:#1a1814;line-height:1.6;text-align:center;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;}
+.ans-id{font-size:16px;font-weight:600;color:#7c3aed;line-height:1.7;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-en{font-size:12px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>💬 Sentence Starters — Academic English</h1>
+  <div class="sub" id="sub-lbl">Depan = Inggris · Belakang = Indonesia</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-S1" onclick="setCat('S1')">🙏 Meminta</button>
+    <button class="fb c-S2" onclick="setCat('S2')">❓ Bertanya</button>
+    <button class="fb c-S3" onclick="setCat('S3')">🔍 Klarifikasi</button>
+    <button class="fb c-S4" onclick="setCat('S4')">🎯 Keinginan</button>
+    <button class="fb c-S5" onclick="setCat('S5')">📢 Info</button>
+    <button class="fb c-S6" onclick="setCat('S6')">✅ Konfirmasi</button>
+    <button class="fb c-S7" onclick="setCat('S7')">🙌 Terima Kasih</button>
+    <button class="fb c-S8" onclick="setCat('S8')">😔 Maaf</button>
+    <button class="fb c-S9" onclick="setCat('S9')">📋 Rencana</button>
+    <button class="fb c-S10" onclick="setCat('S10')">💡 Rekomendasi</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="en-front" id="en-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk terjemahan</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">🇮🇩 Indonesia</div>
+        <div class="ans-id" id="ans-id-txt"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua sentence starters dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+// S1 — Meminta / Request
+{cat:"S1",en:"Could you please...?",id:"Bisakah Anda...?"},
+{cat:"S1",en:"Would you mind...?",id:"Apakah Anda keberatan...?"},
+{cat:"S1",en:"Could I ask you...?",id:"Bolehkah saya bertanya...?"},
+{cat:"S1",en:"May I...?",id:"Bolehkah saya...?"},
+{cat:"S1",en:"Is it possible to...?",id:"Apakah memungkinkan untuk...?"},
+{cat:"S1",en:"Would it be possible to...?",id:"Apakah memungkinkan untuk...?"},
+{cat:"S1",en:"Could you help me with...?",id:"Bisakah Anda membantu saya dengan...?"},
+{cat:"S1",en:"Could you explain...?",id:"Bisakah Anda menjelaskan...?"},
+{cat:"S1",en:"Could you clarify...?",id:"Bisakah Anda menjelaskan lebih jelas...?"},
+{cat:"S1",en:"Could you let me know...?",id:"Bisakah Anda memberi tahu saya...?"},
+// S2 — Bertanya
+{cat:"S2",en:"Do you have...?",id:"Apakah Anda punya...?"},
+{cat:"S2",en:"Do you know...?",id:"Apakah Anda tahu...?"},
+{cat:"S2",en:"May I know...?",id:"Bolehkah saya tahu...?"},
+{cat:"S2",en:"Can I ask...?",id:"Bolehkah saya bertanya...?"},
+{cat:"S2",en:"What do you mean by...?",id:"Apa maksud dari...?"},
+{cat:"S2",en:"What should I...?",id:"Apa yang harus saya...?"},
+{cat:"S2",en:"What would you recommend...?",id:"Apa yang Anda rekomendasikan...?"},
+{cat:"S2",en:"When is...?",id:"Kapan...?"},
+{cat:"S2",en:"When is the deadline for...?",id:"Kapan batas waktu untuk...?"},
+{cat:"S2",en:"Where can I...?",id:"Di mana saya bisa...?"},
+// S3 — Klarifikasi
+{cat:"S3",en:"I'm not sure I understood.",id:"Saya tidak yakin sudah memahami."},
+{cat:"S3",en:"I'm not sure I understand.",id:"Saya tidak yakin saya mengerti."},
+{cat:"S3",en:"Could you explain that again?",id:"Bisa dijelaskan lagi?"},
+{cat:"S3",en:"Could you say that again?",id:"Bisa diulangi?"},
+{cat:"S3",en:"Could you speak more slowly?",id:"Bisa bicara lebih pelan?"},
+{cat:"S3",en:"What does this mean?",id:"Apa artinya ini?"},
+{cat:"S3",en:"Do you mean that...?",id:"Apakah maksud Anda...?"},
+{cat:"S3",en:"If I understand correctly,...",id:"Kalau saya memahami dengan benar,..."},
+{cat:"S3",en:"Just to make sure,...",id:"Untuk memastikan,..."},
+{cat:"S3",en:"So, you mean that...?",id:"Jadi, maksud Anda...?"},
+// S4 — Keinginan / Intentions
+{cat:"S4",en:"I would like to...",id:"Saya ingin..."},
+{cat:"S4",en:"I'd like to ask about...",id:"Saya ingin bertanya tentang..."},
+{cat:"S4",en:"I would like to know...",id:"Saya ingin mengetahui..."},
+{cat:"S4",en:"I'd like to confirm...",id:"Saya ingin mengonfirmasi..."},
+{cat:"S4",en:"I'd like to discuss...",id:"Saya ingin membahas..."},
+{cat:"S4",en:"I want to make sure...",id:"Saya ingin memastikan..."},
+{cat:"S4",en:"I'm planning to...",id:"Saya berencana untuk..."},
+{cat:"S4",en:"I'm hoping to...",id:"Saya berharap untuk..."},
+{cat:"S4",en:"I'm interested in...",id:"Saya tertarik dengan..."},
+{cat:"S4",en:"I'm looking forward to...",id:"Saya menantikan..."},
+// S5 — Memberi Informasi
+{cat:"S5",en:"I would like to inform you that...",id:"Saya ingin menginformasikan bahwa..."},
+{cat:"S5",en:"I'd like to let you know that...",id:"Saya ingin memberi tahu bahwa..."},
+{cat:"S5",en:"I just wanted to let you know...",id:"Saya hanya ingin memberi tahu..."},
+{cat:"S5",en:"Please be informed that...",id:"Mohon diinformasikan bahwa..."},
+{cat:"S5",en:"Just to let you know,...",id:"Sekadar memberi tahu,..."},
+{cat:"S5",en:"I want to let you know...",id:"Saya ingin memberi tahu..."},
+{cat:"S5",en:"For your information,...",id:"Sebagai informasi,..."},
+{cat:"S5",en:"According to...",id:"Menurut..."},
+{cat:"S5",en:"Based on...",id:"Berdasarkan..."},
+{cat:"S5",en:"As far as I know,...",id:"Sejauh yang saya tahu,..."},
+// S6 — Konfirmasi
+{cat:"S6",en:"I'd like to confirm...",id:"Saya ingin mengonfirmasi..."},
+{cat:"S6",en:"I just want to confirm...",id:"Saya hanya ingin memastikan..."},
+{cat:"S6",en:"Could you confirm...?",id:"Bisakah Anda mengonfirmasi...?"},
+{cat:"S6",en:"Can you confirm...?",id:"Bisa Anda konfirmasi...?"},
+{cat:"S6",en:"Just to confirm,...",id:"Untuk memastikan,..."},
+{cat:"S6",en:"Am I correct in saying that...?",id:"Apakah benar jika saya mengatakan bahwa...?"},
+{cat:"S6",en:"Is that correct?",id:"Apakah itu benar?"},
+{cat:"S6",en:"Is this correct?",id:"Apakah ini benar?"},
+{cat:"S6",en:"Does that mean...?",id:"Apakah itu berarti...?"},
+{cat:"S6",en:"Have I understood correctly?",id:"Apakah saya sudah memahami dengan benar?"},
+// S7 — Terima Kasih
+{cat:"S7",en:"Thank you for...",id:"Terima kasih atas..."},
+{cat:"S7",en:"Thank you so much for...",id:"Terima kasih banyak atas..."},
+{cat:"S7",en:"I really appreciate...",id:"Saya sangat menghargai..."},
+{cat:"S7",en:"I really appreciate your help.",id:"Saya sangat menghargai bantuan Anda."},
+{cat:"S7",en:"Thanks for letting me know.",id:"Terima kasih sudah memberi tahu saya."},
+{cat:"S7",en:"Thank you for your time.",id:"Terima kasih atas waktunya."},
+{cat:"S7",en:"Thank you for your help.",id:"Terima kasih atas bantuannya."},
+{cat:"S7",en:"I appreciate your support.",id:"Saya menghargai dukungan Anda."},
+{cat:"S7",en:"Thanks for your understanding.",id:"Terima kasih atas pengertiannya."},
+{cat:"S7",en:"I really appreciate your time.",id:"Saya sangat menghargai waktu Anda."},
+// S8 — Permintaan Maaf
+{cat:"S8",en:"I'm sorry for...",id:"Saya minta maaf atas..."},
+{cat:"S8",en:"I'm sorry about...",id:"Maaf mengenai..."},
+{cat:"S8",en:"I apologize for...",id:"Saya mohon maaf atas..."},
+{cat:"S8",en:"I apologize for the inconvenience.",id:"Saya mohon maaf atas ketidaknyamanannya."},
+{cat:"S8",en:"I'm sorry, I might be...",id:"Maaf, saya mungkin..."},
+{cat:"S8",en:"I'm sorry, I didn't realize...",id:"Maaf, saya tidak menyadari..."},
+{cat:"S8",en:"Sorry for the late reply.",id:"Maaf atas keterlambatan membalas."},
+{cat:"S8",en:"Sorry for the confusion.",id:"Maaf atas kebingungannya."},
+{cat:"S8",en:"I hope you don't mind.",id:"Semoga Anda tidak keberatan."},
+{cat:"S8",en:"I hope it's okay if...",id:"Semoga tidak apa-apa jika..."},
+// S9 — Rencana / Komitmen
+{cat:"S9",en:"I'll make sure...",id:"Saya akan memastikan..."},
+{cat:"S9",en:"I'll make sure to...",id:"Saya akan memastikan untuk..."},
+{cat:"S9",en:"I'll take care of it.",id:"Saya akan mengurusnya."},
+{cat:"S9",en:"I'll check...",id:"Saya akan mengeceknya."},
+{cat:"S9",en:"I'll let you know.",id:"Saya akan memberi tahu Anda."},
+{cat:"S9",en:"I'll get back to you.",id:"Saya akan menghubungi Anda kembali."},
+{cat:"S9",en:"I'll keep you updated.",id:"Saya akan terus memberi kabar."},
+{cat:"S9",en:"I'll do my best to...",id:"Saya akan berusaha sebaik mungkin untuk..."},
+{cat:"S9",en:"I'll try to...",id:"Saya akan mencoba untuk..."},
+{cat:"S9",en:"I'll make sure everything is ready.",id:"Saya akan memastikan semuanya siap."},
+// S10 — Rekomendasi / Pendapat
+{cat:"S10",en:"Could you recommend...?",id:"Bisakah Anda merekomendasikan...?"},
+{cat:"S10",en:"What would you suggest...?",id:"Apa yang Anda sarankan...?"},
+{cat:"S10",en:"What do you think about...?",id:"Apa pendapat Anda tentang...?"},
+{cat:"S10",en:"In my opinion,...",id:"Menurut saya,..."},
+{cat:"S10",en:"I think that...",id:"Saya pikir bahwa..."},
+{cat:"S10",en:"I believe that...",id:"Saya percaya bahwa..."},
+{cat:"S10",en:"From my perspective,...",id:"Dari sudut pandang saya,..."},
+{cat:"S10",en:"As far as I understand,...",id:"Sejauh yang saya pahami,..."},
+{cat:"S10",en:"I would suggest...",id:"Saya menyarankan..."},
+{cat:"S10",en:"I would recommend...",id:"Saya merekomendasikan..."}
+];
+
+var CAT_CFG={
+  S1:{label:"🙏 Meminta",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  S2:{label:"❓ Bertanya",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  S3:{label:"🔍 Klarifikasi",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  S4:{label:"🎯 Keinginan",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#059669)"},
+  S5:{label:"📢 Info",bg:"#f3e8ff",fg:"#6d28d9",acc:"linear-gradient(90deg,#7c3aed,#2563eb)"},
+  S6:{label:"✅ Konfirmasi",bg:"#cffafe",fg:"#0e7490",acc:"linear-gradient(90deg,#0891b2,#059669)"},
+  S7:{label:"🙌 Terima Kasih",bg:"#dcfce7",fg:"#166534",acc:"linear-gradient(90deg,#15803d,#059669)"},
+  S8:{label:"😔 Maaf",bg:"#fce7f3",fg:"#9d174d",acc:"linear-gradient(90deg,#be185d,#7c3aed)"},
+  S9:{label:"📋 Rencana",bg:"#ede9fe",fg:"#5b21b6",acc:"linear-gradient(90deg,#6d28d9,#2563eb)"},
+  S10:{label:"💡 Rekomendasi",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#b45309,#dc2626)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kalimat";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.S1;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("en-disp").textContent=c.en;
+  document.getElementById("ans-id-txt").textContent=c.id;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-en'>"+v.en+"</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>

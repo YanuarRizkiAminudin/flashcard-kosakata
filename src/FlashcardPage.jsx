@@ -133,6 +133,16 @@ const flashcards = [
     route: '/game/survival-english',
   },
   {
+    id: 'SS1',
+    category: 'English',
+    categoryColor: '#e0f2fe', categoryTextColor: '#075985',
+    icon: '💬',
+    title: 'Sentence Starters — Academic English',
+    kartu: 100,
+    level: 'Meminta · Bertanya · Klarifikasi · Konfirmasi…',
+    route: '/game/sentence-starters',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
