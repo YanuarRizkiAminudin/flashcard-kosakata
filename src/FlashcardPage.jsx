@@ -163,6 +163,16 @@ const flashcards = [
     route: '/game/professor-phrases',
   },
   {
+    id: 'DMN1',
+    category: 'Music',
+    categoryColor: '#fdf2f8', categoryTextColor: '#a21caf',
+    icon: '🎵',
+    title: '对面的女孩看过来 — Hafal Pinyin',
+    kartu: 20,
+    level: '阿牛 · Urut dari awal lagu · Hafal pinyin',
+    route: '/game/duimian-nvhai',
+  },
+  {
     id: 'MC11',
     category: 'Mandarin',
     categoryColor: '#fce7f3', categoryTextColor: '#9d174d',
