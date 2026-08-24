@@ -7,57 +7,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:#1a0533;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
 #app{width:100%;max-width:540px;}
-h1{font-size:15px;font-weight:700;color:#e9d5ff;text-align:center;margin-bottom:2px;}
-.subtitle{font-size:11px;color:#9f6dc4;text-align:center;margin-bottom:10px;}
-.sub{font-size:12px;color:#9f6dc4;text-align:center;margin-bottom:10px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:2px;}
+.subtitle{font-size:11px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
-.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#4c1d95;color:#e9d5ff;}
-.ctr{font-size:13px;color:#9f6dc4;}
-.pbar-bg{height:4px;background:#2d1b4e;border-radius:99px;margin-bottom:.4rem;}
-.pbar{height:4px;background:linear-gradient(90deg,#ec4899,#7c3aed);border-radius:99px;transition:width .4s;}
-.plabels{display:flex;justify-content:space-between;font-size:11px;color:#9f6dc4;margin-bottom:.7rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
 .pills{display:flex;gap:6px;margin-bottom:.8rem;}
 .pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
-.pl-p{background:#14532d;border-color:#166534;color:#86efac;}
-.pl-h{background:#451a03;border-color:#78350f;color:#fcd34d;}
-.pl-b{background:#450a0a;border-color:#7f1d1d;color:#fca5a5;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
 .dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
-.dp{background:#86efac;}.dh{background:#fcd34d;}.db{background:#fca5a5;}
-.card{background:linear-gradient(135deg,#1e0a3c,#2d1060);border:1px solid #6d28d9;border-radius:20px;box-shadow:0 4px 30px rgba(236,72,153,.3);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
-.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ec4899,#7c3aed);}
-.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 36px rgba(236,72,153,.4);}
-.card-num{font-size:10px;font-weight:600;color:#9f6dc4;background:#2d1060;border:1px solid #4c1d95;border-radius:99px;padding:2px 8px;margin-bottom:.8rem;}
-.zh-front{font-family:"Noto Serif TC",serif;font-weight:700;color:#e9d5ff;text-align:center;line-height:1.5;font-size:26px;}
-.tap{font-size:12px;color:#7c5aab;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c3aed,#2563eb);}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;margin-bottom:.8rem;}
+.zh-front{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;line-height:1.5;font-size:24px;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
 .ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
 @keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-.dl{width:36px;height:1px;background:#4c1d95;margin:0 auto .8rem;}
-.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#7c5aab;margin-bottom:4px;text-align:center;}
-.ans-py{font-size:22px;font-weight:700;color:#f0abfc;text-align:center;line-height:1.6;margin-bottom:8px;}
-.ans-id{font-size:14px;color:#c4b5fd;text-align:center;line-height:1.6;}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .8rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-py{font-size:20px;font-weight:700;color:#7c3aed;text-align:center;line-height:1.6;margin-bottom:8px;}
+.ans-id{font-size:14px;color:#6b7280;text-align:center;line-height:1.6;}
 .btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
 .cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
 .cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
-.cb-p{background:#14532d;border-color:#166534;color:#86efac;}.cb-p:hover{background:#166534;}
-.cb-h{background:#451a03;border-color:#78350f;color:#fcd34d;}.cb-h:hover{background:#78350f;}
-.cb-b{background:#450a0a;border-color:#7f1d1d;color:#fca5a5;}.cb-b:hover{background:#7f1d1d;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
 .res{text-align:center;padding:.8rem 0;}
 .res-ico{font-size:52px;margin-bottom:.7rem;}
-.res-title{font-size:20px;font-weight:700;color:#e9d5ff;margin-bottom:.3rem;}
-.res-sub{font-size:13px;color:#9f6dc4;margin-bottom:1.2rem;line-height:1.6;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
 .srow{display:flex;gap:7px;margin-bottom:1.2rem;}
 .sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
 .sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
-.sbp{background:#14532d;border-color:#166534;color:#86efac;}
-.sbh{background:#451a03;border-color:#78350f;color:#fcd34d;}
-.sbb{background:#450a0a;border-color:#7f1d1d;color:#fca5a5;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
 .btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
-.btn-purple{background:linear-gradient(135deg,#ec4899,#7c3aed);color:#fff;box-shadow:0 3px 10px rgba(236,72,153,.3);}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
 .btn-purple:hover{opacity:.9;}
-.btn-ghost{background:transparent;border:1.5px solid #4c1d95!important;color:#9f6dc4;}
-.btn-ghost:hover{background:#2d1060;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
 .final{text-align:center;padding:2.5rem 0;}
 </style>
 </head>
@@ -65,11 +65,11 @@ h1{font-size:15px;font-weight:700;color:#e9d5ff;text-align:center;margin-bottom:
 <div id="app">
   <h1>🎵 对面的女孩看过来</h1>
   <div class="subtitle">阿牛 (Ah Niu) · Urut dari awal lagu</div>
-  <div class="sub" id="sub-lbl">Ketuk untuk pinyin + arti</div>
+  <div class="sub" id="sub-lbl">20 baris lirik · urut dari awal lagu</div>
   <div id="qv">
-    <div class="topbar"><span class="badge" id="rb">Kartu 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="topbar"><span class="badge" id="rb">Kartu 1</span><span class="ctr" id="ctr">1/20</span></div>
     <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
-    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">20 kartu</span></div>
     <div class="pills">
       <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Hafal</div>
       <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
@@ -83,6 +83,7 @@ h1{font-size:15px;font-weight:700;color:#e9d5ff;text-align:center;margin-bottom:
         <div class="dl"></div>
         <div class="atag">PINYIN</div>
         <div class="ans-py" id="ans-py"></div>
+        <div class="atag">🇮🇩 Arti</div>
         <div class="ans-id" id="ans-id"></div>
       </div>
     </div>
@@ -103,69 +104,69 @@ h1{font-size:15px;font-weight:700;color:#e9d5ff;text-align:center;margin-bottom:
         <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
       </div>
       <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
-      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari baris pertama lagi</button>
     </div>
   </div>
   <div id="fv3" style="display:none">
     <div class="final">
       <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
       <div class="res-title">Semua lirik hafal!</div>
-      <div style="font-size:13px;color:#9f6dc4;margin:.5rem 0 1.4rem">对面的女孩看过来 🎵</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">对面的女孩看过来 🎵</div>
       <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
     </div>
   </div>
 </div>
 <script>
-// Urut dari awal lagu — TIDAK diacak
 var V=[
   {zh:"对面的女孩看过来",py:"duì miàn de nǚ hái kàn guò lái",id:"Gadis di seberang, lihatlah kemari"},
-  {zh:"看过来 看过来",py:"kàn guò lái, kàn guò lái",id:"lihatlah kemari, lihatlah kemari"},
+  {zh:"看过来 看过来",py:"kàn guò lái kàn guò lái",id:"lihatlah kemari, lihatlah kemari"},
   {zh:"这里的表演很精彩",py:"zhè lǐ de biǎo yǎn hěn jīng cǎi",id:"penampilan di sini sangat memukau"},
   {zh:"请不要假装不理不睬",py:"qǐng bú yào jiǎ zhuāng bù lǐ bù cǎi",id:"tolong jangan pura-pura tidak peduli"},
   {zh:"不要被我的样子吓坏",py:"bú yào bèi wǒ de yàng zi xià huài",id:"jangan takut dengan penampilanku"},
   {zh:"其实我很可爱",py:"qí shí wǒ hěn kě ài",id:"sebenarnya aku sangat menggemaskan"},
   {zh:"寂寞男孩的悲哀",py:"jì mò nán hái de bēi āi",id:"kesedihan anak lelaki yang kesepian"},
-  {zh:"说出来 谁明白",py:"shuō chū lái, shéi míng bái",id:"diucapkan pun, siapa yang mengerti"},
-  {zh:"求求你抛个媚眼过来",py:"qiú qiú nǐ pāo ge mèi yǎn guò lái",id:"kumohon, lemparkan tatapan menggodamu kemari"},
-  {zh:"哄哄我 逗我乐开怀",py:"hǒng hǒng wǒ, dòu wǒ lè kāi huái",id:"rayu aku, buat aku tertawa gembira"},
-  {zh:"我左看右看 上看下看",py:"wǒ zuǒ kàn yòu kàn, shàng kàn xià kàn",id:"aku melihat kiri kanan, atas bawah"},
+  {zh:"说出来 谁明白",py:"shuō chū lái shéi míng bái",id:"diucapkan pun, siapa yang mengerti"},
+  {zh:"求求你抛个媚眼过来",py:"qiú qiu nǐ pāo gè mèi yǎn guò lái",id:"kumohon lemparkan tatapan menggodamu kemari"},
+  {zh:"哄哄我 逗我乐开怀",py:"hǒng hǒng wǒ dòu wǒ lè kāi huái",id:"rayu aku, buat aku tertawa gembira"},
+  {zh:"我左看右看 上看下看",py:"wǒ zuǒ kàn yòu kàn shàng kàn xià kàn",id:"aku lihat kiri kanan, atas bawah"},
   {zh:"原来每个女孩都不简单",py:"yuán lái měi gè nǚ hái dōu bù jiǎn dān",id:"ternyata setiap gadis tidaklah sederhana"},
-  {zh:"我想了又想 猜了又猜",py:"wǒ xiǎng le yòu xiǎng, cāi le yòu cāi",id:"aku pikir berkali-kali, tebak berkali-kali"},
-  {zh:"女孩们的心事她真奇怪",py:"nǚ hái men de xīn shì, tā zhēn qí guài",id:"isi hati para gadis, sungguh aneh"},
+  {zh:"我想了又想 猜了又猜",py:"wǒ xiǎng le yòu xiǎng cāi le yòu cāi",id:"aku pikir berkali-kali, tebak berkali-kali"},
+  {zh:"女孩们的心事她真奇怪",py:"nǚ hái men de xīn shì tā zhēn qí guài",id:"isi hati para gadis, sungguh aneh"},
   {zh:"寂寞男孩的苍蝇拍",py:"jì mò nán hái de cāng yíng pāi",id:"pemukul lalat anak lelaki kesepian"},
-  {zh:"左拍拍 右拍拍",py:"zuǒ pāi pāi, yòu pāi pāi",id:"tepuk kiri, tepuk kanan"},
+  {zh:"左拍拍 右拍拍",py:"zuǒ pāi pai yòu pāi pai",id:"tepuk kiri, tepuk kanan"},
   {zh:"为什么还是没人来爱",py:"wèi shén me hái shì méi rén lái ài",id:"kenapa masih tidak ada yang datang mencintai"},
-  {zh:"无人问津 真无奈",py:"wú rén wèn jīn, zhēn wú nài",id:"tidak ada yang peduli, sungguh tidak berdaya"},
+  {zh:"无人问津 真无奈",py:"wú rén wèn jīn zhēn wú nài",id:"tidak ada yang peduli, sungguh tidak berdaya"},
   {zh:"寂寞男孩情窦初开",py:"jì mò nán hái qíng dòu chū kāi",id:"anak lelaki kesepian yang baru merasakan cinta"},
-  {zh:"需要你给我一点爱",py:"xū yào nǐ gěi wǒ yī diǎn ài",id:"butuh kamu memberi sedikit cinta padaku"},
+  {zh:"需要你给我一点爱",py:"xū yào nǐ gěi wǒ yī diǎn ài",id:"butuh kamu memberi sedikit cinta padaku"}
 ];
 
-var deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+// URUT — tidak pernah diacak
+var deck=[];
+var idx=0,cp=0,ch=0,cbv=0,rev=false,toRev=[];
 
 function fullRestart(){
-  // TIDAK diacak — urut dari awal lagu
-  deck=V.slice();
-  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
-  document.getElementById("sub-lbl").textContent=deck.length+" baris lirik · urut dari awal lagu";
-  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
-  document.getElementById("rb").textContent="Kartu 1";
+  deck=V.slice(); // urut 1-20
+  idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
+  document.getElementById("qv").style.display="";
+  document.getElementById("rv").style.display="none";
+  document.getElementById("fv3").style.display="none";
   upStats();showCard();
 }
 
 function nextRonde(){
-  ronde++;
-  // Review — yang belum hafal, tetap urut
+  // Ulang yang belum hafal, tetap urut
   deck=toRev.slice();
-  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
-  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";
-  document.getElementById("rb").textContent="Review "+ronde;
+  idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
+  document.getElementById("qv").style.display="";
+  document.getElementById("rv").style.display="none";
   upStats();showCard();
 }
 
 function showCard(){
-  rev=false;var c=deck[idx];
+  rev=false;
+  var c=deck[idx];
   document.getElementById("cn").textContent="#"+(idx+1);
-  document.getElementById("rb").textContent="Kartu "+(idx+1);
+  document.getElementById("rb").textContent="Baris "+(idx+1);
   document.getElementById("zh-disp").textContent=c.zh;
   document.getElementById("ans-py").textContent=c.py;
   document.getElementById("ans-id").textContent=c.id;
@@ -191,8 +192,8 @@ function reveal(){
 function rate(r){
   var c=deck[idx];
   if(r===2)cp++;
-  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
-  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  else if(r===1){ch++;toRev.push(c);}
+  else{cbv++;toRev.push(c);}
   upStats();idx++;
   if(idx>=deck.length){showResult();return;}
   showCard();
@@ -215,8 +216,8 @@ function showResult(){
   var pct=Math.round(cp/deck.length*100);
   document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
   document.getElementById("rt").textContent="Selesai satu putaran!";
-  document.getElementById("rs").textContent=toRev.length+" baris perlu diulang lagi.";
-  document.getElementById("nb").textContent="Ulang "+toRev.length+" baris yang belum hafal";
+  document.getElementById("rs").textContent=toRev.length+" baris perlu diulang. Tetap urut lagu.";
+  document.getElementById("nb").textContent="Ulang "+toRev.length+" baris yang belum hafal →";
 }
 
 fullRestart();
