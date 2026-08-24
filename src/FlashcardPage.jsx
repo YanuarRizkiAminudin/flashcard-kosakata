@@ -169,7 +169,7 @@ const flashcards = [
     icon: '🎵',
     title: '对面的女孩看过来 — Hafal Pinyin',
     kartu: 20,
-    level: '阿牛 · Urut dari awal lagu · Hafal pinyin',
+    level: '任賢齊 Richie Jen · Urut dari awal lagu · Hafal pinyin',
     route: '/game/duimian-nvhai',
   },
   {
