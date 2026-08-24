@@ -65,11 +65,11 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 <div id="app">
   <h1>🎵 对面的女孩看过来</h1>
   <div class="subtitle">任賢齊 Richie Jen · Urut dari awal lagu</div>
-  <div class="sub" id="sub-lbl">20 baris lirik · urut dari awal lagu</div>
+  <div class="sub" id="sub-lbl">25 baris lirik · urut dari awal lagu</div>
   <div id="qv">
-    <div class="topbar"><span class="badge" id="rb">Kartu 1</span><span class="ctr" id="ctr">1/20</span></div>
+    <div class="topbar"><span class="badge" id="rb">Kartu 1</span><span class="ctr" id="ctr">1/25</span></div>
     <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
-    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">20 kartu</span></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">25 kartu</span></div>
     <div class="pills">
       <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Hafal</div>
       <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
@@ -118,26 +118,25 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 </div>
 <script>
 var V=[
-  {zh:"对面的女孩看过来",py:"duì miàn de nǚ hái kàn guò lái",id:"Gadis di seberang, lihatlah kemari"},
-  {zh:"看过来 看过来",py:"kàn guò lái kàn guò lái",id:"lihatlah kemari, lihatlah kemari"},
-  {zh:"这里的表演很精彩",py:"zhè lǐ de biǎo yǎn hěn jīng cǎi",id:"penampilan di sini sangat memukau"},
-  {zh:"请不要假装不理不睬",py:"qǐng bú yào jiǎ zhuāng bù lǐ bù cǎi",id:"tolong jangan pura-pura tidak peduli"},
-  {zh:"不要被我的样子吓坏",py:"bú yào bèi wǒ de yàng zi xià huài",id:"jangan takut dengan penampilanku"},
-  {zh:"其实我很可爱",py:"qí shí wǒ hěn kě ài",id:"sebenarnya aku sangat menggemaskan"},
-  {zh:"寂寞男孩的悲哀",py:"jì mò nán hái de bēi āi",id:"kesedihan anak lelaki yang kesepian"},
-  {zh:"说出来 谁明白",py:"shuō chū lái shéi míng bái",id:"diucapkan pun, siapa yang mengerti"},
-  {zh:"求求你抛个媚眼过来",py:"qiú qiu nǐ pāo gè mèi yǎn guò lái",id:"kumohon lemparkan tatapan menggodamu kemari"},
-  {zh:"哄哄我 逗我乐开怀",py:"hǒng hǒng wǒ dòu wǒ lè kāi huái",id:"rayu aku, buat aku tertawa gembira"},
-  {zh:"我左看右看 上看下看",py:"wǒ zuǒ kàn yòu kàn shàng kàn xià kàn",id:"aku lihat kiri kanan, atas bawah"},
-  {zh:"原来每个女孩都不简单",py:"yuán lái měi gè nǚ hái dōu bù jiǎn dān",id:"ternyata setiap gadis tidaklah sederhana"},
-  {zh:"我想了又想 猜了又猜",py:"wǒ xiǎng le yòu xiǎng cāi le yòu cāi",id:"aku pikir berkali-kali, tebak berkali-kali"},
-  {zh:"女孩们的心事她真奇怪",py:"nǚ hái men de xīn shì tā zhēn qí guài",id:"isi hati para gadis, sungguh aneh"},
-  {zh:"寂寞男孩的苍蝇拍",py:"jì mò nán hái de cāng yíng pāi",id:"pemukul lalat anak lelaki kesepian"},
-  {zh:"左拍拍 右拍拍",py:"zuǒ pāi pai yòu pāi pai",id:"tepuk kiri, tepuk kanan"},
-  {zh:"为什么还是没人来爱",py:"wèi shén me hái shì méi rén lái ài",id:"kenapa masih tidak ada yang datang mencintai"},
-  {zh:"无人问津 真无奈",py:"wú rén wèn jīn zhēn wú nài",id:"tidak ada yang peduli, sungguh tidak berdaya"},
-  {zh:"寂寞男孩情窦初开",py:"jì mò nán hái qíng dòu chū kāi",id:"anak lelaki kesepian yang baru merasakan cinta"},
-  {zh:"需要你给我一点爱",py:"xū yào nǐ gěi wǒ yī diǎn ài",id:"butuh kamu memberi sedikit cinta padaku"}
+  {zh:"对面的女孩看过来 看过来 看过来",py:"duì miàn de nǚ hái kàn guò lái, kàn guò lái, kàn guò lái",id:"Gadis di seberang lihatlah kemari, lihatlah kemari, lihatlah kemari"},
+  {zh:"不要被我的样子吓坏 其实我很可爱",py:"bú yào bèi wǒ de yàng zi xià huài, qí shí wǒ hěn kě ài",id:"Jangan takut dengan penampilanku, sebenarnya aku sangat menggemaskan"},
+  {zh:"寂寞男孩的悲哀 说出来 谁明白",py:"jì mò nán hái de bēi āi, shuō chū lái, shéi míng bái",id:"Kesedihan anak lelaki kesepian, diucapkan pun siapa yang mengerti"},
+  {zh:"求求你抛个媚眼过来 哄哄我 逗我乐开怀",py:"qiú qiu nǐ pāo gè mèi yǎn guò lái, hǒng hǒng wǒ, dòu wǒ lè kāi huái",id:"Kumohon lemparkan wink kemari, rayu aku, buat aku tertawa gembira"},
+  {zh:"（呵呵 没人理我）",py:"（hē hē, méi rén lǐ wǒ）",id:"（Hehe, tidak ada yang peduli padaku）"},
+  {zh:"我左看右看 上看下看 原来每个女孩都不简单",py:"wǒ zuǒ kàn yòu kàn, shàng kàn xià kàn, yuán lái měi gè nǚ hái dōu bù jiǎn dān",id:"Aku lihat kiri kanan, atas bawah, ternyata setiap gadis tidaklah sederhana"},
+  {zh:"我想了又想 我猜了又猜 女孩们的心事还真奇怪",py:"wǒ xiǎng le yòu xiǎng, wǒ cāi le yòu cāi, nǚ hái men de xīn shì hái zhēn qí guài",id:"Aku pikir berkali-kali, tebak berkali-kali, isi hati para gadis sungguh aneh"},
+  {zh:"寂寞男孩的苍蝇拍 左拍拍 右拍拍",py:"jì mò nán hái de cāng yíng pāi, zuǒ pāi pai, yòu pāi pai",id:"Pemukul lalat anak lelaki kesepian, tepuk kiri, tepuk kanan"},
+  {zh:"为什么还是没人来爱 无人问津 真无奈",py:"wèi shén me hái shì méi rén lái ài, wú rén wèn jīn, zhēn wú nài",id:"Kenapa masih tidak ada yang mencintai, tidak ada yang peduli, sungguh tidak berdaya"},
+  {zh:"对面的女孩看过来 看过来 看过来",py:"duì miàn de nǚ hái kàn guò lái, kàn guò lái, kàn guò lái",id:"Gadis di seberang lihatlah kemari, lihatlah kemari, lihatlah kemari"},
+  {zh:"寂寞男孩情窦初开 需要你给我一点爱",py:"jì mò nán hái qíng dòu chū kāi, xū yào nǐ gěi wǒ yī diǎn ài",id:"Anak lelaki kesepian yang baru jatuh cinta, butuh kamu beri sedikit cinta"},
+  {zh:"我左看右看 上看下看 原来每个女孩都不简单",py:"wǒ zuǒ kàn yòu kàn, shàng kàn xià kàn, yuán lái měi gè nǚ hái dōu bù jiǎn dān",id:"Aku lihat kiri kanan, atas bawah, ternyata setiap gadis tidaklah sederhana"},
+  {zh:"我想了又想 我猜了又猜 女孩们的心事还真奇怪",py:"wǒ xiǎng le yòu xiǎng, wǒ cāi le yòu cāi, nǚ hái men de xīn shì hái zhēn qí guài",id:"Aku pikir berkali-kali, tebak berkali-kali, isi hati para gadis sungguh aneh"},
+  {zh:"我左看右看 上看下看 原来每个女孩都不简单",py:"wǒ zuǒ kàn yòu kàn, shàng kàn xià kàn, yuán lái měi gè nǚ hái dōu bù jiǎn dān",id:"Aku lihat kiri kanan, atas bawah, ternyata setiap gadis tidaklah sederhana"},
+  {zh:"我想了又想 我猜了又猜 女孩们的心事还真奇怪",py:"wǒ xiǎng le yòu xiǎng, wǒ cāi le yòu cāi, nǚ hái men de xīn shì hái zhēn qí guài",id:"Aku pikir berkali-kali, tebak berkali-kali, isi hati para gadis sungguh aneh"},
+  {zh:"爱真奇怪",py:"ài zhēn qí guài",id:"Cinta sungguh aneh"},
+  {zh:"来来来来来来来来来 噢嘿噢",py:"lái lái lái lái lái lái lái lái lái, ō hēi ō",id:"Ayo ayo ayo... oh hey oh"},
+  {zh:"来来来来来来来来来来来 噢",py:"lái lái lái lái lái lái lái lái lái lái lái, ō",id:"Ayo ayo ayo... oh"},
+  {zh:"唉 算了 回家吧",py:"āi, suàn le, huí jiā ba",id:"Aduh, sudahlah, pulang saja"}
 ];
 
 // URUT — tidak pernah diacak
