@@ -63,6 +63,16 @@ const flashcards = [
     route: '/game/yanuar-prof-shen',
   },
   {
+    id: 'ES1',
+    category: 'English',
+    categoryColor: '#e0f2fe', categoryTextColor: '#075985',
+    icon: '📚',
+    title: 'English Stories — 3 Cerita Kehidupan',
+    kartu: 59,
+    level: 'Millie Belajar · Leila Pindah · John & Istri',
+    route: '/game/english-stories',
+  },
+  {
     id: 'NFU1',
     category: 'English',
     categoryColor: '#e0f2fe', categoryTextColor: '#075985',
