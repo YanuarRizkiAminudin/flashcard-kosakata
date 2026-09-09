@@ -53,6 +53,16 @@ const flashcards = [
     route: '/game/huaqiao-indonesia',
   },
   {
+    id: 'YPS1',
+    category: 'English',
+    categoryColor: '#e0f2fe', categoryTextColor: '#075985',
+    icon: '🎓',
+    title: 'Yanuar × Prof. Shen — Emotion-Aware',
+    kartu: 22,
+    level: 'HCI · ML · Image Processing · Dialog Akademik',
+    route: '/game/yanuar-prof-shen',
+  },
+  {
     id: 'NFU1',
     category: 'English',
     categoryColor: '#e0f2fe', categoryTextColor: '#075985',

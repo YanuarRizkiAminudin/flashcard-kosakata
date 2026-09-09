@@ -23,6 +23,7 @@ function App() {
       <Route path="/game/mandarin-l11" element={<GamePage file="flashcard_lengkap_intact/mandarin_l11.html" title="Mandarin L11 — 以前 經驗 奇怪" />} />
       <Route path="/game/mandarin-l12" element={<GamePage file="flashcard_lengkap_intact/mandarin_l12.html" title="Mandarin L12 — 排隊 聲音 距離 就" />} />
       <Route path="/game/huaqiao-indonesia" element={<GamePage file="flashcard_lengkap_intact/huaqiao_indonesia.html" title="華僑對話 — Tionghoa Indonesia" />} />
+      <Route path="/game/yanuar-prof-shen" element={<GamePage file="flashcard_lengkap_intact/yanuar_prof_shen.html" title="Yanuar × Prof. Shen — Emotion-Aware Interface" />} />
       <Route path="/game/nfu-group-chat" element={<GamePage file="flashcard_lengkap_intact/nfu_group_chat.html" title="NFU Internship Group Chat" />} />
       <Route path="/game/discourse-markers" element={<GamePage file="flashcard_lengkap_intact/discourse_markers.html" title="Discourse Markers — Kata Penghubung" />} />
       <Route path="/game/bluf-communication" element={<GamePage file="flashcard_lengkap_intact/bluf_communication.html" title="Bottom Line Up Front — BLUF" />} />
