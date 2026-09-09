@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>便利商店 — Convenience Store Taiwan</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-Q.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-A.on{background:#059669;border-color:#059669;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.8rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.zh-main{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;line-height:1.4;font-size:28px;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .8rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-py{font-size:17px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:8px;line-height:1.5;}
+.ans-id{font-size:15px;font-weight:600;color:#1a1814;text-align:center;line-height:1.6;margin-bottom:6px;}
+.ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:5px 10px;margin-top:6px;font-style:italic;text-align:center;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:"Noto Serif TC",serif;font-size:15px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🏪 便利商店 — Percakapan Kasir Taiwan</h1>
+  <div class="sub" id="sub-lbl">Ketuk untuk pinyin + arti</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-Q" onclick="setCat('Q')">🙋 Kasir Tanya</button>
+    <button class="fb c-A" onclick="setCat('A')">💬 Kamu Jawab</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="zh-main" id="zh-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk pinyin + arti</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">PINYIN</div>
+        <div class="ans-py" id="ans-py"></div>
+        <div class="atag">🇮🇩 Arti</div>
+        <div class="ans-id" id="ans-id"></div>
+        <div class="ans-note" id="ans-note" style="display:none"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Siap belanja di Taiwan! 🏪</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+  // Kasir tanya
+  {cat:"Q",zh:"有會員嗎？",py:"Yǒu huìyuán ma?",id:"Ada kartu member?",note:"Kasir tanya apakah kamu punya kartu member toko"},
+  {cat:"Q",zh:"需要袋子嗎？",py:"Xūyào dàizi ma?",id:"Perlu kantong plastik?",note:"Taiwan kena biaya untuk kantong plastik"},
+  {cat:"Q",zh:"集點嗎？",py:"Jí diǎn ma?",id:"Kumpulkan poin?",note:"Tanya apakah mau kumpulkan poin reward"},
+  {cat:"Q",zh:"加熱嗎？",py:"Jiārè ma?",id:"Mau dipanaskan?",note:"Untuk makanan seperti bento, onigiri, dll"},
+  {cat:"Q",zh:"要統一發票嗎？",py:"Yào tǒngyī fāpiào ma?",id:"Mau struk/nota resmi?",note:"統一發票 = struk resmi Taiwan yang bisa menang lotre"},
+  {cat:"Q",zh:"有帶零錢嗎？",py:"Yǒu dài língqián ma?",id:"Ada bawa uang receh?",note:"Kasir tanya kalau kamu bisa bayar pas"},
+  {cat:"Q",zh:"有十塊嗎？",py:"Yǒu shí kuài ma?",id:"Ada uang sepuluh yuan?",note:"Kasir minta uang receh 10 NT"},
+  {cat:"Q",zh:"一共多少錢？",py:"Yīgòng duōshǎo qián?",id:"Totalnya berapa?",note:"Kamu bisa tanya ini kalau kasir belum bilang total"},
+  {cat:"Q",zh:"用悠遊卡付嗎？",py:"Yòng yōuyóu kǎ fù ma?",id:"Bayar pakai EasyCard?",note:"悠遊卡 = EasyCard, kartu transportasi+pembayaran Taiwan"},
+  {cat:"Q",zh:"用信用卡付嗎？",py:"Yòng xìnyòng kǎ fù ma?",id:"Bayar pakai kartu kredit?",note:"信用卡 = kartu kredit"},
+  {cat:"Q",zh:"再說一次？",py:"Zài shuō yīcì?",id:"Bisa ulang sekali lagi?",note:"Kalau tidak dengar/mengerti ucapan kasir"},
+  {cat:"Q",zh:"蛤？",py:"Há?",id:"Hah? / Apa?",note:"Ekspresi santai Taiwan untuk 'tidak dengar' — seperti 'hah?' dalam bahasa Indonesia"},
+  // Jawaban kamu
+  {cat:"A",zh:"沒有，不用，謝謝。",py:"Méiyǒu, bú yòng, xièxiè.",id:"Tidak ada, tidak perlu, terima kasih.",note:"Jawaban serba guna untuk menolak dengan sopan"},
+  {cat:"A",zh:"現金。",py:"Xiànjīn.",id:"Tunai.",note:"Kalau mau bayar cash"},
+  {cat:"A",zh:"刷卡。",py:"Shuā kǎ.",id:"Gesek kartu.",note:"Kalau mau bayar kartu kredit/debit"},
+  {cat:"A",zh:"悠遊卡。",py:"Yōuyóu kǎ.",id:"EasyCard.",note:"Kalau mau bayar pakai EasyCard"},
+  {cat:"A",zh:"好。",py:"Hǎo.",id:"Oke / Baik.",note:"Jawaban simpel untuk setuju"},
+  {cat:"A",zh:"不用了，謝謝。",py:"Bú yòng le, xièxiè.",id:"Tidak perlu, terima kasih.",note:"Menolak tawaran dengan sopan"},
+  {cat:"A",zh:"要加熱。",py:"Yào jiārè.",id:"Mau dipanaskan.",note:"Kalau mau minta makanannya dipanaskan"},
+  {cat:"A",zh:"不用加熱。",py:"Bú yòng jiārè.",id:"Tidak perlu dipanaskan.",note:"Kalau tidak mau dipanaskan"},
+  {cat:"A",zh:"要袋子。",py:"Yào dàizi.",id:"Mau kantong plastik.",note:"Kalau mau minta kantong"},
+  {cat:"A",zh:"不用袋子。",py:"Bú yòng dàizi.",id:"Tidak perlu kantong.",note:"Kalau tidak butuh kantong"},
+];
+
+var CAT_CFG={
+  Q:{label:"🙋 Kasir Tanya",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  A:{label:"💬 Kamu Jawab",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kartu";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.Q;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("zh-disp").textContent=c.zh;
+  document.getElementById("ans-py").textContent=c.py;
+  document.getElementById("ans-id").textContent=c.id;
+  var note=document.getElementById("ans-note");
+  if(c.note){note.textContent=c.note;note.style.display="";}else{note.style.display="none";}
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-zh'>"+v.zh+"</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandarin L12 · 排隊 聲音 距離 方向 就</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:500px;}
+h1{font-family:"Noto Serif TC",serif;font-size:16px;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-vocab.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-sent.on{background:#059669;border-color:#059669;}
+.fb.c-dial.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-qa.on{background:#d97706;border-color:#d97706;}
+.ls-lbl{font-size:10px;color:#8a8478;text-align:center;margin-bottom:5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
+.lang-sw{display:flex;background:#fff;border:1px solid #e8e4dc;border-radius:99px;padding:3px;gap:2px;margin-bottom:10px;}
+.lang-sw label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:99px;color:#8a8478;transition:all .2s;user-select:none;}
+.lang-sw input[type=radio]{display:none;}
+.lang-sw input[type=radio]:checked+label{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.3);}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.6rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.zh-main{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;line-height:1.2;text-align:center;}
+.zh-main.big{font-size:64px;}.zh-main.med{font-size:44px;}.zh-main.sm{font-size:28px;}.zh-main.xs{font-size:20px;}.zh-main.xxs{font-size:16px;}
+.py-sub{font-size:14px;color:#7c3aed;font-weight:600;margin-top:6px;}
+.sent-front{font-family:"Noto Serif TC",serif;font-size:18px;color:#1a1814;line-height:1.6;text-align:center;font-weight:600;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;text-align:center;animation:fup .25s ease;width:100%;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:3px;}
+.ans-py{font-size:16px;font-weight:700;color:#7c3aed;margin-bottom:4px;}
+.ans-id{font-size:16px;font-weight:700;color:#1a1814;line-height:1.5;}
+.ans-en{font-size:14px;color:#2563eb;font-weight:500;line-height:1.5;}
+.ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:5px 10px;margin-top:6px;font-style:italic;}
+.hint-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;border:1.5px dashed #c4b5fd;border-radius:12px;background:transparent;color:#7c3aed;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:"DM Sans",sans-serif;margin-bottom:.5rem;}
+.hint-btn:hover{background:#f5f3ff;border-style:solid;}
+.hint-pop{background:linear-gradient(135deg,#f5f3ff,#eff6ff);border:1.5px solid #c4b5fd;border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:.5rem;animation:fup .2s ease;}
+.hint-pop-t{font-size:16px;font-weight:700;color:#1a1814;line-height:1.5;}
+.hint-pop-s{font-size:11px;color:#7c3aed;font-weight:500;margin-top:2px;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-family:"Noto Serif TC",serif;font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:"Noto Serif TC",serif;font-size:15px;color:#1a1814;min-width:60px;}
+.ri-id{font-size:11px;color:#7c3aed;margin-left:auto;text-align:right;max-width:180px;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>曼德林 · 排隊 聲音 距離 方向 就</h1>
+  <div class="sub" id="sub-lbl">Bab 12 · Vocab + Kalimat + Dialog</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-vocab" onclick="setCat('VOCAB')">📗 Vocab</button>
+    <button class="fb c-sent" onclick="setCat('SENT')">💬 Kalimat</button>
+    <button class="fb c-dial" onclick="setCat('DIAL')">🎭 Dialog</button>
+    <button class="fb c-qa" onclick="setCat('QA')">❓ Soal</button>
+  </div>
+  <div class="ls-lbl">Tampilan Jawaban</div>
+  <div class="lang-sw">
+    <input type="radio" name="al" id="aid" value="id" checked>
+    <label for="aid">🇮🇩 Indonesia</label>
+    <input type="radio" name="al" id="aen" value="en">
+    <label for="aen">🇬🇧 English</label>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div id="fv-vocab" style="display:none;text-align:center">
+        <div class="zh-main" id="zh-disp"></div>
+      </div>
+      <div id="fv-sent" style="display:none;width:100%">
+        <div class="sent-front" id="sent-disp"></div>
+      </div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk jawaban</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag" style="margin-bottom:2px">PINYIN</div><div class="ans-py" id="py-disp" style="margin-bottom:8px;font-size:18px;font-weight:700;color:#7c3aed;text-align:center"></div>
+        <div id="ab-id"><div class="atag">🇮🇩 Indonesia</div><div class="ans-id" id="ans-id-txt"></div></div>
+        <div id="ab-en" style="display:none"><div class="atag">🇬🇧 English</div><div class="ans-en" id="ans-en-txt"></div></div>
+        <div class="ans-note" id="ans-note" style="display:none"></div>
+      </div>
+    </div>
+    <div id="hp" class="hint-pop" style="display:none"><div class="hint-pop-t" id="hpt"></div><div class="hint-pop-s" id="hps"></div></div>
+    <button class="hint-btn" id="hb" onclick="doHint(event)">💡 Hint</button>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😵</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Yang perlu diperkuat 💪</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔁 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🏆</div>
+      <div class="res-title">厲害！</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua kartu Bab 12 dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔁 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+/* ── VOCAB ── */
+{t:"VOCAB",zh:"排隊",py:"pái duì",id:"antri / berbaris",en:"to queue / to line up"},
+{t:"VOCAB",zh:"必須",py:"bìxū",id:"harus / wajib",en:"must / have to"},
+{t:"VOCAB",zh:"理解",py:"lǐjiě",id:"mengerti / memahami",en:"to understand / to comprehend"},
+{t:"VOCAB",zh:"聲音",py:"shēngyīn",id:"suara / bunyi",en:"sound / voice"},
+{t:"VOCAB",zh:"好聽",py:"hǎotīng",id:"merdu / enak didengar",en:"pleasant to hear / melodious"},
+{t:"VOCAB",zh:"啞",py:"yǎ",id:"serak / habis suara",en:"hoarse / mute"},
+{t:"VOCAB",zh:"距離",py:"jùlí",id:"jarak",en:"distance"},
+{t:"VOCAB",zh:"至於",py:"zhìyú",id:"mengenai / soal / tentang",en:"as for / regarding",note:"至於 dipakai untuk beralih topik"},
+{t:"VOCAB",zh:"覺得",py:"juéde",id:"merasa / berpendapat",en:"to feel / to think"},
+{t:"VOCAB",zh:"從",py:"cóng",id:"dari",en:"from"},
+{t:"VOCAB",zh:"往",py:"wǎng",id:"ke / menuju / ke arah",en:"towards / in the direction of"},
+{t:"VOCAB",zh:"遠處",py:"yuǎnchù",id:"dari jauh / tempat jauh",en:"from afar / a distant place"},
+{t:"VOCAB",zh:"裡面",py:"lǐmiàn",id:"dari dalam",en:"inside / from inside"},
+{t:"VOCAB",zh:"進去",py:"jìn qù",id:"masuk (menjauh dari pembicara)",en:"go in (away from speaker)",note:"去 = menjauh dari pembicara"},
+{t:"VOCAB",zh:"進來",py:"jìn lái",id:"masuk (mendekat ke pembicara)",en:"come in (toward speaker)",note:"來 = mendekati pembicara"},
+{t:"VOCAB",zh:"就",py:"jiù",id:"sudah / segera / langsung",en:"already / right away / then",note:"就 menekankan lebih cepat/awal dari yang diharapkan"},
+{t:"VOCAB",zh:"已經",py:"yǐjīng",id:"sudah / telah",en:"already"},
+{t:"VOCAB",zh:"拐",py:"guǎi",id:"belok",en:"to turn / to bend"},
+{t:"VOCAB",zh:"轉",py:"zhuǎn",id:"putar / belok",en:"to turn / to rotate"},
+{t:"VOCAB",zh:"紅綠燈",py:"hónglǜdēng",id:"lampu merah / lampu lalu lintas",en:"traffic light"},
+{t:"VOCAB",zh:"加入",py:"jiārù",id:"bergabung / masuk ke",en:"to join / to add"},
+{t:"VOCAB",zh:"班級",py:"bānjí",id:"kelas",en:"class / classroom"},
+{t:"VOCAB",zh:"上網",py:"shàngwǎng",id:"internet / online",en:"to go online / to use the internet"},
+{t:"VOCAB",zh:"圖書館",py:"túshūguǎn",id:"perpustakaan",en:"library"},
+{t:"VOCAB",zh:"緊張",py:"jǐnzhāng",id:"gugup / tegang / nervous",en:"nervous / tense"},
+{t:"VOCAB",zh:"禮物",py:"lǐwù",id:"hadiah",en:"gift / present"},
+{t:"VOCAB",zh:"回國",py:"huíguó",id:"pulang ke negara asal",en:"to return to one's home country"},
+/* ── KALIMAT (Sent 1–29) ── */
+{t:"SENT",zh:"你必須排隊拿書。",py:"Nǐmen bìxū pái duì ná shū.",id:"Kalian harus antri ambil buku.",en:"You must queue to get the books."},
+{t:"SENT",zh:"請你們大家都要理解。",py:"Qǐng nǐmen dàjiā dōu yào lǐjiě.",id:"Tolong kalian semua mengerti.",en:"Please, everyone needs to understand."},
+{t:"SENT",zh:"我聽到有聲音。",py:"Wǒ tīngdào yǒu shēngyīn.",id:"Saya dengar ada suara.",en:"I heard a sound."},
+{t:"SENT",zh:"這是什麼聲音？",py:"Zhè shì shénme shēngyīn?",id:"Ini suara apa?",en:"What sound is this?"},
+{t:"SENT",zh:"你的聲音很好聽。",py:"Nǐ de shēngyīn hěn hǎotīng.",id:"Suara kamu sangat merdu.",en:"Your voice is very pleasant."},
+{t:"SENT",zh:"我想聽你的聲音。",py:"Wǒ xiǎng tīng nǐ de shēngyīn.",id:"Saya ingin mendengar suara kamu.",en:"I want to hear your voice."},
+{t:"SENT",zh:"老師，我的聲音啞了。",py:"Lǎoshī, wǒ de shēngyīn yǎ le.",id:"Laoshi, suara saya serak/habis.",en:"Teacher, my voice is hoarse.",note:"了 = perubahan keadaan"},
+{t:"SENT",zh:"你的聲音怎麼了？",py:"Nǐ de shēngyīn zěnme le?",id:"Kenapa suara kamu?",en:"What happened to your voice?"},
+{t:"SENT",zh:"至於距離，我不知道。",py:"Zhìyú jùlí, wǒ bù zhīdào.",id:"Mengenai jaraknya, saya tidak tahu.",en:"As for the distance, I don't know.",note:"至於 = beralih topik / 'soal hal itu'"},
+{t:"SENT",zh:"我覺得老師坐得很近。",py:"Wǒ juéde lǎoshī zuò de hěn jìn.",id:"Menurut saya laoshi duduknya dekat.",en:"I think the teacher sits quite close."},
+{t:"SENT",zh:"從遠處往台北101看，我覺得台北101真的好高。",py:"Cóng yuǎnchù wǎng Táiběi yī líng yī kàn, wǒ juéde Táiběi yī líng yī zhēn de hǎo gāo.",id:"Melihat dari jauh ke arah Taipei 101, saya rasa Taipei 101 benar-benar sangat tinggi.",en:"Looking from afar towards Taipei 101, I think it is really very tall.",note:"從…往…看 = melihat dari … ke arah …"},
+{t:"SENT",zh:"從裡面往外看，房子很小，很有趣。",py:"Cóng lǐmiàn wǎng wài kàn, fángzi hěn xiǎo, hěn yǒuqù.",id:"Melihat dari dalam ke luar, rumahnya kecil, sangat menarik.",en:"Looking from inside outward, the house is small, very interesting."},
+{t:"SENT",zh:"從學校往郵局走，看到一隻貓。",py:"Cóng xuéxiào wǎng yóujú zǒu, kàndào yī zhī māo.",id:"Berjalan dari sekolah menuju kantor pos, melihat seekor kucing.",en:"Walking from school towards the post office, I saw a cat."},
+{t:"SENT",zh:"我們一起進去。",py:"Wǒmen yīqǐ jìn qù.",id:"Kita masuk bersama-sama (menjauh dari pembicara).",en:"Let's go in together.",note:"進去 = masuk, menjauh dari pembicara"},
+{t:"SENT",zh:"你進來吧！",py:"Nǐ jìn lái ba!",id:"Kamu masuklah! (mendekat ke pembicara)",en:"Come on in!",note:"進來 = masuk, mendekati pembicara"},
+{t:"SENT",zh:"九點開始上班，可是我每天都八點半就到公司了。",py:"Jiǔ diǎn kāishǐ shàngbān, kěshì wǒ měitiān dōu bā diǎn bàn jiù dào gōngsī le.",id:"Mulai kerja jam 9, tapi saya setiap hari jam 8.30 sudah sampai di kantor.",en:"Work starts at 9, but I arrive at the office at 8:30 every day.",note:"就 = sudah, lebih awal dari yang diharapkan"},
+{t:"SENT",zh:"我今天早上六點就起床了。",py:"Wǒ jīntiān zǎoshang liù diǎn jiù qǐchuáng le.",id:"Hari ini saya jam 6 pagi sudah bangun.",en:"Today I got up as early as 6 a.m.",note:"就 = menekankan lebih awal"},
+{t:"SENT",zh:"你往前走（拐，轉），就可以看到那家店了。",py:"Nǐ wǎng qián zǒu (guǎi, zhuǎn), jiù kěyǐ kàndào nà jiā diàn le.",id:"Kamu jalan ke depan (belok, putar), langsung bisa lihat toko itu.",en:"Walk forward (turn), and you can see that shop.",note:"往前走 = jalan lurus ke depan"},
+{t:"SENT",zh:"你先跟老師請假，就沒問題了吧？",py:"Nǐ xiān gēn lǎoshī qǐngjià, jiù méi wèntí le ba?",id:"Kamu izin dulu ke guru, pasti tidak ada masalah kan?",en:"If you ask for leave from the teacher first, there won't be a problem, right?",note:"先…就… = kalau dulu… maka…"},
+{t:"SENT",zh:"我七點就到了。",py:"Wǒ qī diǎn jiù dào le.",id:"Saya jam 7 sudah sampai.",en:"I arrived as early as 7 o'clock.",note:"就 = sudah/lebih awal"},
+{t:"SENT",zh:"你往前走，然後在紅綠燈右轉，就可以看到台北101了。",py:"Nǐ wǎng qián zǒu, ránhòu zài hónglǜdēng yòu zhuǎn, jiù kěyǐ kàndào Táiběi yī líng yī le.",id:"Kamu jalan lurus ke depan, lalu di lampu merah belok kanan, langsung bisa lihat Taipei 101.",en:"Go straight, then turn right at the traffic light, and you can see Taipei 101."},
+{t:"SENT",zh:"老師，謝謝您，我現在已經可以加入班級了。",py:"Lǎoshī, xièxiè nín, wǒ xiànzài yǐjīng kěyǐ jiārù bānjí le.",id:"Laoshi, terima kasih, sekarang saya sudah bisa bergabung ke kelas.",en:"Teacher, thank you. I can now join the class."},
+{t:"SENT",zh:"你上網找就可以了，不用去圖書館。",py:"Nǐ shàngwǎng zhǎo jiù kěyǐ le, bùyòng qù túshūguǎn.",id:"Kamu cari di internet saja sudah cukup, tidak perlu pergi ke perpustakaan.",en:"Just search online, no need to go to the library.",note:"就可以了 = sudah cukup"},
+{t:"SENT",zh:"明天就要考試了，你不緊張嗎？",py:"Míngtiān jiù yào kǎoshì le, nǐ bù jǐnzhāng ma?",id:"Besok sebentar lagi ujian, kamu tidak gugup?",en:"The exam is tomorrow already, aren't you nervous?",note:"就要…了 = sebentar lagi akan…"},
+{t:"SENT",zh:"她星期二就要回國了，我想送她一個禮物。",py:"Tā xīngqí'èr jiù yào huíguó le, wǒ xiǎng sòng tā yī gè lǐwù.",id:"Dia hari Selasa sebentar lagi pulang ke negaranya, saya mau kasih dia hadiah.",en:"She is going back to her country as soon as Tuesday; I want to give her a gift.",note:"就要…了 = sebentar lagi"},
+{t:"SENT",zh:"火車十分鐘以後就要來了，他們怎麼還沒到？",py:"Huǒchē shí fēnzhōng yǐhòu jiù yào lái le, tāmen zěnme hái méi dào?",id:"Kereta sepuluh menit lagi sebentar lagi datang, kenapa mereka masih belum sampai?",en:"The train is coming in ten minutes; why haven't they arrived yet?",note:"就要…了 = sebentar lagi akan"},
+{t:"SENT",zh:"可以借我看（一）看嗎？",py:"Kěyǐ jiè wǒ kàn (yī) kàn ma?",id:"Boleh pinjam saya lihat-lihat sebentar?",en:"Can I borrow it to have a quick look?",note:"V+(一)+V = tindakan sebentar"},
+{t:"SENT",zh:"等一下。",py:"Děng yīxià.",id:"Tunggu sebentar.",en:"Wait a moment."},
+{t:"SENT",zh:"等我一下。",py:"Děng wǒ yīxià.",id:"Tunggu saya sebentar.",en:"Wait for me a moment."},
+/* ── DIALOG (Latihan) ── */
+{t:"DIAL",zh:"我今天很早就到學校來了。",py:"Wǒ jīntiān hěn zǎo jiù dào xuéxiào lái le.",id:"Hari ini saya sangat awal sudah sampai di sekolah.",en:"I arrived at school very early today.",note:"就…了 = sudah, lebih awal"},
+{t:"DIAL",zh:"你今天是幾點到的？",py:"Nǐ jīntiān shì jǐ diǎn dào de?",id:"Kamu hari ini jam berapa sampainya?",en:"What time did you arrive today?",note:"是…的 = menanyakan detail kejadian lampau"},
+{t:"DIAL",zh:"我六點就到了。",py:"Wǒ liù diǎn jiù dào le.",id:"Saya jam 6 sudah sampai.",en:"I arrived as early as 6 o'clock."},
+{t:"DIAL",zh:"你的中文說得真好，你是在哪裡學的？",py:"Nǐ de Zhōngwén shuō de zhēn hǎo, nǐ shì zài nǎlǐ xué de?",id:"Mandarin kamu sangat bagus, kamu belajarnya di mana?",en:"Your Mandarin is really good. Where did you study it?",note:"是…的 = menekankan tempat/waktu/cara kejadian lampau"},
+{t:"DIAL",zh:"我在台灣學的。",py:"Wǒ zài Táiwān xué de.",id:"Saya belajarnya di Taiwan.",en:"I studied it in Taiwan."},
+{t:"DIAL",zh:"你知道她的手機號碼嗎？是誰告訴你的？",py:"Nǐ zhīdào tā de shǒujī hàomǎ ma? Shì shéi gàosù nǐ de?",id:"Kamu tahu nomor HP dia? Siapa yang memberi tahu kamu?",en:"Do you know her phone number? Who told you?"},
+{t:"DIAL",zh:"是她媽媽告訴我的。",py:"Shì tā māma gàosù wǒ de.",id:"Yang memberitahu saya adalah ibunya.",en:"It was her mother who told me.",note:"是…的 menekankan subjek (siapa)"},
+{t:"DIAL",zh:"他是昨天晚上到的，不是今天早上到的。",py:"Tā shì zuótiān wǎnshang dào de, bú shì jīntiān zǎoshang dào de.",id:"Dia sampainya kemarin malam, bukan tadi pagi.",en:"He arrived last night, not this morning.",note:"是…的 menekankan waktu kejadian"},
+/* ── SOAL ── */
+{t:"QA",zh:"如何用「從…往…看」造句？",py:"Rúhé yòng 'cóng…wǎng…kàn' zào jù?",id:"從遠處往台北101看，台北101很高。 Melihat dari jauh ke Taipei 101, Taipei 101 sangat tinggi.",en:"E.g. From afar, looking towards Taipei 101, it is very tall."},
+{t:"QA",zh:"「進去」和「進來」有什麼不同？",py:"'Jìn qù' hé 'jìn lái' yǒu shénme bùtóng?",id:"進去 = masuk menjauh dari pembicara. 進來 = masuk mendekati pembicara.",en:"進去 = go in (away from speaker). 進來 = come in (toward speaker)."},
+{t:"QA",zh:"「就」在句子裡有什麼功能？",py:"'Jiù' zài jùzi lǐ yǒu shénme gōngnéng?",id:"就 menekankan sesuatu sudah terjadi lebih awal/cepat dari yang diharapkan, atau menunjukkan hasil langsung.",en:"就 emphasizes that something happened sooner than expected or shows an immediate result."},
+{t:"QA",zh:"「就要…了」是什麼意思？舉例說明。",py:"'Jiù yào…le' shì shénme yìsi?",id:"就要…了 = sebentar lagi akan… Contoh: 明天就要考試了。",en:"就要…了 = something is about to happen. E.g. 明天就要考試了 = The exam is tomorrow already."},
+{t:"QA",zh:"「是…的」怎麼用？舉一個例子。",py:"'Shì…de' zěnme yòng?",id:"是…的 dipakai untuk menekankan waktu, tempat, atau cara kejadian lampau. 例：我是在台灣學的。",en:"是…的 emphasizes how/when/where a past action happened. E.g. 我是在台灣學的 = I studied it in Taiwan."},
+{t:"QA",zh:"「至於」怎麼用？",py:"'Zhìyú' zěnme yòng?",id:"至於 dipakai untuk beralih ke topik baru. 例：至於距離，我不知道。",en:"至於 is used to shift to a new topic. E.g. As for the distance, I don't know."},
+{t:"QA",zh:"如何描述路線？請用「往前走」和「轉」造一個句子。",py:"Rúhé miáoshù lùxiàn?",id:"你往前走，在紅綠燈右轉，就可以看到那家店了。",en:"Go straight, turn right at the traffic light, and you can see the shop."},
+];
+var CAT_CFG={
+  VOCAB:{label:"Vocab",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  SENT:{label:"Kalimat",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  DIAL:{label:"Dialog",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  QA:{label:"Soal",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#dc2626)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function getAL(){return document.querySelector('input[name="al"]:checked').value;}
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.t===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  document.getElementById("sub-lbl").textContent=(curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat)+"  "+deck.length+" kartu";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.t]||CAT_CFG.VOCAB;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("py-disp").textContent=c.py||"";
+  if(c.t==="VOCAB"){
+    document.getElementById("fv-vocab").style.display="";
+    document.getElementById("fv-sent").style.display="none";
+    var wl=c.zh.length;
+    var wEl=document.getElementById("zh-disp");
+    wEl.textContent=c.zh;
+    wEl.className="zh-main"+(wl<=2?" big":wl<=4?" med":wl<=6?" sm":wl<=10?" xs":" xxs");
+  } else {
+    document.getElementById("fv-vocab").style.display="none";
+    document.getElementById("fv-sent").style.display="";
+    document.getElementById("sent-disp").textContent=c.zh;
+  }
+  document.getElementById("ans-id-txt").textContent=c.id;
+  document.getElementById("ans-en-txt").textContent=c.en;
+  var note=document.getElementById("ans-note");
+  if(c.note){note.textContent=c.note;note.style.display="";}else{note.style.display="none";}
+  var al=getAL();
+  document.getElementById("ab-id").style.display=al==="id"?"":"none";
+  document.getElementById("ab-en").style.display=al==="en"?"":"none";
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("hp").style.display="none";
+  document.getElementById("hb").style.display="";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  var al=getAL();
+  document.getElementById("ab-id").style.display=al==="id"?"":"none";
+  document.getElementById("ab-en").style.display=al==="en"?"":"none";
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+  document.getElementById("hp").style.display="none";
+  document.getElementById("hb").style.display="none";
+}
+document.querySelectorAll('input[name="al"]').forEach(function(r){
+  r.addEventListener("change",function(){
+    var al=getAL();
+    document.getElementById("ab-id").style.display=al==="id"?"":"none";
+    document.getElementById("ab-en").style.display=al==="en"?"":"none";
+  });
+});
+function doHint(e){
+  e.stopPropagation();if(rev)return;
+  var c=deck[idx];var hp=document.getElementById("hp");
+  if(hp.style.display==="none"){
+    var al=getAL();
+    document.getElementById("hpt").textContent=al==="id"?c.id:c.en;
+    document.getElementById("hps").textContent=c.zh;
+    hp.style.display="";
+  } else {hp.style.display="none";}
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🏆":pct>=70?"🌟":pct>=50?"💪":"😤";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":pct>=50?"Lumayan! Ulangi "+toRev.length+" kartu.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" 🔁 "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML='<div style="padding:10px 12px;font-size:12px;color:#8a8478;text-align:center">Tidak ada yang benar-benar sulit 🎉</div>';
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score='<span class="ri-score">✗'+(v._b||0)+'</span>';
+      d.innerHTML='<span class="ri-zh">'+v.zh+'</span><div style="flex:1"><div style="font-size:11px;font-weight:600;color:#7c3aed">'+v.py+'</div></div>'+score;
+      rl.appendChild(d);
+    });
+    document.getElementById("rlw").style.display="";
+  }
+}
+fullRestart();
+</script>
+</body>
+</html>
