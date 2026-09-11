@@ -27,6 +27,7 @@ function App() {
       <Route path="/game/english-stories" element={<GamePage file="flashcard_lengkap_intact/english_stories.html" title="English Stories — 3 Cerita Kehidupan" />} />
       <Route path="/game/mandarin-l13" element={<GamePage file="flashcard_lengkap_intact/mandarin_l13.html" title="Mandarin L13 — V一V · 馬上 · 歷史 · 世界" />} />
       <Route path="/game/convenience-store" element={<GamePage file="flashcard_lengkap_intact/convenience_store.html" title="便利商店 — Percakapan Kasir Taiwan" />} />
+      <Route path="/game/top50-english" element={<GamePage file="flashcard_lengkap_intact/top50_english.html" title="Top 50 Kata Bahasa Inggris" />} />
       <Route path="/game/nfu-group-chat" element={<GamePage file="flashcard_lengkap_intact/nfu_group_chat.html" title="NFU Internship Group Chat" />} />
       <Route path="/game/discourse-markers" element={<GamePage file="flashcard_lengkap_intact/discourse_markers.html" title="Discourse Markers — Kata Penghubung" />} />
       <Route path="/game/bluf-communication" element={<GamePage file="flashcard_lengkap_intact/bluf_communication.html" title="Bottom Line Up Front — BLUF" />} />
@@ -43,7 +44,6 @@ function App() {
       <Route path="/game/duimian-nvhai" element={<GamePage file="flashcard_lengkap_intact/duimian_nvhai.html" title="对面的女孩看过来 — Pinyin" />} />
       <Route path="/game/ayi-video" element={<GamePage file="flashcard_lengkap_intact/ayi_video.html" title="阿姨！Video Viral Mandarin" />} />
       <Route path="/game/waimai-video" element={<GamePage file="flashcard_lengkap_intact/waimai_video.html" title="外賣員 · Video Sosial Mandarin" />} />
-      <Route path="/game/waimai-video" element={<GamePage file="flashcard_lengkap_intact/waimai_video.html" title="外賣員 · Video Sosial" />} />
       <Route path="/game/mandarin-adverbs" element={<GamePage file="flashcard_lengkap_intact/mandarin_adverbs_3lang.html" title="Kata Keterangan Mandarin 3 Bahasa" />} />
       <Route path="/game/mandarin-mei-vocab" element={<GamePage file="flashcard_lengkap_intact/mandarin_mei_vocab.html" title="Mandarin — 沒 Phrases & Kosakata" />} />
       <Route path="/game/psychology-of-money" element={<GamePage file="flashcard_lengkap_intact/psychology_of_money.html" title="The Psychology of Money" />} />

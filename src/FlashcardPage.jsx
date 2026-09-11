@@ -93,6 +93,16 @@ const flashcards = [
     route: '/game/convenience-store',
   },
   {
+    id: 'T50',
+    category: 'English',
+    categoryColor: '#e0f2fe', categoryTextColor: '#075985',
+    icon: '🔤',
+    title: 'Top 50 Kata Inggris Paling Sering',
+    kartu: 50,
+    level: 'the · to · you · and · for · would · could…',
+    route: '/game/top50-english',
+  },
+  {
     id: 'NFU1',
     category: 'English',
     categoryColor: '#e0f2fe', categoryTextColor: '#075985',
