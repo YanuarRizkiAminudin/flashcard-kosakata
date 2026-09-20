@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣大學生 — University Life in Taiwan</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-MAJOR.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-PARENT.on{background:#059669;border-color:#059669;}
+.fb.c-GAP.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-LIFE.on{background:#d97706;border-color:#d97706;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:185px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.zh-front{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;line-height:1.5;font-size:19px;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .8rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-py{font-size:14px;color:#7c3aed;font-weight:600;text-align:center;margin-bottom:6px;line-height:1.5;}
+.ans-id{font-size:14px;color:#1a1814;text-align:center;line-height:1.65;font-weight:600;margin-bottom:6px;}
+.ans-en{font-size:13px;color:#2563eb;text-align:center;line-height:1.6;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:"Noto Serif TC",serif;font-size:13px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🎓 台灣大學生 — University Life in Taiwan</h1>
+  <div class="sub" id="sub-lbl">Ketuk untuk pinyin + arti + terjemahan Inggris</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-MAJOR" onclick="setCat('MAJOR')">📚 Jurusan</button>
+    <button class="fb c-PARENT" onclick="setCat('PARENT')">👨‍👩‍👧 Orang Tua</button>
+    <button class="fb c-GAP" onclick="setCat('GAP')">✈️ Gap Year</button>
+    <button class="fb c-LIFE" onclick="setCat('LIFE')">🏫 Kehidupan</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="zh-front" id="zh-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk jawaban</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">PINYIN</div>
+        <div class="ans-py" id="ans-py"></div>
+        <div class="atag">🇮🇩 Indonesia</div>
+        <div class="ans-id" id="ans-id"></div>
+        <div class="atag">🇬🇧 English</div>
+        <div class="ans-en" id="ans-en"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Semua dialog dikuasai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+  // JURUSAN
+  {cat:"MAJOR",zh:"你的科系是什麼？",py:"Nǐ de kēxì shì shénme?",id:"Jurusanmu apa?",en:"What is your major?"},
+  {cat:"MAJOR",zh:"我唸藥學的。",py:"Wǒ niàn yàoxué de.",id:"Saya kuliah di jurusan Farmasi.",en:"I studied Pharmacy."},
+  {cat:"MAJOR",zh:"風保系。",py:"Fēng bǎo xì.",id:"Jurusan Manajemen Risiko dan Asuransi.",en:"Department of Risk Management and Insurance."},
+  {cat:"MAJOR",zh:"地球科學。",py:"Dìqiú kēxué.",id:"Ilmu Kebumian.",en:"Department of Geoscience."},
+  {cat:"MAJOR",zh:"電機系。",py:"Diànjī xì.",id:"Jurusan Teknik Elektro.",en:"Department of Electrical Engineering."},
+  {cat:"MAJOR",zh:"外文系。",py:"Wài wén xì.",id:"Jurusan Bahasa Asing.",en:"Department of Foreign Languages."},
+  {cat:"MAJOR",zh:"工業工程。",py:"Gōngyè gōngchéng.",id:"Teknik Industri.",en:"Department of Industrial Engineering."},
+  {cat:"MAJOR",zh:"動物科學。",py:"Dòngwù kēxué.",id:"Ilmu Hewan.",en:"Department of Animal Science."},
+  {cat:"MAJOR",zh:"那你為什麼選擇這個科系？",py:"Nà nǐ wèishéme xuǎnzé zhège kēxì?",id:"Lalu kenapa kamu memilih jurusan ini?",en:"And why did you choose this major?"},
+  {cat:"MAJOR",zh:"當初是因為興趣。",py:"Dāngchū shì yīnwèi xìngqù.",id:"Awalnya karena minat.",en:"At the beginning it was because of (my) interest."},
+  {cat:"MAJOR",zh:"電機系就是台灣二類組第一志願。",py:"Diànjī xì jiùshì táiwān èr lèi zǔ dì yī zhìyuàn.",id:"Teknik Elektro adalah pilihan pertama kategori sains di Taiwan.",en:"Electrical Engineering is the top choice for the science category in Taiwan."},
+  {cat:"MAJOR",zh:"那時候想要幫助台灣的農業做得更好一些。",py:"Nà shíhòu xiǎng yào bāngzhù táiwān de nóngyè zuò dé gèng hǎo yīxiē.",id:"Saat itu ingin membantu pertanian Taiwan menjadi lebih baik.",en:"At that time, I wanted to help Taiwan's agriculture do better."},
+  {cat:"MAJOR",zh:"那你覺得在台灣最熱門的科系是什麼？",py:"Nà nǐ juédé zài táiwān zuì rèmén de kēxì shì shénme?",id:"Menurut kamu jurusan paling populer di Taiwan apa?",en:"What do you think is the most popular major in Taiwan?"},
+  {cat:"MAJOR",zh:"最熱門我覺得現在，電腦相關的吧。",py:"Zuì rèmén wǒ juédé xiànzài, diànnǎo xiāngguān de ba.",id:"Yang paling populer sekarang, menurut saya yang berhubungan dengan komputer.",en:"The most popular now, I think, should be computer-related."},
+  {cat:"MAJOR",zh:"文科就是法律，理科都是經濟、金融、跟醫生那些。",py:"Wénkē jiùshì fǎlǜ, lǐkē dōu shì jīngjì, jīnróng, gēn yīshēng nàxiē.",id:"Untuk humaniora adalah hukum, untuk sains semuanya ekonomi, keuangan, dan kedokteran.",en:"For humanities it's law; for sciences it's economics, finance, and medicine."},
+  // ORANG TUA
+  {cat:"PARENT",zh:"你父母對你們的選擇有影響嗎？",py:"Nǐ fùmǔ duì nǐmen de xuǎnzé yǒu yìngxiǎng ma?",id:"Apakah orang tuamu berpengaruh pada pilihanmu?",en:"Do your parents influence your decision?"},
+  {cat:"PARENT",zh:"嗯，我覺得有，就是當初填的時候會給建議。",py:"Ń, wǒ juédé yǒu, jiùshì dāngchū tián de shíhòu huì gěi jiànyì.",id:"Ya, menurut saya ada, waktu isi formulir mereka memberi saran.",en:"Yes, I think so. When filling in the university application, they gave advice."},
+  {cat:"PARENT",zh:"他們很尊重我的決定。",py:"Tāmen hěn zūnzhòng wǒ de juédìng.",id:"Mereka sangat menghormati keputusan saya.",en:"They really respect my decision."},
+  {cat:"PARENT",zh:"支持，但是還是會擔心說人文學科在台灣的出路並不是很好。",py:"Zhīchí, dànshì háishi huì dānxīn shuō rénwén xuékē zài táiwān de chūrù bìng bùshì hěn hǎo.",id:"Mendukung, tapi masih khawatir prospek kerja humaniora di Taiwan tidak bagus.",en:"Supportive, but still worried that humanities won't have good career prospects in Taiwan."},
+  {cat:"PARENT",zh:"因為畢竟我們不懂，可是他們可能有看過說，不同科系的人出來後走上什麼樣子的路。",py:"Yīnwèi bìjìng wǒmen bù dǒng, kěshì tāmen kěnéng yǒu kànguò shuō, bùtóng kēxì de rén chūlái hòu zǒu shàng shénme yàngzi de lù.",id:"Karena bagaimanapun kita tidak tahu, tapi mereka mungkin sudah melihat karir orang dari berbagai jurusan.",en:"Because we don't know, but they've seen the careers of graduates from different majors."},
+  // GAP YEAR
+  {cat:"GAP",zh:"在德國，很多年輕人做一個空檔年，在台灣也有嗎？",py:"Zài déguó, hěnduō niánqīng rén zuò yīgè kòng dàng nián, zài táiwān yěyǒu ma?",id:"Di Jerman banyak anak muda punya gap year, di Taiwan juga ada?",en:"In Germany, many young people take a gap year. Is it the same in Taiwan?"},
+  {cat:"GAP",zh:"在台灣不太常有gap year這個東西。",py:"Zài táiwān bù tài cháng yǒu gap year zhège dōngxi.",id:"Di Taiwan gap year tidak terlalu umum.",en:"Gap year is not very common in Taiwan."},
+  {cat:"GAP",zh:"台灣比較少，基本上還是會希望你高中畢業馬上進入大學。",py:"Táiwān bǐjiào shǎo, jīběn shàng háishi huì xīwàng nǐ gāozhōng bìyè mǎshàng jìnrù dàxué.",id:"Taiwan lebih jarang, pada dasarnya masih berharap kamu masuk universitas langsung setelah lulus SMA.",en:"It's less common in Taiwan. Basically they want you to go to college right after high school."},
+  {cat:"GAP",zh:"我覺得gap year不錯啊，就是如果你真的沒有目標，出去走走是很不錯的事情。",py:"Wǒ juédé gap year bùcuò a, jiùshì rúguǒ nǐ zhēn de méiyǒu mùbiāo, chūqù zǒu zǒu shì hái búcuò de shìqíng.",id:"Menurut saya gap year bagus, kalau kamu benar-benar tidak punya tujuan, pergi jalan-jalan adalah hal yang bagus.",en:"I think gap year is not bad. If you don't have a goal, going out and traveling is a great thing."},
+  {cat:"GAP",zh:"如果我當時要take gap year，他們應該會瘋掉吧。",py:"Rúguǒ wǒ dāngshí yào take gap year, tāmen yīnggāi huì fēng diào ba.",id:"Kalau dulu saya mau ambil gap year, mereka pasti sudah gila.",en:"If I had said I wanted to take a gap year back then, they would have gone crazy."},
+  {cat:"GAP",zh:"就是沒有在那個文化裡面吧。",py:"Jiùshì méiyǒu zài nàgè wénhuà lǐmiàn ba.",id:"Memang bukan bagian dari budaya itu.",en:"It's just not in that culture."},
+  {cat:"GAP",zh:"gap year有趣的一點就是它沒有目標，你想做什麼就去做什麼。",py:"Gap year yǒuqù de yīdiǎn jiùshì tā méiyǒu mùbiāo, nǐ xiǎng zuò shénme jiù qù zuò shénme.",id:"Hal menarik dari gap year adalah tidak ada target, kamu mau lakukan apa saja bisa.",en:"The interesting thing about a gap year is it has no goal — you do whatever you want."},
+  {cat:"GAP",zh:"它有點像沈澱心靈的一個過程，你可以看什麼對你真正重要。",py:"Tā yǒudiǎn xiāng chéndiàn xīnlíng de yīgè guòchéng, nǐ kěyǐ kàn shénme duì nǐ zhēnzhèng zhòngyào.",id:"Ini seperti proses menenangkan pikiran, kamu bisa melihat apa yang benar-benar penting bagimu.",en:"It's like a process to settle your mind, and you can see what truly matters to you."},
+  // KEHIDUPAN KAMPUS
+  {cat:"LIFE",zh:"那你覺得在台灣上大學好玩嗎？還是很累？",py:"Nà nǐ juédé zài táiwān shàng dàxué hǎowán ma? Háishi hěn lèi?",id:"Menurut kamu kuliah di Taiwan menyenangkan? Atau sangat melelahkan?",en:"Do you find going to college in Taiwan fun? Or very tiring?"},
+  {cat:"LIFE",zh:"我覺得學業還是蠻重的。",py:"Wǒ juédé xuéyè háishi mán zhòng de.",id:"Menurut saya beban pelajaran masih cukup berat.",en:"I think the academic workload is quite heavy."},
+  {cat:"LIFE",zh:"可能社團的選擇啊，或是時間的掌握，其實都蠻自由的我覺得。",py:"Kěnéng shètuán de xuǎnzé a, huò shì shíjiān de zhǎngwò, qíshí dōu mán zīyóu de wǒ juédé.",id:"Mungkin pilihan kegiatan ekstrakurikuler atau pengelolaan waktu, semuanya cukup bebas menurut saya.",en:"The choice of clubs and time management are actually quite free, I feel."},
+  {cat:"LIFE",zh:"大學，並不會給我壓力。大學還好，還蠻輕鬆的。",py:"Dàxué, bìng bù huì gěi wǒ yālì. Dàxué hái hǎo, hái mán qīngsōng de.",id:"Universitas tidak memberi saya tekanan. Universitas baik-baik saja, masih cukup santai.",en:"University doesn't really give me pressure. College is fine, pretty relaxed."},
+  {cat:"LIFE",zh:"大學生可能會迷失方向，然後會有不一樣的心理壓力。",py:"Dàxuéshēng kěnéng huì míshī fāngxiǎng, ránhòu huì yǒu bù yíyàng de xīnlǐ yālì.",id:"Mahasiswa mungkin akan kehilangan arah, lalu mengalami tekanan psikologis yang berbeda.",en:"College students might lose their direction and experience a different kind of psychological pressure."},
+  {cat:"LIFE",zh:"你覺得台灣年輕人都會上大學嗎？",py:"Nǐ juédé táiwān niánqīng rén dūhuì shàng dàxué ma?",id:"Menurut kamu semua anak muda Taiwan kuliah?",en:"Do you think all Taiwanese young people go to college?"},
+  {cat:"LIFE",zh:"幾乎九十幾趴都會上大學。",py:"Jīhū jiǔshí jǐ pā dōuhuì shàng dàxué.",id:"Hampir 90% semua kuliah.",en:"Almost 90% go to college."},
+  {cat:"LIFE",zh:"在台灣，如果你不上大學，機會比較少，說實話。",py:"Zài táiwān, rúguǒ nǐ bù shàng dàxué, jīhuì bǐjiào shǎo, shuō shíhuà.",id:"Di Taiwan, kalau kamu tidak kuliah, kesempatan lebih sedikit, jujur saja.",en:"In Taiwan, if you don't go to college, the chances are fewer, honestly."},
+  {cat:"LIFE",zh:"我覺得在台灣上大學，和在我的國家德國上大學不一樣。",py:"Wǒ juédé zài táiwān shàng dàxué, hé zài wǒ de guójiā déguó shàng dàxué bù yíyàng.",id:"Menurut saya kuliah di Taiwan berbeda dengan kuliah di negaraku Jerman.",en:"I think going to college in Taiwan is different from going to college in my country Germany."},
+  {cat:"LIFE",zh:"我覺得並不是所有的高中生畢業就需要馬上進入大學。",py:"Wǒ juédé bìng bùshì suǒyǒu de gāozhōngshēng bìyè jiù xūyào mǎshàng jìnrù dàxué.",id:"Menurut saya tidak semua lulusan SMA harus langsung masuk universitas.",en:"I don't think all high school graduates need to go to college right away."},
+];
+
+var CAT_CFG={
+  MAJOR:{label:"📚 Jurusan",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  PARENT:{label:"👨‍👩‍👧 Orang Tua",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  GAP:{label:"✈️ Gap Year",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  LIFE:{label:"🏫 Kehidupan",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#059669)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kalimat";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.MAJOR;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("zh-disp").textContent=c.zh;
+  document.getElementById("ans-py").textContent=c.py;
+  document.getElementById("ans-id").textContent=c.id;
+  document.getElementById("ans-en").textContent=c.en;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-zh'>"+v.zh.substring(0,18)+"…</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>

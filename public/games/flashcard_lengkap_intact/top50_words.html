@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 50 Most Used English Words</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.8rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c3aed,#2563eb);}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.rank-tag{font-size:11px;font-weight:700;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 10px;margin-bottom:.8rem;}
+.word-main{font-size:64px;font-weight:700;color:#1a1814;text-align:center;line-height:1.1;}
+.word-pct{font-size:12px;color:#8a8478;margin-top:4px;text-align:center;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .8rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-id{font-size:22px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:8px;}
+.ans-ex{font-size:13px;color:#6b7280;text-align:center;line-height:1.6;font-style:italic;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-w{font-size:18px;font-weight:700;color:#1a1814;min-width:80px;}
+.ri-id{font-size:12px;color:#7c3aed;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🔤 Top 50 Most Used English Words</h1>
+  <div class="sub" id="sub-lbl">Depan = kata Inggris · Belakang = arti Indonesia + contoh</div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/50</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">50 kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Hafal</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="rank-tag" id="rank-tag">#1 · 5.90%</div>
+      <div class="word-main" id="word-disp"></div>
+      <div class="word-pct" id="pct-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk arti</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">🇮🇩 Arti</div>
+        <div class="ans-id" id="ans-id"></div>
+        <div class="atag">💬 Contoh</div>
+        <div class="ans-ex" id="ans-ex"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Hafal</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Hafal</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Semua 50 kata dikuasai!</div>
+      <div style="font-size:13px;color:#8a8478;margin:.5rem 0 1.4rem">Kamu sudah hafal 50 kata paling sering dipakai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+  {r:1,w:"the",pct:"5.90%",id:"kata sandang (penunjuk tertentu)",ex:"The book is on the table. — Bukunya ada di atas meja."},
+  {r:2,w:"to",pct:"3.29%",id:"ke / untuk / akan (kata depan & infinitif)",ex:"I want to learn English. — Saya ingin belajar bahasa Inggris."},
+  {r:3,w:"you",pct:"2.92%",id:"kamu / Anda",ex:"Could you help me? — Bisakah Anda membantu saya?"},
+  {r:4,w:"and",pct:"2.32%",id:"dan",ex:"I study hard and practice every day. — Saya belajar keras dan berlatih setiap hari."},
+  {r:5,w:"for",pct:"2.04%",id:"untuk / bagi / selama",ex:"This is for you. — Ini untukmu."},
+  {r:6,w:"your",pct:"2.02%",id:"milik kamu / -mu",ex:"What is your name? — Siapa namamu?"},
+  {r:7,w:"we",pct:"1.16%",id:"kami / kita",ex:"We are learning together. — Kita belajar bersama."},
+  {r:8,w:"my",pct:"1.12%",id:"milikku / -ku",ex:"My name is Yanuar. — Nama saya Yanuar."},
+  {r:9,w:"is",pct:"1.12%",id:"adalah / sedang (to be tunggal)",ex:"This is a good opportunity. — Ini adalah kesempatan yang bagus."},
+  {r:10,w:"in",pct:"1.04%",id:"di (dalam) / pada",ex:"I study in Taiwan. — Saya belajar di Taiwan."},
+  {r:11,w:"that",pct:"1.02%",id:"itu / bahwa / yang",ex:"I think that this is correct. — Saya pikir bahwa ini benar."},
+  {r:12,w:"be",pct:"0.93%",id:"menjadi / ada (kata kerja dasar to be)",ex:"I want to be a designer. — Saya ingin menjadi desainer."},
+  {r:13,w:"will",pct:"0.84%",id:"akan (masa depan)",ex:"I will send it tomorrow. — Saya akan mengirimnya besok."},
+  {r:14,w:"of",pct:"0.84%",id:"dari / milik (penghubung)",ex:"The end of the semester. — Akhir semester."},
+  {r:15,w:"this",pct:"0.83%",id:"ini",ex:"This is my project. — Ini adalah proyek saya."},
+  {r:16,w:"if",pct:"0.76%",id:"jika / kalau",ex:"If you need help, let me know. — Jika kamu butuh bantuan, beritahu saya."},
+  {r:17,w:"as",pct:"0.74%",id:"sebagai / seperti / ketika",ex:"As a student, I learn every day. — Sebagai mahasiswa, saya belajar setiap hari."},
+  {r:18,w:"at",pct:"0.65%",id:"di (lokasi/waktu) / pada",ex:"I am at the library. — Saya ada di perpustakaan."},
+  {r:19,w:"have",pct:"0.65%",id:"punya / telah (auxiliary)",ex:"I have finished my homework. — Saya telah menyelesaikan PR saya."},
+  {r:20,w:"would",pct:"0.60%",id:"akan (conditional) / mau",ex:"I would like to ask a question. — Saya ingin mengajukan pertanyaan."},
+  {r:21,w:"could",pct:"0.58%",id:"bisakah / bisa (masa lalu/sopan)",ex:"Could you explain this again? — Bisakah Anda jelaskan ini lagi?"},
+  {r:22,w:"it",pct:"0.54%",id:"itu / dia (benda/hewan)",ex:"It is very helpful. — Itu sangat membantu."},
+  {r:23,w:"on",pct:"0.53%",id:"di atas / pada / tentang",ex:"Please focus on this task. — Tolong fokus pada tugas ini."},
+  {r:24,w:"can",pct:"0.51%",id:"bisa / dapat",ex:"Can I ask a question? — Boleh saya bertanya?"},
+  {r:25,w:"are",pct:"0.51%",id:"adalah / sedang (to be jamak)",ex:"We are ready to start. — Kami siap untuk mulai."},
+  {r:26,w:"may",pct:"0.51%",id:"boleh / mungkin",ex:"May I come in? — Boleh saya masuk?"},
+  {r:27,w:"all",pct:"0.46%",id:"semua / seluruh",ex:"Thank you all for your help. — Terima kasih semua atas bantuannya."},
+  {r:28,w:"me",pct:"0.46%",id:"saya (objek) / aku",ex:"Could you help me? — Bisakah Anda membantu saya?"},
+  {r:29,w:"with",pct:"0.44%",id:"dengan / bersama",ex:"I work with my team every day. — Saya bekerja bersama tim saya setiap hari."},
+  {r:30,w:"by",pct:"0.42%",id:"oleh / dengan cara / paling lambat",ex:"Please reply by Friday. — Tolong balas paling lambat Jumat."},
+  {r:31,w:"not",pct:"0.42%",id:"tidak / bukan",ex:"I am not sure about this. — Saya tidak yakin tentang ini."},
+  {r:32,w:"i'm",pct:"0.39%",id:"saya (kontraksi I am)",ex:"I'm happy to help. — Saya senang bisa membantu."},
+  {r:33,w:"our",pct:"0.35%",id:"milik kami / kita",ex:"Our meeting is tomorrow. — Pertemuan kita besok."},
+  {r:34,w:"so",pct:"0.32%",id:"jadi / sangat / sehingga",ex:"I was busy, so I couldn't reply. — Saya sibuk, jadi tidak bisa balas."},
+  {r:35,w:"from",pct:"0.32%",id:"dari",ex:"I am from Indonesia. — Saya dari Indonesia."},
+  {r:36,w:"or",pct:"0.30%",id:"atau",ex:"Tea or coffee? — Teh atau kopi?"},
+  {r:37,w:"am",pct:"0.28%",id:"adalah / sedang (to be saya)",ex:"I am a student. — Saya adalah seorang mahasiswa."},
+  {r:38,w:"very",pct:"0.28%",id:"sangat",ex:"Thank you very much. — Terima kasih sangat banyak."},
+  {r:39,w:"us",pct:"0.25%",id:"kami / kita (objek)",ex:"Please guide us. — Tolong bimbing kami."},
+  {r:40,w:"but",pct:"0.25%",id:"tapi / tetapi",ex:"I want to help, but I'm busy. — Saya ingin membantu, tapi saya sibuk."},
+  {r:41,w:"about",pct:"0.25%",id:"tentang / sekitar",ex:"I would like to ask about this. — Saya ingin bertanya tentang ini."},
+  {r:42,w:"after",pct:"0.21%",id:"setelah / sesudah",ex:"I will send it after the meeting. — Saya akan kirim setelah rapat."},
+  {r:43,w:"any",pct:"0.21%",id:"apapun / apa saja / ada",ex:"Do you have any questions? — Apakah ada pertanyaan?"},
+  {r:44,w:"before",pct:"0.21%",id:"sebelum",ex:"Please read this before the class. — Tolong baca ini sebelum kelas."},
+  {r:45,w:"there",pct:"0.21%",id:"di sana / ada (there is/are)",ex:"There is a problem. — Ada masalah."},
+  {r:46,w:"has",pct:"0.18%",id:"punya / telah (orang ketiga)",ex:"She has finished the report. — Dia telah menyelesaikan laporan."},
+  {r:47,w:"been",pct:"0.18%",id:"telah (sudah) — past participle of be",ex:"I have been waiting for an hour. — Saya sudah menunggu satu jam."},
+  {r:48,w:"once",pct:"0.16%",id:"sekali / begitu / setelah",ex:"Once you confirm, I will proceed. — Begitu kamu konfirmasi, saya akan lanjutkan."},
+  {r:49,w:"other",pct:"0.16%",id:"lain / yang lain",ex:"Do you have any other questions? — Apakah ada pertanyaan lain?"},
+  {r:50,w:"should",pct:"0.16%",id:"seharusnya / sebaiknya",ex:"You should submit it by Monday. — Kamu seharusnya mengumpulkannya sebelum Senin."},
+];
+
+var deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function fullRestart(){
+  deck=shuffle(V.slice());
+  idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];
+  document.getElementById("sub-lbl").textContent="50 kata paling sering dipakai · Ketuk untuk arti";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);idx=0;cp=0;ch=0;cbv=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  document.getElementById("rank-tag").textContent="#"+c.r+" · "+c.pct+" dari semua teks";
+  document.getElementById("word-disp").textContent=c.w;
+  document.getElementById("pct-disp").textContent="";
+  document.getElementById("ans-id").textContent=c.id;
+  document.getElementById("ans-ex").textContent=c.ex;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kata tersisa.":pct>=70?"Bagus! "+toRev.length+" kata perlu diulang.":"Semangat! "+toRev.length+" kata menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kata";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-w'>"+v.w+"</span><span class='ri-id'>"+v.id+"</span>"+score;
+      rl.appendChild(d);
+    });
+  }
+  document.getElementById("rlw").style.display="";
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>

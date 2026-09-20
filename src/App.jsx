@@ -26,8 +26,9 @@ function App() {
       <Route path="/game/yanuar-prof-shen" element={<GamePage file="flashcard_lengkap_intact/yanuar_prof_shen.html" title="Yanuar × Prof. Shen — Emotion-Aware Interface" />} />
       <Route path="/game/english-stories" element={<GamePage file="flashcard_lengkap_intact/english_stories.html" title="English Stories — 3 Cerita Kehidupan" />} />
       <Route path="/game/mandarin-l13" element={<GamePage file="flashcard_lengkap_intact/mandarin_l13.html" title="Mandarin L13 — V一V · 馬上 · 歷史 · 世界" />} />
+      <Route path="/game/top50-words" element={<GamePage file="flashcard_lengkap_intact/top50_words.html" title="Top 50 Most Used English Words" />} />
+      <Route path="/game/taiwan-university" element={<GamePage file="flashcard_lengkap_intact/taiwan_university.html" title="台灣大學生 — University Life in Taiwan" />} />
       <Route path="/game/convenience-store" element={<GamePage file="flashcard_lengkap_intact/convenience_store.html" title="便利商店 — Percakapan Kasir Taiwan" />} />
-      <Route path="/game/top50-english" element={<GamePage file="flashcard_lengkap_intact/top50_english.html" title="Top 50 Kata Bahasa Inggris" />} />
       <Route path="/game/nfu-group-chat" element={<GamePage file="flashcard_lengkap_intact/nfu_group_chat.html" title="NFU Internship Group Chat" />} />
       <Route path="/game/discourse-markers" element={<GamePage file="flashcard_lengkap_intact/discourse_markers.html" title="Discourse Markers — Kata Penghubung" />} />
       <Route path="/game/bluf-communication" element={<GamePage file="flashcard_lengkap_intact/bluf_communication.html" title="Bottom Line Up Front — BLUF" />} />
