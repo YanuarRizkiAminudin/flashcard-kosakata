@@ -105,6 +105,8 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
       <div class="tap" id="tap"><span>👆</span>Ketuk untuk terjemahan</div>
       <div class="ans" id="ans" style="display:none">
         <div class="dl"></div>
+        <div class="atag">PINYIN</div>
+        <div style="font-size:15px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:8px;line-height:1.5;" id="ans-py"></div>
         <div class="atag">🇮🇩 Indonesia</div>
         <div class="ans-id" id="ans-id"></div>
       </div>
@@ -146,7 +148,67 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 <script>
 var V=[
 // KELAS
-{cat:"KELAS",zh:"臺灣的學生對我來講，也是最重要的，但是我們也是不能說我都全部講中文然後我不理他們。",id:"Mahasiswa Taiwan bagi saya juga yang paling penting, tapi kita tidak bisa hanya bicara Mandarin terus tidak peduli mereka."},
+{cat:"KELAS",zh:"臺灣的學生對我來講，也是最重要的，但是我們也是不能說我都全部講中文然後我不理他們。",py:"Táiwān de xuésheng duì wǒ lái jiǎng, yěshì zuì zhòngyào de, dànshì wǒmen yěshì bùnéng shuō wǒ dōu quánbù jiǎng Zhōngwén ránhòu wǒ bù lǐ tāmen.",id:"Mahasiswa Taiwan bagi saya juga yang paling penting, tapi kita tidak bisa hanya bicara Mandarin terus tidak peduli mereka."},
+{cat:"KELAS",zh:"如果你有什麼想法或是什麼，可以私信我或是可以在臉書的群組講都無所謂。",py:"Rúguǒ nǐ yǒu shénme xiǎngfǎ huòshì shénme, kěyǐ sīxìn wǒ huòshì kěyǐ zài Liǎnshū de qúnzǔ jiǎng dōu wúsuǒwèi.",id:"Kalau kamu punya pikiran atau apapun, bisa DM saya atau bicara di grup Facebook, tidak masalah."},
+{cat:"KELAS",zh:"我比較希望用臉書因為 Line 的群組你通常換手機除非你備份否則就沒有了。",py:"Wǒ bǐjiào xīwàng yòng Liǎnshū yīnwèi Line de qúnzǔ nǐ tōngcháng huàn shǒujī chúfēi nǐ bèifèn fǒuzé jiù méiyǒu le.",id:"Saya lebih suka pakai Facebook karena grup Line kalau ganti HP kalau tidak backup biasanya hilang."},
+{cat:"KELAS",zh:"雖然我外表看不太清楚，其實我應該是你們阿公阿媽級的。",py:"Suīrán wǒ wàibiǎo kàn bù tài qīngchǔ, qíshí wǒ yīnggāi shì nǐmen āgōng āmā jí de.",id:"Walaupun penampilan saya tidak terlalu kelihatan tua, sebenarnya saya sudah level kakek nenek kalian."},
+{cat:"KELAS",zh:"我比較希望你們叫老師姐姐，不要叫我大嬸也不要叫我婆婆或是阿嬤。",py:"Wǒ bǐjiào xīwàng nǐmen jiào lǎoshī jiějiě, bùyào jiào wǒ dàshěn yě bùyào jiào wǒ pópo huòshì āmā.",id:"Saya lebih suka kalian panggil 'kakak guru', jangan panggil saya 'tante' atau 'nenek'."},
+{cat:"KELAS",zh:"因為我們有外籍生，所以我上課的時間跟進度就會有一點沒辦法很迅速。",py:"Yīnwèi wǒmen yǒu wàijí shēng, suǒyǐ wǒ shàngkè de shíjiān gēn jìndù jiù huì yǒu yīdiǎn méibànfǎ hěn xùnsù.",id:"Karena ada mahasiswa asing, waktu mengajar dan kemajuan kelas tidak bisa terlalu cepat."},
+{cat:"KELAS",zh:"我的 quality 絕對不會差，但是我的進度就很慢。",py:"Wǒ de quality juéduì bù huì chà, dànshì wǒ de jìndù jiù hěn màn.",id:"Kualitas saya pasti tidak akan buruk, tapi kemajuannya akan lambat."},
+{cat:"KELAS",zh:"如果是三節課，我不會三節課全部上完，因為那個是沒有效果的。",py:"Rúguǒ shì sān jié kè, wǒ bù huì sān jié kè quánbù shàng wán, yīnwèi nàge shì méiyǒu xiàoguǒ de.",id:"Kalau ada tiga sesi, saya tidak akan mengajar penuh tiga sesi karena itu tidak efektif."},
+{cat:"KELAS",zh:"剩下你們可以在這裡自由討論或是做作業都是可以的。",py:"Shèng xià nǐmen kěyǐ zài zhèlǐ zìyóu tǎolùn huòshì zuò zuòyè dōu shì kěyǐ de.",id:"Sisanya kalian bisa bebas diskusi atau mengerjakan tugas di sini."},
+{cat:"KELAS",zh:"我希望大家可以接受，如果不能接受，也請你先跟我講。",py:"Wǒ xīwàng dàjiā kěyǐ jiēshòu, rúguǒ bùnéng jiēshòu, yě qǐng nǐ xiān gēn wǒ jiǎng.",id:"Saya harap semua bisa menerima, kalau tidak bisa tolong beritahu saya dulu."},
+{cat:"KELAS",zh:"任何問題都歡迎，只要是課堂上都非常歡迎跟我詢問。",py:"Rènhé wèntí dōu huānyíng, zhǐyào shì kètáng shàng dōu fēicháng huānyíng gēn wǒ xúnwèn.",id:"Pertanyaan apapun diterima, selama di kelas sangat welcome untuk bertanya kepada saya."},
+{cat:"KELAS",zh:"大家都是 Z 世代的人，我們就是不要太做作，就是自然就好，自然最重要。",py:"Dàjiā dōu shì Z shìdài de rén, wǒmen jiùshì bùyào tài zuòzuò, jiùshì zìrán jiù hǎo, zìrán zuì zhòngyào.",id:"Semua adalah generasi Z, jangan terlalu dibuat-buat, yang natural saja, natural itu yang paling penting."},
+{cat:"KELAS",zh:"到期中呢，我希望大家能夠做自己專業的自我介紹。",py:"Dào qīzhōng ne, wǒ xīwàng dàjiā nénggòu zuò zìjǐ zhuānyè de zìwǒ jièshào.",id:"Sampai UTS, saya harap semua bisa membuat perkenalan diri yang profesional."},
+{cat:"KELAS",zh:"你不要覺得說你抱著以前大學的心態，你就是來這邊上課，然後就坐著像 NPC 一樣。",py:"Nǐ bùyào juéde shuō nǐ bàozhe yǐqián dàxué de xīntài, nǐ jiùshì lái zhèbiān shàngkè, ránhòu jiù zuòzhe xiàng NPC yīyàng.",id:"Jangan berpikir dengan mentalitas kuliah S1 dulu, duduk di sini seperti NPC saja."},
+{cat:"KELAS",zh:"今年你們應該是人數最少的，這就告訴我們是一個趨勢。",py:"Jīnnián nǐmen yīnggāi shì rénshù zuì shǎo de, zhè jiù gàosù wǒmen shì yīgè qūshì.",id:"Tahun ini kalian seharusnya yang paling sedikit jumlahnya, ini menunjukkan suatu tren."},
+// TESIS
+{cat:"TESIS",zh:"設計研究方法必修就是你可以任選3個你喜歡的，你覺得你可能會用到的。",py:"Shèjì yánjiū fāngfǎ bìxiū jiùshì nǐ kěyǐ rèn xuǎn 3 gè nǐ xǐhuān de, nǐ juédé nǐ kěnéng huì yòngdào de.",id:"Metode Penelitian Desain yang wajib adalah kamu bisa pilih 3 yang kamu suka, yang kamu kira mungkin akan kamu pakai."},
+{cat:"TESIS",zh:"我並沒有說不能用 AI，但是你一定要自己看過去。",py:"Wǒ bìng méiyǒu shuō bùnéng yòng AI, dànshì nǐ yīdìng yào zìjǐ kàn guòqù.",id:"Saya tidak bilang tidak boleh pakai AI, tapi kamu harus melihatnya sendiri dulu."},
+{cat:"TESIS",zh:"沒有什麼題目是好做也沒有什麼題目是不能做的，重點你想專注在什麼地方。",py:"Méiyǒu shénme tímù shì hǎo zuò yě méiyǒu shénme tímù shì bùnéng zuò de, zhòngdiǎn nǐ xiǎng zhuānzhù zài shénme dìfāng.",id:"Tidak ada topik yang mudah dan tidak ada topik yang tidak bisa dikerjakan, intinya kamu mau fokus di mana."},
+{cat:"TESIS",zh:"題目不用急，一定會改的，甚至改到一年以後、一年半之後都會改。",py:"Tímù bùyòng jí, yīdìng huì gǎi de, shènzhì gǎi dào yī nián yǐhòu, yī nián bàn zhīhòu dōu huì gǎi.",id:"Judul tidak perlu terburu-buru, pasti akan berubah, bahkan sampai setahun atau setahun setengah kemudian."},
+{cat:"TESIS",zh:"你要看範本，因為叫你自己做，你也不知道要怎麼做。",py:"Nǐ yào kàn fànběn, yīnwèi jiào nǐ zìjǐ zuò, nǐ yě bù zhīdào yào zěnme zuò.",id:"Kamu perlu melihat contoh, karena kalau disuruh buat sendiri kamu juga tidak tahu harus bagaimana."},
+{cat:"TESIS",zh:"我希望你至少選3種然後去比較它的優缺點。",py:"Wǒ xīwàng nǐ zhìshǎo xuǎn 3 zhǒng ránhòu qù bǐjiào tā de yōu quēdiǎn.",id:"Saya harap kamu pilih minimal 3 jenis lalu bandingkan kelebihan dan kekurangannya."},
+{cat:"TESIS",zh:"整理資料不在於多，在於你自己能夠看清楚多少。",py:"Zhěnglǐ zīliào bù zàiyú duō, zàiyú nǐ zìjǐ nénggòu kàn qīngchǔ duōshǎo.",id:"Mengorganisir data bukan soal banyaknya, tapi soal seberapa jelas kamu bisa memahaminya."},
+{cat:"TESIS",zh:"你一定要多閱讀，你沒有多閱讀你絕對問題有限。",py:"Nǐ yīdìng yào duō yuèdú, nǐ méiyǒu duō yuèdú nǐ juéduì wèntí yǒuxiàn.",id:"Kamu harus banyak membaca, kalau tidak banyak membaca pertanyaan-pertanyaanmu pasti terbatas."},
+{cat:"TESIS",zh:"論文寫不出來不是因為上了沈老師的課，你論文馬上就寫出來，沒有這種事的。",py:"Lùnwén xiě bù chūlái búshì yīnwèi shàng le Shěn lǎoshī de kè, nǐ lùnwén mǎshàng jiù xiě chūlái, méiyǒu zhè zhǒng shì de.",id:"Tidak bisa menulis tesis bukan karena sudah ikut kelas saya lalu langsung bisa nulis, tidak ada yang seperti itu."},
+{cat:"TESIS",zh:"我可以告訴你方法，可是你自己要去做，時間管理是你的不是我的。",py:"Wǒ kěyǐ gàosù nǐ fāngfǎ, kěshì nǐ zìjǐ yào qù zuò, shíjiān guǎnlǐ shì nǐ de búshì wǒ de.",id:"Saya bisa beritahu caranya, tapi kamu sendiri yang harus melakukannya, manajemen waktu adalah milikmu bukan milikku."},
+{cat:"TESIS",zh:"大部分都拖到2到3年，準時2年以內畢業很少。",py:"Dàbùfen dōu tuō dào 2 dào 3 nián, zhǔnshí 2 nián yǐnèi bìyè hěn shǎo.",id:"Kebanyakan molor sampai 2-3 tahun, sangat jarang yang selesai tepat waktu dalam 2 tahun."},
+{cat:"TESIS",zh:"你同一時間進來不一定同一時間出得去，所以是你自己時間管理的問題。",py:"Nǐ tóngyī shíjiān jìnlái bù yīdìng tóngyī shíjiān chū dé qù, suǒyǐ shì nǐ zìjǐ shíjiān guǎnlǐ de wèntí.",id:"Masuk bersamaan tidak berarti keluar bersamaan, itu masalah manajemen waktu kamu sendiri."},
+{cat:"TESIS",zh:"做創作呢，你可能要有一個展演或者是參加一個比賽的證明。",py:"Zuò chuàngzuò ne, nǐ kěnéng yào yǒu yīgè zhǎnyǎn huòzhě shì cānjiā yīgè bǐsài de zhèngmíng.",id:"Untuk karya kreatif, kamu mungkin perlu bukti pertunjukan atau mengikuti kompetisi."},
+{cat:"TESIS",zh:"做論文的可能要參加某個研討會去發表，你要有這樣的資格門檻才可以提出口考。",py:"Zuò lùnwén de kěnéng yào cānjiā mǒuge yántǎohuì qù fābiǎo, nǐ yào yǒu zhèyàng de zīgé ménkǎn cái kěyǐ tíchū kǒukǎo.",id:"Untuk penulisan tesis perlu ikut seminar untuk presentasi, kamu butuh kualifikasi seperti itu baru bisa mengajukan ujian lisan."},
+{cat:"TESIS",zh:"不要急著找老師，每一個老師都去談談看，哪一個跟你的理念比較合適。",py:"Bùyào jízhe zhǎo lǎoshī, měi yīgè lǎoshī dōu qù tán tán kàn, nǎ yīgè gēn nǐ de lǐniàn bǐjiào héshì.",id:"Jangan terburu-buru mencari dosen pembimbing, coba ngobrol dengan setiap dosen dulu, mana yang paling cocok dengan ide kamu."},
+// ADMINISTRASI
+{cat:"ADMIN",zh:"東西寫出來了，一定要上傳到圖書館，圖書館會幫你做一個論文原創性的比對系統。",py:"Dōngxi xiě chūlái le, yīdìng yào shàngchuán dào túshūguǎn, túshūguǎn huì bāng nǐ zuò yīgè lùnwén yuánchuàngxìng de bǐduì xìtǒng.",id:"Setelah selesai ditulis, harus diunggah ke perpustakaan, perpustakaan akan membantu cek sistem keaslian tesis."},
+{cat:"ADMIN",zh:"如果36%是太高，一般是要13以下會比較好。",py:"Rúguǒ 36% shì tài gāo, yībān shì yào 13 yǐxià huì bǐjiào hǎo.",id:"Kalau 36% itu terlalu tinggi, umumnya di bawah 13% lebih baik."},
+{cat:"ADMIN",zh:"研究倫理就是6個小時，你可以上臺灣學術倫理教育資源，免費的，但是你要註冊。",py:"Yánjiū lúnlǐ jiùshì 6 gè xiǎoshí, nǐ kěyǐ shàng Táiwān xuéshù lúnlǐ jiàoyù zīyuán, miǎnfèi de, dànshì nǐ yào zhùcè.",id:"Etika penelitian itu 6 jam, bisa ikut di sumber pendidikan etika akademik Taiwan, gratis tapi harus daftar."},
+{cat:"ADMIN",zh:"論文比對系統在67月大塞車，你口考完之後還要再上傳繳交一些文件。",py:"Lùnwén bǐduì xìtǒng zài 6、7 yuè dà sāichē, nǐ kǒukǎo wán zhīhòu hái yào zài shàngchuán jiǎo jiāo yīxiē wénjian.",id:"Sistem pembandingan tesis di bulan 6-7 sangat macet, setelah ujian lisan masih harus unggah dan serahkan dokumen."},
+{cat:"ADMIN",zh:"假設你全部弄完，731以前就可以順利拿到畢業證書。",py:"Jiǎshè nǐ quánbù nòng wán, 7 yuè 31 hào yǐqián jiù kěyǐ shùnlì ná dào bìyè zhèngshū.",id:"Asumsi kamu selesaikan semuanya, sebelum 31 Juli bisa terima ijazah dengan lancar."},
+{cat:"ADMIN",zh:"口考完成之後，你要自己去跑，不管你女朋友、家人，大部分都自己弄。",py:"Kǒukǎo wánchéng zhīhòu, nǐ yào zìjǐ qù pǎo, bùguǎn nǐ nǚpéngyǒu, jiārén, dàbùfen dōu zìjǐ nòng.",id:"Setelah ujian lisan selesai, kamu harus urus sendiri, tidak peduli pacar atau keluarga, sebagian besar urus sendiri."},
+{cat:"ADMIN",zh:"論文摘要跟關鍵詞，都是要英文的版本，不是只有中文的，要附在那一本碩論的最後。",py:"Lùnwén zhāiyào gēn guānjiàncí, dōu shì yào yīngwén de bǎnběn, búshì zhǐyǒu Zhōngwén de, yào fù zài nà yī běn shuòlùn de zuìhòu.",id:"Abstrak tesis dan kata kunci harus ada versi Inggrisnya, tidak cukup hanya Mandarin, dilampirkan di akhir tesis."},
+{cat:"ADMIN",zh:"碩生在11月底就要確定指導老師，系上會告訴班代。",py:"Shuòshēng zài 11 yuè dǐ jiù yào quèdìng zhǐdǎo lǎoshī, xì shàng huì gàosù bāndài.",id:"Mahasiswa S2 harus konfirmasi dosen pembimbing di akhir November, departemen akan beritahu ketua kelas."},
+{cat:"ADMIN",zh:"我只是一個授課老師，你的選課系統跟我沒關係，我的系統也進不去。",py:"Wǒ zhǐshì yīgè shòukè lǎoshī, nǐ de xuǎnkè xìtǒng gēn wǒ méi guānxì, wǒ de xìtǒng yě jìn bù qù.",id:"Saya hanya dosen pengajar, sistem pemilihan mata kuliah kamu tidak ada hubungannya dengan saya."},
+{cat:"ADMIN",zh:"你的15000元不是都到我口袋裡，那是繳給教務處的。",py:"Nǐ de 15000 yuán búshì dōu dào wǒ kǒudài lǐ, nà shì jiǎo gěi jiàowùchù de.",id:"15.000 NT kamu tidak masuk semua ke kantong saya, itu dibayarkan ke Bagian Akademik."},
+// NASIHAT
+{cat:"NASIHAT",zh:"你要想想看你為什麼要投資這2年，這2年不見得能夠準時畢業。",py:"Nǐ yào xiǎng xiǎng kàn nǐ wèishénme yào tóuzī zhè 2 nián, zhè 2 nián bú jiàn de nénggòu zhǔnshí bìyè.",id:"Pikirkan mengapa kamu mau investasikan 2 tahun ini, 2 tahun belum tentu bisa lulus tepat waktu."},
+{cat:"NASIHAT",zh:"你同樣花2年，你自己去工作，因為你們學費不便宜。",py:"Nǐ tóngyàng huā 2 nián, nǐ zìjǐ qù gōngzuò, yīnwèi nǐmen xuéfèi bù piányí.",id:"Untuk 2 tahun yang sama kamu bisa kerja, karena biaya kuliah kalian tidak murah."},
+{cat:"NASIHAT",zh:"你來這裡一定有某種的原因，你是要來圓夢的還是當跳板還是怎麼樣的。",py:"Nǐ lái zhèlǐ yīdìng yǒu mǒu zhǒng de yuányīn, nǐ shì yào lái yuán mèng de háishi dāng tiàobǎn háishi zěnme yàng de.",id:"Kamu pasti punya alasan tertentu untuk ke sini, apakah untuk mewujudkan mimpi, jembatan karir, atau apa."},
+{cat:"NASIHAT",zh:"你既然來了，你就要想想看，你投資的這2年，你要怎麼回本。",py:"Nǐ jìrán lái le, nǐ jiù yào xiǎng xiǎng kàn, nǐ tóuzī de zhè 2 nián, nǐ yào zěnme huí běn.",id:"Karena sudah datang, pikirkan investasi 2 tahun ini, bagaimana cara mendapat balik modalnya."},
+{cat:"NASIHAT",zh:"假設你到人生地不熟的地方，你要怎麼運用你的專業，你要怎麼賺錢。",py:"Jiǎshè nǐ dào rén shēng dì bù shú de dìfāng, nǐ yào zěnme yùnyòng nǐ de zhuānyè, nǐ yào zěnme zhuànqián.",id:"Misalkan kamu ke tempat yang asing, bagaimana kamu memanfaatkan keahlianmu, bagaimana kamu menghasilkan uang."},
+{cat:"NASIHAT",zh:"我雖然不會講越南話，那至少我可以去教中文，我可以去教英文，開補習班也可以。",py:"Wǒ suīrán bù huì jiǎng Yuènán huà, nà zhìshǎo wǒ kěyǐ qù jiāo Zhōngwén, wǒ kěyǐ qù jiāo Yīngwén, kāi bǔxí bān yě kěyǐ.",id:"Walaupun saya tidak bisa bahasa Vietnam, setidaknya saya bisa mengajar Mandarin, mengajar Inggris, buka bimbel juga bisa."},
+{cat:"NASIHAT",zh:"不要覺得越南落後，那個全部都是工作機會啊，我們是已經過度發展。",py:"Bùyào juéde Yuènán luòhòu, nàge quánbù dōu shì gōngzuò jīhuì a, wǒmen shì yǐjīng guòdù fāzhǎn.",id:"Jangan pikir Vietnam terbelakang, itu semua adalah peluang kerja, kita sudah terlalu jenuh berkembang."},
+{cat:"NASIHAT",zh:"我們要學會跟國際人士相處，因為我們的人口真的沒辦法。",py:"Wǒmen yào xuéhuì gēn guójì rénshì xiāngchǔ, yīnwèi wǒmen de rénkǒu zhēn de méibànfǎ.",id:"Kita harus belajar bergaul dengan orang internasional, karena jumlah penduduk kita memang tidak mencukupi."},
+{cat:"NASIHAT",zh:"臺灣相對的安全，但是任何事情都有可能發生，自己也要小心。",py:"Táiwān xiāngduì de ānquán, dànshì rènhé shìqíng dōu yǒu kěnéng fāshēng, zìjǐ yě yào xiǎoxīn.",id:"Taiwan relatif aman, tapi hal apapun bisa terjadi, kamu juga harus berhati-hati."},
+{cat:"NASIHAT",zh:"你要把大學生的心態拿來做碩論，碩論是要自己付出的，要勤勞一點。",py:"Nǐ yào bǎ dàxuéshēng de xīntài ná lái zuò shuòlùn, shuòlùn shì yào zìjǐ fùchū de, yào qínláo yīdiǎn.",id:"Kamu tidak boleh pakai mentalitas mahasiswa S1 untuk mengerjakan tesis S2, tesis harus dikerjakan sendiri, harus lebih rajin."},
+{cat:"NASIHAT",zh:"你不能說啊，我怪老師，怨天怨地，就不會怨自己，那個都是個人的因素。",py:"Nǐ bùnéng shuō a, wǒ guài lǎoshī, yuàn tiān yuàn dì, jiù bù huì yuàn zìjǐ, nàge dōu shì gèrén de yīnsù.",id:"Kamu tidak bisa menyalahkan dosen, menyalahkan ini itu, tapi tidak salahkan diri sendiri, itu semua faktor pribadi."},
+{cat:"NASIHAT",zh:"碩論是你這一生可能最後一次念書的機會，如果你不想念博士的話，你就好好的珍惜。",py:"Shuòlùn shì nǐ zhè yīshēng kěnéng zuìhòu yīcì niànshū de jīhuì, rúguǒ nǐ bùxiǎng niàn bóshì dehuà, nǐ jiù hǎohǎo de zhēnxī.",id:"Tesis S2 mungkin adalah kesempatan belajar terakhirmu seumur hidup, kalau tidak mau lanjut S3, manfaatkan dengan baik."},
+{cat:"NASIHAT",zh:"AI 對我來講只是一個工具，你能夠掌握什麼，你能掌握什麼。",py:"AI duì wǒ lái jiǎng zhǐshì yīgè gōngjù, nǐ nénggòu zhǎngwò shénme, nǐ néng zhǎngwò shénme.",id:"AI bagi saya hanya sebuah alat, apa yang bisa kamu kuasai, apa yang bisa kamu pegang."},
+{cat:"NASIHAT",zh:"我是喜歡直接面對面的溝通，如果有什麼問題，請你直接跟我講。",py:"Wǒ shì xǐhuān zhíjiē miàn duì miàn de gōutōng, rúguǒ yǒu shénme wèntí, qǐng nǐ zhíjiē gēn wǒ jiǎng.",id:"Saya suka komunikasi langsung tatap muka, kalau ada masalah tolong langsung bicara ke saya."},
+{cat:"NASIHAT",zh:"你要告訴我你的需求，我能夠幫助你；而你沒有告訴我的需求，我也不明白。",py:"Nǐ yào gàosù wǒ nǐ de xūqiú, wǒ nénggòu bāngzhù nǐ; ér nǐ méiyǒu gàosù wǒ de xūqiú, wǒ yě bù míngbái.",id:"Kamu harus beritahu kebutuhanmu, saya bisa membantumu; kalau kamu tidak beritahu saya juga tidak mengerti."},
+{cat:"NASIHAT",zh:"隻要是在我課堂以內，我可以幫助你，我一定會負責到底。",py:"Zhǐyào shì zài wǒ kètáng yǐnèi, wǒ kěyǐ bāngzhù nǐ, wǒ yīdìng huì fùzé dàodǐ.",id:"Selama masih dalam cakupan kelasmu, saya bisa membantumu, saya pasti akan bertanggung jawab sampai selesai."},
+{cat:"NASIHAT",zh:"現在才是開始哦，放輕鬆，你要覺得你自己的強項是什麼。",py:"Xiànzài cái shì kāishǐ ō, fàng qīngsōng, nǐ yào juéde nǐ zìjǐ de qiángxiàng shì shénme.",id:"Ini baru awal, santai saja, kamu perlu tahu apa kelebihan dirimu sendiri."},
+];
 {cat:"KELAS",zh:"如果你有什麼想法或是什麼，可以私信我或是可以在臉書的群組講都無所謂。",id:"Kalau kamu punya pikiran atau apapun, bisa DM saya atau bicara di grup Facebook, tidak masalah."},
 {cat:"KELAS",zh:"我比較希望用臉書因為 Line 的群組你通常換手機除非你備份否則就沒有了。",id:"Saya lebih suka pakai Facebook karena grup Line kalau ganti HP kalau tidak backup biasanya hilang."},
 {cat:"KELAS",zh:"雖然我外表看不太清楚，其實我應該是你們阿公阿媽級的。",id:"Walaupun penampilan saya tidak terlalu kelihatan tua, sebenarnya saya sudah level kakek nenek kalian."},
@@ -243,6 +305,7 @@ function showCard(){
   document.getElementById("cn").textContent="#"+(idx+1);
   var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
   document.getElementById("zh-disp").textContent=c.zh;
+  document.getElementById("ans-py").textContent=c.py||"";
   document.getElementById("ans-id").textContent=c.id;
   document.getElementById("ans").style.display="none";
   document.getElementById("tap").style.display="";
