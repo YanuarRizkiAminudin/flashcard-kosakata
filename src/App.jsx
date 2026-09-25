@@ -28,6 +28,7 @@ function App() {
       <Route path="/game/mandarin-l13" element={<GamePage file="flashcard_lengkap_intact/mandarin_l13.html" title="Mandarin L13 — V一V · 馬上 · 歷史 · 世界" />} />
       <Route path="/game/top50-words" element={<GamePage file="flashcard_lengkap_intact/top50_words.html" title="Top 50 Most Used English Words" />} />
       <Route path="/game/taiwan-university" element={<GamePage file="flashcard_lengkap_intact/taiwan_university.html" title="台灣大學生 — University Life in Taiwan" />} />
+      <Route path="/game/shen-laoshi-class" element={<GamePage file="flashcard_lengkap_intact/shen_laoshi_class.html" title="沈老師的課 — 設計研究方法" />} />
       <Route path="/game/convenience-store" element={<GamePage file="flashcard_lengkap_intact/convenience_store.html" title="便利商店 — Percakapan Kasir Taiwan" />} />
       <Route path="/game/nfu-group-chat" element={<GamePage file="flashcard_lengkap_intact/nfu_group_chat.html" title="NFU Internship Group Chat" />} />
       <Route path="/game/discourse-markers" element={<GamePage file="flashcard_lengkap_intact/discourse_markers.html" title="Discourse Markers — Kata Penghubung" />} />
