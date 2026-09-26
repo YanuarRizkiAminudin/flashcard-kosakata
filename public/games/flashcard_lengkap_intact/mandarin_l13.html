@@ -333,9 +333,8 @@ function doHint(e){
   e.stopPropagation();if(rev)return;
   var c=deck[idx];var hp=document.getElementById("hp");
   if(hp.style.display==="none"){
-    var al=getAL();
-    document.getElementById("hpt").textContent=al==="id"?c.id:c.en;
-    document.getElementById("hps").textContent=c.zh;
+    document.getElementById("hpt").textContent=c.py||"";
+    document.getElementById("hps").textContent="Pinyin · klik kartu untuk jawaban";
     hp.style.display="";
   } else {hp.style.display="none";}
 }
