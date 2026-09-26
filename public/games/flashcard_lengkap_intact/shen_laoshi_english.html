@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prof. Shen's Class — English Session</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-CLASS.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-THESIS.on{background:#059669;border-color:#059669;}
+.fb.c-ADVICE.on{background:#d97706;border-color:#d97706;}
+.fb.c-CULTURE.on{background:#dc2626;border-color:#dc2626;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:185px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.en-front{font-size:16px;font-weight:600;color:#1a1814;text-align:center;line-height:1.6;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-id{font-size:14px;font-weight:600;color:#1a1814;text-align:center;line-height:1.7;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-en{font-size:13px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🏫 Prof. Shen's Class — English Session</h1>
+  <div class="sub" id="sub-lbl">Tap for Indonesian translation</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 All</button>
+    <button class="fb c-CLASS" onclick="setCat('CLASS')">📚 Class</button>
+    <button class="fb c-THESIS" onclick="setCat('THESIS')">📝 Thesis</button>
+    <button class="fb c-ADVICE" onclick="setCat('ADVICE')">💡 Advice</button>
+    <button class="fb c-CULTURE" onclick="setCat('CULTURE')">🌏 Culture</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Round 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 done</span><span id="pr">-- cards</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Got it</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Almost</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Again</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="en-front" id="en-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Tap for translation</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">🇮🇩 Terjemahan Indonesia</div>
+        <div class="ans-id" id="ans-id"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Again</span><span class="cb-sub">Repeat</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Almost</span><span class="cb-sub">Repeat</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Got it</span><span class="cb-sub">Done</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Got it</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Almost</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Again</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Need review 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Start over</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Well done!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Repeat</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+// ── CLASS ──
+{cat:"CLASS",en:"Based on my family issues, I will amend the policies towards the end of the semester.",id:"Karena masalah keluarga saya, saya akan merevisi kebijakannya menjelang akhir semester."},
+{cat:"CLASS",en:"I'm going to show you what we're going to run for this design research.",id:"Saya akan menunjukkan apa yang akan kita jalankan untuk penelitian desain ini."},
+{cat:"CLASS",en:"Everybody, even if using the locals, I'm sure it's your first time to meet me in person.",id:"Semua orang, bahkan yang lokal sekalipun, saya yakin ini pertama kali kalian bertemu saya langsung."},
+{cat:"CLASS",en:"My way, I don't know maybe exactly your country or the locals, I'm quite easy going.",id:"Cara saya, entah apakah sama dengan negara kalian atau orang lokal, saya cukup santai."},
+{cat:"CLASS",en:"You just relax a little bit, I quickly convert into Chinese.",id:"Kalian santai saja dulu, saya cepat-cepat beralih ke bahasa Mandarin."},
+{cat:"CLASS",en:"If you wanted to join my Chinese conversation, you are very free.",id:"Kalau kalian mau ikut percakapan Mandarin saya, sangat boleh."},
+{cat:"CLASS",en:"I'm sure it's very complicated, just like Vietnamese or Indonesian, it's very difficult for me to understand.",id:"Saya yakin itu sangat rumit, seperti bahasa Vietnam atau Indonesia, sangat sulit bagi saya untuk dipahami."},
+{cat:"CLASS",en:"For week 1 and 2 it's quite flexible, even for the internationals.",id:"Untuk minggu 1 dan 2 cukup fleksibel, bahkan untuk mahasiswa internasional."},
+{cat:"CLASS",en:"When he or she arrives, they can come along with the class, and if they won't like it, they can always change.",id:"Ketika dia tiba, mereka bisa ikut kelasnya, dan kalau tidak suka bisa selalu ganti."},
+{cat:"CLASS",en:"International office, they don't like it because it's got to be done from the registry office manually.",id:"Kantor internasional tidak suka karena harus dilakukan dari kantor pendaftaran secara manual."},
+{cat:"CLASS",en:"Normally they don't like to let you change because it's quite complicated.",id:"Biasanya mereka tidak suka membiarkan kamu ganti karena cukup rumit."},
+{cat:"CLASS",en:"International or the locals, everybody looks the same to me.",id:"Internasional atau lokal, semua orang terlihat sama bagi saya."},
+{cat:"CLASS",en:"My class is quite international, so feel free to have a chat.",id:"Kelas saya cukup internasional, jadi silakan ngobrol saja."},
+{cat:"CLASS",en:"I really don't know how many of you are going to be here with the final confirmation.",id:"Saya benar-benar tidak tahu berapa banyak dari kalian yang akan ada di sini dengan konfirmasi akhir."},
+{cat:"CLASS",en:"This is for a master course, so it's mostly already based.",id:"Ini untuk mata kuliah master, jadi sebagian besar sudah berbasis itu."},
+{cat:"CLASS",en:"It's interesting to learn something about design research — how we run focus groups, structured questionnaires, and how we do survey things.",id:"Menarik untuk mempelajari sesuatu tentang riset desain — bagaimana kita menjalankan focus group, kuesioner terstruktur, dan cara melakukan survei."},
+{cat:"CLASS",en:"They can pick three methods they might use in their dissertation and make a PowerPoint to show us.",id:"Mereka bisa pilih tiga metode yang mungkin mereka gunakan dalam disertasi dan buat PowerPoint untuk ditunjukkan ke kita."},
+{cat:"CLASS",en:"Of course that book is quite expensive, I will lend it to you.",id:"Tentu buku itu cukup mahal, saya akan meminjamkannya ke kamu."},
+{cat:"CLASS",en:"I think the best thing to start with is to introduce yourself.",id:"Saya pikir hal terbaik untuk memulai adalah memperkenalkan diri."},
+{cat:"CLASS",en:"I'm sure you can use the AI to make a PowerPoint easily.",id:"Saya yakin kamu bisa pakai AI untuk membuat PowerPoint dengan mudah."},
+{cat:"CLASS",en:"I don't want all at once, you know, it's a bit too overwhelming.",id:"Saya tidak mau semuanya sekaligus, itu agak terlalu kewalahan."},
+{cat:"CLASS",en:"I want a little bit quality — slow, because we are very slow, easy life in Taiwan.",id:"Saya ingin sedikit kualitas — pelan, karena kita sangat santai, kehidupan mudah di Taiwan."},
+{cat:"CLASS",en:"There's no limitation about how many pages you share, just feel free.",id:"Tidak ada batasan tentang berapa banyak halaman yang kamu bagikan, silakan saja."},
+{cat:"CLASS",en:"It's not a competition, as long as you are willing to share with us, that's more to get to know you.",id:"Ini bukan kompetisi, selama kamu mau berbagi dengan kita, itu lebih untuk mengenal kamu."},
+{cat:"CLASS",en:"For PPT, there's no limitation — not a competition — but as long as you are willing to share.",id:"Untuk PPT tidak ada batasan, bukan kompetisi, tapi selama kamu mau berbagi."},
+{cat:"CLASS",en:"Feel free to ask me anything, I deal with so many international students.",id:"Silakan tanyakan apa saja kepada saya, saya sudah menangani begitu banyak mahasiswa internasional."},
+{cat:"CLASS",en:"If I'm still awake, I will always try to reply.",id:"Kalau saya masih terjaga, saya akan selalu berusaha membalas."},
+{cat:"CLASS",en:"I want to make sure you had a good time, be safe and have fun.",id:"Saya ingin memastikan kamu punya waktu yang baik, aman dan menyenangkan."},
+{cat:"CLASS",en:"Normally I would hold an end of the year party, only for limited members because I don't like to make it too big.",id:"Biasanya saya mengadakan pesta akhir tahun, hanya untuk anggota terbatas karena saya tidak suka membuatnya terlalu besar."},
+{cat:"CLASS",en:"By the time people get to know each other better, it's towards the end of Christmas and New Year.",id:"Pada saat orang-orang sudah lebih saling mengenal, itu menjelang akhir Natal dan Tahun Baru."},
+{cat:"CLASS",en:"All the computers here you are free to use, but it's a very old one.",id:"Semua komputer di sini bebas kamu gunakan, tapi ini yang sangat lama."},
+{cat:"CLASS",en:"With my teaching time you are free to use, very free to use, and feel free to ask me anything.",id:"Selama waktu mengajar saya, kamu bebas menggunakan, sangat bebas, dan silakan tanyakan apa saja."},
+{cat:"CLASS",en:"Every year I get so many international students, so don't worry about it.",id:"Setiap tahun saya mendapat begitu banyak mahasiswa internasional, jadi tidak perlu khawatir."},
+{cat:"CLASS",en:"I already show you two — self intro and the PPT — that was the thing.",id:"Saya sudah tunjukkan dua hal — perkenalan diri dan PPT — itulah intinya."},
+{cat:"CLASS",en:"You don't need to do whatever you see, that's just an example.",id:"Kamu tidak perlu melakukan apa yang kamu lihat, itu hanya contoh."},
+{cat:"CLASS",en:"So you can start thinking — it's a good thing if you quickly finish your presentation, then you can lay back and relax.",id:"Jadi kamu bisa mulai berpikir — bagus kalau kamu cepat selesai presentasi, lalu bisa santai dan rileks."},
+{cat:"CLASS",en:"Some people say oh no, I'm a bit nervous, I wanted to watch everybody finish and come the last one.",id:"Beberapa orang bilang oh tidak, saya agak gugup, saya mau nonton semua orang selesai dulu baru tampil terakhir."},
+{cat:"CLASS",en:"Always try to do it when you have time and try to kill it so you can be more comfortable to sit in the back.",id:"Selalu berusaha lakukan saat kamu punya waktu dan berusaha selesaikan supaya lebih nyaman duduk di belakang."},
+{cat:"CLASS",en:"For the locals I just stick with Facebook, otherwise it's too many groups for me.",id:"Untuk yang lokal saya cukup pakai Facebook, kalau tidak terlalu banyak grup untuk saya."},
+{cat:"CLASS",en:"You got better qualitative time for me because I do it differently for internationals.",id:"Kamu dapat waktu kualitatif yang lebih baik dari saya karena saya lakukan berbeda untuk internasional."},
+{cat:"CLASS",en:"So I think we're gonna do a great year — remember, it's already almost October.",id:"Jadi saya pikir kita akan punya tahun yang bagus — ingat, sekarang sudah hampir Oktober."},
+{cat:"CLASS",en:"You guys have a 4 days off after Thursday — we got the Mid Moon Festival.",id:"Kalian punya libur 4 hari setelah Kamis — kita punya Festival Pertengahan Bulan."},
+{cat:"CLASS",en:"Think about what you're going to do, have fun.",id:"Pikirkan apa yang mau kamu lakukan, bersenang-senanglah."},
+{cat:"CLASS",en:"I will see some of you for HCI, if not I see you next Tuesday, same place same here.",id:"Saya akan bertemu beberapa dari kalian untuk HCI, kalau tidak sampai jumpa Selasa depan, tempat yang sama."},
+// ── THESIS ──
+{cat:"THESIS",en:"I told them what we're going to do: pick three methods they might use in their dissertation.",id:"Saya bilang ke mereka apa yang akan kita lakukan: pilih tiga metode yang mungkin mereka gunakan dalam disertasi."},
+{cat:"THESIS",en:"The book is quite expensive, I will lend it to you, and I need to check my cloud for some other samples.",id:"Bukunya cukup mahal, saya akan meminjamkannya ke kamu, dan saya perlu cek cloud saya untuk contoh lain."},
+{cat:"THESIS",en:"I don't ask you to get the book right, but I will show you next week because I bought it all in English.",id:"Saya tidak meminta kamu membeli bukunya dulu, tapi saya akan tunjukkan minggu depan karena saya beli semuanya dalam bahasa Inggris."},
+{cat:"THESIS",en:"My background is not suited for everybody, so I'm just trying to give you more freedom.",id:"Latar belakang saya tidak cocok untuk semua orang, jadi saya hanya mencoba memberi kamu lebih banyak kebebasan."},
+{cat:"THESIS",en:"I don't want to limit you to say you must use that book, I will just use certain books and you can extend.",id:"Saya tidak mau membatasimu untuk bilang kamu harus pakai buku itu, saya hanya akan pakai buku tertentu dan kamu bisa kembangkan."},
+{cat:"THESIS",en:"She wanted to choose improvisation, prototyping, and body storming method — all based on her preference.",id:"Dia ingin memilih improvisasi, prototyping, dan metode body storming — semua berdasarkan preferensinya."},
+{cat:"THESIS",en:"After choosing the method, she always had some pros and cons, but you can also combine it with interview, survey, et cetera.",id:"Setelah memilih metode, dia selalu punya kelebihan dan kekurangan, tapi kamu juga bisa gabungkan dengan wawancara, survei, dan lain-lain."},
+{cat:"THESIS",en:"By survey we got so many different kinds — quantitative and qualitative — most of it involves behavior, attitudes, and cognitive theory.",id:"Dari survei kita punya banyak jenis berbeda — kuantitatif dan kualitatif — sebagian besar melibatkan perilaku, sikap, dan teori kognitif."},
+{cat:"THESIS",en:"I bet she also finds everything from the internet, just showing you guys an example.",id:"Saya yakin dia juga menemukan segalanya dari internet, ini hanya menunjukkan contoh kepada kalian."},
+{cat:"THESIS",en:"Don't worry, every week we come here — if you need it, I can always get you some more examples.",id:"Jangan khawatir, setiap minggu kita ke sini — kalau kamu butuh, saya selalu bisa carikan lebih banyak contoh."},
+{cat:"THESIS",en:"Something to start with, anyway — so you can start thinking.",id:"Sesuatu untuk memulai, bagaimanapun — supaya kamu bisa mulai berpikir."},
+{cat:"THESIS",en:"Do we need to introduce in Mandarin too? You can use AI, it's not obliged.",id:"Apakah kita perlu perkenalan dalam bahasa Mandarin juga? Kamu bisa pakai AI, tidak diwajibkan."},
+{cat:"THESIS",en:"You can have a bilingual if you want, they will help, but ask AI.",id:"Kamu bisa buat bilingual kalau mau, itu akan membantu, tapi tanya AI."},
+{cat:"THESIS",en:"I think it's really good now — everybody with AI is easy to communicate.",id:"Saya pikir sekarang sudah bagus — semua orang dengan AI mudah berkomunikasi."},
+{cat:"THESIS",en:"I remember last time everybody was using Google Translate to do the project together.",id:"Saya ingat dulu semua orang pakai Google Translate untuk mengerjakan proyek bersama."},
+{cat:"THESIS",en:"By random pick they formed mixed groups — one local and one international — they need to force themselves to communicate.",id:"Dengan pilihan acak mereka membentuk kelompok campuran — satu lokal dan satu internasional — mereka perlu memaksa diri untuk berkomunikasi."},
+{cat:"THESIS",en:"I can't be a translator all the time — I have at least 8 or 10 groups.",id:"Saya tidak bisa jadi penerjemah sepanjang waktu — saya punya setidaknya 8 atau 10 kelompok."},
+{cat:"THESIS",en:"Everybody sort of pushed themselves a little bit harder to get to know someone from a completely different country and profession.",id:"Semua orang sedikit mendorong diri lebih keras untuk mengenal seseorang dari negara dan profesi yang sama sekali berbeda."},
+{cat:"THESIS",en:"They nailed down to a project and we had a fantastic time and we're still in touch.",id:"Mereka menyelesaikan sebuah proyek dan kami punya waktu yang fantastis dan kami masih berhubungan."},
+{cat:"THESIS",en:"About this presentation: basically an introduction — first about your professional background.",id:"Tentang presentasi ini: pada dasarnya adalah perkenalan — pertama tentang latar belakang profesional kamu."},
+{cat:"THESIS",en:"Maybe you can combine it with some research — if you're interested in design research — but no hurry.",id:"Mungkin kamu bisa gabungkan dengan beberapa penelitian — kalau kamu tertarik dengan riset desain — tapi tidak usah terburu-buru."},
+{cat:"THESIS",en:"It's more important to do the self intro first because you get to know each other.",id:"Lebih penting melakukan perkenalan diri dulu karena kalian bisa saling mengenal."},
+{cat:"THESIS",en:"So you can think about which 5 of you are going to present — just two that will be fine.",id:"Jadi kamu bisa pikirkan siapa 5 dari kalian yang akan presentasi — dua saja sudah bagus."},
+// ── ADVICE ──
+{cat:"ADVICE",en:"I'd like to drive the car and they have some accidents — someone was sent back just after a month. Be very careful.",id:"Saya suka mengemudi dan mereka mengalami beberapa kecelakaan — seseorang dipulangkan hanya setelah sebulan. Berhati-hatilah."},
+{cat:"ADVICE",en:"Especially here, traffic lights are only for reference to double check — locals don't really care, but just don't bump into them.",id:"Terutama di sini, lampu lalu lintas hanya untuk referensi untuk pengecekan ganda — orang lokal tidak terlalu peduli, tapi jangan sampai menabrak mereka."},
+{cat:"ADVICE",en:"If you can walk, walk. I think this is going to be lovely in Taiwan in general.",id:"Kalau bisa jalan, jalan kaki saja. Saya pikir ini akan menyenangkan di Taiwan secara umum."},
+{cat:"ADVICE",en:"Taiwan's autumn and winter is quite pleasant — not soaking wet, still quite hot 32 degrees but the temperature gets comfortable.",id:"Musim gugur dan musim dingin Taiwan cukup menyenangkan — tidak basah kuyup, masih cukup panas 32 derajat tapi suhu jadi nyaman."},
+{cat:"ADVICE",en:"Don't rent a car, you don't really know the roads — it's a mountainous road, too dangerous. Just pay the transportation fee.",id:"Jangan sewa mobil, kamu tidak benar-benar tahu jalannya — ini jalan pegunungan, terlalu berbahaya. Bayar ongkos transportasi saja."},
+{cat:"ADVICE",en:"A lot of sad things happen, so really be careful. Take it slow but continue — it's good to go in this old time before it gets colder.",id:"Banyak hal menyedihkan terjadi, jadi benar-benar berhati-hati. Pelan-pelan tapi lanjutkan — bagus untuk pergi sekarang sebelum makin dingin."},
+{cat:"ADVICE",en:"Taiwanese got some earthquakes, but so far finger cross it's not like a major disaster. Just be careful.",id:"Taiwan ada beberapa gempa, tapi sejauh ini semoga bukan bencana besar. Hati-hati saja."},
+{cat:"ADVICE",en:"Stay with the messages, keep alert. Have any questions? Always ask.",id:"Ikuti pesannya, tetap waspada. Ada pertanyaan? Selalu tanyakan."},
+{cat:"ADVICE",en:"You made a broad move to come here — it's a major achievement — but the point is, where are you going to go from here?",id:"Kamu membuat langkah besar untuk datang ke sini — itu pencapaian besar — tapi intinya, kamu mau ke mana dari sini?"},
+{cat:"ADVICE",en:"What have you achieved this year and what do you want to do?",id:"Apa yang sudah kamu capai tahun ini dan apa yang ingin kamu lakukan?"},
+{cat:"ADVICE",en:"Work hard, play hard, be safe. When the time comes — three months, less than four months — that's it.",id:"Kerja keras, main keras, aman. Ketika waktunya tiba — tiga bulan, kurang dari empat bulan — selesai."},
+{cat:"ADVICE",en:"It's not very competitive here, but if you want to go for really high, we are a national university, not too bad.",id:"Di sini tidak terlalu kompetitif, tapi kalau mau mengejar yang benar-benar tinggi, kita adalah universitas nasional, tidak terlalu buruk."},
+{cat:"ADVICE",en:"I would always say keep on trying — it's our relationship, a new journey.",id:"Saya selalu bilang teruslah berusaha — ini adalah hubungan kita, perjalanan baru."},
+{cat:"ADVICE",en:"You are very free to join me on my LinkedIn, and if you want me to write you a nice comment, very good.",id:"Kamu sangat bebas bergabung dengan saya di LinkedIn saya, dan kalau kamu mau saya tulis komentar bagus, sangat bagus."},
+{cat:"ADVICE",en:"If you want to contact me, I can help you write the reference.",id:"Kalau kamu mau menghubungi saya, saya bisa bantu menulis referensi."},
+{cat:"ADVICE",en:"I find maximum 3 or 4 social media is quite engaging — you're not going to be on social media all the time.",id:"Saya temukan maksimal 3 atau 4 media sosial cukup menarik — kamu tidak akan terus-menerus di media sosial."},
+{cat:"ADVICE",en:"Feel free to ask me or anything — if you fancy details of your LinkedIn viewing, feel free to ask me.",id:"Silakan tanyakan apa saja kepada saya — kalau kamu mau detail tampilan LinkedIn kamu, silakan tanya saya."},
+{cat:"ADVICE",en:"I don't really mind, I'm very open. So feel free to ask me or anything.",id:"Saya tidak terlalu keberatan, saya sangat terbuka. Jadi silakan tanyakan apa saja kepada saya."},
+{cat:"ADVICE",en:"You are very lucky, you're so relaxing here. Taiwan is a slow, easy life.",id:"Kamu sangat beruntung, kamu sangat santai di sini. Taiwan adalah kehidupan lambat yang mudah."},
+{cat:"ADVICE",en:"It's a good culture experience — it's a short time, doesn't matter. You like it? I would say just enjoy it.",id:"Ini pengalaman budaya yang bagus — waktunya singkat, tidak masalah. Kamu suka? Saya bilang nikmati saja."},
+{cat:"ADVICE",en:"If any of you have any questions you can ask me — if there's some culture shock or something you wanted to know, let me know.",id:"Kalau ada dari kalian yang punya pertanyaan bisa tanya saya — kalau ada gegar budaya atau sesuatu yang ingin kamu tahu, beritahu saya."},
+{cat:"ADVICE",en:"I deal with so many and some of them are already on my LinkedIn.",id:"Saya menangani begitu banyak dan beberapa dari mereka sudah ada di LinkedIn saya."},
+{cat:"ADVICE",en:"You never know what brought you guys here — that's magic. I always think, wow, it's amazing.",id:"Kamu tidak pernah tahu apa yang membawa kalian ke sini — itu sihir. Saya selalu pikir, wow, itu luar biasa."},
+{cat:"ADVICE",en:"If you mean to meet someone, it doesn't matter how far — it's like it's meant to be.",id:"Kalau kamu ditakdirkan bertemu seseorang, tidak masalah seberapa jauh — seperti sudah ditakdirkan."},
+{cat:"ADVICE",en:"Over the years I can see we got more international students and I think it's good for us because Taiwan has a very low birth rate.",id:"Selama bertahun-tahun saya bisa lihat kita mendapat lebih banyak mahasiswa internasional dan saya pikir itu bagus untuk kita karena Taiwan punya tingkat kelahiran yang sangat rendah."},
+{cat:"ADVICE",en:"You will see a lot of people seeking a job or study here, and the government has some funding depending on which subject you apply.",id:"Kamu akan melihat banyak orang mencari pekerjaan atau belajar di sini, dan pemerintah punya beberapa dana tergantung subjek yang kamu lamar."},
+{cat:"ADVICE",en:"Everybody leading a life — you never know — you either here for fun, do something, yeah work hard, play hard, be safe.",id:"Semua orang menjalani hidup — kamu tidak pernah tahu — kamu di sini untuk bersenang-senang, lakukan sesuatu, kerja keras, main keras, aman."},
+// ── CULTURE ──
+{cat:"CULTURE",en:"Mid Moon Festival becomes a national barbecue day — I don't know why, it's just a very strange thing.",id:"Festival Pertengahan Bulan menjadi hari BBQ nasional — saya tidak tahu kenapa, itu hal yang sangat aneh."},
+{cat:"CULTURE",en:"Everywhere will be packed — if you want to go somewhere, just start thinking about that or just relax here.",id:"Di mana-mana akan penuh — kalau mau pergi ke suatu tempat, mulai pikirkan itu atau santai saja di sini."},
+{cat:"CULTURE",en:"Taiwan is a very slow, easy life — we don't want to be bang bang bang.",id:"Taiwan kehidupannya sangat lambat dan mudah — kita tidak mau terburu-buru."},
+{cat:"CULTURE",en:"Indonesia — the most interesting is that you got more than 1000 dialects, similar to India with different languages.",id:"Indonesia — yang paling menarik adalah kamu punya lebih dari 1000 dialek, mirip India dengan bahasa yang berbeda."},
+{cat:"CULTURE",en:"I've been to Bali a few times but now it's probably full of Russians and Ukrainians — a bit too much. I really like the old days.",id:"Saya sudah beberapa kali ke Bali tapi sekarang mungkin penuh orang Rusia dan Ukraina — agak terlalu banyak. Saya benar-benar suka zaman dulu."},
+{cat:"CULTURE",en:"I like to interact with the locals in Ubud — it's nice with handmade craft markets and things. But now it's very commercial.",id:"Saya suka berinteraksi dengan orang lokal di Ubud — itu bagus dengan pasar kerajinan tangan dan hal-hal. Tapi sekarang sudah sangat komersial."},
+{cat:"CULTURE",en:"Taiwan's government is going to open more workers — even EVA Airlines launched a new flight to Delhi.",id:"Pemerintah Taiwan akan membuka lebih banyak pekerja — bahkan EVA Airlines meluncurkan penerbangan baru ke Delhi."},
+{cat:"CULTURE",en:"I really like Indian food once every week — okra, egg curry, tikka masala, all those things.",id:"Saya sangat suka makanan India seminggu sekali — okra, kari telur, tikka masala, semua itu."},
+{cat:"CULTURE",en:"Once I studied in the UK and got used to it — oh, that's a real curry, isn't it? It's just lovely.",id:"Begitu saya belajar di UK dan sudah terbiasa — oh, itu kari yang sebenarnya kan? Itu benar-benar lezat."},
+{cat:"CULTURE",en:"It's interesting because last time we even done a project on light, color, and celebration in the north.",id:"Menarik karena terakhir kali kami bahkan mengerjakan proyek tentang cahaya, warna, dan perayaan di utara."},
+{cat:"CULTURE",en:"The Golden Triangle — Taj Mahal, Jaipur, and all those things — I don't know when, but we should see.",id:"Segitiga Emas — Taj Mahal, Jaipur, dan semua itu — saya tidak tahu kapan, tapi kita harus lihat."},
+{cat:"CULTURE",en:"I would like to visit someday to do the Golden Triangle. You know, it's Taj Mahal and Jaipur.",id:"Saya ingin mengunjungi suatu hari nanti untuk melakukan Segitiga Emas. Kamu tahu, itu Taj Mahal dan Jaipur."},
+{cat:"CULTURE",en:"Taiwan has a very low birth rate — extremely low. So you will see a lot of people seeking a job or study here.",id:"Taiwan punya tingkat kelahiran yang sangat rendah — sangat ekstrem. Jadi kamu akan melihat banyak orang mencari pekerjaan atau belajar di sini."},
+{cat:"CULTURE",en:"It's interesting because last time we even done a project and we had a fantastic time and we're still in touch.",id:"Menarik karena terakhir kali kami bahkan mengerjakan proyek dan kami punya waktu yang fantastis dan kami masih berhubungan."},
+{cat:"CULTURE",en:"It's not about power — it's interesting because last time we done a project on the light and color of celebration.",id:"Ini bukan soal kekuasaan — menarik karena terakhir kali kami mengerjakan proyek tentang cahaya dan warna perayaan."},
+{cat:"CULTURE",en:"You know you never meet all your life and you know what brought you guys here? That's magic.",id:"Kamu tahu kamu tidak pernah bertemu seumur hidup dan tahu apa yang membawa kalian ke sini? Itu sihir."},
+{cat:"CULTURE",en:"I don't travel that much intensively based on my job — I've even never been to Surabaya.",id:"Saya tidak banyak bepergian secara intensif karena pekerjaan saya — saya bahkan belum pernah ke Surabaya."},
+{cat:"CULTURE",en:"I've been to Bali and I got a friend from Makassar — different Java, the island that looks like the letter K.",id:"Saya sudah ke Bali dan saya punya teman dari Makassar — bukan Jawa, pulau yang terlihat seperti huruf K."},
+{cat:"CULTURE",en:"Do you believe in destiny or fate? I mean, it's meant to be — if you're meant to meet someone, it doesn't matter how far.",id:"Apakah kamu percaya takdir? Maksud saya, itu sudah ditakdirkan — kalau kamu ditakdirkan bertemu seseorang, tidak masalah seberapa jauh."},
+{cat:"CULTURE",en:"I respect all religions but I'm not a religious maniac — a bit too much, you know.",id:"Saya menghormati semua agama tapi saya bukan fanatik agama — agak terlalu banyak, kamu tahu."},
+{cat:"CULTURE",en:"Is it possible we create a LINE group? I have a different class — some may join my HCI, some may not.",id:"Apakah mungkin kita buat grup LINE? Saya punya kelas berbeda — beberapa mungkin ikut HCI saya, beberapa tidak."},
+{cat:"CULTURE",en:"We might not see each other every week — I'm a supervisor of at least six students, so it's better we build the group now.",id:"Kita mungkin tidak bertemu setiap minggu — saya membimbing setidaknya enam mahasiswa, jadi lebih baik kita bangun grupnya sekarang."},
+{cat:"CULTURE",en:"Unfortunately we got so many groups — can you imagine that? But I think it's more efficient.",id:"Sayangnya kita punya begitu banyak grup — bisakah kamu bayangkan itu? Tapi saya pikir itu lebih efisien."},
+{cat:"CULTURE",en:"For snorkeling in Green Island — you have to take something, yeah, something like that.",id:"Untuk snorkeling di Green Island — kamu harus naik sesuatu, ya, seperti itu."},
+{cat:"CULTURE",en:"You must climb 101, it's general. And go to some nature hot springs.",id:"Kamu harus naik 101, itu umum. Dan pergi ke beberapa sumber air panas alami."},
+{cat:"CULTURE",en:"It's called Puli — it's between Taipei and Taichung, about the middle of the mountain. I'll send you some recommendations in English.",id:"Namanya Puli — berada di antara Taipei dan Taichung, sekitar tengah pegunungan. Saya akan kirim beberapa rekomendasi dalam bahasa Inggris."},
+];
+
+var CAT_CFG={
+  CLASS:{label:"📚 Class",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  THESIS:{label:"📝 Thesis",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  ADVICE:{label:"💡 Advice",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#059669)"},
+  CULTURE:{label:"🌏 Culture",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"All":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" cards";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Round "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Round "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.CLASS;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("en-disp").textContent=c.en;
+  document.getElementById("ans-id").textContent=c.id;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" done";
+  document.getElementById("pr").textContent=deck.length+" cards";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Round "+ronde+" done!";
+  document.getElementById("rs").textContent=pct>=90?"Almost perfect! "+toRev.length+" cards left.":pct>=70?"Good! "+toRev.length+" cards to review.":"Keep going! "+toRev.length+" cards waiting.";
+  document.getElementById("nb").textContent="Next Round "+(ronde+1)+" → "+toRev.length+" cards";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Nothing too hard 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-en'>"+v.en.substring(0,40)+"…</span>"+score;
+      rl.appendChild(d);
+    });
+    document.getElementById("rlw").style.display="";
+  }
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
