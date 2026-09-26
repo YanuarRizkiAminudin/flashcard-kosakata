@@ -1,0 +1,946 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沈老師的課 — Per Kalimat Pendek</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-KELAS.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-TESIS.on{background:#059669;border-color:#059669;}
+.fb.c-ADMIN.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-NASIHAT.on{background:#d97706;border-color:#d97706;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:185px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.zh-front{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;line-height:1.55;font-size:16px;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-id{font-size:14px;font-weight:600;color:#1a1814;text-align:center;line-height:1.7;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:"Noto Serif TC",serif;font-size:13px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🏫 沈老師的課 — Per Kalimat Pendek</h1>
+  <div class="sub" id="sub-lbl">Ketuk untuk terjemahan Indonesia</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-KELAS" onclick="setCat('KELAS')">📚 Kelas</button>
+    <button class="fb c-TESIS" onclick="setCat('TESIS')">📝 Tesis</button>
+    <button class="fb c-ADMIN" onclick="setCat('ADMIN')">📋 Administrasi</button>
+    <button class="fb c-NASIHAT" onclick="setCat('NASIHAT')">💡 Nasihat</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="zh-front" id="zh-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk terjemahan</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">PINYIN</div>
+        <div id="ans-py" style="font-size:14px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:8px;line-height:1.6;"></div>
+        <div class="atag">🇮🇩 Indonesia</div>
+        <div class="ans-id" id="ans-id"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+{cat:"KELAS",zh:"學校他要收我們，",py:"xué xiào tā yào shōu wǒ men",id:"Sekolah yang menerima kita, guru hanya dosen pengajar. Kamu tidak bisa karena sudah bilang bilingual lalu tidak peduli mahasiswa."},
+{cat:"KELAS",zh:"老師只是一個授課的老師，",py:"lǎo shī zhǐ shì yī gè shòu kè de lǎo shī",id:"Sekolah yang menerima kita, guru hanya dosen pengajar. Kamu tidak bisa karena sudah bilang bilingual lalu tidak peduli mahasiswa."},
+{cat:"KELAS",zh:"你不能因為他就是訂立雙語，",py:"nǐ bù néng yīn wèi tā jiù shì dìng lì shuāng yǔ",id:"Sekolah yang menerima kita, guru hanya dosen pengajar. Kamu tidak bisa karena sudah bilang bilingual lalu tidak peduli mahasiswa."},
+{cat:"KELAS",zh:"就不理學生。",py:"jiù bù lǐ xué shēng",id:"Sekolah yang menerima kita, guru hanya dosen pengajar. Kamu tidak bisa karena sudah bilang bilingual lalu tidak peduli mahasiswa."},
+{cat:"KELAS",zh:"因為沈老師的課，",py:"yīn wèi shěn lǎo shī de kè",id:"Karena kelas Shen Laoshi,"},
+{cat:"KELAS",zh:"可能沒辦法百分之百完全說中文，",py:"kě néng méi bàn fǎ bǎi fēn zhī bǎi wán quán shuō zhōng wén",id:"mungkin tidak bisa 100% berbicara Mandarin,"},
+{cat:"KELAS",zh:"因為有國際學生。",py:"yīn wèi yǒu guó jì xué shēng",id:"karena ada mahasiswa internasional."},
+{cat:"KELAS",zh:"我課堂的時間可能就變成切一半，",py:"wǒ kè táng de shí jiān kě néng jiù biàn chéng qiè yī bàn",id:"Waktu mengajar saya mungkin jadi terbagi dua,"},
+{cat:"KELAS",zh:"要去克服我的國際學生。",py:"yào qù kè fú wǒ de guó jì xué shēng",id:"untuk mengakomodasi mahasiswa internasional saya."},
+{cat:"KELAS",zh:"臺灣的學生對我來講，",py:"tái wān de xué shēng duì wǒ lái jiǎng",id:"Mahasiswa Taiwan bagi saya juga yang paling penting, tapi kita tidak bisa hanya bicara Mandarin terus tidak peduli mereka."},
+{cat:"KELAS",zh:"也是最重要的，",py:"yě shì zuì zhòng yào de",id:"Mahasiswa Taiwan bagi saya juga yang paling penting, tapi kita tidak bisa hanya bicara Mandarin terus tidak peduli mereka."},
+{cat:"KELAS",zh:"但是我們也是不能說我都全部講中文然後我不理他們。",py:"dàn shì wǒ men yě shì bù néng shuō wǒ dōu quán bù jiǎng zhōng wén rán hòu wǒ bù lǐ tā men",id:"Mahasiswa Taiwan bagi saya juga yang paling penting, tapi kita tidak bisa hanya bicara Mandarin terus tidak peduli mereka."},
+{cat:"KELAS",zh:"如果你有什麼想法或是什麼，",py:"rú guǒ nǐ yǒu shén me xiǎng fǎ huò shì shén me",id:"Kalau kamu punya pikiran atau apapun,"},
+{cat:"KELAS",zh:"可以私信我或是可以在臉書的群組講都無所謂。",py:"kě yǐ sī xìn wǒ huò shì kě yǐ zài liǎn shū de qún zǔ jiǎng dōu wú suǒ wèi",id:"bisa DM saya atau bicara di grup Facebook,"},
+{cat:"KELAS",zh:"我比較希望用臉書，",py:"wǒ bǐ jiào xī wàng yòng liǎn shū",id:"Saya lebih suka pakai Facebook, karena grup Line kalau ganti HP tanpa backup biasanya hilang."},
+{cat:"KELAS",zh:"因為 Line 的群組你通常換手機除非你備份，",py:"yīn wèi de qún zǔ nǐ tōng cháng huàn shǒu jī chú fēi nǐ bèi fèn",id:"Saya lebih suka pakai Facebook, karena grup Line kalau ganti HP tanpa backup biasanya hilang."},
+{cat:"KELAS",zh:"否則就沒有了。",py:"fǒu zé jiù méi yǒu le",id:"Saya lebih suka pakai Facebook, karena grup Line kalau ganti HP tanpa backup biasanya hilang."},
+{cat:"KELAS",zh:"我的群組從我已經在教書22年了。",py:"wǒ de qún zǔ cóng wǒ yǐ jīng zài jiào shū nián le",id:"Grup saya sudah ada sejak saya mengajar selama 22 tahun."},
+{cat:"KELAS",zh:"雖然我外表看不太清楚，",py:"suī rán wǒ wài biǎo kàn bù tài qīng chǔ",id:"Walaupun penampilan saya tidak terlalu kelihatan tua,"},
+{cat:"KELAS",zh:"其實我應該是你們阿公阿媽級的。",py:"qí shí wǒ yīng gāi shì nǐ men ā gōng ā mā jí de",id:"sebenarnya saya sudah level kakek nenek kalian."},
+{cat:"KELAS",zh:"我沒有去整形喔，",py:"wǒ méi yǒu qù zhěng xíng ō",id:"Saya tidak operasi plastik ya,"},
+{cat:"KELAS",zh:"但是我有打玻尿酸，",py:"dàn shì wǒ yǒu dǎ bō niào suān",id:"tapi saya suntik filler,"},
+{cat:"KELAS",zh:"這是一定有的，",py:"zhè shì yī dìng yǒu de",id:"itu pasti ada,"},
+{cat:"KELAS",zh:"就是維持至少看起來就是不要太老。",py:"jiù shì wéi chí zhì shǎo kàn qǐ lái jiù shì bù yào tài lǎo",id:"supaya setidaknya tidak kelihatan terlalu tua."},
+{cat:"KELAS",zh:"我比較希望你們叫老師姐姐，",py:"wǒ bǐ jiào xī wàng nǐ men jiào lǎo shī jiě jiě",id:"Saya lebih suka kalian panggil 'kakak guru', jangan panggil saya 'tante' atau 'nenek'."},
+{cat:"KELAS",zh:"不要叫我大嬸，",py:"bù yào jiào wǒ dà shěn",id:"Saya lebih suka kalian panggil 'kakak guru', jangan panggil saya 'tante' atau 'nenek'."},
+{cat:"KELAS",zh:"也不要叫我婆婆或是阿嬤。",py:"yě bù yào jiào wǒ pó pó huò shì ā mā",id:"Saya lebih suka kalian panggil 'kakak guru', jangan panggil saya 'tante' atau 'nenek'."},
+{cat:"KELAS",zh:"老師賺的錢不會因為有國際學生就有加價，",py:"lǎo shī zhuàn de qián bù huì yīn wèi yǒu guó jì xué shēng jiù yǒu jiā jià",id:"Gaji guru tidak naik karena ada mahasiswa internasional,"},
+{cat:"KELAS",zh:"我就是居民價，",py:"wǒ jiù shì jū mín jià",id:"saya tetap gaji standar,"},
+{cat:"KELAS",zh:"因為我只是員工。",py:"yīn wèi wǒ zhǐ shì yuán gōng",id:"karena saya hanya karyawan."},
+{cat:"KELAS",zh:"因為我們有外籍生，",py:"yīn wèi wǒ men yǒu wài jí shēng",id:"Karena ada mahasiswa asing,"},
+{cat:"KELAS",zh:"所以我上課的時間跟進度就會有一點沒辦法很迅速。",py:"suǒ yǐ wǒ shàng kè de shí jiān gēn jìn dù jiù huì yǒu yī diǎn méi bàn fǎ hěn xùn sù",id:"waktu mengajar dan kemajuan kelas tidak bisa terlalu cepat."},
+{cat:"KELAS",zh:"在這邊請同學先原諒我，",py:"zài zhè biān qǐng tóng xué xiān yuán liàng wǒ",id:"Di sini tolong teman-teman memaafkan saya dulu,"},
+{cat:"KELAS",zh:"就說我可能有一半不講中文。",py:"jiù shuō wǒ kě néng yǒu yī bàn bù jiǎng zhōng wén",id:"karena mungkin setengahnya tidak saya sampaikan dalam bahasa Mandarin."},
+{cat:"KELAS",zh:"我的 quality 絕對不會差，",py:"wǒ de jué duì bù huì chà",id:"Kualitas saya pasti tidak akan buruk,"},
+{cat:"KELAS",zh:"但是我的進度就很慢。",py:"dàn shì wǒ de jìn dù jiù hěn màn",id:"tapi kemajuannya akan lambat."},
+{cat:"KELAS",zh:"均一價，只收到保真的，吃到飽，那你說知識是什麼？",py:"jūn yī jià zhǐ shōu dào bǎo zhēn de chī dào bǎo nà nǐ shuō zhī shí shì shén me",id:"Harga seragam,"},
+{cat:"KELAS",zh:"沒知識啊。",py:"méi zhī shí a",id:"bayar pas dan dapat semua yang ada,"},
+{cat:"KELAS",zh:"如果是三節課，",py:"rú guǒ shì sān jié kè",id:"Kalau ada tiga sesi, saya tidak akan mengajar penuh tiga sesi karena itu tidak efektif."},
+{cat:"KELAS",zh:"我不會三節課全部上完，",py:"wǒ bù huì sān jié kè quán bù shàng wán",id:"Kalau ada tiga sesi, saya tidak akan mengajar penuh tiga sesi karena itu tidak efektif."},
+{cat:"KELAS",zh:"因為那個是沒有效果的。",py:"yīn wèi nà gè shì méi yǒu xiào guǒ de",id:"Kalau ada tiga sesi, saya tidak akan mengajar penuh tiga sesi karena itu tidak efektif."},
+{cat:"KELAS",zh:"剩下你們可以在這裡自由討論或是做作業都是可以的。",py:"shèng xià nǐ men kě yǐ zài zhè lǐ zì yóu tǎo lùn huò shì zuò zuò yè dōu shì kě yǐ de",id:"Sisanya kalian bisa bebas diskusi atau mengerjakan tugas di sini."},
+{cat:"KELAS",zh:"你甚至可以在課堂上做 PPT 或者做別人提報的時候自己再做簡報也可以。",py:"nǐ shèn zhì kě yǐ zài kè táng shàng zuò huò zhě zuò bié rén tí bào de shí hòu zì jǐ zài zuò jiǎn bào yě kě yǐ",id:"Kamu bahkan bisa mengerjakan PPT di kelas atau waktu orang lain presentasi kamu buat slidenya sendiri juga boleh."},
+{cat:"KELAS",zh:"我都是講重點，",py:"wǒ dōu shì jiǎng zhòng diǎn",id:"Saya selalu menyampaikan poinnya saja, sisanya kalian bisa bebas diskusi atau mengerjakan tugas di sini."},
+{cat:"KELAS",zh:"那剩下你們可以在這裡自由討論，",py:"nà shèng xià nǐ men kě yǐ zài zhè lǐ zì yóu tǎo lùn",id:"Saya selalu menyampaikan poinnya saja, sisanya kalian bisa bebas diskusi atau mengerjakan tugas di sini."},
+{cat:"KELAS",zh:"或是做作業都是可以的。",py:"huò shì zuò zuò yè dōu shì kě yǐ de",id:"Saya selalu menyampaikan poinnya saja, sisanya kalian bisa bebas diskusi atau mengerjakan tugas di sini."},
+{cat:"KELAS",zh:"我希望大家可以接受，",py:"wǒ xī wàng dà jiā kě yǐ jiē shòu",id:"Saya harap semua bisa menerima, kalau tidak bisa tolong beritahu saya dulu."},
+{cat:"KELAS",zh:"如果不能接受，",py:"rú guǒ bù néng jiē shòu",id:"Saya harap semua bisa menerima, kalau tidak bisa tolong beritahu saya dulu."},
+{cat:"KELAS",zh:"也請你先跟我講。",py:"yě qǐng nǐ xiān gēn wǒ jiǎng",id:"Saya harap semua bisa menerima, kalau tidak bisa tolong beritahu saya dulu."},
+{cat:"KELAS",zh:"任何問題都歡迎，",py:"rèn hé wèn tí dōu huān yíng",id:"Pertanyaan apapun diterima,"},
+{cat:"KELAS",zh:"只要是課堂上都非常歡迎跟我詢問。",py:"zhǐ yào shì kè táng shàng dōu fēi cháng huān yíng gēn wǒ xún wèn",id:"selama di kelas sangat welcome untuk bertanya kepada saya."},
+{cat:"KELAS",zh:"大家都是 Z 世代的人，",py:"dà jiā dōu shì shì dài de rén",id:"Semua adalah generasi Z,"},
+{cat:"KELAS",zh:"我們就是不要太做作，",py:"wǒ men jiù shì bù yào tài zuò zuò",id:"jangan terlalu dibuat-buat,"},
+{cat:"KELAS",zh:"就是自然就好，",py:"jiù shì zì rán jiù hǎo",id:"yang natural saja,"},
+{cat:"KELAS",zh:"自然最重要。",py:"zì rán zuì zhòng yào",id:"natural itu yang paling penting."},
+{cat:"KELAS",zh:"到期中呢，",py:"dào qī zhōng ne",id:"Sampai UTS,"},
+{cat:"KELAS",zh:"我希望大家能夠做自己專業的自我介紹。",py:"wǒ xī wàng dà jiā néng gòu zuò zì jǐ zhuān yè de zì wǒ jiè shào",id:"saya harap semua bisa membuat perkenalan diri sesuai latar belakang profesional masing-masing."},
+{cat:"KELAS",zh:"你不要覺得說你抱著以前大學的心態，",py:"nǐ bù yào jué dé shuō nǐ bào zhù yǐ qián dà xué de xīn tài",id:"Jangan berpikir dengan mentalitas kuliah S1 dulu, datang lalu duduk seperti NPC saja."},
+{cat:"KELAS",zh:"你就是來這邊上課，",py:"nǐ jiù shì lái zhè biān shàng kè",id:"Jangan berpikir dengan mentalitas kuliah S1 dulu, datang lalu duduk seperti NPC saja."},
+{cat:"KELAS",zh:"然後就坐著像 NPC 一樣。",py:"rán hòu jiù zuò zhù xiàng yī yàng",id:"Jangan berpikir dengan mentalitas kuliah S1 dulu, datang lalu duduk seperti NPC saja."},
+{cat:"KELAS",zh:"今年你們應該是人數最少的，",py:"jīn nián nǐ men yīng gāi shì rén shù zuì shǎo de",id:"Tahun ini kalian seharusnya yang paling sedikit jumlahnya,"},
+{cat:"KELAS",zh:"這就告訴我們是一個趨勢。",py:"zhè jiù gào sù wǒ men shì yī gè qū shì",id:"ini menunjukkan suatu tren."},
+{cat:"KELAS",zh:"雖然所不會倒，",py:"suī rán suǒ bù huì dào",id:"Walaupun jurusan tidak akan bubar,"},
+{cat:"KELAS",zh:"但是念書越來越少人想來，",py:"dàn shì niàn shū yuè lái yuè shǎo rén xiǎng lái",id:"tapi semakin sedikit orang yang mau kuliah,"},
+{cat:"KELAS",zh:"想來骨科大的也相對越來越少。",py:"xiǎng lái gǔ kē dà de yě xiāng duì yuè lái yuè shǎo",id:"yang mau ke NUE juga semakin berkurang."},
+{cat:"KELAS",zh:"我們先學期就做了一個蠻好的 project，",py:"wǒ men xiān xué qī jiù zuò le yī gè mán hǎo de",id:"Semester lalu kami sudah buat project yang cukup bagus,"},
+{cat:"KELAS",zh:"所以你們學長很高興認識不同的人然後去溝通。",py:"suǒ yǐ nǐ men xué zhǎng hěn gāo xìng rèn shí bù tóng de rén rán hòu qù gōu tōng",id:"jadi kakak tingkatmu senang mengenal orang berbeda lalu berkomunikasi."},
+{cat:"KELAS",zh:"我會看課堂的人數去調說要怎麼做，",py:"wǒ huì kàn kè táng de rén shù qù diào shuō yào zěn me zuò",id:"Saya akan melihat jumlah orang di kelas lalu menyesuaikan caranya,"},
+{cat:"KELAS",zh:"比較客製化。",py:"bǐ jiào kè zhì huà",id:"lebih disesuaikan secara personal."},
+{cat:"KELAS",zh:"因為我們人少，",py:"yīn wèi wǒ men rén shǎo",id:"Karena kita sedikit orang,"},
+{cat:"KELAS",zh:"就是還是有優點，",py:"jiù shì hái shì yǒu yōu diǎn",id:"itu masih ada kelebihannya,"},
+{cat:"KELAS",zh:"可以比較好好認識每個人。",py:"kě yǐ bǐ jiào hǎo hǎo rèn shí měi gè rén",id:"bisa lebih mengenal satu sama lain dengan baik."},
+{cat:"KELAS",zh:"開學第一週，",py:"kāi xué dì yī zhōu",id:"Minggu pertama kuliah,"},
+{cat:"KELAS",zh:"我不能來的時候，",py:"wǒ bù néng lái de shí hòu",id:"waktu saya tidak bisa datang,"},
+{cat:"KELAS",zh:"我趕緊叫晏喜跟嘉軒還有建良來 support 一下。",py:"wǒ gǎn jǐn jiào yàn xǐ gēn jiā xuān hái yǒu jiàn liáng lái yī xià",id:"saya cepat-cepat minta Yanxi,"},
+{cat:"KELAS",zh:"通常到期中考過後，",py:"tōng cháng dào qī zhōng kǎo guò hòu",id:"Biasanya setelah melewati UTS,"},
+{cat:"KELAS",zh:"自我介紹過後，",py:"zì wǒ jiè shào guò hòu",id:"setelah perkenalan diri,"},
+{cat:"KELAS",zh:"到年底會比較熟一點。",py:"dào nián dǐ huì bǐ jiào shú yī diǎn",id:"menjelang akhir tahun akan lebih akrab."},
+{cat:"KELAS",zh:"因為他們不是歐美的，",py:"yīn wèi tā men bù shì ōu měi de",id:"Karena mereka bukan orang Barat,"},
+{cat:"KELAS",zh:"他們跟我們文化差不多，",py:"tā men gēn wǒ men wén huà chà bù duō",id:"budaya mereka mirip kita,"},
+{cat:"KELAS",zh:"大家會比較東方，",py:"dà jiā huì bǐ jiào dōng fāng",id:"semua lebih ke budaya Timur,"},
+{cat:"KELAS",zh:"比較害羞一點。",py:"bǐ jiào hài xiū yī diǎn",id:"lebih pemalu sedikit."},
+{cat:"KELAS",zh:"老師每年都要經歷過這樣一次，",py:"lǎo shī měi nián dōu yào jīng lì guò zhè yàng yī cì",id:"Guru setiap tahun harus melewati ini sekali,"},
+{cat:"KELAS",zh:"每年9月都是這樣，",py:"měi nián yuè dōu shì zhè yàng",id:"setiap September selalu begini,"},
+{cat:"KELAS",zh:"要開始大家都 NPC 好久。",py:"yào kāi shǐ dà jiā dōu hǎo jiǔ",id:"mulai dengan semua orang ber-NPC dulu lama."},
+{cat:"KELAS",zh:"沈老師的課中間不休息，",py:"shěn lǎo shī de kè zhōng jiān bù xiū xī",id:"Kelas Shen Laoshi tidak ada istirahat di tengah,"},
+{cat:"KELAS",zh:"你要自己上洗手間就自己去可不可以。",py:"nǐ yào zì jǐ shàng xǐ shǒu jiān jiù zì jǐ qù kě bù kě yǐ",id:"kalau mau ke toilet pergi sendiri saja boleh tidak."},
+{cat:"KELAS",zh:"只要你來，你才有辦法跟我互動；",py:"zhǐ yào nǐ lái nǐ cái yǒu bàn fǎ gēn wǒ hù dòng",id:"Selama kamu datang,"},
+{cat:"KELAS",zh:"你不來，我也沒辦法跟你互動。",py:"nǐ bù lái wǒ yě méi bàn fǎ gēn nǐ hù dòng",id:"baru bisa berinteraksi dengan saya;"},
+{cat:"KELAS",zh:"我是喜歡直接面對面的溝通，",py:"wǒ shì xǐ huān zhí jiē miàn duì miàn de gōu tōng",id:"Saya suka komunikasi langsung tatap muka, kalau ada masalah tolong langsung bicara ke saya."},
+{cat:"KELAS",zh:"如果有什麼問題，",py:"rú guǒ yǒu shén me wèn tí",id:"Saya suka komunikasi langsung tatap muka, kalau ada masalah tolong langsung bicara ke saya."},
+{cat:"KELAS",zh:"請你直接跟我講。",py:"qǐng nǐ zhí jiē gēn wǒ jiǎng",id:"Saya suka komunikasi langsung tatap muka, kalau ada masalah tolong langsung bicara ke saya."},
+{cat:"KELAS",zh:"本班只有7、8個同學，",py:"běn bān zhǐ yǒu gè tóng xué",id:"Kelas ini hanya 7-8 mahasiswa,"},
+{cat:"KELAS",zh:"所以請你直接跟我講好不好。",py:"suǒ yǐ qǐng nǐ zhí jiē gēn wǒ jiǎng hǎo bù hǎo",id:"jadi tolong langsung bicara ke saya ya."},
+{cat:"KELAS",zh:"你要告訴我你的需求，我能夠幫助你；",py:"nǐ yào gào sù wǒ nǐ de xū qiú wǒ néng gòu bāng zhù nǐ",id:"Kamu harus beritahu kebutuhanmu,"},
+{cat:"KELAS",zh:"而你沒有告訴我的需求，我也不明白。",py:"ér nǐ méi yǒu gào sù wǒ de xū qiú wǒ yě bù míng bái",id:"saya bisa membantumu;"},
+{cat:"KELAS",zh:"只要是在我課堂以內，",py:"zhǐ yào shì zài wǒ kè táng yǐ nèi",id:"Selama masih dalam cakupan kelas saya,"},
+{cat:"KELAS",zh:"我可以幫助你，",py:"wǒ kě yǐ bāng zhù nǐ",id:"saya bisa membantumu,"},
+{cat:"KELAS",zh:"我一定會負責到底。",py:"wǒ yī dìng huì fù zé dào dǐ",id:"saya pasti akan bertanggung jawab sampai selesai."},
+{cat:"KELAS",zh:"碩一上跟碩一下，",py:"shuò yī shàng gēn shuò yī xià",id:"S2 semester 1 dan 2,"},
+{cat:"KELAS",zh:"只要你上我的課，",py:"zhǐ yào nǐ shàng wǒ de kè",id:"selama kamu ikut kelas saya,"},
+{cat:"KELAS",zh:"我就會負責，",py:"wǒ jiù huì fù zé",id:"saya akan bertanggung jawab,"},
+{cat:"KELAS",zh:"但是你不能叫我負責你的論文，",py:"dàn shì nǐ bù néng jiào wǒ fù zé nǐ de lùn wén",id:"tapi kamu tidak bisa minta saya tanggung jawab atas tesismu,"},
+{cat:"KELAS",zh:"這是不可能的。",py:"zhè shì bù kě néng de",id:"itu tidak mungkin."},
+{cat:"KELAS",zh:"我沒有被埋怨過或者怎麼樣，",py:"wǒ méi yǒu bèi mái yuàn guò huò zhě zěn me yàng",id:"Saya tidak pernah dikeluhkan atau apapun,"},
+{cat:"KELAS",zh:"所以我希望繼續 carry on 這樣的傳統。",py:"suǒ yǐ wǒ xī wàng jì xù zhè yàng de chuán tǒng",id:"jadi saya harap bisa terus lanjutkan tradisi seperti ini."},
+{cat:"KELAS",zh:"如果我可能答非所問或者怎樣，",py:"rú guǒ wǒ kě néng dá fēi suǒ wèn huò zhě zěn yàng",id:"Kalau saya mungkin menjawab tidak sesuai pertanyaan atau bagaimana,"},
+{cat:"KELAS",zh:"就是有的時候切換的時候有一點秀逗，",py:"jiù shì yǒu de shí hòu qiè huàn de shí hòu yǒu yī diǎn xiù dòu",id:"kadang waktu berganti bahasa ada sedikit kacau,"},
+{cat:"KELAS",zh:"請同學一定要點醒老師。",py:"qǐng tóng xué yī dìng yào diǎn xǐng lǎo shī",id:"tolong mahasiswa ingatkan guru."},
+{cat:"KELAS",zh:"你不用不好意思跟我講，",py:"nǐ bù yòng bù hǎo yì sī gēn wǒ jiǎng",id:"Jangan sungkan untuk bilang ke saya, saya rasa harus bilang ke saya kalau mungkin saya salah bicara."},
+{cat:"KELAS",zh:"我覺得不好意思一定要跟我講，",py:"wǒ jué dé bù hǎo yì sī yī dìng yào gēn wǒ jiǎng",id:"Jangan sungkan untuk bilang ke saya, saya rasa harus bilang ke saya kalau mungkin saya salah bicara."},
+{cat:"KELAS",zh:"如果我可能說錯了。",py:"rú guǒ wǒ kě néng shuō cuò le",id:"Jangan sungkan untuk bilang ke saya, saya rasa harus bilang ke saya kalau mungkin saya salah bicara."},
+{cat:"TESIS",zh:"設計研究方法必修就是你可以任選3個你喜歡的，",py:"shè jì yán jiū fāng fǎ bì xiū jiù shì nǐ kě yǐ rèn xuǎn gè nǐ xǐ huān de",id:"Wajib Metode Penelitian Desain adalah kamu bisa pilih 3 yang kamu suka,"},
+{cat:"TESIS",zh:"你覺得你可能會用到的。",py:"nǐ jué dé nǐ kě néng huì yòng dào de",id:"yang kamu kira mungkin akan kamu pakai."},
+{cat:"TESIS",zh:"我已經帶了歷屆學長解了範本給你看，",py:"wǒ yǐ jīng dài le lì jiè xué zhǎng jiě le fàn běn gěi nǐ kàn",id:"Saya sudah bawa contoh dari kakak tingkat semua angkatan untuk kalian lihat, karena saya tahu mahasiswa pasti harus lihat contoh."},
+{cat:"TESIS",zh:"同學，",py:"tóng xué",id:"Saya sudah bawa contoh dari kakak tingkat semua angkatan untuk kalian lihat, karena saya tahu mahasiswa pasti harus lihat contoh."},
+{cat:"TESIS",zh:"我知道同學一定要看範本。",py:"wǒ zhī dào tóng xué yī dìng yào kàn fàn běn",id:"Saya sudah bawa contoh dari kakak tingkat semua angkatan untuk kalian lihat, karena saya tahu mahasiswa pasti harus lihat contoh."},
+{cat:"TESIS",zh:"我並沒有說不能用 AI，",py:"wǒ bìng méi yǒu shuō bù néng yòng",id:"Saya tidak bilang tidak boleh pakai AI,"},
+{cat:"TESIS",zh:"但是你一定要自己看過去，",py:"dàn shì nǐ yī dìng yào zì jǐ kàn guò qù",id:"tapi kamu harus melihatnya sendiri dulu,"},
+{cat:"TESIS",zh:"因為你在寫論文的時候你還是會用到的。",py:"yīn wèi nǐ zài xiě lùn wén de shí hòu nǐ hái shì huì yòng dào de",id:"karena waktu menulis tesis kamu masih akan memakainya."},
+{cat:"TESIS",zh:"你把這本書吃透或者怎樣，",py:"nǐ bǎ zhè běn shū chī tòu huò zhě zěn yàng",id:"Kamu habiskan buku ini atau bagaimana,"},
+{cat:"TESIS",zh:"但是我覺得你還是要自己問過一遍。",py:"dàn shì wǒ jué dé nǐ hái shì yào zì jǐ wèn guò yī biàn",id:"tapi saya rasa kamu tetap harus menanyai dirimu sendiri dulu."},
+{cat:"TESIS",zh:"沒有什麼題目是好做也沒有什麼題目是不能做的，",py:"méi yǒu shén me tí mù shì hǎo zuò yě méi yǒu shén me tí mù shì bù néng zuò de",id:"Tidak ada topik yang mudah dikerjakan dan tidak ada topik yang tidak bisa dikerjakan,"},
+{cat:"TESIS",zh:"重點你想專注在什麼地方。",py:"zhòng diǎn nǐ xiǎng zhuān zhù zài shén me dì fāng",id:"intinya kamu mau fokus di mana."},
+{cat:"TESIS",zh:"題目不用急，",py:"tí mù bù yòng jí",id:"Judul tidak perlu terburu-buru,"},
+{cat:"TESIS",zh:"一定會改的，",py:"yī dìng huì gǎi de",id:"pasti akan berubah,"},
+{cat:"TESIS",zh:"甚至改到一年以後、一年半之後都會改。",py:"shèn zhì gǎi dào yī nián yǐ hòu yī nián bàn zhī hòu dōu huì gǎi",id:"bahkan sampai setahun atau setahun setengah kemudian pun masih akan berubah."},
+{cat:"TESIS",zh:"你要看範本，",py:"nǐ yào kàn fàn běn",id:"Kamu perlu melihat contoh, karena kalau disuruh buat sendiri kamu juga tidak tahu harus bagaimana."},
+{cat:"TESIS",zh:"因為叫你自己做，",py:"yīn wèi jiào nǐ zì jǐ zuò",id:"Kamu perlu melihat contoh, karena kalau disuruh buat sendiri kamu juga tidak tahu harus bagaimana."},
+{cat:"TESIS",zh:"你也不知道要怎麼做。",py:"nǐ yě bù zhī dào yào zěn me zuò",id:"Kamu perlu melihat contoh, karena kalau disuruh buat sendiri kamu juga tidak tahu harus bagaimana."},
+{cat:"TESIS",zh:"我希望你至少選3種然後去比較它的優缺點，",py:"wǒ xī wàng nǐ zhì shǎo xuǎn zhǒng rán hòu qù bǐ jiào tā de yōu quē diǎn",id:"Saya harap kamu pilih minimal 3 jenis lalu bandingkan kelebihan dan kekurangannya,"},
+{cat:"TESIS",zh:"了解一下他要怎麼樣。",py:"le jiě yī xià tā yào zěn me yàng",id:"pahami bagaimana cara kerjanya."},
+{cat:"TESIS",zh:"整理資料不在於多，",py:"zhěng lǐ zī liào bù zài yú duō",id:"Mengorganisir data bukan soal banyaknya,"},
+{cat:"TESIS",zh:"在於你自己能夠看清楚多少。",py:"zài yú nǐ zì jǐ néng gòu kàn qīng chǔ duō shǎo",id:"tapi soal seberapa jelas kamu bisa memahaminya."},
+{cat:"TESIS",zh:"你到最後你還是可能會用到問卷的方式，",py:"nǐ dào zuì hòu nǐ hái shì kě néng huì yòng dào wèn juǎn de fāng shì",id:"Pada akhirnya kamu masih mungkin menggunakan metode kuesioner,"},
+{cat:"TESIS",zh:"所以我希望你自己幫同學找跟設計最相關的。",py:"suǒ yǐ wǒ xī wàng nǐ zì jǐ bāng tóng xué zhǎo gēn shè jì zuì xiāng guān de",id:"jadi saya harap kamu sendiri cari yang paling relevan dengan desain."},
+{cat:"TESIS",zh:"你一定要多閱讀，",py:"nǐ yī dìng yào duō yuè dú",id:"Kamu harus banyak membaca, kalau tidak banyak membaca pertanyaan-pertanyaanmu pasti terbatas."},
+{cat:"TESIS",zh:"你沒有多閱讀，",py:"nǐ méi yǒu duō yuè dú",id:"Kamu harus banyak membaca, kalau tidak banyak membaca pertanyaan-pertanyaanmu pasti terbatas."},
+{cat:"TESIS",zh:"你絕對問題有限。",py:"nǐ jué duì wèn tí yǒu xiàn",id:"Kamu harus banyak membaca, kalau tidak banyak membaca pertanyaan-pertanyaanmu pasti terbatas."},
+{cat:"TESIS",zh:"論文寫不出來不是因為上了沈老師的課你論文馬上就寫出來，",py:"lùn wén xiě bù chū lái bù shì yīn wèi shàng le shěn lǎo shī de kè nǐ lùn wén mǎ shàng jiù xiě chū lái",id:"Tidak bisa menulis tesis bukan karena sudah ikut kelas saya lalu langsung bisa nulis tesis,"},
+{cat:"TESIS",zh:"沒有這種事的。",py:"méi yǒu zhè zhǒng shì de",id:"tidak ada yang seperti itu."},
+{cat:"TESIS",zh:"我可以告訴你方法，",py:"wǒ kě yǐ gào sù nǐ fāng fǎ",id:"Saya bisa beritahu caranya,"},
+{cat:"TESIS",zh:"可是你自己要去做，",py:"kě shì nǐ zì jǐ yào qù zuò",id:"tapi kamu sendiri yang harus melakukannya,"},
+{cat:"TESIS",zh:"時間管理是你的，",py:"shí jiān guǎn lǐ shì nǐ de",id:"manajemen waktu adalah milikmu,"},
+{cat:"TESIS",zh:"不是我的。",py:"bù shì wǒ de",id:"bukan milikku."},
+{cat:"TESIS",zh:"大部分都拖到2到3年，",py:"dà bù fēn dōu tuō dào dào nián",id:"Kebanyakan molor sampai 2-3 tahun,"},
+{cat:"TESIS",zh:"準時2年以內畢業很少。",py:"zhǔn shí nián yǐ nèi bì yè hěn shǎo",id:"sangat jarang yang selesai tepat waktu dalam 2 tahun."},
+{cat:"TESIS",zh:"你同一時間進來，",py:"nǐ tóng yī shí jiān jìn lái",id:"Masuk bersamaan tidak berarti keluar bersamaan, itu masalah manajemen waktu kamu sendiri."},
+{cat:"TESIS",zh:"不一定同一時間出得去，",py:"bù yī dìng tóng yī shí jiān chū dé qù",id:"Masuk bersamaan tidak berarti keluar bersamaan, itu masalah manajemen waktu kamu sendiri."},
+{cat:"TESIS",zh:"所以是你自己時間管理的問題。",py:"suǒ yǐ shì nǐ zì jǐ shí jiān guǎn lǐ de wèn tí",id:"Masuk bersamaan tidak berarti keluar bersamaan, itu masalah manajemen waktu kamu sendiri."},
+{cat:"TESIS",zh:"做創作呢，",py:"zuò chuàng zuò ne",id:"Untuk karya kreatif,"},
+{cat:"TESIS",zh:"你可能要有一個展演或者是參加一個比賽的證明。",py:"nǐ kě néng yào yǒu yī gè zhǎn yǎn huò zhě shì cān jiā yī gè bǐ sài de zhèng míng",id:"kamu mungkin perlu bukti pertunjukan atau mengikuti kompetisi."},
+{cat:"TESIS",zh:"做論文的可能要參加某個研討會去發表，",py:"zuò lùn wén de kě néng yào cān jiā mǒu gè yán tǎo huì qù fā biǎo",id:"Untuk penulisan tesis perlu ikut seminar untuk presentasi,"},
+{cat:"TESIS",zh:"你要有這樣的資格門檻才可以提出口考。",py:"nǐ yào yǒu zhè yàng de zī gé mén kǎn cái kě yǐ tí chū kǒu kǎo",id:"kamu butuh kualifikasi seperti itu baru bisa mengajukan ujian lisan."},
+{cat:"TESIS",zh:"不要急著找老師，",py:"bù yào jí zhù zhǎo lǎo shī",id:"Jangan terburu-buru mencari dosen pembimbing,"},
+{cat:"TESIS",zh:"每一個老師都去談談看，",py:"měi yī gè lǎo shī dōu qù tán tán kàn",id:"coba ngobrol dengan setiap dosen dulu,"},
+{cat:"TESIS",zh:"哪一個跟你的理念比較合適。",py:"nǎ yī gè gēn nǐ de lǐ niàn bǐ jiào hé shì",id:"mana yang paling cocok dengan ide kamu."},
+{cat:"TESIS",zh:"你本來選了 A，",py:"nǐ běn lái xuǎn le",id:"Kamu awalnya pilih A,"},
+{cat:"TESIS",zh:"後來又覺得不合適，",py:"hòu lái yòu jué dé bù hé shì",id:"lalu merasa tidak cocok,"},
+{cat:"TESIS",zh:"就再換了 B，",py:"jiù zài huàn le",id:"lalu ganti ke B,"},
+{cat:"TESIS",zh:"就是會耽誤了一些時間。",py:"jiù shì huì dān wù le yī xiē shí jiān",id:"itu akan membuang waktu."},
+{cat:"TESIS",zh:"除非已經有老師拉你，",py:"chú fēi yǐ jīng yǒu lǎo shī lā nǐ",id:"Kecuali sudah ada dosen yang mengajak kamu dan kamu rasa oke, kalau tidak saya selalu anjurkan mahasiswa jangan terburu cari pembimbing."},
+{cat:"TESIS",zh:"你覺得還不錯，",py:"nǐ jué dé hái bù cuò",id:"Kecuali sudah ada dosen yang mengajak kamu dan kamu rasa oke, kalau tidak saya selalu anjurkan mahasiswa jangan terburu cari pembimbing."},
+{cat:"TESIS",zh:"不然我都鼓勵同學不要太急著找老師。",py:"bù rán wǒ dōu gǔ lì tóng xué bù yào tài jí zhù zhǎo lǎo shī",id:"Kecuali sudah ada dosen yang mengajak kamu dan kamu rasa oke, kalau tidak saya selalu anjurkan mahasiswa jangan terburu cari pembimbing."},
+{cat:"TESIS",zh:"每一個老師都去談談看，",py:"měi yī gè lǎo shī dōu qù tán tán kàn",id:"Coba ngobrol dengan setiap dosen dulu,"},
+{cat:"TESIS",zh:"哪一個跟你的坐的方向比較契合，",py:"nǎ yī gè gēn nǐ de zuò de fāng xiàng bǐ jiào qì hé",id:"mana yang arah penelitiannya lebih cocok dengan kamu,"},
+{cat:"TESIS",zh:"你再去選。",py:"nǐ zài qù xuǎn",id:"baru kamu pilih."},
+{cat:"TESIS",zh:"比較懶惰的，",py:"bǐ jiào lǎn duò de",id:"Yang agak malas,"},
+{cat:"TESIS",zh:"你要找能夠盯住的、穩定的老師，",py:"nǐ yào zhǎo néng gòu dīng zhù de wěn dìng de lǎo shī",id:"kamu perlu cari dosen yang bisa mengawasi dan konsisten,"},
+{cat:"TESIS",zh:"因為你自己的狀況你最清楚。",py:"yīn wèi nǐ zì jǐ de zhuàng kuàng nǐ zuì qīng chǔ",id:"karena kamu paling tahu kondisimu sendiri."},
+{cat:"TESIS",zh:"像嘉軒，",py:"xiàng jiā xuān",id:"Seperti Jiaxuan,"},
+{cat:"TESIS",zh:"他就是很認真，",py:"tā jiù shì hěn rèn zhēn",id:"dia sangat serius,"},
+{cat:"TESIS",zh:"他就是要2210個月畢業，",py:"tā jiù shì yào gè yuè bì yè",id:"dia ingin lulus 22 bulan,"},
+{cat:"TESIS",zh:"他已經知道自己要做什麼，",py:"tā yǐ jīng zhī dào zì jǐ yào zuò shén me",id:"dia sudah tahu mau buat apa,"},
+{cat:"TESIS",zh:"只是需要老師去跑一下流程。",py:"zhǐ shì xū yào lǎo shī qù pǎo yī xià liú chéng",id:"hanya butuh dosen untuk menjalankan prosedurnya."},
+{cat:"TESIS",zh:"目前你一定沒有什麼特定想法，",py:"mù qián nǐ yī dìng méi yǒu shén me tè dìng xiǎng fǎ",id:"Sekarang kamu pasti belum punya ide khusus,"},
+{cat:"TESIS",zh:"可是通常都會延續大學專題的方向或者之前的工作方向。",py:"kě shì tōng cháng dōu huì yán xù dà xué zhuān tí de fāng xiàng huò zhě zhī qián de gōng zuò fāng xiàng",id:"tapi biasanya melanjutkan arah proyek skripsi atau arah kerja sebelumnya."},
+{cat:"TESIS",zh:"很多人說我要做 AR，",py:"hěn duō rén shuō wǒ yào zuò",id:"Banyak yang bilang mau buat AR,"},
+{cat:"TESIS",zh:"好看了很多，",py:"hǎo kàn le hěn duō",id:"sudah lihat banyak,"},
+{cat:"TESIS",zh:"AI 看多了，",py:"kàn duō le",id:"terlalu banyak lihat AI,"},
+{cat:"TESIS",zh:"他不知道做什麼，",py:"tā bù zhī dào zuò shén me",id:"lalu tidak tahu mau buat apa,"},
+{cat:"TESIS",zh:"然後說絕對不要做 AI。",py:"rán hòu shuō jué duì bù yào zuò",id:"terus bilang pasti tidak mau buat AI."},
+{cat:"TESIS",zh:"沒有什麼題目是好做的，",py:"méi yǒu shén me tí mù shì hǎo zuò de",id:"Tidak ada topik yang mudah,"},
+{cat:"TESIS",zh:"也沒有什麼題目是不能做的，",py:"yě méi yǒu shén me tí mù shì bù néng zuò de",id:"juga tidak ada topik yang tidak bisa dikerjakan,"},
+{cat:"TESIS",zh:"重點你想 shift 在什麼地方。",py:"zhòng diǎn nǐ xiǎng zài shén me dì fāng",id:"intinya kamu mau fokus di mana."},
+{cat:"TESIS",zh:"你要多看，",py:"nǐ yào duō kàn",id:"Kamu harus banyak melihat,"},
+{cat:"TESIS",zh:"你沒有多看，",py:"nǐ méi yǒu duō kàn",id:"kalau tidak banyak melihat,"},
+{cat:"TESIS",zh:"你絕對問題有限。",py:"nǐ jué duì wèn tí yǒu xiàn",id:"pertanyaan-pertanyaanmu pasti terbatas."},
+{cat:"TESIS",zh:"你可以問 AI，",py:"nǐ kě yǐ wèn",id:"Kamu bisa tanya AI,"},
+{cat:"TESIS",zh:"但是重點就是你要弄懂，",py:"dàn shì zhòng diǎn jiù shì nǐ yào nòng dǒng",id:"tapi intinya kamu harus mengerti,"},
+{cat:"TESIS",zh:"你不懂是沒有用的。",py:"nǐ bù dǒng shì méi yǒu yòng de",id:"kalau tidak mengerti tidak ada gunanya."},
+{cat:"TESIS",zh:"老師跳得太快，",py:"lǎo shī tiào dé tài kuài",id:"Kalau guru terlalu cepat,"},
+{cat:"TESIS",zh:"請你也跟我講好，",py:"qǐng nǐ yě gēn wǒ jiǎng hǎo",id:"tolong beritahu saya ya,"},
+{cat:"TESIS",zh:"請你也跟我講喔。",py:"qǐng nǐ yě gēn wǒ jiǎng ō",id:"tolong beritahu saya ya."},
+{cat:"TESIS",zh:"嘉軒是非常認真的同學，",py:"jiā xuān shì fēi cháng rèn zhēn de tóng xué",id:"Jiaxuan adalah mahasiswa yang sangat serius,"},
+{cat:"TESIS",zh:"上學期畢業，",py:"shàng xué qī bì yè",id:"semester lalu lulus,"},
+{cat:"TESIS",zh:"終於，",py:"zhōng yú",id:"akhirnya,"},
+{cat:"TESIS",zh:"還蠻辛苦的，",py:"hái mán xīn kǔ de",id:"cukup berat perjuangannya,"},
+{cat:"TESIS",zh:"他是直升的，",py:"tā shì zhí shēng de",id:"dia langsung lanjut S2,"},
+{cat:"TESIS",zh:"沒有工作經驗。",py:"méi yǒu gōng zuò jīng yàn",id:"tidak punya pengalaman kerja."},
+{cat:"TESIS",zh:"整理資料不在於多，在於你自己能夠看清楚多少。",py:"zhěng lǐ zī liào bù zài yú duō zài yú nǐ zì jǐ néng gòu kàn qīng chǔ duō shǎo",id:"Mengorganisir data bukan soal banyaknya,"},
+{cat:"TESIS",zh:"好，當然，看的那一本可能很難懂。",py:"hǎo dāng rán kàn de nà yī běn kě néng hěn nán dǒng",id:"tapi seberapa jelas kamu bisa memahaminya."},
+{cat:"TESIS",zh:"你要縫你不懂是沒有用的，",py:"nǐ yào fèng nǐ bù dǒng shì méi yǒu yòng de",id:"Kalau kamu tidak mengerti tidak ada gunanya,"},
+{cat:"TESIS",zh:"你可能會以為你懂了，",py:"nǐ kě néng huì yǐ wèi nǐ dǒng le",id:"kamu mungkin pikir sudah mengerti,"},
+{cat:"TESIS",zh:"但是自己整理資料，",py:"dàn shì zì jǐ zhěng lǐ zī liào",id:"tapi mengorganisir data sendiri,"},
+{cat:"TESIS",zh:"有沒有可能自己還是會忘記的。",py:"yǒu méi yǒu kě néng zì jǐ hái shì huì wàng jì de",id:"ada kemungkinan kamu masih bisa lupa."},
+{cat:"TESIS",zh:"你要縫你不懂是沒有用的，",py:"nǐ yào fèng nǐ bù dǒng shì méi yǒu yòng de",id:"Kalau kamu hanya hafal tanpa mengerti tidak ada gunanya,"},
+{cat:"TESIS",zh:"所以你一定要花時間下去想。",py:"suǒ yǐ nǐ yī dìng yào huā shí jiān xià qù xiǎng",id:"jadi kamu harus luangkan waktu untuk benar-benar memikirkannya."},
+{cat:"TESIS",zh:"準時2年內畢業是指畢業在2年以內，",py:"zhǔn shí nián nèi bì yè shì zhǐ bì yè zài nián yǐ nèi",id:"Lulus tepat waktu dalam 2 tahun artinya selesai sebelum 2 tahun, karena dia memang sudah sangat jelas mau buat apa, dan dia sangat serius dalam mengerjakan."},
+{cat:"TESIS",zh:"因為他是本來就很清楚，",py:"yīn wèi tā shì běn lái jiù hěn qīng chǔ",id:"Lulus tepat waktu dalam 2 tahun artinya selesai sebelum 2 tahun, karena dia memang sudah sangat jelas mau buat apa, dan dia sangat serius dalam mengerjakan."},
+{cat:"TESIS",zh:"要做什麼，",py:"yào zuò shén me",id:"Lulus tepat waktu dalam 2 tahun artinya selesai sebelum 2 tahun, karena dia memang sudah sangat jelas mau buat apa, dan dia sangat serius dalam mengerjakan."},
+{cat:"TESIS",zh:"而且他做事非常認真。",py:"ér qiě tā zuò shì fēi cháng rèn zhēn",id:"Lulus tepat waktu dalam 2 tahun artinya selesai sebelum 2 tahun, karena dia memang sudah sangat jelas mau buat apa, dan dia sangat serius dalam mengerjakan."},
+{cat:"TESIS",zh:"大家最常用的就那幾個：問卷調查法、訪談法、焦點團體法，",py:"dà jiā zuì cháng yòng de jiù nà jǐ gè wèn juǎn diào chá fǎ fǎng tán fǎ jiāo diǎn tuán tǐ fǎ",id:"Yang paling sering dipakai semua orang hanya beberapa: survei kuesioner,"},
+{cat:"TESIS",zh:"同學選的都差不多。",py:"tóng xué xuǎn de dōu chà bù duō",id:"wawancara,"},
+{cat:"TESIS",zh:"如果每個人選的或多或少一樣，",py:"rú guǒ měi gè rén xuǎn de huò duō huò shǎo yī yàng",id:"Kalau semua orang pilih yang kurang lebih sama,"},
+{cat:"TESIS",zh:"到學期末的時候，",py:"dào xué qī mò de shí hòu",id:"di akhir semester,"},
+{cat:"TESIS",zh:"每個人提報一遍，",py:"měi gè rén tí bào yī biàn",id:"setiap orang presentasi sekali,"},
+{cat:"TESIS",zh:"這本書是不是就等於用完了。",py:"zhè běn shū shì bù shì jiù děng yú yòng wán le",id:"bukunya jadi seolah sudah habis dipelajari."},
+{cat:"TESIS",zh:"有些人喜歡用圖案，",py:"yǒu xiē rén xǐ huān yòng tú àn",id:"Ada yang suka pakai gambar,"},
+{cat:"TESIS",zh:"有些人不喜歡用圖案，",py:"yǒu xiē rén bù xǐ huān yòng tú àn",id:"ada yang tidak suka pakai gambar,"},
+{cat:"TESIS",zh:"他跟我講說老師我真的認真看了很久哦，",py:"tā gēn wǒ jiǎng shuō lǎo shī wǒ zhēn de rèn zhēn kàn le hěn jiǔ ó",id:"dia bilang guru saya benar-benar baca lama lho,"},
+{cat:"TESIS",zh:"那整理資料不在於多。",py:"nà zhěng lǐ zī liào bù zài yú duō",id:"nah mengorganisir data bukan soal banyaknya."},
+{cat:"TESIS",zh:"以後有機會，",py:"yǐ hòu yǒu jī huì",id:"Ke depan ada kesempatan,"},
+{cat:"TESIS",zh:"因為他要跟老師去福岡11月去福岡發表，",py:"yīn wèi tā yào gēn lǎo shī qù fú gāng yuè qù fú gāng fā biǎo",id:"karena dia akan ikut guru ke Fukuoka November untuk presentasi,"},
+{cat:"TESIS",zh:"因為剛好我也要去。",py:"yīn wèi gāng hǎo wǒ yě yào qù",id:"kebetulan saya juga mau pergi."},
+{cat:"ADMIN",zh:"東西寫出來了，",py:"dōng xī xiě chū lái le",id:"Setelah selesai ditulis,"},
+{cat:"ADMIN",zh:"一定要上傳到圖書館，",py:"yī dìng yào shàng chuán dào tú shū guǎn",id:"harus diunggah ke perpustakaan,"},
+{cat:"ADMIN",zh:"圖書館會幫你做一個論文原創性的比對系統。",py:"tú shū guǎn huì bāng nǐ zuò yī gè lùn wén yuán chuàng xìng de bǐ duì xì tǒng",id:"perpustakaan akan membantu cek sistem keaslian tesis."},
+{cat:"ADMIN",zh:"如果36%是太高，",py:"rú guǒ shì tài gāo",id:"Kalau 36% itu terlalu tinggi,"},
+{cat:"ADMIN",zh:"一般是要13以下會比較好，",py:"yī bān shì yào yǐ xià huì bǐ jiào hǎo",id:"umumnya di bawah 13% lebih baik,"},
+{cat:"ADMIN",zh:"就是說你有沒有跟人家的論文相似。",py:"jiù shì shuō nǐ yǒu méi yǒu gēn rén jiā de lùn wén xiāng shì",id:"artinya apakah tesismu mirip dengan tesis orang lain."},
+{cat:"ADMIN",zh:"研究倫理就是6個小時，",py:"yán jiū lún lǐ jiù shì gè xiǎo shí",id:"Etika penelitian itu 6 jam, bisa ikut di sumber pendidikan etika akademik Taiwan, gratis tapi harus daftar."},
+{cat:"ADMIN",zh:"你可以上臺灣學術倫理教育資源，",py:"nǐ kě yǐ shàng tái wān xué shù lún lǐ jiào yù zī yuán",id:"Etika penelitian itu 6 jam, bisa ikut di sumber pendidikan etika akademik Taiwan, gratis tapi harus daftar."},
+{cat:"ADMIN",zh:"免費的，",py:"miǎn fèi de",id:"Etika penelitian itu 6 jam, bisa ikut di sumber pendidikan etika akademik Taiwan, gratis tapi harus daftar."},
+{cat:"ADMIN",zh:"但是你要註冊。",py:"dàn shì nǐ yào zhù cè",id:"Etika penelitian itu 6 jam, bisa ikut di sumber pendidikan etika akademik Taiwan, gratis tapi harus daftar."},
+{cat:"ADMIN",zh:"他會給你一張數位的證明，",py:"tā huì gěi nǐ yī zhāng shù wèi de zhèng míng",id:"Mereka akan memberi kamu sertifikat digital,"},
+{cat:"ADMIN",zh:"你要這個你才可以提出口考。",py:"nǐ yào zhè gè nǐ cái kě yǐ tí chū kǒu kǎo",id:"kamu butuh ini baru bisa mengajukan ujian lisan."},
+{cat:"ADMIN",zh:"論文比對系統在6、7月大塞車，",py:"lùn wén bǐ duì xì tǒng zài yuè dà sāi chē",id:"Sistem pembandingan tesis di bulan 6-7 sangat macet,"},
+{cat:"ADMIN",zh:"你口考完之後還要再上傳繳交一些文件。",py:"nǐ kǒu kǎo wán zhī hòu hái yào zài shàng chuán jiǎo jiāo yī xiē wén jiàn",id:"setelah ujian lisan kamu masih harus unggah dan serahkan beberapa dokumen."},
+{cat:"ADMIN",zh:"假設你全部弄完，",py:"jiǎ shè nǐ quán bù nòng wán",id:"Asumsi kamu selesaikan semuanya,"},
+{cat:"ADMIN",zh:"731以前就可以順利拿到畢業證書。",py:"yǐ qián jiù kě yǐ shùn lì ná dào bì yè zhèng shū",id:"sebelum 31 Juli kamu bisa terima ijazah dengan lancar."},
+{cat:"ADMIN",zh:"如果有任何一個步驟沒有完成，",py:"rú guǒ yǒu rèn hé yī gè bù zhòu méi yǒu wán chéng",id:"Kalau ada salah satu langkah yang belum selesai,"},
+{cat:"ADMIN",zh:"那你就是要到8、9月才有辦法拿到畢業證書。",py:"nà nǐ jiù shì yào dào yuè cái yǒu bàn fǎ ná dào bì yè zhèng shū",id:"kamu baru bisa dapat ijazah di bulan 8-9."},
+{cat:"ADMIN",zh:"口考完成之後，",py:"kǒu kǎo wán chéng zhī hòu",id:"Setelah ujian lisan selesai,"},
+{cat:"ADMIN",zh:"你要自己去跑，",py:"nǐ yào zì jǐ qù pǎo",id:"kamu harus urus sendiri,"},
+{cat:"ADMIN",zh:"不管你女朋友、家人，",py:"bù guǎn nǐ nǚ péng yǒu jiā rén",id:"tidak peduli pacar atau keluarga,"},
+{cat:"ADMIN",zh:"大部分都自己弄。",py:"dà bù fēn dōu zì jǐ nòng",id:"sebagian besar urus sendiri."},
+{cat:"ADMIN",zh:"論文摘要跟關鍵詞，",py:"lùn wén zhāi yào gēn guān jiàn cí",id:"Abstrak tesis dan kata kunci harus ada versi bahasa Inggrisnya, tidak cukup hanya Mandarin, harus dilampirkan di akhir tesis."},
+{cat:"ADMIN",zh:"都是要英文的版本，",py:"dōu shì yào yīng wén de bǎn běn",id:"Abstrak tesis dan kata kunci harus ada versi bahasa Inggrisnya, tidak cukup hanya Mandarin, harus dilampirkan di akhir tesis."},
+{cat:"ADMIN",zh:"不是只有中文的，",py:"bù shì zhǐ yǒu zhōng wén de",id:"Abstrak tesis dan kata kunci harus ada versi bahasa Inggrisnya, tidak cukup hanya Mandarin, harus dilampirkan di akhir tesis."},
+{cat:"ADMIN",zh:"要附在那一本碩論的最後。",py:"yào fù zài nà yī běn shuò lùn de zuì hòu",id:"Abstrak tesis dan kata kunci harus ada versi bahasa Inggrisnya, tidak cukup hanya Mandarin, harus dilampirkan di akhir tesis."},
+{cat:"ADMIN",zh:"這個 template 都有在系網的上面，",py:"zhè gè dōu yǒu zài xì wǎng de shàng miàn",id:"Template ini semua ada di website jurusan,"},
+{cat:"ADMIN",zh:"你要 download 最新的。",py:"nǐ yào zuì xīn de",id:"kamu harus download yang terbaru."},
+{cat:"ADMIN",zh:"碩生在11月底就要確定指導老師，",py:"shuò shēng zài yuè dǐ jiù yào què dìng zhǐ dǎo lǎo shī",id:"Mahasiswa S2 harus konfirmasi dosen pembimbing di akhir November,"},
+{cat:"ADMIN",zh:"系上會告訴班代，",py:"xì shàng huì gào sù bān dài",id:"departemen akan beritahu ketua kelas,"},
+{cat:"ADMIN",zh:"然後班代通知同學。",py:"rán hòu bān dài tōng zhī tóng xué",id:"lalu ketua kelas kasih tahu mahasiswa."},
+{cat:"ADMIN",zh:"我只是一個授課老師，",py:"wǒ zhǐ shì yī gè shòu kè lǎo shī",id:"Saya hanya dosen pengajar,"},
+{cat:"ADMIN",zh:"你的選課系統跟我沒關係，",py:"nǐ de xuǎn kè xì tǒng gēn wǒ méi guān xì",id:"sistem pemilihan mata kuliah kamu tidak ada hubungannya dengan saya,"},
+{cat:"ADMIN",zh:"我的系統也進不去。",py:"wǒ de xì tǒng yě jìn bù qù",id:"saya juga tidak bisa masuk sistemnya."},
+{cat:"ADMIN",zh:"你的15000元不是都到我口袋裡，",py:"nǐ de yuán bù shì dōu dào wǒ kǒu dài lǐ",id:"15.000 NT kamu tidak masuk semua ke kantong saya,"},
+{cat:"ADMIN",zh:"那是繳給教務處的。",py:"nà shì jiǎo gěi jiào wù chù de",id:"itu dibayarkan ke Bagian Akademik."},
+{cat:"ADMIN",zh:"我只是一個企業下的員工，",py:"wǒ zhǐ shì yī gè qǐ yè xià de yuán gōng",id:"Saya hanya karyawan di bawah institusi,"},
+{cat:"ADMIN",zh:"所以你的學費不知道我口袋，",py:"suǒ yǐ nǐ de xué fèi bù zhī dào wǒ kǒu dài",id:"jadi biaya kuliahmu tidak masuk kantong saya,"},
+{cat:"ADMIN",zh:"我怎麼幫你發畢業證書？",py:"wǒ zěn me bāng nǐ fā bì yè zhèng shū",id:"bagaimana saya bisa kasih kamu ijazah?"},
+{cat:"ADMIN",zh:"加退學，",py:"jiā tuì xué",id:"Tambah atau drop mata kuliah,"},
+{cat:"ADMIN",zh:"那個步驟我不可能幫你加，",py:"nà gè bù zhòu wǒ bù kě néng bāng nǐ jiā",id:"prosedur itu tidak mungkin saya lakukan untuk kamu,"},
+{cat:"ADMIN",zh:"我沒有辦法進入那個系統，",py:"wǒ méi yǒu bàn fǎ jìn rù nà gè xì tǒng",id:"saya tidak bisa masuk sistem itu,"},
+{cat:"ADMIN",zh:"我也不是學生身份。",py:"wǒ yě bù shì xué shēng shēn fèn",id:"saya juga bukan dengan status mahasiswa."},
+{cat:"ADMIN",zh:"你的畢業，這些要繳交：原創性比對、研究倫理證書、口考成績，還有論文。",py:"nǐ de bì yè zhè xiē yào jiǎo jiāo yuán chuàng xìng bǐ duì yán jiū lún lǐ zhèng shū kǒu kǎo chéng jī hái yǒu lùn wén",id:"Kelulusanmu,"},
+{cat:"ADMIN",zh:"這些東西要自己跑，不是系上幫你弄。",py:"zhè xiē dōng xī yào zì jǐ pǎo bù shì xì shàng bāng nǐ nòng",id:"hal-hal yang harus diserahkan: uji keaslian,"},
+{cat:"ADMIN",zh:"你在投考的時候你不用布置嗎？",py:"nǐ zài tóu kǎo de shí hòu nǐ bù yòng bù zhì ma",id:"Waktu ujian kamu tidak perlu atur ruangan?"},
+{cat:"ADMIN",zh:"你叫我布置嗎？",py:"nǐ jiào wǒ bù zhì ma",id:"Kamu minta saya atur?"},
+{cat:"ADMIN",zh:"我不可能幫你布置啊，那個都不用時間嗎？",py:"wǒ bù kě néng bāng nǐ bù zhì a nà gè dōu bù yòng shí jiān ma",id:"Saya tidak mungkin atur untuk kamu,"},
+{cat:"ADMIN",zh:"你要邀我當口委，",py:"nǐ yào yāo wǒ dāng kǒu wěi",id:"Kamu mau undang saya jadi penguji,"},
+{cat:"ADMIN",zh:"我也不見得有時間，",py:"wǒ yě bù jiàn dé yǒu shí jiān",id:"saya belum tentu ada waktu,"},
+{cat:"ADMIN",zh:"你不能說你要的老師一定要在你想要的時間來。",py:"nǐ bù néng shuō nǐ yào de lǎo shī yī dìng yào zài nǐ xiǎng yào de shí jiān lái",id:"kamu tidak bisa bilang dosen yang kamu mau harus datang di waktu yang kamu inginkan."},
+{cat:"ADMIN",zh:"56月是我的忘記好，",py:"yuè shì wǒ de wàng jì hǎo",id:"Bulan 5-6 itu jadwal ujian lisan saya yang sudah penuh, bulan 7 saya biasanya tidak terima lagi."},
+{cat:"ADMIN",zh:"那個就是我的口考忘記，",py:"nà gè jiù shì wǒ de kǒu kǎo wàng jì",id:"Bulan 5-6 itu jadwal ujian lisan saya yang sudah penuh, bulan 7 saya biasanya tidak terima lagi."},
+{cat:"ADMIN",zh:"7月我通常就不做。",py:"yuè wǒ tōng cháng jiù bù zuò",id:"Bulan 5-6 itu jadwal ujian lisan saya yang sudah penuh, bulan 7 saya biasanya tidak terima lagi."},
+{cat:"ADMIN",zh:"太趕我也暑假，",py:"tài gǎn wǒ yě shǔ jiǎ",id:"Terlalu terburu-buru dan saya juga liburan musim panas, ada jadwal lain, jadi biasanya bagi saya bulan 5-6 itu sudah penuh."},
+{cat:"ADMIN",zh:"我有別的行程，",py:"wǒ yǒu bié de xíng chéng",id:"Terlalu terburu-buru dan saya juga liburan musim panas, ada jadwal lain, jadi biasanya bagi saya bulan 5-6 itu sudah penuh."},
+{cat:"ADMIN",zh:"所以我通常對我來講，",py:"suǒ yǐ wǒ tōng cháng duì wǒ lái jiǎng",id:"Terlalu terburu-buru dan saya juga liburan musim panas, ada jadwal lain, jadi biasanya bagi saya bulan 5-6 itu sudah penuh."},
+{cat:"ADMIN",zh:"56月是我的忘記好。",py:"yuè shì wǒ de wàng jì hǎo",id:"Terlalu terburu-buru dan saya juga liburan musim panas, ada jadwal lain, jadi biasanya bagi saya bulan 5-6 itu sudah penuh."},
+{cat:"ADMIN",zh:"你既然講了這個學費進來，",py:"nǐ jì rán jiǎng le zhè gè xué fèi jìn lái",id:"Karena kamu sudah bayar biaya kuliah dan masuk,"},
+{cat:"ADMIN",zh:"你投資的這兩年，",py:"nǐ tóu zī de zhè liǎng nián",id:"investasi 2 tahun ini,"},
+{cat:"ADMIN",zh:"你的確要把自己搞畢業。",py:"nǐ de què yào bǎ zì jǐ gǎo bì yè",id:"kamu memang harus bisa wisudakan dirimu sendiri."},
+{cat:"ADMIN",zh:"你還有學倫喔，",py:"nǐ hái yǒu xué lún ō",id:"Kamu masih ada etika penelitian ya,"},
+{cat:"ADMIN",zh:"這個法規應該會有再更改一點點，",py:"zhè gè fǎ guī yīng gāi huì yǒu zài gèng gǎi yī diǎn diǎn",id:"peraturan ini mungkin akan sedikit berubah,"},
+{cat:"ADMIN",zh:"可是大部分不會離太遠。",py:"kě shì dà bù fēn bù huì lí tài yuǎn",id:"tapi kebanyakan tidak akan jauh berbeda."},
+{cat:"ADMIN",zh:"你要去正式繳交之前，",py:"nǐ yào qù zhèng shì jiǎo jiāo zhī qián",id:"Sebelum kamu menyerahkan secara resmi,"},
+{cat:"ADMIN",zh:"你可能3、4月就要送了，",py:"nǐ kě néng yuè jiù yào sòng le",id:"mungkin bulan 3-4 sudah harus dikirim,"},
+{cat:"ADMIN",zh:"所以不知道同學你還有學倫哦。",py:"suǒ yǐ bù zhī dào tóng xué nǐ hái yǒu xué lún ó",id:"jadi tidak tahu mahasiswa apakah kamu masih punya etika penelitian ya."},
+{cat:"ADMIN",zh:"口考的時候你的錄影，",py:"kǒu kǎo de shí hòu nǐ de lù yǐng",id:"Saat ujian lisan rekaman videonya,"},
+{cat:"ADMIN",zh:"還有你在口考的時候，",py:"hái yǒu nǐ zài kǒu kǎo de shí hòu",id:"dan saat ujian lisan,"},
+{cat:"ADMIN",zh:"如果要布置場地那都是你自己要準備的。",py:"rú guǒ yào bù zhì chǎng dì nà dōu shì nǐ zì jǐ yào zhǔn bèi de",id:"kalau perlu tata ruangan itu semua yang harus kamu siapkan sendiri."},
+{cat:"ADMIN",zh:"我只能告訴你 know how，",py:"wǒ zhǐ néng gào sù nǐ",id:"Saya hanya bisa memberitahu cara-caranya,"},
+{cat:"ADMIN",zh:"但是執行的人是你，",py:"dàn shì zhí xíng de rén shì nǐ",id:"tapi yang mengerjakan adalah kamu,"},
+{cat:"ADMIN",zh:"你了解嗎？",py:"nǐ le jiě ma",id:"kamu mengerti?"},
+{cat:"NASIHAT",zh:"你要想想看你為什麼要投資這2年，",py:"nǐ yào xiǎng xiǎng kàn nǐ wèi shén me yào tóu zī zhè nián",id:"Pikirkan mengapa kamu mau investasikan 2 tahun ini,"},
+{cat:"NASIHAT",zh:"這2年不見得能夠準時畢業。",py:"zhè nián bù jiàn dé néng gòu zhǔn shí bì yè",id:"2 tahun belum tentu bisa lulus tepat waktu."},
+{cat:"NASIHAT",zh:"你同樣花2年，",py:"nǐ tóng yàng huā nián",id:"Untuk 2 tahun yang sama kamu bisa kerja, karena biaya kuliah kalian tidak murah."},
+{cat:"NASIHAT",zh:"你自己去工作，",py:"nǐ zì jǐ qù gōng zuò",id:"Untuk 2 tahun yang sama kamu bisa kerja, karena biaya kuliah kalian tidak murah."},
+{cat:"NASIHAT",zh:"因為你們學費不便宜。",py:"yīn wèi nǐ men xué fèi bù biàn yí",id:"Untuk 2 tahun yang sama kamu bisa kerja, karena biaya kuliah kalian tidak murah."},
+{cat:"NASIHAT",zh:"你來這裡一定有某種的原因，",py:"nǐ lái zhè lǐ yī dìng yǒu mǒu zhǒng de yuán yīn",id:"Kamu pasti punya alasan tertentu untuk ke sini,"},
+{cat:"NASIHAT",zh:"你是要來圓夢的還是當跳板還是怎麼樣的。",py:"nǐ shì yào lái yuán mèng de hái shì dāng tiào bǎn hái shì zěn me yàng de",id:"apakah untuk mewujudkan mimpi,"},
+{cat:"NASIHAT",zh:"你既然來了，",py:"nǐ jì rán lái le",id:"Karena sudah datang,"},
+{cat:"NASIHAT",zh:"你就要想想看，",py:"nǐ jiù yào xiǎng xiǎng kàn",id:"kamu harus pikirkan,"},
+{cat:"NASIHAT",zh:"你投資的這2年，",py:"nǐ tóu zī de zhè nián",id:"investasi 2 tahun ini,"},
+{cat:"NASIHAT",zh:"你要怎麼回本。",py:"nǐ yào zěn me huí běn",id:"bagaimana cara mendapat balik modalnya."},
+{cat:"NASIHAT",zh:"假設你到人生地不熟的地方，",py:"jiǎ shè nǐ dào rén shēng dì bù shú de dì fāng",id:"Misalkan kamu ke tempat yang asing,"},
+{cat:"NASIHAT",zh:"你要怎麼運用你的專業，",py:"nǐ yào zěn me yùn yòng nǐ de zhuān yè",id:"bagaimana kamu memanfaatkan keahlianmu,"},
+{cat:"NASIHAT",zh:"你要怎麼賺錢。",py:"nǐ yào zěn me zhuàn qián",id:"bagaimana kamu menghasilkan uang."},
+{cat:"NASIHAT",zh:"我雖然不會講越南話，",py:"wǒ suī rán bù huì jiǎng yuè nán huà",id:"Walaupun saya tidak bisa bahasa Vietnam,"},
+{cat:"NASIHAT",zh:"那至少我可以去教中文，",py:"nà zhì shǎo wǒ kě yǐ qù jiào zhōng wén",id:"setidaknya saya bisa mengajar Mandarin,"},
+{cat:"NASIHAT",zh:"我可以去教英文，",py:"wǒ kě yǐ qù jiào yīng wén",id:"mengajar Inggris,"},
+{cat:"NASIHAT",zh:"開補習班也可以。",py:"kāi bǔ xí bān yě kě yǐ",id:"buka bimbel juga bisa."},
+{cat:"NASIHAT",zh:"不要覺得越南落後，",py:"bù yào jué dé yuè nán luò hòu",id:"Jangan pikir Vietnam terbelakang,"},
+{cat:"NASIHAT",zh:"那個全部都是工作機會啊，",py:"nà gè quán bù dōu shì gōng zuò jī huì a",id:"itu semua adalah peluang kerja,"},
+{cat:"NASIHAT",zh:"我們是已經過度發展。",py:"wǒ men shì yǐ jīng guò dù fā zhǎn",id:"kita sudah terlalu jenuh berkembang."},
+{cat:"NASIHAT",zh:"胡志明市、峴港、那個全部都是工作機會啊，",py:"hú zhì míng shì xiàn gǎng nà gè quán bù dōu shì gōng zuò jī huì a",id:"Ho Chi Minh City,"},
+{cat:"NASIHAT",zh:"我們臺灣是已經過度發展，",py:"wǒ men tái wān shì yǐ jīng guò dù fā zhǎn",id:"Da Nang,"},
+{cat:"NASIHAT",zh:"然後少子化。",py:"rán hòu shǎo zi huà",id:"itu semua peluang kerja,"},
+{cat:"NASIHAT",zh:"你輪得到嗎？",py:"nǐ lún dé dào ma",id:"Apa kamu bisa dapat giliran?"},
+{cat:"NASIHAT",zh:"每個人都想卡好的位置，但是輪得到你們嗎？",py:"měi gè rén dōu xiǎng kǎ hǎo de wèi zhì dàn shì lún dé dào nǐ men ma",id:"Semua orang mau rebut posisi bagus,"},
+{cat:"NASIHAT",zh:"我們要學會跟國際人士相處，",py:"wǒ men yào xué huì gēn guó jì rén shì xiāng chù",id:"Kita harus belajar bergaul dengan orang internasional,"},
+{cat:"NASIHAT",zh:"因為我們的人口真的沒辦法，",py:"yīn wèi wǒ men de rén kǒu zhēn de méi bàn fǎ",id:"karena jumlah penduduk kita memang tidak cukup,"},
+{cat:"NASIHAT",zh:"那些基礎的工作一定會有人來做。",py:"nà xiē jī chǔ de gōng zuò yī dìng huì yǒu rén lái zuò",id:"pekerjaan-pekerjaan dasar itu pasti akan ada yang datang mengisi."},
+{cat:"NASIHAT",zh:"就像我們到東南亞去工作被公司派遣那樣，",py:"jiù xiàng wǒ men dào dōng nán yà qù gōng zuò bèi gōng sī pài qiǎn nà yàng",id:"Seperti kita pergi bekerja ke Asia Tenggara dikirim oleh perusahaan,"},
+{cat:"NASIHAT",zh:"所以我們一定要學會跟國際的人相處。",py:"suǒ yǐ wǒ men yī dìng yào xué huì gēn guó jì de rén xiāng chù",id:"jadi kita harus belajar bergaul dengan orang internasional."},
+{cat:"NASIHAT",zh:"臺灣相對的安全，",py:"tái wān xiāng duì de ān quán",id:"Taiwan relatif aman,"},
+{cat:"NASIHAT",zh:"但是任何事情都有可能發生，",py:"dàn shì rèn hé shì qíng dōu yǒu kě néng fā shēng",id:"tapi hal apapun bisa terjadi,"},
+{cat:"NASIHAT",zh:"自己也要小心。",py:"zì jǐ yě yào xiǎo xīn",id:"kamu juga harus berhati-hati."},
+{cat:"NASIHAT",zh:"你要把大學生的心態拿來做碩論，",py:"nǐ yào bǎ dà xué shēng de xīn tài ná lái zuò shuò lùn",id:"Kamu tidak boleh pakai mentalitas mahasiswa S1 untuk tesis S2,"},
+{cat:"NASIHAT",zh:"碩論是要自己付出的，",py:"shuò lùn shì yào zì jǐ fù chū de",id:"tesis harus dikerjakan sendiri,"},
+{cat:"NASIHAT",zh:"要勤勞一點，",py:"yào qín láo yī diǎn",id:"harus lebih rajin,"},
+{cat:"NASIHAT",zh:"不是永遠坐在背後聽。",py:"bù shì yǒng yuǎn zuò zài bèi hòu tīng",id:"bukan selalu duduk di belakang saja mendengarkan."},
+{cat:"NASIHAT",zh:"你不能說啊，",py:"nǐ bù néng shuō a",id:"Kamu tidak bisa menyalahkan dosen, menyalahkan ini itu, tapi tidak salahkan diri sendiri, itu semua faktor pribadi."},
+{cat:"NASIHAT",zh:"我怪老師，",py:"wǒ guài lǎo shī",id:"Kamu tidak bisa menyalahkan dosen, menyalahkan ini itu, tapi tidak salahkan diri sendiri, itu semua faktor pribadi."},
+{cat:"NASIHAT",zh:"怨天怨地，",py:"yuàn tiān yuàn dì",id:"Kamu tidak bisa menyalahkan dosen, menyalahkan ini itu, tapi tidak salahkan diri sendiri, itu semua faktor pribadi."},
+{cat:"NASIHAT",zh:"就不會怨自己，",py:"jiù bù huì yuàn zì jǐ",id:"Kamu tidak bisa menyalahkan dosen, menyalahkan ini itu, tapi tidak salahkan diri sendiri, itu semua faktor pribadi."},
+{cat:"NASIHAT",zh:"那個都是個人的因素。",py:"nà gè dōu shì gè rén de yīn sù",id:"Kamu tidak bisa menyalahkan dosen, menyalahkan ini itu, tapi tidak salahkan diri sendiri, itu semua faktor pribadi."},
+{cat:"NASIHAT",zh:"時間是你的還是我的？",py:"shí jiān shì nǐ de hái shì wǒ de",id:"Waktu itu punyamu atau punyaku?"},
+{cat:"NASIHAT",zh:"我沒有擦啊，你就是要配合我在這22年。",py:"wǒ méi yǒu cā a nǐ jiù shì yào pèi hé wǒ zài zhè nián",id:"Saya tidak yang minta,"},
+{cat:"NASIHAT",zh:"碩論是你這一生可能最後一次念書的機會，",py:"shuò lùn shì nǐ zhè yī shēng kě néng zuì hòu yī cì niàn shū de jī huì",id:"Tesis S2 mungkin adalah kesempatan belajar terakhirmu seumur hidup,"},
+{cat:"NASIHAT",zh:"如果你不想念博士的話，",py:"rú guǒ nǐ bù xiǎng niàn bó shì de huà",id:"kalau tidak mau lanjut S3,"},
+{cat:"NASIHAT",zh:"你就好好的珍惜。",py:"nǐ jiù hǎo hǎo de zhēn xī",id:"manfaatkan dengan baik."},
+{cat:"NASIHAT",zh:"AI 對我來講只是一個工具，",py:"duì wǒ lái jiǎng zhǐ shì yī gè gōng jù",id:"AI bagi saya hanya sebuah alat,"},
+{cat:"NASIHAT",zh:"我不會因為 AI 走投無路，",py:"wǒ bù huì yīn wèi zǒu tóu wú lù",id:"saya tidak akan terdesak karena AI,"},
+{cat:"NASIHAT",zh:"因為我還有其他能力。",py:"yīn wèi wǒ hái yǒu qí tā néng lì",id:"karena saya masih punya kemampuan lain."},
+{cat:"NASIHAT",zh:"就算臺灣的學校關了，",py:"jiù suàn tái wān de xué xiào guān le",id:"Walaupun sekolah di Taiwan tutup,"},
+{cat:"NASIHAT",zh:"我也可以去別的學校教書，",py:"wǒ yě kě yǐ qù bié de xué xiào jiào shū",id:"saya bisa pergi mengajar di sekolah lain,"},
+{cat:"NASIHAT",zh:"我不排除去越南，",py:"wǒ bù pái chú qù yuè nán",id:"saya tidak menutup kemungkinan ke Vietnam,"},
+{cat:"NASIHAT",zh:"只要能夠講英語就可以去。",py:"zhǐ yào néng gòu jiǎng yīng yǔ jiù kě yǐ qù",id:"selama bisa berbicara bahasa Inggris bisa pergi."},
+{cat:"NASIHAT",zh:"你不要覺得他皮膚比我們黑，",py:"nǐ bù yào jué dé tā pí fū bǐ wǒ men hēi",id:"Jangan pikir karena kulitnya lebih gelap dari kita,"},
+{cat:"NASIHAT",zh:"他們就比我們落後，",py:"tā men jiù bǐ wǒ men luò hòu",id:"mereka lebih terbelakang dari kita,"},
+{cat:"NASIHAT",zh:"臺灣不見得是好的環境。",py:"tái wān bù jiàn dé shì hǎo de huán jìng",id:"Taiwan belum tentu lingkungan yang bagus."},
+{cat:"NASIHAT",zh:"臺灣不見得是好的環境，",py:"tái wān bù jiàn dé shì hǎo de huán jìng",id:"Taiwan belum tentu lingkungan yang bagus,"},
+{cat:"NASIHAT",zh:"地震啊、斷電、缺水，",py:"dì zhèn a duàn diàn quē shuǐ",id:"gempa,"},
+{cat:"NASIHAT",zh:"一大堆問題對不對。",py:"yī dà duī wèn tí duì bù duì",id:"mati lampu,"},
+{cat:"NASIHAT",zh:"我會鼓勵同學多看多走，",py:"wǒ huì gǔ lì tóng xué duō kàn duō zǒu",id:"Saya akan dorong mahasiswa untuk banyak melihat dan berjalan,"},
+{cat:"NASIHAT",zh:"認識一點，",py:"rèn shí yī diǎn",id:"mengenal sedikit lebih banyak,"},
+{cat:"NASIHAT",zh:"我覺得也蠻不錯的。",py:"wǒ jué dé yě mán bù cuò de",id:"saya rasa itu cukup bagus."},
+{cat:"NASIHAT",zh:"你自己最實在，",py:"nǐ zì jǐ zuì shí zài",id:"Dirimu sendiri yang paling nyata, benar-benar, jangan pikirkan orang lain, guru ataupun teman siapapun, dirimu sendiri yang paling nyata."},
+{cat:"NASIHAT",zh:"真的，",py:"zhēn de",id:"Dirimu sendiri yang paling nyata, benar-benar, jangan pikirkan orang lain, guru ataupun teman siapapun, dirimu sendiri yang paling nyata."},
+{cat:"NASIHAT",zh:"不要想別人，",py:"bù yào xiǎng bié rén",id:"Dirimu sendiri yang paling nyata, benar-benar, jangan pikirkan orang lain, guru ataupun teman siapapun, dirimu sendiri yang paling nyata."},
+{cat:"NASIHAT",zh:"老師也好，",py:"lǎo shī yě hǎo",id:"Dirimu sendiri yang paling nyata, benar-benar, jangan pikirkan orang lain, guru ataupun teman siapapun, dirimu sendiri yang paling nyata."},
+{cat:"NASIHAT",zh:"同學誰誰誰也好，",py:"tóng xué shuí shuí shuí yě hǎo",id:"Dirimu sendiri yang paling nyata, benar-benar, jangan pikirkan orang lain, guru ataupun teman siapapun, dirimu sendiri yang paling nyata."},
+{cat:"NASIHAT",zh:"你自己最實在。",py:"nǐ zì jǐ zuì shí zài",id:"Dirimu sendiri yang paling nyata, benar-benar, jangan pikirkan orang lain, guru ataupun teman siapapun, dirimu sendiri yang paling nyata."},
+{cat:"NASIHAT",zh:"我可能不是完美的機器人，",py:"wǒ kě néng bù shì wán měi de jī qì rén",id:"Saya mungkin bukan mesin yang sempurna,"},
+{cat:"NASIHAT",zh:"我可能也會犯錯誤，",py:"wǒ kě néng yě huì fàn cuò wù",id:"saya mungkin juga akan membuat kesalahan,"},
+{cat:"NASIHAT",zh:"可能速度不夠快，",py:"kě néng sù dù bù gòu kuài",id:"mungkin kecepatan tidak cukup,"},
+{cat:"NASIHAT",zh:"講話可能沒辦法讓你理解。",py:"jiǎng huà kě néng méi bàn fǎ ràng nǐ lǐ jiě",id:"bicara mungkin tidak bisa membuatmu mengerti."},
+{cat:"NASIHAT",zh:"那你心裡也跟我講，",py:"nà nǐ xīn lǐ yě gēn wǒ jiǎng",id:"Nah itu ceritakan juga ke saya,"},
+{cat:"NASIHAT",zh:"我願意聽，",py:"wǒ yuàn yì tīng",id:"saya mau mendengarkan,"},
+{cat:"NASIHAT",zh:"但是就是你要讓我知道你的難處在哪。",py:"dàn shì jiù shì nǐ yào ràng wǒ zhī dào nǐ de nán chù zài nǎ",id:"tapi kamu harus beri tahu saya di mana kesulitanmu."},
+{cat:"NASIHAT",zh:"作文你沒有看文章你就寫得出來嗎？",py:"zuò wén nǐ méi yǒu kàn wén zhāng nǐ jiù xiě dé chū lái ma",id:"Karangan tanpa membaca artikel kamu bisa menulis?"},
+{cat:"NASIHAT",zh:"你覺得不可能啊，你要多閱讀才寫得出來啊。",py:"nǐ jué dé bù kě néng a nǐ yào duō yuè dú cái xiě dé chū lái a",id:"Menurutmu tidak mungkin kan,"},
+{cat:"NASIHAT",zh:"Reset 好自己的心情，",py:"hǎo zì jǐ de xīn qíng",id:"Reset suasana hatimu,"},
+{cat:"NASIHAT",zh:"不要永遠只想當 NPC，",py:"bù yào yǒng yuǎn zhǐ xiǎng dāng",id:"jangan selalu hanya mau jadi NPC,"},
+{cat:"NASIHAT",zh:"你要把大學生的心態放下。",py:"nǐ yào bǎ dà xué shēng de xīn tài fàng xià",id:"kamu harus melepaskan mentalitas mahasiswa S1."},
+{cat:"NASIHAT",zh:"碩論是要自己付出的，",py:"shuò lùn shì yào zì jǐ fù chū de",id:"Tesis S2 harus dikerjakan sendiri,"},
+{cat:"NASIHAT",zh:"要勤勞一點，",py:"yào qín láo yī diǎn",id:"harus lebih rajin,"},
+{cat:"NASIHAT",zh:"不是永遠坐在背後哦，",py:"bù shì yǒng yuǎn zuò zài bèi hòu ó",id:"bukan selalu duduk di belakang saja,"},
+{cat:"NASIHAT",zh:"那聽一聽哦。",py:"nà tīng yī tīng ó",id:"dengar-dengarin ya."},
+{cat:"NASIHAT",zh:"我跟你講，",py:"wǒ gēn nǐ jiǎng",id:"Saya bilang ke kamu,"},
+{cat:"NASIHAT",zh:"你絕對寫不出來，",py:"nǐ jué duì xiě bù chū lái",id:"kamu pasti tidak akan bisa menulis,"},
+{cat:"NASIHAT",zh:"所以你要想清楚，",py:"suǒ yǐ nǐ yào xiǎng qīng chǔ",id:"jadi kamu harus pikir jelas,"},
+{cat:"NASIHAT",zh:"你到底為什麼要念碩士。",py:"nǐ dào dǐ wèi shén me yào niàn shuò shì",id:"sebenarnya kenapa kamu mau ambil S2."},
+{cat:"NASIHAT",zh:"你有沒有辦法做設計相關的東西，",py:"nǐ yǒu méi yǒu bàn fǎ zuò shè jì xiāng guān de dōng xī",id:"Bisakah kamu membuat sesuatu yang berkaitan dengan desain,"},
+{cat:"NASIHAT",zh:"在跟同學講一下，",py:"zài gēn tóng xué jiǎng yī xià",id:"ingatkan teman-teman juga,"},
+{cat:"NASIHAT",zh:"因為 homework 的工作一定要落實。",py:"yīn wèi de gōng zuò yī dìng yào luò shí",id:"karena pekerjaan rumah harus benar-benar dilaksanakan."},
+{cat:"NASIHAT",zh:"你要不要去做長照、殯葬，",py:"nǐ yào bù yào qù zuò zhǎng zhào bìn zàng",id:"Apakah kamu mau kerja di perawatan lansia,"},
+{cat:"NASIHAT",zh:"那也是蠻神聖的一個工作，",py:"nà yě shì mán shén shèng de yī gè gōng zuò",id:"pemakaman,"},
+{cat:"NASIHAT",zh:"你願不願意？",py:"nǐ yuàn bù yuàn yì",id:"itu juga pekerjaan yang cukup mulia,"},
+{cat:"NASIHAT",zh:"那些基礎的工作是要做的，",py:"nà xiē jī chǔ de gōng zuò shì yào zuò de",id:"Pekerjaan-pekerjaan dasar itu harus ada yang mengerjakan,"},
+{cat:"NASIHAT",zh:"我們要學會對，",py:"wǒ men yào xué huì duì",id:"kita harus belajar menghargai,"},
+{cat:"NASIHAT",zh:"不要鄙視就是說國際的人士來臺灣工作。",py:"bù yào bǐ shì jiù shì shuō guó jì de rén shì lái tái wān gōng zuò",id:"jangan meremehkan orang internasional yang datang bekerja ke Taiwan."},
+{cat:"NASIHAT",zh:"現在才是開始哦，",py:"xiàn zài cái shì kāi shǐ ó",id:"Ini baru awal,"},
+{cat:"NASIHAT",zh:"放輕鬆，",py:"fàng qīng sōng",id:"santai saja,"},
+{cat:"NASIHAT",zh:"你要覺得你自己的強項是什麼先把它做起來。",py:"nǐ yào jué dé nǐ zì jǐ de qiáng xiàng shì shén me xiān bǎ tā zuò qǐ lái",id:"kamu perlu tahu apa kelebihan dirimu sendiri,"},
+{cat:"NASIHAT",zh:"你上我的課應該是感覺像三溫暖，",py:"nǐ shàng wǒ de kè yīng gāi shì gǎn jué xiàng sān wēn nuǎn",id:"Ikut kelas saya harusnya terasa seperti sauna,"},
+{cat:"NASIHAT",zh:"就是老師跟你講一些很恐怖的，",py:"jiù shì lǎo shī gēn nǐ jiǎng yī xiē hěn kǒng bù de",id:"guru bicara hal-hal yang menakutkan,"},
+{cat:"NASIHAT",zh:"然後又說摸摸，",py:"rán hòu yòu shuō mō mō",id:"lalu bilang tenang saja,"},
+{cat:"NASIHAT",zh:"你不用擔心。",py:"nǐ bù yòng dān xīn",id:"tidak perlu khawatir."},
+{cat:"NASIHAT",zh:"準時2年畢業的，",py:"zhǔn shí nián bì yè de",id:"Yang lulus tepat waktu 2 tahun,"},
+{cat:"NASIHAT",zh:"歷屆學長姐大概只有一兩個，",py:"lì jiè xué zhǎng jiě dà gài zhǐ yǒu yī liǎng gè",id:"dari semua angkatan kakak tingkat hanya sekitar satu dua orang,"},
+{cat:"NASIHAT",zh:"大部分都是3年。",py:"dà bù fēn dōu shì nián",id:"kebanyakan 3 tahun."},
+{cat:"NASIHAT",zh:"你要不要念博士也可以，",py:"nǐ yào bù yào niàn bó shì yě kě yǐ",id:"Mau lanjut S3 juga bisa, tapi saya lebih sarankan untuk dipikir ulang dulu, karena ambil S3 itu cukup panjang jalannya."},
+{cat:"NASIHAT",zh:"但是我比較建議就是說，",py:"dàn shì wǒ bǐ jiào jiàn yì jiù shì shuō",id:"Mau lanjut S3 juga bisa, tapi saya lebih sarankan untuk dipikir ulang dulu, karena ambil S3 itu cukup panjang jalannya."},
+{cat:"NASIHAT",zh:"他再想想，",py:"tā zài xiǎng xiǎng",id:"Mau lanjut S3 juga bisa, tapi saya lebih sarankan untuk dipikir ulang dulu, karena ambil S3 itu cukup panjang jalannya."},
+{cat:"NASIHAT",zh:"因為念博士也是個蠻長遠的。",py:"yīn wèi niàn bó shì yě shì gè mán zhǎng yuǎn de",id:"Mau lanjut S3 juga bisa, tapi saya lebih sarankan untuk dipikir ulang dulu, karena ambil S3 itu cukup panjang jalannya."},
+{cat:"NASIHAT",zh:"你碩士出去，你覺得幾萬塊，你可以接受？",py:"nǐ shuò shì chū qù nǐ jué dé jǐ wàn kuài nǐ kě yǐ jiē shòu",id:"Kamu lulus S2 keluar,"},
+{cat:"NASIHAT",zh:"這樣問答，你覺得4萬塊以下你可以接受舉手。",py:"zhè yàng wèn dá nǐ jué dé wàn kuài yǐ xià nǐ kě yǐ jiē shòu jǔ shǒu",id:"menurutmu berapa puluh ribu,"},
+{cat:"KELAS",zh:"開學第一週第二週我請了事假，",py:"kāi xué dì yī zhōu dì èr zhōu wǒ qǐng le shì jiǎ",id:"Minggu pertama dan kedua kuliah saya ambil cuti,"},
+{cat:"KELAS",zh:"學校是有批准的，",py:"xué xiào shì yǒu pī zhǔn de",id:"sekolah sudah menyetujui,"},
+{cat:"KELAS",zh:"那我期末再慢慢補課好不好。",py:"nà wǒ qī mò zài màn màn bǔ kè hǎo bù hǎo",id:"nanti akhir semester perlahan saya ganti ya."},
+{cat:"KELAS",zh:"我們把禮拜三的課，",py:"wǒ men bǎ lǐ bài sān de kè",id:"Kita gabungkan kelas Rabu,"},
+{cat:"KELAS",zh:"就是專考靈學分，",py:"jiù shì zhuān kǎo líng xué fēn",id:"yaitu kredit ujian khusus,"},
+{cat:"KELAS",zh:"因為都是必修，",py:"yīn wèi dōu shì bì xiū",id:"karena semua wajib,"},
+{cat:"KELAS",zh:"一起殺，",py:"yī qǐ shā",id:"selesaikan bersama,"},
+{cat:"KELAS",zh:"歷屆的學長姐比較喜歡。",py:"lì jiè de xué zhǎng jiě bǐ jiào xǐ huān",id:"kakak tingkat semua angkatan lebih suka begini."},
+{cat:"KELAS",zh:"你不要覺得說你抱著以前大學的心態，",py:"nǐ bù yào jué dé shuō nǐ bào zhù yǐ qián dà xué de xīn tài",id:"Jangan berpikir dengan mentalitas kuliah S1 dulu,"},
+{cat:"KELAS",zh:"你就是來這邊上課，",py:"nǐ jiù shì lái zhè biān shàng kè",id:"datang ke sini lalu duduk seperti NPC,"},
+{cat:"KELAS",zh:"然後就坐著像 NPC 一樣時間到了就換另一個場景。",py:"rán hòu jiù zuò zhù xiàng yī yàng shí jiān dào le jiù huàn lìng yī gè chǎng jǐng",id:"waktunya habis pindah ke adegan lain."},
+{cat:"KELAS",zh:"在我的課堂學生都是 NPC，",py:"zài wǒ de kè táng xué shēng dōu shì",id:"Di kelas saya muridnya semua NPC, tidak tidak, saya rasa mahasiswa internasional lebih responsif."},
+{cat:"KELAS",zh:"沒有，",py:"méi yǒu",id:"Di kelas saya muridnya semua NPC, tidak tidak, saya rasa mahasiswa internasional lebih responsif."},
+{cat:"KELAS",zh:"沒有，",py:"méi yǒu",id:"Di kelas saya muridnya semua NPC, tidak tidak, saya rasa mahasiswa internasional lebih responsif."},
+{cat:"KELAS",zh:"我覺得 international student 他是較有反應。",py:"wǒ jué dé tā shì jiào yǒu fǎn yīng",id:"Di kelas saya muridnya semua NPC, tidak tidak, saya rasa mahasiswa internasional lebih responsif."},
+{cat:"KELAS",zh:"今年是人數最少的，",py:"jīn nián shì rén shù zuì shǎo de",id:"Tahun ini jumlah paling sedikit,"},
+{cat:"KELAS",zh:"以前都10個以上到16個18個，",py:"yǐ qián dōu gè yǐ shàng dào gè gè",id:"dulu selalu lebih dari 10 sampai 16-18 orang,"},
+{cat:"KELAS",zh:"這就告訴我們是一個趨勢。",py:"zhè jiù gào sù wǒ men shì yī gè qū shì",id:"ini menunjukkan sebuah tren."},
+{cat:"KELAS",zh:"我覺得我人緣還不錯，",py:"wǒ jué dé wǒ rén yuán hái bù cuò",id:"Saya rasa pergaulan saya cukup baik,"},
+{cat:"KELAS",zh:"開學第一週我不能來，",py:"kāi xué dì yī zhōu wǒ bù néng lái",id:"minggu pertama kuliah saya tidak bisa datang,"},
+{cat:"KELAS",zh:"我趕緊叫晏喜跟嘉軒還有建良來 support 一下。",py:"wǒ gǎn jǐn jiào yàn xǐ gēn jiā xuān hái yǒu jiàn liáng lái yī xià",id:"saya cepat minta Yanxi Jiaxuan dan Jianliang untuk support."},
+{cat:"KELAS",zh:"我可以每週都，",py:"wǒ kě yǐ měi zhōu dōu",id:"Saya bisa setiap minggu,"},
+{cat:"KELAS",zh:"我的光碟片非常多，",py:"wǒ de guāng dié piàn fēi cháng duō",id:"koleksi slide saya sangat banyak,"},
+{cat:"KELAS",zh:"所以慢慢看，",py:"suǒ yǐ màn màn kàn",id:"jadi lihat perlahan,"},
+{cat:"KELAS",zh:"看到你們轉為止，",py:"kàn dào nǐ men zhuǎn wèi zhǐ",id:"sampai kalian lulus,"},
+{cat:"KELAS",zh:"你不用擔心。",py:"nǐ bù yòng dān xīn",id:"tidak perlu khawatir."},
+{cat:"KELAS",zh:"因為像 Line 的話，",py:"yīn wèi xiàng de huà",id:"Karena seperti Line,"},
+{cat:"KELAS",zh:"Line 群組你通常換手機除非你備份，",py:"qún zǔ nǐ tōng cháng huàn shǒu jī chú fēi nǐ bèi fèn",id:"grup Line biasanya kalau ganti HP kecuali ada backup,"},
+{cat:"KELAS",zh:"否則基本上就是沒有了。",py:"fǒu zé jī běn shàng jiù shì méi yǒu le",id:"kalau tidak pada dasarnya sudah hilang."},
+{cat:"KELAS",zh:"我的群組從我已經在教22年了，",py:"wǒ de qún zǔ cóng wǒ yǐ jīng zài jiào nián le",id:"Grup saya sudah dari saya mengajar 22 tahun,"},
+{cat:"KELAS",zh:"雖然我外表看不太清楚，",py:"suī rán wǒ wài biǎo kàn bù tài qīng chǔ",id:"walaupun penampilan saya tidak kelihatan tua,"},
+{cat:"KELAS",zh:"其實我應該是你們阿公阿媽級的。",py:"qí shí wǒ yīng gāi shì nǐ men ā gōng ā mā jí de",id:"sebenarnya saya sudah level kakek nenek kalian."},
+{cat:"KELAS",zh:"我可以 show 給你看一屆的，",py:"wǒ kě yǐ gěi nǐ kàn yī jiè de",id:"Saya bisa tunjukkan satu angkatan punya ke kamu, nanti saya buka untuk kalian lihat, karena saya punya tiap angkatan."},
+{cat:"KELAS",zh:"待會開給你們看，",py:"dài huì kāi gěi nǐ men kàn",id:"Saya bisa tunjukkan satu angkatan punya ke kamu, nanti saya buka untuk kalian lihat, karena saya punya tiap angkatan."},
+{cat:"KELAS",zh:"因為我每一屆都有，",py:"yīn wèi wǒ měi yī jiè dōu yǒu",id:"Saya bisa tunjukkan satu angkatan punya ke kamu, nanti saya buka untuk kalian lihat, karena saya punya tiap angkatan."},
+{cat:"KELAS",zh:"我也可以 show 給你看。",py:"wǒ yě kě yǐ gěi nǐ kàn",id:"Saya bisa tunjukkan satu angkatan punya ke kamu, nanti saya buka untuk kalian lihat, karena saya punya tiap angkatan."},
+{cat:"KELAS",zh:"學校當然就是爽啊，為什麼？",py:"xué xiào dāng rán jiù shì shuǎng a wèi shén me",id:"Sekolah tentu enak,"},
+{cat:"KELAS",zh:"因為我們只是員工，不管來多少人，我們就是客服。",py:"yīn wèi wǒ men zhǐ shì yuán gōng bù guǎn lái duō shǎo rén wǒ men jiù shì kè fú",id:"kenapa?"},
+{cat:"KELAS",zh:"所以請你也體諒一下老師，",py:"suǒ yǐ qǐng nǐ yě tǐ liàng yī xià lǎo shī",id:"Jadi tolong maklumi guru juga,"},
+{cat:"KELAS",zh:"沒辦法，",py:"méi bàn fǎ",id:"tidak bisa dihindari,"},
+{cat:"KELAS",zh:"我不是萬能的啊，",py:"wǒ bù shì wàn néng de a",id:"saya tidak serba bisa,"},
+{cat:"KELAS",zh:"我可能忙中也會錯。",py:"wǒ kě néng máng zhōng yě huì cuò",id:"saya mungkin di sela kesibukan juga bisa salah."},
+{cat:"KELAS",zh:"你不用不好意思跟我講，",py:"nǐ bù yòng bù hǎo yì sī gēn wǒ jiǎng",id:"Jangan sungkan bilang ke saya, karena kadang saya bicara seperti ini, karena saya bukan robot, saya tidak sehebat itu."},
+{cat:"KELAS",zh:"因為有的時候，",py:"yīn wèi yǒu de shí hòu",id:"Jangan sungkan bilang ke saya, karena kadang saya bicara seperti ini, karena saya bukan robot, saya tidak sehebat itu."},
+{cat:"KELAS",zh:"我這樣講一下，",py:"wǒ zhè yàng jiǎng yī xià",id:"Jangan sungkan bilang ke saya, karena kadang saya bicara seperti ini, karena saya bukan robot, saya tidak sehebat itu."},
+{cat:"KELAS",zh:"因為我不是機器人，",py:"yīn wèi wǒ bù shì jī qì rén",id:"Jangan sungkan bilang ke saya, karena kadang saya bicara seperti ini, karena saya bukan robot, saya tidak sehebat itu."},
+{cat:"KELAS",zh:"我沒有那麼厲害。",py:"wǒ méi yǒu nà me lì hài",id:"Jangan sungkan bilang ke saya, karena kadang saya bicara seperti ini, karena saya bukan robot, saya tidak sehebat itu."},
+{cat:"KELAS",zh:"那個登錄的時候就會因為密碼好多種，",py:"nà gè dēng lù de shí hòu jiù huì yīn wèi mì mǎ hǎo duō zhǒng",id:"Waktu login karena passwordnya banyak jenis,"},
+{cat:"KELAS",zh:"有的要改，",py:"yǒu de yào gǎi",id:"ada yang harus diganti,"},
+{cat:"KELAS",zh:"有的要8位，",py:"yǒu de yào wèi",id:"ada yang 8 karakter,"},
+{cat:"KELAS",zh:"有的要10位，",py:"yǒu de yào wèi",id:"ada yang 10 karakter,"},
+{cat:"KELAS",zh:"就很麻煩。",py:"jiù hěn má fán",id:"jadi repot."},
+{cat:"KELAS",zh:"你不來，我也沒辦法跟你互動，好不好，請問這樣有什麼問題嗎？",py:"nǐ bù lái wǒ yě méi bàn fǎ gēn nǐ hù dòng hǎo bù hǎo qǐng wèn zhè yàng yǒu shén me wèn tí ma",id:"Kalau kamu tidak datang,"},
+{cat:"KELAS",zh:"沒有沒有什麼問題。",py:"méi yǒu méi yǒu shén me wèn tí",id:"saya juga tidak bisa berinteraksi dengan kamu,"},
+{cat:"KELAS",zh:"如果有修我人機的禮拜四再來，",py:"rú guǒ yǒu xiū wǒ rén jī de lǐ bài sì zài lái",id:"Kalau ada yang ambil HCI kelas Kamis datang lagi,"},
+{cat:"KELAS",zh:"禮拜四會有更多的外籍生，",py:"lǐ bài sì huì yǒu gèng duō de wài jí shēng",id:"Kamis akan ada lebih banyak mahasiswa asing,"},
+{cat:"KELAS",zh:"那請大家自己輕鬆一下。",py:"nà qǐng dà jiā zì jǐ qīng sōng yī xià",id:"silakan semua santai dulu."},
+{cat:"KELAS",zh:"我待會開放時間，",py:"wǒ dài huì kāi fàng shí jiān",id:"Nanti saya akan buka waktu bebas,"},
+{cat:"KELAS",zh:"你們可以想一下，",py:"nǐ men kě yǐ xiǎng yī xià",id:"kalian bisa memikirkan,"},
+{cat:"KELAS",zh:"還有就是說我為什麼要選臉書。",py:"hái yǒu jiù shì shuō wǒ wèi shén me yào xuǎn liǎn shū",id:"dan juga kenapa saya pilih Facebook."},
+{cat:"KELAS",zh:"大家進來氣氛都很亮，",py:"dà jiā jìn lái qì fēn dōu hěn liàng",id:"Semua masuk suasananya cerah,"},
+{cat:"KELAS",zh:"我跟同學講準時2年畢業，",py:"wǒ gēn tóng xué jiǎng zhǔn shí nián bì yè",id:"saya bilang ke mahasiswa lulus tepat 2 tahun,"},
+{cat:"KELAS",zh:"歷屆學長姐大概只有一兩個，",py:"lì jiè xué zhǎng jiě dà gài zhǐ yǒu yī liǎng gè",id:"dari semua angkatan hanya sekitar satu dua,"},
+{cat:"KELAS",zh:"春3年的都3年是最普遍的。",py:"chūn nián de dōu nián shì zuì pǔ biàn de",id:"yang 3 tahun semua 3 tahun itu yang paling umum."},
+{cat:"KELAS",zh:"通常到期中考過後，",py:"tōng cháng dào qī zhōng kǎo guò hòu",id:"Biasanya setelah melewati UTS,"},
+{cat:"KELAS",zh:"自我介紹過後，",py:"zì wǒ jiè shào guò hòu",id:"setelah perkenalan diri,"},
+{cat:"KELAS",zh:"到年底會比較熟一點，",py:"dào nián dǐ huì bǐ jiào shú yī diǎn",id:"menjelang akhir tahun akan lebih akrab,"},
+{cat:"KELAS",zh:"因為大部分加上又有國際生，",py:"yīn wèi dà bù fēn jiā shàng yòu yǒu guó jì shēng",id:"karena kebanyakan ditambah ada mahasiswa internasional,"},
+{cat:"KELAS",zh:"所以大家難免會比較害羞。",py:"suǒ yǐ dà jiā nán miǎn huì bǐ jiào hài xiū",id:"jadi semua terpaksa lebih pemalu."},
+{cat:"KELAS",zh:"之後就會講的話，",py:"zhī hòu jiù huì jiǎng de huà",id:"Setelah itu mulai banyak bicara,"},
+{cat:"KELAS",zh:"然後之後一定是老師還吵吵的，",py:"rán hòu zhī hòu yī dìng shì lǎo shī hái chǎo chǎo de",id:"dan setelah itu pasti guru masih ribut,"},
+{cat:"KELAS",zh:"這很正常，",py:"zhè hěn zhèng cháng",id:"ini sangat normal,"},
+{cat:"KELAS",zh:"所以老師每年都要經歷過這樣一次。",py:"suǒ yǐ lǎo shī měi nián dōu yào jīng lì guò zhè yàng yī cì",id:"jadi guru setiap tahun harus melewati ini sekali."},
+{cat:"TESIS",zh:"我知道同學一定要看範本，",py:"wǒ zhī dào tóng xué yī dìng yào kàn fàn běn",id:"Saya tahu mahasiswa pasti harus lihat contoh,"},
+{cat:"TESIS",zh:"因為叫你自己做，",py:"yīn wèi jiào nǐ zì jǐ zuò",id:"karena disuruh buat sendiri,"},
+{cat:"TESIS",zh:"而且現在你們比以前的更方便，",py:"ér qiě xiàn zài nǐ men bǐ yǐ qián de gèng fāng biàn",id:"dan sekarang kalian lebih praktis dari dulu,"},
+{cat:"TESIS",zh:"你用 AI 弄就好了。",py:"nǐ yòng nòng jiù hǎo le",id:"pakai AI saja."},
+{cat:"TESIS",zh:"但是我覺得你還是要自己問過一遍，",py:"dàn shì wǒ jué dé nǐ hái shì yào zì jǐ wèn guò yī biàn",id:"Tapi saya rasa kamu tetap harus menanyai dirimu sendiri dulu,"},
+{cat:"TESIS",zh:"我個人建議，",py:"wǒ gè rén jiàn yì",id:"saran pribadi saya,"},
+{cat:"TESIS",zh:"我並沒有說不能用 AI。",py:"wǒ bìng méi yǒu shuō bù néng yòng",id:"saya tidak bilang tidak boleh pakai AI."},
+{cat:"TESIS",zh:"你一定要自己看過去，",py:"nǐ yī dìng yào zì jǐ kàn guò qù",id:"Kamu harus melihatnya sendiri dulu, karena waktu menulis tesis apapun yang kamu buat, pada akhirnya kamu masih mungkin pakai kuesioner."},
+{cat:"TESIS",zh:"因為你在寫論文的時候，",py:"yīn wèi nǐ zài xiě lùn wén de shí hòu",id:"Kamu harus melihatnya sendiri dulu, karena waktu menulis tesis apapun yang kamu buat, pada akhirnya kamu masih mungkin pakai kuesioner."},
+{cat:"TESIS",zh:"不管你是做創作或者是做理論，",py:"bù guǎn nǐ shì zuò chuàng zuò huò zhě shì zuò lǐ lùn",id:"Kamu harus melihatnya sendiri dulu, karena waktu menulis tesis apapun yang kamu buat, pada akhirnya kamu masih mungkin pakai kuesioner."},
+{cat:"TESIS",zh:"你到最後你還是可能會用到問卷。",py:"nǐ dào zuì hòu nǐ hái shì kě néng huì yòng dào wèn juǎn",id:"Kamu harus melihatnya sendiri dulu, karena waktu menulis tesis apapun yang kamu buat, pada akhirnya kamu masih mungkin pakai kuesioner."},
+{cat:"TESIS",zh:"我希望大家到期中以前，",py:"wǒ xī wàng dà jiā dào qī zhōng yǐ qián",id:"Saya harap semua sebelum UTS,"},
+{cat:"TESIS",zh:"可以排時間做提報，",py:"kě yǐ pái shí jiān zuò tí bào",id:"bisa atur waktu untuk presentasi,"},
+{cat:"TESIS",zh:"待會給同學看範本好不好。",py:"dài huì gěi tóng xué kàn fàn běn hǎo bù hǎo",id:"nanti saya tunjukkan contoh ke mahasiswa ya."},
+{cat:"TESIS",zh:"你也可以跟學長姐買，",py:"nǐ yě kě yǐ gēn xué zhǎng jiě mǎi",id:"Kamu juga bisa beli dari kakak tingkat,"},
+{cat:"TESIS",zh:"如果有人要賣或怎樣，",py:"rú guǒ yǒu rén yào mài huò zěn yàng",id:"kalau ada yang mau jual atau bagaimana,"},
+{cat:"TESIS",zh:"這個我就不知道，",py:"zhè gè wǒ jiù bù zhī dào",id:"ini saya tidak tahu,"},
+{cat:"TESIS",zh:"但是這個就是借你看沒有問題。",py:"dàn shì zhè gè jiù shì jiè nǐ kàn méi yǒu wèn tí",id:"tapi ini dipinjamkan untuk kamu lihat tidak apa-apa."},
+{cat:"TESIS",zh:"嘉軒用了4種，",py:"jiā xuān yòng le zhǒng",id:"Jiaxuan pakai 4 metode,"},
+{cat:"TESIS",zh:"可是他是撐到最後一刻，",py:"kě shì tā shì chēng dào zuì hòu yī kè",id:"tapi dia bertahan sampai menit terakhir,"},
+{cat:"TESIS",zh:"所以他就把研究方法跟自我介紹混搭了。",py:"suǒ yǐ tā jiù bǎ yán jiū fāng fǎ gēn zì wǒ jiè shào hùn dā le",id:"jadi dia campur metode penelitian dengan perkenalan dirinya."},
+{cat:"TESIS",zh:"當然，",py:"dāng rán",id:"Tentu yang kamu pilih belum tentu semua bisa dipakai, saya harap kamu pilih minimal 3 jenis lalu bandingkan kelebihan kekurangannya untuk dipahami."},
+{cat:"TESIS",zh:"你選擇的不見得能夠全部用得上，",py:"nǐ xuǎn zé de bù jiàn dé néng gòu quán bù yòng dé shàng",id:"Tentu yang kamu pilih belum tentu semua bisa dipakai, saya harap kamu pilih minimal 3 jenis lalu bandingkan kelebihan kekurangannya untuk dipahami."},
+{cat:"TESIS",zh:"我希望你至少選3種然後去比較它的優缺點了解一下。",py:"wǒ xī wàng nǐ zhì shǎo xuǎn zhǒng rán hòu qù bǐ jiào tā de yōu quē diǎn le jiě yī xià",id:"Tentu yang kamu pilih belum tentu semua bisa dipakai, saya harap kamu pilih minimal 3 jenis lalu bandingkan kelebihan kekurangannya untuk dipahami."},
+{cat:"TESIS",zh:"請看一下哦，",py:"qǐng kàn yī xià ó",id:"Tolong lihat ya, semua ada di buku, tentu juga bisa cari sendiri, saya yakin di internet ada banyak referensi, atau suruh AI generate juga bisa."},
+{cat:"TESIS",zh:"都在書本上啊，",py:"dōu zài shū běn shàng a",id:"Tolong lihat ya, semua ada di buku, tentu juga bisa cari sendiri, saya yakin di internet ada banyak referensi, atau suruh AI generate juga bisa."},
+{cat:"TESIS",zh:"當然，",py:"dāng rán",id:"Tolong lihat ya, semua ada di buku, tentu juga bisa cari sendiri, saya yakin di internet ada banyak referensi, atau suruh AI generate juga bisa."},
+{cat:"TESIS",zh:"也可以自己去找，",py:"yě kě yǐ zì jǐ qù zhǎo",id:"Tolong lihat ya, semua ada di buku, tentu juga bisa cari sendiri, saya yakin di internet ada banyak referensi, atau suruh AI generate juga bisa."},
+{cat:"TESIS",zh:"我相信網路上有很多資料，",py:"wǒ xiāng xìn wǎng lù shàng yǒu hěn duō zī liào",id:"Tolong lihat ya, semua ada di buku, tentu juga bisa cari sendiri, saya yakin di internet ada banyak referensi, atau suruh AI generate juga bisa."},
+{cat:"TESIS",zh:"或者是叫 AI 生成也可以。",py:"huò zhě shì jiào shēng chéng yě kě yǐ",id:"Tolong lihat ya, semua ada di buku, tentu juga bisa cari sendiri, saya yakin di internet ada banyak referensi, atau suruh AI generate juga bisa."},
+{cat:"TESIS",zh:"有同學說啊老師，要做幾頁？",py:"yǒu tóng xué shuō a lǎo shī yào zuò jǐ yè",id:"Ada mahasiswa bilang guru harus buat berapa halaman?"},
+{cat:"TESIS",zh:"不用擔心，沈老師不會限制你，你想做幾頁就做幾頁，我絕對不會叫你一定要怎麼做。",py:"bù yòng dān xīn shěn lǎo shī bù huì xiàn zhì nǐ nǐ xiǎng zuò jǐ yè jiù zuò jǐ yè wǒ jué duì bù huì jiào nǐ yī dìng yào zěn me zuò",id:"Tidak perlu khawatir,"},
+{cat:"TESIS",zh:"Likert 量表就是那個1到5、1到7、1到9，",py:"liàng biǎo jiù shì nà gè dào dào dào",id:"Skala Likert itu yang 1-5,"},
+{cat:"TESIS",zh:"不知道大家有沒有印象，",py:"bù zhī dào dà jiā yǒu méi yǒu yìn xiàng",id:"1-7,"},
+{cat:"TESIS",zh:"那沒有關係，",py:"nà méi yǒu guān xì",id:"1-9,"},
+{cat:"TESIS",zh:"我們按部就班來。",py:"wǒ men àn bù jiù bān lái",id:"tidak tahu apakah kalian masih ingat,"},
+{cat:"TESIS",zh:"結構式、非結構式、半結構式都在書中，",py:"jié gòu shì fēi jié gòu shì bàn jié gòu shì dōu zài shū zhōng",id:"Terstruktur,"},
+{cat:"TESIS",zh:"焦點團體法是比較直性的，",py:"jiāo diǎn tuán tǐ fǎ shì bǐ jiào zhí xìng de",id:"tidak terstruktur,"},
+{cat:"TESIS",zh:"其實不多了。",py:"qí shí bù duō le",id:"semi-terstruktur semuanya ada di buku,"},
+{cat:"TESIS",zh:"那問卷的方式有很多種，",py:"nà wèn juǎn de fāng shì yǒu hěn duō zhǒng",id:"Metode kuesioner ada banyak cara,"},
+{cat:"TESIS",zh:"這幾個 mandatory，",py:"zhè jǐ gè",id:"beberapa yang wajib ini,"},
+{cat:"TESIS",zh:"非常夯的 Likert 量表，",py:"fēi cháng hāng de liàng biǎo",id:"Skala Likert yang sangat populer,"},
+{cat:"TESIS",zh:"常常在我們設計或者做遊戲相關的一定會有。",py:"cháng cháng zài wǒ men shè jì huò zhě zuò yóu xì xiāng guān de yī dìng huì yǒu",id:"sering di desain atau yang berkaitan game pasti ada."},
+{cat:"TESIS",zh:"碩班你要比較有獨立思考，",py:"shuò bān nǐ yào bǐ jiào yǒu dú lì sī kǎo",id:"S2 kamu harus lebih punya pemikiran independen,"},
+{cat:"TESIS",zh:"不是跟著老師說告訴你你要怎麼做就做。",py:"bù shì gēn zhù lǎo shī shuō gào sù nǐ nǐ yào zěn me zuò jiù zuò",id:"bukan mengikuti guru yang memberitahu caranya lalu dikerjakan begitu saja."},
+{cat:"TESIS",zh:"為什麼有些學長唸的3年到4年，",py:"wèi shén me yǒu xiē xué zhǎng niàn de nián dào nián",id:"Kenapa ada kakak tingkat yang kuliah 3 sampai 4 tahun, karena kemampuan kontrol diri dan manajemen waktu mereka sendiri."},
+{cat:"TESIS",zh:"因為他自己自我控管時間的能力，",py:"yīn wèi tā zì jǐ zì wǒ kòng guǎn shí jiān de néng lì",id:"Kenapa ada kakak tingkat yang kuliah 3 sampai 4 tahun, karena kemampuan kontrol diri dan manajemen waktu mereka sendiri."},
+{cat:"TESIS",zh:"時間管理。",py:"shí jiān guǎn lǐ",id:"Kenapa ada kakak tingkat yang kuliah 3 sampai 4 tahun, karena kemampuan kontrol diri dan manajemen waktu mereka sendiri."},
+{cat:"TESIS",zh:"他就是很奇怪，",py:"tā jiù shì hěn qí guài",id:"Dia memang aneh,"},
+{cat:"TESIS",zh:"他就是默默的來了，",py:"tā jiù shì mò mò de lái le",id:"dia tetap diam-diam datang,"},
+{cat:"TESIS",zh:"而且每次都在2點左右才出現，",py:"ér qiě měi cì dōu zài diǎn zuǒ yòu cái chū xiàn",id:"dan setiap kali selalu muncul sekitar jam 2,"},
+{cat:"TESIS",zh:"1點20分的課都快下課了。",py:"diǎn fēn de kè dōu kuài xià kè le",id:"jam 1:20 kelas sudah hampir selesai."},
+{cat:"TESIS",zh:"我的課不知道其他老師，",py:"wǒ de kè bù zhī dào qí tā lǎo shī",id:"Kelas saya tidak tahu guru lain,"},
+{cat:"TESIS",zh:"但是我一定是從基礎開始打起，",py:"dàn shì wǒ yī dìng shì cóng jī chǔ kāi shǐ dǎ qǐ",id:"tapi saya pasti mulai dari dasar dulu,"},
+{cat:"TESIS",zh:"因為有很多學長的論文那些都想跟你們分享。",py:"yīn wèi yǒu hěn duō xué zhǎng de lùn wén nà xiē dōu xiǎng gēn nǐ men fēn xiǎng",id:"karena ada banyak tesis kakak tingkat yang ingin saya bagikan ke kalian."},
+{cat:"TESIS",zh:"看多不見得是好事，",py:"kàn duō bù jiàn dé shì hǎo shì",id:"Melihat banyak belum tentu bagus,"},
+{cat:"TESIS",zh:"但是就是說你自己要先有一個大概，",py:"dàn shì jiù shì shuō nǐ zì jǐ yào xiān yǒu yī gè dà gài",id:"tapi intinya kamu sendiri harus punya gambaran dulu,"},
+{cat:"TESIS",zh:"我們再來討論會比較好。",py:"wǒ men zài lái tǎo lùn huì bǐ jiào hǎo",id:"baru kita diskusi akan lebih baik."},
+{cat:"TESIS",zh:"學生之前是想要做 ChatGPT 比對，",py:"xué shēng zhī qián shì xiǎng yào zuò bǐ duì",id:"Mahasiswa sebelumnya mau buat perbandingan ChatGPT,"},
+{cat:"TESIS",zh:"還有另外比對一個在做社交相關的通訊者內容的東西，",py:"hái yǒu lìng wài bǐ duì yī gè zài zuò shè jiāo xiāng guān de tōng xùn zhě nèi róng de dōng xī",id:"dan satu lagi membandingkan konten komunikator media sosial,"},
+{cat:"TESIS",zh:"但是他後來又換了。",py:"dàn shì tā hòu lái yòu huàn le",id:"tapi dia kemudian berubah lagi."},
+{cat:"TESIS",zh:"有些東西都蠻有趣的，",py:"yǒu xiē dōng xī dōu mán yǒu qù de",id:"Beberapa hal cukup menarik,"},
+{cat:"TESIS",zh:"但是你要多看，",py:"dàn shì nǐ yào duō kàn",id:"tapi kamu harus banyak melihat,"},
+{cat:"TESIS",zh:"你沒有多看你絕對問題有限。",py:"nǐ méi yǒu duō kàn nǐ jué duì wèn tí yǒu xiàn",id:"kalau tidak banyak melihat pertanyaanmu pasti terbatas."},
+{cat:"ADMIN",zh:"70學分為主，",py:"xué fēn wèi zhǔ",id:"Mayoritas 70 SKS,"},
+{cat:"ADMIN",zh:"每一個科目你放心，",py:"měi yī gè kē mù nǐ fàng xīn",id:"setiap mata kuliah tenang saja,"},
+{cat:"ADMIN",zh:"沈老師的課絕對都是很甜的分數。",py:"shěn lǎo shī de kè jué duì dōu shì hěn tián de fēn shù",id:"kelas Shen Laoshi pasti nilainya selalu manis."},
+{cat:"ADMIN",zh:"大家都是甜甜的這樣，",py:"dà jiā dōu shì tián tián de zhè yàng",id:"Semua nilainya manis begini, karena ini bersifat mendorong, karena bagus atau tidaknya yang kamu buat hanya kamu yang tahu."},
+{cat:"ADMIN",zh:"因為這是一個鼓勵性，",py:"yīn wèi zhè shì yī gè gǔ lì xìng",id:"Semua nilainya manis begini, karena ini bersifat mendorong, karena bagus atau tidaknya yang kamu buat hanya kamu yang tahu."},
+{cat:"ADMIN",zh:"因為你做的好不好，",py:"yīn wèi nǐ zuò de hǎo bù hǎo",id:"Semua nilainya manis begini, karena ini bersifat mendorong, karena bagus atau tidaknya yang kamu buat hanya kamu yang tahu."},
+{cat:"ADMIN",zh:"只有你知道了。",py:"zhǐ yǒu nǐ zhī dào le",id:"Semua nilainya manis begini, karena ini bersifat mendorong, karena bagus atau tidaknya yang kamu buat hanya kamu yang tahu."},
+{cat:"ADMIN",zh:"你覺得你有沒有用心做？",py:"nǐ jué dé nǐ yǒu méi yǒu yòng xīn zuò",id:"Menurutmu apakah kamu mengerjakan dengan sungguh-sungguh?"},
+{cat:"ADMIN",zh:"你覺得我看不出來嗎？",py:"nǐ jué dé wǒ kàn bù chū lái ma",id:"Menurutmu saya tidak bisa lihat?"},
+{cat:"ADMIN",zh:"你是用 AI 跑的，我就用了一個東西檢測，相似度有多少。",py:"nǐ shì yòng pǎo de wǒ jiù yòng le yī gè dōng xī jiǎn cè xiāng shì dù yǒu duō shǎo",id:"Kamu pakai AI dijalankan,"},
+{cat:"ADMIN",zh:"太原97趴，",py:"tài yuán pā",id:"Taiyuan 97%,"},
+{cat:"ADMIN",zh:"嘉軒學姐98趴，",py:"jiā xuān xué jiě pā",id:"kakak Jiaxuan 98%,"},
+{cat:"ADMIN",zh:"他們兩個都在笑，",py:"tā men liǎng gè dōu zài xiào",id:"mereka berdua tertawa,"},
+{cat:"ADMIN",zh:"那也無所謂，",py:"nà yě wú suǒ wèi",id:"tidak apa-apa,"},
+{cat:"ADMIN",zh:"但是他錯過自己練習的機會。",py:"dàn shì tā cuò guò zì jǐ liàn xí de jī huì",id:"tapi dia melewatkan kesempatan latihan sendiri."},
+{cat:"ADMIN",zh:"到最後如果他們論文寫不出來，你懂我意思嗎？",py:"dào zuì hòu rú guǒ tā men lùn wén xiě bù chū lái nǐ dǒng wǒ yì sī ma",id:"Pada akhirnya kalau mereka tidak bisa menulis tesis,"},
+{cat:"ADMIN",zh:"上了我的研究方法還是不會，這是不可能急救的事情。",py:"shàng le wǒ de yán jiū fāng fǎ hái shì bù huì zhè shì bù kě néng jí jiù de shì qíng",id:"kamu mengerti maksud saya?"},
+{cat:"ADMIN",zh:"我們有一個 template，",py:"wǒ men yǒu yī gè",id:"Kita punya satu template,"},
+{cat:"ADMIN",zh:"系上都可以下載的，",py:"xì shàng dōu kě yǐ xià zài de",id:"di jurusan semua bisa download,"},
+{cat:"ADMIN",zh:"就是他有一個格式，",py:"jiù shì tā yǒu yī gè gé shì",id:"ada formatnya,"},
+{cat:"ADMIN",zh:"所以不是說你自己隨便弄一下。",py:"suǒ yǐ bù shì shuō nǐ zì jǐ suí biàn nòng yī xià",id:"jadi bukan kamu buat sesukamu saja."},
+{cat:"ADMIN",zh:"現在越來越難考，",py:"xiàn zài yuè lái yuè nán kǎo",id:"Sekarang semakin sulit ujiannya,"},
+{cat:"ADMIN",zh:"就是你要閱讀完之後，",py:"jiù shì nǐ yào yuè dú wán zhī hòu",id:"yaitu kamu harus selesai membaca,"},
+{cat:"ADMIN",zh:"電腦會隨機出題，",py:"diàn nǎo huì suí jī chū tí",id:"lalu komputer akan acak soal,"},
+{cat:"ADMIN",zh:"你好像要考70還是80，",py:"nǐ hǎo xiàng yào kǎo hái shì",id:"sepertinya harus dapat 70 atau 80,"},
+{cat:"ADMIN",zh:"反正我每3年要考一次。",py:"fǎn zhèng wǒ měi nián yào kǎo yī cì",id:"pokoknya saya harus ujian setiap 3 tahun sekali."},
+{cat:"ADMIN",zh:"理論類你要參加研討會，國內外都可以；",py:"lǐ lùn lèi nǐ yào cān jiā yán tǎo huì guó nèi wài dōu kě yǐ",id:"Untuk teori kamu harus ikut seminar dalam maupun luar negeri boleh;"},
+{cat:"ADMIN",zh:"創作類國內外也都可以，這個都要完成才能提出口考。",py:"chuàng zuò lèi guó nèi wài yě dōu kě yǐ zhè gè dōu yào wán chéng cái néng tí chū kǒu kǎo",id:"untuk karya kreatif dalam maupun luar negeri juga boleh,"},
+{cat:"ADMIN",zh:"你預計2年內畢業，",py:"nǐ yù jì nián nèi bì yè",id:"Kalau rencana lulus 2 tahun,"},
+{cat:"ADMIN",zh:"2028的5、6月要完成口考，",py:"de yuè yào wán chéng kǒu kǎo",id:"bulan 5-6 2028 harus selesai ujian lisan,"},
+{cat:"ADMIN",zh:"如果想在731以前拿到畢業證書，",py:"rú guǒ xiǎng zài yǐ qián ná dào bì yè zhèng shū",id:"kalau mau dapat ijazah sebelum 31 Juli,"},
+{cat:"ADMIN",zh:"6月依據同學喜歡趕工通常學校最塞車。",py:"yuè yī jù tóng xué xǐ huān gǎn gōng tōng cháng xué xiào zuì sāi chē",id:"bulan 6 berdasarkan mahasiswa yang suka ngebut biasanya paling macet di sekolah."},
+{cat:"ADMIN",zh:"如果照沈老師的配件，",py:"rú guǒ zhào shěn lǎo shī de pèi jiàn",id:"Kalau mengikuti jadwal Shen Laoshi,"},
+{cat:"ADMIN",zh:"也就是你2027年底到2028的1月2月，",py:"yě jiù shì nǐ nián dǐ dào de yuè yuè",id:"yaitu akhir 2027 sampai Januari Februari 2028,"},
+{cat:"ADMIN",zh:"你的東西就已經要大部分都出來了。",py:"nǐ de dōng xī jiù yǐ jīng yào dà bù fēn dōu chū lái le",id:"karyamu sudah harus sebagian besar selesai."},
+{cat:"ADMIN",zh:"你覺得很多時候都是想的很完美，",py:"nǐ jué dé hěn duō shí hòu dōu shì xiǎng de hěn wán měi",id:"Kamu pikir sering kali semuanya terencana sempurna,"},
+{cat:"ADMIN",zh:"偏偏在趕工的時候電腦當機，",py:"piān piān zài gǎn gōng de shí hòu diàn nǎo dāng jī",id:"tapi tepat saat buru-buru komputer crash,"},
+{cat:"ADMIN",zh:"不可預期的因素。",py:"bù kě yù qī de yīn sù",id:"faktor tak terduga."},
+{cat:"ADMIN",zh:"投口考的時候你不能說你要的老師一定要在你想要的時間，",py:"tóu kǒu kǎo de shí hòu nǐ bù néng shuō nǐ yào de lǎo shī yī dìng yào zài nǐ xiǎng yào de shí jiān",id:"Saat mendaftarkan ujian lisan kamu tidak bisa bilang dosen yang kamu mau harus ada di waktu yang kamu inginkan,"},
+{cat:"ADMIN",zh:"因為那些時間都是你叫他就來嗎？",py:"yīn wèi nà xiē shí jiān dōu shì nǐ jiào tā jiù lái ma",id:"karena waktu-waktu itu tinggal kamu panggil dia langsung datang?"},
+{cat:"ADMIN",zh:"56月是我的口考忘記，",py:"yuè shì wǒ de kǒu kǎo wàng jì",id:"Bulan 5-6 itu jadwal ujian lisan saya sudah penuh,"},
+{cat:"ADMIN",zh:"7月我通常就不做了，",py:"yuè wǒ tōng cháng jiù bù zuò le",id:"bulan 7 saya biasanya tidak terima lagi,"},
+{cat:"ADMIN",zh:"因為太趕我也暑假有別的行程。",py:"yīn wèi tài gǎn wǒ yě shǔ jiǎ yǒu bié de xíng chéng",id:"karena terlalu terburu-buru saya juga liburan ada jadwal lain."},
+{cat:"ADMIN",zh:"重點不在於老師，",py:"zhòng diǎn bù zài yú lǎo shī",id:"Intinya bukan pada dosen,"},
+{cat:"ADMIN",zh:"老師只是幫你把關的，",py:"lǎo shī zhǐ shì bāng nǐ bǎ guān de",id:"dosen hanya membantu mengawasi,"},
+{cat:"ADMIN",zh:"重點你要怎麼去執行，",py:"zhòng diǎn nǐ yào zěn me qù zhí xíng",id:"intinya bagaimana kamu mengeksekusinya,"},
+{cat:"ADMIN",zh:"執行我可以跟你講怎麼做，",py:"zhí xíng wǒ kě yǐ gēn nǐ jiǎng zěn me zuò",id:"saya bisa beritahu cara melakukannya,"},
+{cat:"ADMIN",zh:"但是做什麼事因為我不是學生身份。",py:"dàn shì zuò shén me shì yīn wèi wǒ bù shì xué shēng shēn fèn",id:"tapi mengerjakan apa karena saya bukan status mahasiswa."},
+{cat:"ADMIN",zh:"如果有任何一個步驟沒有完成，那你就是要到8、9月才有辦法拿到畢業證書，那是誰的錯？",py:"rú guǒ yǒu rèn hé yī gè bù zhòu méi yǒu wán chéng nà nǐ jiù shì yào dào yuè cái yǒu bàn fǎ ná dào bì yè zhèng shū nà shì shuí de cuò",id:"Kalau ada salah satu langkah yang belum selesai,"},
+{cat:"ADMIN",zh:"是你自己的錯。",py:"shì nǐ zì jǐ de cuò",id:"kamu baru bisa dapat ijazah di bulan 8-9,"},
+{cat:"ADMIN",zh:"你要自己下面印：口考的領據、口考成績，",py:"nǐ yào zì jǐ xià miàn yìn kǒu kǎo de lǐng jù kǒu kǎo chéng jī",id:"Kamu sendiri harus cetak: kuitansi ujian lisan,"},
+{cat:"ADMIN",zh:"我都說多印幾份，",py:"wǒ dōu shuō duō yìn jǐ fèn",id:"nilai ujian lisan,"},
+{cat:"ADMIN",zh:"用萬一，",py:"yòng wàn yī",id:"saya selalu bilang cetak beberapa lembar untuk jaga-jaga,"},
+{cat:"ADMIN",zh:"還有你在口考的時候你不用布置嗎？",py:"hái yǒu nǐ zài kǒu kǎo de shí hòu nǐ bù yòng bù zhì ma",id:"dan waktu ujian lisan kamu tidak perlu tata ruangan?"},
+{cat:"NASIHAT",zh:"你在人生地不熟的地方，",py:"nǐ zài rén shēng dì bù shú de dì fāng",id:"Di tempat yang asing bagimu,"},
+{cat:"NASIHAT",zh:"假設你沒有任何的現金，",py:"jiǎ shè nǐ méi yǒu rèn hé de xiàn jīn",id:"misalkan kamu tidak punya uang tunai,"},
+{cat:"NASIHAT",zh:"你要怎麼開始新的生活，",py:"nǐ yào zěn me kāi shǐ xīn de shēng huó",id:"bagaimana kamu memulai kehidupan baru,"},
+{cat:"NASIHAT",zh:"你先想哈大家一定會想講或怎麼樣。",py:"nǐ xiān xiǎng hā dà jiā yī dìng huì xiǎng jiǎng huò zěn me yàng",id:"pikirkan dulu,"},
+{cat:"NASIHAT",zh:"我雖然不會講越南話，",py:"wǒ suī rán bù huì jiǎng yuè nán huà",id:"Walaupun saya tidak bisa bahasa Vietnam, setidaknya saya bisa mengajar Mandarin bagus kan, saya bisa mengajar Inggris, buka bimbel juga bisa."},
+{cat:"NASIHAT",zh:"那至少我可以去教中文嘛，",py:"nà zhì shǎo wǒ kě yǐ qù jiào zhōng wén ma",id:"Walaupun saya tidak bisa bahasa Vietnam, setidaknya saya bisa mengajar Mandarin bagus kan, saya bisa mengajar Inggris, buka bimbel juga bisa."},
+{cat:"NASIHAT",zh:"好對不對，",py:"hǎo duì bù duì",id:"Walaupun saya tidak bisa bahasa Vietnam, setidaknya saya bisa mengajar Mandarin bagus kan, saya bisa mengajar Inggris, buka bimbel juga bisa."},
+{cat:"NASIHAT",zh:"我可以去教英文啊，",py:"wǒ kě yǐ qù jiào yīng wén a",id:"Walaupun saya tidak bisa bahasa Vietnam, setidaknya saya bisa mengajar Mandarin bagus kan, saya bisa mengajar Inggris, buka bimbel juga bisa."},
+{cat:"NASIHAT",zh:"開補習班也可以。",py:"kāi bǔ xí bān yě kě yǐ",id:"Walaupun saya tidak bisa bahasa Vietnam, setidaknya saya bisa mengajar Mandarin bagus kan, saya bisa mengajar Inggris, buka bimbel juga bisa."},
+{cat:"NASIHAT",zh:"或是開餐廳如果有幾本好，",py:"huò shì kāi cān tīng rú guǒ yǒu jǐ běn hǎo",id:"Atau buka restoran kalau ada modal bagus,"},
+{cat:"NASIHAT",zh:"就開傳統加 internet，",py:"jiù kāi chuán tǒng jiā",id:"buka yang tradisional ditambah internet,"},
+{cat:"NASIHAT",zh:"有什麼菜的，",py:"yǒu shén me cài de",id:"ada menu apa,"},
+{cat:"NASIHAT",zh:"這個就是我已經想好我要怎麼生活的東西。",py:"zhè gè jiù shì wǒ yǐ jīng xiǎng hǎo wǒ yào zěn me shēng huó de dōng xī",id:"ini sudah saya pikirkan bagaimana cara hidup saya."},
+{cat:"NASIHAT",zh:"之前有個學長因為他會弄冷氣，",py:"zhī qián yǒu gè xué zhǎng yīn wèi tā huì nòng lěng qì",id:"Dulu ada kakak tingkat karena dia bisa pasang AC,"},
+{cat:"NASIHAT",zh:"他就說那假設他到越南，",py:"tā jiù shuō nà jiǎ shè tā dào yuè nán",id:"dia bilang misalkan dia ke Vietnam,"},
+{cat:"NASIHAT",zh:"他就專門去弄冷氣，",py:"tā jiù zhuān mén qù nòng lěng qì",id:"dia khusus pasang-pasang AC,"},
+{cat:"NASIHAT",zh:"也不錯哦。",py:"yě bù cuò ó",id:"juga bagus."},
+{cat:"NASIHAT",zh:"另外有一個臺哥大的就是我指導的學生，",py:"lìng wài yǒu yī gè tái gē dà de jiù shì wǒ zhǐ dǎo de xué shēng",id:"Selain itu ada satu dari NTUT yang adalah mahasiswa bimbingan saya dari arsitektur, dia bilang guru walaupun tidak bisa bahasa tapi saya bisa buat maket, bagus juga."},
+{cat:"NASIHAT",zh:"他是做建築系的，",py:"tā shì zuò jiàn zhù xì de",id:"Selain itu ada satu dari NTUT yang adalah mahasiswa bimbingan saya dari arsitektur, dia bilang guru walaupun tidak bisa bahasa tapi saya bisa buat maket, bagus juga."},
+{cat:"NASIHAT",zh:"他說哎老師雖然語言不通，",py:"tā shuō āi lǎo shī suī rán yǔ yán bù tōng",id:"Selain itu ada satu dari NTUT yang adalah mahasiswa bimbingan saya dari arsitektur, dia bilang guru walaupun tidak bisa bahasa tapi saya bisa buat maket, bagus juga."},
+{cat:"NASIHAT",zh:"可是我可以做模型，",py:"kě shì wǒ kě yǐ zuò mó xíng",id:"Selain itu ada satu dari NTUT yang adalah mahasiswa bimbingan saya dari arsitektur, dia bilang guru walaupun tidak bisa bahasa tapi saya bisa buat maket, bagus juga."},
+{cat:"NASIHAT",zh:"也不錯。",py:"yě bù cuò",id:"Selain itu ada satu dari NTUT yang adalah mahasiswa bimbingan saya dari arsitektur, dia bilang guru walaupun tidak bisa bahasa tapi saya bisa buat maket, bagus juga."},
+{cat:"NASIHAT",zh:"臺灣這個島你們一定要提早適應，",py:"tái wān zhè gè dǎo nǐ men yī dìng yào tí zǎo shì yīng",id:"Pulau Taiwan ini kalian harus beradaptasi lebih awal,"},
+{cat:"NASIHAT",zh:"因為我們的人口沒有那麼多，",py:"yīn wèi wǒ men de rén kǒu méi yǒu nà me duō",id:"karena jumlah penduduk kita tidak sebanyak itu,"},
+{cat:"NASIHAT",zh:"你要不要去做長照或者是殯葬，",py:"nǐ yào bù yào qù zuò zhǎng zhào huò zhě shì bìn zàng",id:"maukah kamu kerja di perawatan lansia atau pemakaman,"},
+{cat:"NASIHAT",zh:"那也是蠻神聖的一個工作。",py:"nà yě shì mán shén shèng de yī gè gōng zuò",id:"itu juga pekerjaan yang cukup mulia."},
+{cat:"NASIHAT",zh:"就是國際的人士來臺灣工作，",py:"jiù shì guó jì de rén shì lái tái wān gōng zuò",id:"Yaitu orang internasional datang bekerja ke Taiwan,"},
+{cat:"NASIHAT",zh:"就像我們到東南亞去工作被公司派遣那樣，",py:"jiù xiàng wǒ men dào dōng nán yà qù gōng zuò bèi gōng sī pài qiǎn nà yàng",id:"seperti kita pergi bekerja ke Asia Tenggara dikirim perusahaan,"},
+{cat:"NASIHAT",zh:"所以我們一定要學會跟國際人士相處。",py:"suǒ yǐ wǒ men yī dìng yào xué huì gēn guó jì rén shì xiāng chù",id:"jadi kita harus belajar bergaul dengan orang internasional."},
+{cat:"NASIHAT",zh:"我跟同學講，",py:"wǒ gēn tóng xué jiǎng",id:"Saya bilang ke mahasiswa,"},
+{cat:"NASIHAT",zh:"你不要覺得越南落後，",py:"nǐ bù yào jué dé yuè nán luò hòu",id:"jangan kamu pikir Vietnam terbelakang,"},
+{cat:"NASIHAT",zh:"我去過這2個國家，",py:"wǒ qù guò zhè gè guó jiā",id:"saya sudah ke 2 negara ini,"},
+{cat:"NASIHAT",zh:"現在都比我們發展，",py:"xiàn zài dōu bǐ wǒ men fā zhǎn",id:"sekarang semua berkembang lebih dari kita,"},
+{cat:"NASIHAT",zh:"反而是臺灣都在這邊。",py:"fǎn ér shì tái wān dōu zài zhè biān",id:"justru Taiwan yang seperti ini."},
+{cat:"NASIHAT",zh:"胡志明市大城峴港那個已經全部都是工作機會，",py:"hú zhì míng shì dà chéng xiàn gǎng nà gè yǐ jīng quán bù dōu shì gōng zuò jī huì",id:"Ho Chi Minh City,"},
+{cat:"NASIHAT",zh:"我們是已經過度發展，",py:"wǒ men shì yǐ jīng guò dù fā zhǎn",id:"kota besar Da Nang itu semua sudah penuh peluang kerja,"},
+{cat:"NASIHAT",zh:"然後少子化，",py:"rán hòu shǎo zi huà",id:"kita sudah terlalu jenuh berkembang,"},
+{cat:"NASIHAT",zh:"每個人都想卡好的位置，",py:"měi gè rén dōu xiǎng kǎ hǎo de wèi zhì",id:"ditambah penurunan populasi,"},
+{cat:"NASIHAT",zh:"但是輪得到你們嗎？",py:"dàn shì lún dé dào nǐ men ma",id:"semua orang mau rebut posisi bagus,"},
+{cat:"NASIHAT",zh:"我覺得認識一點，",py:"wǒ jué dé rèn shí yī diǎn",id:"Saya rasa mengenal sedikit juga cukup bagus, jangan kamu pikir orang lebih terbelakang dari kita, sebenarnya Taiwan belum tentu lingkungan yang bagus."},
+{cat:"NASIHAT",zh:"我覺得也蠻不錯的，",py:"wǒ jué dé yě mán bù cuò de",id:"Saya rasa mengenal sedikit juga cukup bagus, jangan kamu pikir orang lebih terbelakang dari kita, sebenarnya Taiwan belum tentu lingkungan yang bagus."},
+{cat:"NASIHAT",zh:"你不要覺得人家比我們落後，",py:"nǐ bù yào jué dé rén jiā bǐ wǒ men luò hòu",id:"Saya rasa mengenal sedikit juga cukup bagus, jangan kamu pikir orang lebih terbelakang dari kita, sebenarnya Taiwan belum tentu lingkungan yang bagus."},
+{cat:"NASIHAT",zh:"其實臺灣不見得是好的環境。",py:"qí shí tái wān bù jiàn dé shì hǎo de huán jìng",id:"Saya rasa mengenal sedikit juga cukup bagus, jangan kamu pikir orang lebih terbelakang dari kita, sebenarnya Taiwan belum tentu lingkungan yang bagus."},
+{cat:"NASIHAT",zh:"因為他們來這邊工作可能賺的薪水還蠻高啊，",py:"yīn wèi tā men lái zhè biān gōng zuò kě néng zhuàn de xīn shuǐ hái mán gāo a",id:"Karena mereka datang bekerja ke sini mungkin gajinya cukup tinggi, tapi 30 ribu bagi kamu menurutmu sedikit, kan."},
+{cat:"NASIHAT",zh:"可是對3萬塊對你而言，",py:"kě shì duì wàn kuài duì nǐ ér yán",id:"Karena mereka datang bekerja ke sini mungkin gajinya cukup tinggi, tapi 30 ribu bagi kamu menurutmu sedikit, kan."},
+{cat:"NASIHAT",zh:"你覺得很少，",py:"nǐ jué dé hěn shǎo",id:"Karena mereka datang bekerja ke sini mungkin gajinya cukup tinggi, tapi 30 ribu bagi kamu menurutmu sedikit, kan."},
+{cat:"NASIHAT",zh:"對不對。",py:"duì bù duì",id:"Karena mereka datang bekerja ke sini mungkin gajinya cukup tinggi, tapi 30 ribu bagi kamu menurutmu sedikit, kan."},
+{cat:"NASIHAT",zh:"我覺得構成在比的應該不是說你幾年畢業，",py:"wǒ jué dé gòu chéng zài bǐ de yīng gāi bù shì shuō nǐ jǐ nián bì yè",id:"Saya rasa yang harus dibandingkan seharusnya bukan kamu lulus tahun berapa,"},
+{cat:"NASIHAT",zh:"是你有沒有辦法將你的碩論做完整一點然後可以完成階段性的任務。",py:"shì nǐ yǒu méi yǒu bàn fǎ jiāng nǐ de shuò lùn zuò wán zhěng yī diǎn rán hòu kě yǐ wán chéng jiē duàn xìng de rèn wù",id:"tapi bisakah kamu menyelesaikan tesismu dengan lebih lengkap lalu menyelesaikan tugas bertahap ini."},
+{cat:"NASIHAT",zh:"你要自己想清楚說你到底念這個碩士，",py:"nǐ yào zì jǐ xiǎng qīng chǔ shuō nǐ dào dǐ niàn zhè gè shuò shì",id:"Kamu harus sendiri pikirkan jelas kamu sebenarnya ambil S2 ini,"},
+{cat:"NASIHAT",zh:"投資的這2年，",py:"tóu zī de zhè nián",id:"investasi 2 tahun ini,"},
+{cat:"NASIHAT",zh:"你的同學去當兵，",py:"nǐ de tóng xué qù dāng bīng",id:"temanmu ada yang wamil,"},
+{cat:"NASIHAT",zh:"也有人在工作，",py:"yě yǒu rén zài gōng zuò",id:"ada yang bekerja,"},
+{cat:"NASIHAT",zh:"人家工作2年存款很多，",py:"rén jiā gōng zuò nián cún kuǎn hěn duō",id:"orang kerja 2 tahun tabungannya banyak,"},
+{cat:"NASIHAT",zh:"你是在繳學費，",py:"nǐ shì zài jiǎo xué fèi",id:"kamu sedang bayar biaya kuliah,"},
+{cat:"NASIHAT",zh:"那你得到什麼啊。",py:"nà nǐ dé dào shén me a",id:"lalu kamu dapat apa."},
+{cat:"NASIHAT",zh:"如果不值得的話，",py:"rú guǒ bù zhí dé de huà",id:"Kalau tidak sebanding,"},
+{cat:"NASIHAT",zh:"那就是好好呆在這裡，",py:"nà jiù shì hǎo hǎo dāi zài zhè lǐ",id:"ya tinggal di sini dengan baik,"},
+{cat:"NASIHAT",zh:"好好投資自己，",py:"hǎo hǎo tóu zī zì jǐ",id:"investasikan dirimu dengan baik,"},
+{cat:"NASIHAT",zh:"好好人生，",py:"hǎo hǎo rén shēng",id:"hidup yang baik,"},
+{cat:"NASIHAT",zh:"可能自己應該是你人生最後一次當學生的機會。",py:"kě néng zì jǐ yīng gāi shì nǐ rén shēng zuì hòu yī cì dāng xué shēng de jī huì",id:"mungkin ini adalah kesempatan terakhirmu menjadi mahasiswa seumur hidup."},
+{cat:"NASIHAT",zh:"雖然 AI 充斥著，",py:"suī rán chōng chì zhù",id:"Walaupun AI di mana-mana,"},
+{cat:"NASIHAT",zh:"好，",py:"hǎo",id:"oke,"},
+{cat:"NASIHAT",zh:"那你能夠掌握什麼，",py:"nà nǐ néng gòu zhǎng wò shén me",id:"lalu apa yang bisa kamu kuasai,"},
+{cat:"NASIHAT",zh:"你能掌握什麼啊，",py:"nǐ néng zhǎng wò shén me a",id:"apa yang bisa kamu pegang,"},
+{cat:"NASIHAT",zh:"但是我不會因為 AI 走投無路。",py:"dàn shì wǒ bù huì yīn wèi zǒu tóu wú lù",id:"tapi saya tidak akan terdesak karena AI."},
+{cat:"NASIHAT",zh:"我爸爸媽媽投資我又出國留學，",py:"wǒ bà bà mā mā tóu zī wǒ yòu chū guó liú xué",id:"Ayah ibu saya investasikan saya dan saya juga studi ke luar negeri,"},
+{cat:"NASIHAT",zh:"所以我英文啊，",py:"suǒ yǐ wǒ yīng wén a",id:"jadi bahasa Inggris saya bagus,"},
+{cat:"NASIHAT",zh:"我繼續在做設計，",py:"wǒ jì xù zài zuò shè jì",id:"saya terus bergelut di desain,"},
+{cat:"NASIHAT",zh:"所以我應該不至於會因為 AI 會走投無路。",py:"suǒ yǐ wǒ yīng gāi bù zhì yú huì yīn wèi huì zǒu tóu wú lù",id:"jadi saya seharusnya tidak akan terdesak karena AI."},
+{cat:"NASIHAT",zh:"我不會害怕 AI，",py:"wǒ bù huì hài pà",id:"Saya tidak akan takut AI,"},
+{cat:"NASIHAT",zh:"我也不會害怕，",py:"wǒ yě bù huì hài pà",id:"saya juga tidak akan takut,"},
+{cat:"NASIHAT",zh:"而且包括是骨科大關閉或是怎樣，",py:"ér qiě bāo kuò shì gǔ kē dà guān bì huò shì zěn yàng",id:"termasuk kalau NUE tutup atau bagaimana,"},
+{cat:"NASIHAT",zh:"因為我沒有什麼危機意識，",py:"yīn wèi wǒ méi yǒu shén me wēi jī yì shí",id:"karena saya tidak punya kesadaran krisis,"},
+{cat:"NASIHAT",zh:"我其實蠻開心的。",py:"wǒ qí shí mán kāi xīn de",id:"saya sebenarnya cukup senang."},
+{cat:"NASIHAT",zh:"我蠻喜歡去別的地方探險，",py:"wǒ mán xǐ huān qù bié de dì fāng tàn xiǎn",id:"Saya cukup suka pergi berpetualang ke tempat lain,"},
+{cat:"NASIHAT",zh:"就是我蠻喜歡這種國際學生，",py:"jiù shì wǒ mán xǐ huān zhè zhǒng guó jì xué shēng",id:"saya cukup suka mahasiswa internasional seperti ini,"},
+{cat:"NASIHAT",zh:"因為你可以正視他們國家。",py:"yīn wèi nǐ kě yǐ zhèng shì tā men guó jiā",id:"karena kamu bisa menghadapi negara mereka langsung."},
+{cat:"NASIHAT",zh:"你不要覺得說他皮膚比我們黑，",py:"nǐ bù yào jué dé shuō tā pí fū bǐ wǒ men hēi",id:"Jangan kamu pikir karena kulitnya lebih gelap dari kita mereka lebih terbelakang, Taiwan hanyalah sebuah pulau terpencil, gempa, sesekali mati lampu mati air."},
+{cat:"NASIHAT",zh:"他們就比我們落後，",py:"tā men jiù bǐ wǒ men luò hòu",id:"Jangan kamu pikir karena kulitnya lebih gelap dari kita mereka lebih terbelakang, Taiwan hanyalah sebuah pulau terpencil, gempa, sesekali mati lampu mati air."},
+{cat:"NASIHAT",zh:"臺灣就是一個荒島，",py:"tái wān jiù shì yī gè huāng dǎo",id:"Jangan kamu pikir karena kulitnya lebih gelap dari kita mereka lebih terbelakang, Taiwan hanyalah sebuah pulau terpencil, gempa, sesekali mati lampu mati air."},
+{cat:"NASIHAT",zh:"地震啊，",py:"dì zhèn a",id:"Jangan kamu pikir karena kulitnya lebih gelap dari kita mereka lebih terbelakang, Taiwan hanyalah sebuah pulau terpencil, gempa, sesekali mati lampu mati air."},
+{cat:"NASIHAT",zh:"三不五時斷電斷水。",py:"sān bù wǔ shí duàn diàn duàn shuǐ",id:"Jangan kamu pikir karena kulitnya lebih gelap dari kita mereka lebih terbelakang, Taiwan hanyalah sebuah pulau terpencil, gempa, sesekali mati lampu mati air."},
+{cat:"NASIHAT",zh:"我會鼓勵同學多看多走，",py:"wǒ huì gǔ lì tóng xué duō kàn duō zǒu",id:"Saya akan dorong mahasiswa untuk banyak melihat dan berjalan,"},
+{cat:"NASIHAT",zh:"認識一點，",py:"rèn shí yī diǎn",id:"mengenal sedikit,"},
+{cat:"NASIHAT",zh:"我覺得也蠻不錯的。",py:"wǒ jué dé yě mán bù cuò de",id:"saya rasa juga cukup bagus."},
+{cat:"NASIHAT",zh:"想清楚，你要做什麼？",py:"xiǎng qīng chǔ nǐ yào zuò shén me",id:"Pikir jelas,"},
+{cat:"NASIHAT",zh:"來不上，我的課很好，因為我一定會跟你講這些資訊，但是回去之後，你要自己想。",py:"lái bù shàng wǒ de kè hěn hǎo yīn wèi wǒ yī dìng huì gēn nǐ jiǎng zhè xiē zī xùn dàn shì huí qù zhī hòu nǐ yào zì jǐ xiǎng",id:"kamu mau buat apa?"},
+{cat:"NASIHAT",zh:"你有可能不再當學生的身份，",py:"nǐ yǒu kě néng bù zài dāng xué shēng de shēn fèn",id:"Kamu mungkin tidak akan lagi jadi mahasiswa,"},
+{cat:"NASIHAT",zh:"那你就好好的珍惜，",py:"nà nǐ jiù hǎo hǎo de zhēn xī",id:"ya manfaatkan dengan baik,"},
+{cat:"NASIHAT",zh:"好好的認識，",py:"hǎo hǎo de rèn shí",id:"kenali dengan baik,"},
+{cat:"NASIHAT",zh:"直接想要念碩士，",py:"zhí jiē xiǎng yào niàn shuò shì",id:"langsung mau ambil S2,"},
+{cat:"NASIHAT",zh:"那個就是你最高的學歷。",py:"nà gè jiù shì nǐ zuì gāo de xué lì",id:"itu adalah gelar akademik tertinggimu."},
+{cat:"NASIHAT",zh:"就算臺灣的學校關了，",py:"jiù suàn tái wān de xué xiào guān le",id:"Walaupun sekolah di Taiwan tutup, saya bisa pergi mengajar di sekolah lain, saya tidak menutup kemungkinan ke Vietnam, selama bisa berbicara bahasa Inggris masih bisa pergi."},
+{cat:"NASIHAT",zh:"我也可以去別的學校教書，",py:"wǒ yě kě yǐ qù bié de xué xiào jiào shū",id:"Walaupun sekolah di Taiwan tutup, saya bisa pergi mengajar di sekolah lain, saya tidak menutup kemungkinan ke Vietnam, selama bisa berbicara bahasa Inggris masih bisa pergi."},
+{cat:"NASIHAT",zh:"我不排除去越南，",py:"wǒ bù pái chú qù yuè nán",id:"Walaupun sekolah di Taiwan tutup, saya bisa pergi mengajar di sekolah lain, saya tidak menutup kemungkinan ke Vietnam, selama bisa berbicara bahasa Inggris masih bisa pergi."},
+{cat:"NASIHAT",zh:"只要能夠講英語，",py:"zhǐ yào néng gòu jiǎng yīng yǔ",id:"Walaupun sekolah di Taiwan tutup, saya bisa pergi mengajar di sekolah lain, saya tidak menutup kemungkinan ke Vietnam, selama bisa berbicara bahasa Inggris masih bisa pergi."},
+{cat:"NASIHAT",zh:"還是可以去。",py:"hái shì kě yǐ qù",id:"Walaupun sekolah di Taiwan tutup, saya bisa pergi mengajar di sekolah lain, saya tidak menutup kemungkinan ke Vietnam, selama bisa berbicara bahasa Inggris masih bisa pergi."}
+];
+
+var CAT_CFG={
+  KELAS:{label:"📚 Kelas",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  TESIS:{label:"📝 Tesis",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  ADMIN:{label:"📋 Administrasi",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  NASIHAT:{label:"💡 Nasihat",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#059669)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kalimat";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.KELAS;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("zh-disp").textContent=c.zh;
+  document.getElementById("ans-py").textContent=c.py||"";
+  document.getElementById("ans-id").textContent=c.id;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-zh'>"+v.zh.substring(0,20)+"…</span>"+score;
+      rl.appendChild(d);
+    });
+    document.getElementById("rlw").style.display="";
+  }
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
+
