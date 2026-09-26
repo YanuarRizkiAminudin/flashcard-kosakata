@@ -38,7 +38,7 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 .card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
 .card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
 .cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
-.zh-front{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;line-height:1.55;font-size:17px;}
+.zh-front{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;line-height:1.55;font-size:16px;}
 .tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
 .ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
 @keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
@@ -105,8 +105,6 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
       <div class="tap" id="tap"><span>👆</span>Ketuk untuk terjemahan</div>
       <div class="ans" id="ans" style="display:none">
         <div class="dl"></div>
-        <div class="atag">PINYIN</div>
-        <div style="font-size:15px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:8px;line-height:1.5;" id="ans-py"></div>
         <div class="atag">🇮🇩 Indonesia</div>
         <div class="ans-id" id="ans-id"></div>
       </div>
@@ -147,110 +145,116 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 </div>
 <script>
 var V=[
-// KELAS
-{cat:"KELAS",zh:"臺灣的學生對我來講，也是最重要的，但是我們也是不能說我都全部講中文然後我不理他們。",py:"Táiwān de xuésheng duì wǒ lái jiǎng, yěshì zuì zhòngyào de, dànshì wǒmen yěshì bùnéng shuō wǒ dōu quánbù jiǎng Zhōngwén ránhòu wǒ bù lǐ tāmen.",id:"Mahasiswa Taiwan bagi saya juga yang paling penting, tapi kita tidak bisa hanya bicara Mandarin terus tidak peduli mereka."},
-{cat:"KELAS",zh:"如果你有什麼想法或是什麼，可以私信我或是可以在臉書的群組講都無所謂。",py:"Rúguǒ nǐ yǒu shénme xiǎngfǎ huòshì shénme, kěyǐ sīxìn wǒ huòshì kěyǐ zài Liǎnshū de qúnzǔ jiǎng dōu wúsuǒwèi.",id:"Kalau kamu punya pikiran atau apapun, bisa DM saya atau bicara di grup Facebook, tidak masalah."},
-{cat:"KELAS",zh:"我比較希望用臉書因為 Line 的群組你通常換手機除非你備份否則就沒有了。",py:"Wǒ bǐjiào xīwàng yòng Liǎnshū yīnwèi Line de qúnzǔ nǐ tōngcháng huàn shǒujī chúfēi nǐ bèifèn fǒuzé jiù méiyǒu le.",id:"Saya lebih suka pakai Facebook karena grup Line kalau ganti HP kalau tidak backup biasanya hilang."},
-{cat:"KELAS",zh:"雖然我外表看不太清楚，其實我應該是你們阿公阿媽級的。",py:"Suīrán wǒ wàibiǎo kàn bù tài qīngchǔ, qíshí wǒ yīnggāi shì nǐmen āgōng āmā jí de.",id:"Walaupun penampilan saya tidak terlalu kelihatan tua, sebenarnya saya sudah level kakek nenek kalian."},
-{cat:"KELAS",zh:"我比較希望你們叫老師姐姐，不要叫我大嬸也不要叫我婆婆或是阿嬤。",py:"Wǒ bǐjiào xīwàng nǐmen jiào lǎoshī jiějiě, bùyào jiào wǒ dàshěn yě bùyào jiào wǒ pópo huòshì āmā.",id:"Saya lebih suka kalian panggil 'kakak guru', jangan panggil saya 'tante' atau 'nenek'."},
-{cat:"KELAS",zh:"因為我們有外籍生，所以我上課的時間跟進度就會有一點沒辦法很迅速。",py:"Yīnwèi wǒmen yǒu wàijí shēng, suǒyǐ wǒ shàngkè de shíjiān gēn jìndù jiù huì yǒu yīdiǎn méibànfǎ hěn xùnsù.",id:"Karena ada mahasiswa asing, waktu mengajar dan kemajuan kelas tidak bisa terlalu cepat."},
-{cat:"KELAS",zh:"我的 quality 絕對不會差，但是我的進度就很慢。",py:"Wǒ de quality juéduì bù huì chà, dànshì wǒ de jìndù jiù hěn màn.",id:"Kualitas saya pasti tidak akan buruk, tapi kemajuannya akan lambat."},
-{cat:"KELAS",zh:"如果是三節課，我不會三節課全部上完，因為那個是沒有效果的。",py:"Rúguǒ shì sān jié kè, wǒ bù huì sān jié kè quánbù shàng wán, yīnwèi nàge shì méiyǒu xiàoguǒ de.",id:"Kalau ada tiga sesi, saya tidak akan mengajar penuh tiga sesi karena itu tidak efektif."},
-{cat:"KELAS",zh:"剩下你們可以在這裡自由討論或是做作業都是可以的。",py:"Shèng xià nǐmen kěyǐ zài zhèlǐ zìyóu tǎolùn huòshì zuò zuòyè dōu shì kěyǐ de.",id:"Sisanya kalian bisa bebas diskusi atau mengerjakan tugas di sini."},
-{cat:"KELAS",zh:"我希望大家可以接受，如果不能接受，也請你先跟我講。",py:"Wǒ xīwàng dàjiā kěyǐ jiēshòu, rúguǒ bùnéng jiēshòu, yě qǐng nǐ xiān gēn wǒ jiǎng.",id:"Saya harap semua bisa menerima, kalau tidak bisa tolong beritahu saya dulu."},
-{cat:"KELAS",zh:"任何問題都歡迎，只要是課堂上都非常歡迎跟我詢問。",py:"Rènhé wèntí dōu huānyíng, zhǐyào shì kètáng shàng dōu fēicháng huānyíng gēn wǒ xúnwèn.",id:"Pertanyaan apapun diterima, selama di kelas sangat welcome untuk bertanya kepada saya."},
-{cat:"KELAS",zh:"大家都是 Z 世代的人，我們就是不要太做作，就是自然就好，自然最重要。",py:"Dàjiā dōu shì Z shìdài de rén, wǒmen jiùshì bùyào tài zuòzuò, jiùshì zìrán jiù hǎo, zìrán zuì zhòngyào.",id:"Semua adalah generasi Z, jangan terlalu dibuat-buat, yang natural saja, natural itu yang paling penting."},
-{cat:"KELAS",zh:"到期中呢，我希望大家能夠做自己專業的自我介紹。",py:"Dào qīzhōng ne, wǒ xīwàng dàjiā nénggòu zuò zìjǐ zhuānyè de zìwǒ jièshào.",id:"Sampai UTS, saya harap semua bisa membuat perkenalan diri yang profesional."},
-{cat:"KELAS",zh:"你不要覺得說你抱著以前大學的心態，你就是來這邊上課，然後就坐著像 NPC 一樣。",py:"Nǐ bùyào juéde shuō nǐ bàozhe yǐqián dàxué de xīntài, nǐ jiùshì lái zhèbiān shàngkè, ránhòu jiù zuòzhe xiàng NPC yīyàng.",id:"Jangan berpikir dengan mentalitas kuliah S1 dulu, duduk di sini seperti NPC saja."},
-{cat:"KELAS",zh:"今年你們應該是人數最少的，這就告訴我們是一個趨勢。",py:"Jīnnián nǐmen yīnggāi shì rénshù zuì shǎo de, zhè jiù gàosù wǒmen shì yīgè qūshì.",id:"Tahun ini kalian seharusnya yang paling sedikit jumlahnya, ini menunjukkan suatu tren."},
-// TESIS
-{cat:"TESIS",zh:"設計研究方法必修就是你可以任選3個你喜歡的，你覺得你可能會用到的。",py:"Shèjì yánjiū fāngfǎ bìxiū jiùshì nǐ kěyǐ rèn xuǎn 3 gè nǐ xǐhuān de, nǐ juédé nǐ kěnéng huì yòngdào de.",id:"Metode Penelitian Desain yang wajib adalah kamu bisa pilih 3 yang kamu suka, yang kamu kira mungkin akan kamu pakai."},
-{cat:"TESIS",zh:"我並沒有說不能用 AI，但是你一定要自己看過去。",py:"Wǒ bìng méiyǒu shuō bùnéng yòng AI, dànshì nǐ yīdìng yào zìjǐ kàn guòqù.",id:"Saya tidak bilang tidak boleh pakai AI, tapi kamu harus melihatnya sendiri dulu."},
-{cat:"TESIS",zh:"沒有什麼題目是好做也沒有什麼題目是不能做的，重點你想專注在什麼地方。",py:"Méiyǒu shénme tímù shì hǎo zuò yě méiyǒu shénme tímù shì bùnéng zuò de, zhòngdiǎn nǐ xiǎng zhuānzhù zài shénme dìfāng.",id:"Tidak ada topik yang mudah dan tidak ada topik yang tidak bisa dikerjakan, intinya kamu mau fokus di mana."},
-{cat:"TESIS",zh:"題目不用急，一定會改的，甚至改到一年以後、一年半之後都會改。",py:"Tímù bùyòng jí, yīdìng huì gǎi de, shènzhì gǎi dào yī nián yǐhòu, yī nián bàn zhīhòu dōu huì gǎi.",id:"Judul tidak perlu terburu-buru, pasti akan berubah, bahkan sampai setahun atau setahun setengah kemudian."},
-{cat:"TESIS",zh:"你要看範本，因為叫你自己做，你也不知道要怎麼做。",py:"Nǐ yào kàn fànběn, yīnwèi jiào nǐ zìjǐ zuò, nǐ yě bù zhīdào yào zěnme zuò.",id:"Kamu perlu melihat contoh, karena kalau disuruh buat sendiri kamu juga tidak tahu harus bagaimana."},
-{cat:"TESIS",zh:"我希望你至少選3種然後去比較它的優缺點。",py:"Wǒ xīwàng nǐ zhìshǎo xuǎn 3 zhǒng ránhòu qù bǐjiào tā de yōu quēdiǎn.",id:"Saya harap kamu pilih minimal 3 jenis lalu bandingkan kelebihan dan kekurangannya."},
-{cat:"TESIS",zh:"整理資料不在於多，在於你自己能夠看清楚多少。",py:"Zhěnglǐ zīliào bù zàiyú duō, zàiyú nǐ zìjǐ nénggòu kàn qīngchǔ duōshǎo.",id:"Mengorganisir data bukan soal banyaknya, tapi soal seberapa jelas kamu bisa memahaminya."},
-{cat:"TESIS",zh:"你一定要多閱讀，你沒有多閱讀你絕對問題有限。",py:"Nǐ yīdìng yào duō yuèdú, nǐ méiyǒu duō yuèdú nǐ juéduì wèntí yǒuxiàn.",id:"Kamu harus banyak membaca, kalau tidak banyak membaca pertanyaan-pertanyaanmu pasti terbatas."},
-{cat:"TESIS",zh:"論文寫不出來不是因為上了沈老師的課，你論文馬上就寫出來，沒有這種事的。",py:"Lùnwén xiě bù chūlái búshì yīnwèi shàng le Shěn lǎoshī de kè, nǐ lùnwén mǎshàng jiù xiě chūlái, méiyǒu zhè zhǒng shì de.",id:"Tidak bisa menulis tesis bukan karena sudah ikut kelas saya lalu langsung bisa nulis, tidak ada yang seperti itu."},
-{cat:"TESIS",zh:"我可以告訴你方法，可是你自己要去做，時間管理是你的不是我的。",py:"Wǒ kěyǐ gàosù nǐ fāngfǎ, kěshì nǐ zìjǐ yào qù zuò, shíjiān guǎnlǐ shì nǐ de búshì wǒ de.",id:"Saya bisa beritahu caranya, tapi kamu sendiri yang harus melakukannya, manajemen waktu adalah milikmu bukan milikku."},
-{cat:"TESIS",zh:"大部分都拖到2到3年，準時2年以內畢業很少。",py:"Dàbùfen dōu tuō dào 2 dào 3 nián, zhǔnshí 2 nián yǐnèi bìyè hěn shǎo.",id:"Kebanyakan molor sampai 2-3 tahun, sangat jarang yang selesai tepat waktu dalam 2 tahun."},
-{cat:"TESIS",zh:"你同一時間進來不一定同一時間出得去，所以是你自己時間管理的問題。",py:"Nǐ tóngyī shíjiān jìnlái bù yīdìng tóngyī shíjiān chū dé qù, suǒyǐ shì nǐ zìjǐ shíjiān guǎnlǐ de wèntí.",id:"Masuk bersamaan tidak berarti keluar bersamaan, itu masalah manajemen waktu kamu sendiri."},
-{cat:"TESIS",zh:"做創作呢，你可能要有一個展演或者是參加一個比賽的證明。",py:"Zuò chuàngzuò ne, nǐ kěnéng yào yǒu yīgè zhǎnyǎn huòzhě shì cānjiā yīgè bǐsài de zhèngmíng.",id:"Untuk karya kreatif, kamu mungkin perlu bukti pertunjukan atau mengikuti kompetisi."},
-{cat:"TESIS",zh:"做論文的可能要參加某個研討會去發表，你要有這樣的資格門檻才可以提出口考。",py:"Zuò lùnwén de kěnéng yào cānjiā mǒuge yántǎohuì qù fābiǎo, nǐ yào yǒu zhèyàng de zīgé ménkǎn cái kěyǐ tíchū kǒukǎo.",id:"Untuk penulisan tesis perlu ikut seminar untuk presentasi, kamu butuh kualifikasi seperti itu baru bisa mengajukan ujian lisan."},
-{cat:"TESIS",zh:"不要急著找老師，每一個老師都去談談看，哪一個跟你的理念比較合適。",py:"Bùyào jízhe zhǎo lǎoshī, měi yīgè lǎoshī dōu qù tán tán kàn, nǎ yīgè gēn nǐ de lǐniàn bǐjiào héshì.",id:"Jangan terburu-buru mencari dosen pembimbing, coba ngobrol dengan setiap dosen dulu, mana yang paling cocok dengan ide kamu."},
-// ADMINISTRASI
-{cat:"ADMIN",zh:"東西寫出來了，一定要上傳到圖書館，圖書館會幫你做一個論文原創性的比對系統。",py:"Dōngxi xiě chūlái le, yīdìng yào shàngchuán dào túshūguǎn, túshūguǎn huì bāng nǐ zuò yīgè lùnwén yuánchuàngxìng de bǐduì xìtǒng.",id:"Setelah selesai ditulis, harus diunggah ke perpustakaan, perpustakaan akan membantu cek sistem keaslian tesis."},
-{cat:"ADMIN",zh:"如果36%是太高，一般是要13以下會比較好。",py:"Rúguǒ 36% shì tài gāo, yībān shì yào 13 yǐxià huì bǐjiào hǎo.",id:"Kalau 36% itu terlalu tinggi, umumnya di bawah 13% lebih baik."},
-{cat:"ADMIN",zh:"研究倫理就是6個小時，你可以上臺灣學術倫理教育資源，免費的，但是你要註冊。",py:"Yánjiū lúnlǐ jiùshì 6 gè xiǎoshí, nǐ kěyǐ shàng Táiwān xuéshù lúnlǐ jiàoyù zīyuán, miǎnfèi de, dànshì nǐ yào zhùcè.",id:"Etika penelitian itu 6 jam, bisa ikut di sumber pendidikan etika akademik Taiwan, gratis tapi harus daftar."},
-{cat:"ADMIN",zh:"論文比對系統在67月大塞車，你口考完之後還要再上傳繳交一些文件。",py:"Lùnwén bǐduì xìtǒng zài 6、7 yuè dà sāichē, nǐ kǒukǎo wán zhīhòu hái yào zài shàngchuán jiǎo jiāo yīxiē wénjian.",id:"Sistem pembandingan tesis di bulan 6-7 sangat macet, setelah ujian lisan masih harus unggah dan serahkan dokumen."},
-{cat:"ADMIN",zh:"假設你全部弄完，731以前就可以順利拿到畢業證書。",py:"Jiǎshè nǐ quánbù nòng wán, 7 yuè 31 hào yǐqián jiù kěyǐ shùnlì ná dào bìyè zhèngshū.",id:"Asumsi kamu selesaikan semuanya, sebelum 31 Juli bisa terima ijazah dengan lancar."},
-{cat:"ADMIN",zh:"口考完成之後，你要自己去跑，不管你女朋友、家人，大部分都自己弄。",py:"Kǒukǎo wánchéng zhīhòu, nǐ yào zìjǐ qù pǎo, bùguǎn nǐ nǚpéngyǒu, jiārén, dàbùfen dōu zìjǐ nòng.",id:"Setelah ujian lisan selesai, kamu harus urus sendiri, tidak peduli pacar atau keluarga, sebagian besar urus sendiri."},
-{cat:"ADMIN",zh:"論文摘要跟關鍵詞，都是要英文的版本，不是只有中文的，要附在那一本碩論的最後。",py:"Lùnwén zhāiyào gēn guānjiàncí, dōu shì yào yīngwén de bǎnběn, búshì zhǐyǒu Zhōngwén de, yào fù zài nà yī běn shuòlùn de zuìhòu.",id:"Abstrak tesis dan kata kunci harus ada versi Inggrisnya, tidak cukup hanya Mandarin, dilampirkan di akhir tesis."},
-{cat:"ADMIN",zh:"碩生在11月底就要確定指導老師，系上會告訴班代。",py:"Shuòshēng zài 11 yuè dǐ jiù yào quèdìng zhǐdǎo lǎoshī, xì shàng huì gàosù bāndài.",id:"Mahasiswa S2 harus konfirmasi dosen pembimbing di akhir November, departemen akan beritahu ketua kelas."},
-{cat:"ADMIN",zh:"我只是一個授課老師，你的選課系統跟我沒關係，我的系統也進不去。",py:"Wǒ zhǐshì yīgè shòukè lǎoshī, nǐ de xuǎnkè xìtǒng gēn wǒ méi guānxì, wǒ de xìtǒng yě jìn bù qù.",id:"Saya hanya dosen pengajar, sistem pemilihan mata kuliah kamu tidak ada hubungannya dengan saya."},
-{cat:"ADMIN",zh:"你的15000元不是都到我口袋裡，那是繳給教務處的。",py:"Nǐ de 15000 yuán búshì dōu dào wǒ kǒudài lǐ, nà shì jiǎo gěi jiàowùchù de.",id:"15.000 NT kamu tidak masuk semua ke kantong saya, itu dibayarkan ke Bagian Akademik."},
-// NASIHAT
-{cat:"NASIHAT",zh:"你要想想看你為什麼要投資這2年，這2年不見得能夠準時畢業。",py:"Nǐ yào xiǎng xiǎng kàn nǐ wèishénme yào tóuzī zhè 2 nián, zhè 2 nián bú jiàn de nénggòu zhǔnshí bìyè.",id:"Pikirkan mengapa kamu mau investasikan 2 tahun ini, 2 tahun belum tentu bisa lulus tepat waktu."},
-{cat:"NASIHAT",zh:"你同樣花2年，你自己去工作，因為你們學費不便宜。",py:"Nǐ tóngyàng huā 2 nián, nǐ zìjǐ qù gōngzuò, yīnwèi nǐmen xuéfèi bù piányí.",id:"Untuk 2 tahun yang sama kamu bisa kerja, karena biaya kuliah kalian tidak murah."},
-{cat:"NASIHAT",zh:"你來這裡一定有某種的原因，你是要來圓夢的還是當跳板還是怎麼樣的。",py:"Nǐ lái zhèlǐ yīdìng yǒu mǒu zhǒng de yuányīn, nǐ shì yào lái yuán mèng de háishi dāng tiàobǎn háishi zěnme yàng de.",id:"Kamu pasti punya alasan tertentu untuk ke sini, apakah untuk mewujudkan mimpi, jembatan karir, atau apa."},
-{cat:"NASIHAT",zh:"你既然來了，你就要想想看，你投資的這2年，你要怎麼回本。",py:"Nǐ jìrán lái le, nǐ jiù yào xiǎng xiǎng kàn, nǐ tóuzī de zhè 2 nián, nǐ yào zěnme huí běn.",id:"Karena sudah datang, pikirkan investasi 2 tahun ini, bagaimana cara mendapat balik modalnya."},
-{cat:"NASIHAT",zh:"假設你到人生地不熟的地方，你要怎麼運用你的專業，你要怎麼賺錢。",py:"Jiǎshè nǐ dào rén shēng dì bù shú de dìfāng, nǐ yào zěnme yùnyòng nǐ de zhuānyè, nǐ yào zěnme zhuànqián.",id:"Misalkan kamu ke tempat yang asing, bagaimana kamu memanfaatkan keahlianmu, bagaimana kamu menghasilkan uang."},
-{cat:"NASIHAT",zh:"我雖然不會講越南話，那至少我可以去教中文，我可以去教英文，開補習班也可以。",py:"Wǒ suīrán bù huì jiǎng Yuènán huà, nà zhìshǎo wǒ kěyǐ qù jiāo Zhōngwén, wǒ kěyǐ qù jiāo Yīngwén, kāi bǔxí bān yě kěyǐ.",id:"Walaupun saya tidak bisa bahasa Vietnam, setidaknya saya bisa mengajar Mandarin, mengajar Inggris, buka bimbel juga bisa."},
-{cat:"NASIHAT",zh:"不要覺得越南落後，那個全部都是工作機會啊，我們是已經過度發展。",py:"Bùyào juéde Yuènán luòhòu, nàge quánbù dōu shì gōngzuò jīhuì a, wǒmen shì yǐjīng guòdù fāzhǎn.",id:"Jangan pikir Vietnam terbelakang, itu semua adalah peluang kerja, kita sudah terlalu jenuh berkembang."},
-{cat:"NASIHAT",zh:"我們要學會跟國際人士相處，因為我們的人口真的沒辦法。",py:"Wǒmen yào xuéhuì gēn guójì rénshì xiāngchǔ, yīnwèi wǒmen de rénkǒu zhēn de méibànfǎ.",id:"Kita harus belajar bergaul dengan orang internasional, karena jumlah penduduk kita memang tidak mencukupi."},
-{cat:"NASIHAT",zh:"臺灣相對的安全，但是任何事情都有可能發生，自己也要小心。",py:"Táiwān xiāngduì de ānquán, dànshì rènhé shìqíng dōu yǒu kěnéng fāshēng, zìjǐ yě yào xiǎoxīn.",id:"Taiwan relatif aman, tapi hal apapun bisa terjadi, kamu juga harus berhati-hati."},
-{cat:"NASIHAT",zh:"你要把大學生的心態拿來做碩論，碩論是要自己付出的，要勤勞一點。",py:"Nǐ yào bǎ dàxuéshēng de xīntài ná lái zuò shuòlùn, shuòlùn shì yào zìjǐ fùchū de, yào qínláo yīdiǎn.",id:"Kamu tidak boleh pakai mentalitas mahasiswa S1 untuk mengerjakan tesis S2, tesis harus dikerjakan sendiri, harus lebih rajin."},
-{cat:"NASIHAT",zh:"你不能說啊，我怪老師，怨天怨地，就不會怨自己，那個都是個人的因素。",py:"Nǐ bùnéng shuō a, wǒ guài lǎoshī, yuàn tiān yuàn dì, jiù bù huì yuàn zìjǐ, nàge dōu shì gèrén de yīnsù.",id:"Kamu tidak bisa menyalahkan dosen, menyalahkan ini itu, tapi tidak salahkan diri sendiri, itu semua faktor pribadi."},
-{cat:"NASIHAT",zh:"碩論是你這一生可能最後一次念書的機會，如果你不想念博士的話，你就好好的珍惜。",py:"Shuòlùn shì nǐ zhè yīshēng kěnéng zuìhòu yīcì niànshū de jīhuì, rúguǒ nǐ bùxiǎng niàn bóshì dehuà, nǐ jiù hǎohǎo de zhēnxī.",id:"Tesis S2 mungkin adalah kesempatan belajar terakhirmu seumur hidup, kalau tidak mau lanjut S3, manfaatkan dengan baik."},
-{cat:"NASIHAT",zh:"AI 對我來講只是一個工具，你能夠掌握什麼，你能掌握什麼。",py:"AI duì wǒ lái jiǎng zhǐshì yīgè gōngjù, nǐ nénggòu zhǎngwò shénme, nǐ néng zhǎngwò shénme.",id:"AI bagi saya hanya sebuah alat, apa yang bisa kamu kuasai, apa yang bisa kamu pegang."},
-{cat:"NASIHAT",zh:"我是喜歡直接面對面的溝通，如果有什麼問題，請你直接跟我講。",py:"Wǒ shì xǐhuān zhíjiē miàn duì miàn de gōutōng, rúguǒ yǒu shénme wèntí, qǐng nǐ zhíjiē gēn wǒ jiǎng.",id:"Saya suka komunikasi langsung tatap muka, kalau ada masalah tolong langsung bicara ke saya."},
-{cat:"NASIHAT",zh:"你要告訴我你的需求，我能夠幫助你；而你沒有告訴我的需求，我也不明白。",py:"Nǐ yào gàosù wǒ nǐ de xūqiú, wǒ nénggòu bāngzhù nǐ; ér nǐ méiyǒu gàosù wǒ de xūqiú, wǒ yě bù míngbái.",id:"Kamu harus beritahu kebutuhanmu, saya bisa membantumu; kalau kamu tidak beritahu saya juga tidak mengerti."},
-{cat:"NASIHAT",zh:"隻要是在我課堂以內，我可以幫助你，我一定會負責到底。",py:"Zhǐyào shì zài wǒ kètáng yǐnèi, wǒ kěyǐ bāngzhù nǐ, wǒ yīdìng huì fùzé dàodǐ.",id:"Selama masih dalam cakupan kelasmu, saya bisa membantumu, saya pasti akan bertanggung jawab sampai selesai."},
-{cat:"NASIHAT",zh:"現在才是開始哦，放輕鬆，你要覺得你自己的強項是什麼。",py:"Xiànzài cái shì kāishǐ ō, fàng qīngsōng, nǐ yào juéde nǐ zìjǐ de qiángxiàng shì shénme.",id:"Ini baru awal, santai saja, kamu perlu tahu apa kelebihan dirimu sendiri."},
-,{cat:"KELAS",zh:"如果你有什麼想法或是什麼，可以私信我或是可以在臉書的群組講都無所謂。",id:"Kalau kamu punya pikiran atau apapun, bisa DM saya atau bicara di grup Facebook, tidak masalah."},
-{cat:"KELAS",zh:"我比較希望用臉書因為 Line 的群組你通常換手機除非你備份否則就沒有了。",id:"Saya lebih suka pakai Facebook karena grup Line kalau ganti HP kalau tidak backup biasanya hilang."},
+// ── KELAS ──
+{cat:"KELAS",zh:"學校他要收我們，老師只是一個授課的老師，你不能因為他就是訂立雙語，就不理學生。",id:"Sekolah yang menerima kita, guru hanya dosen pengajar. Kamu tidak bisa karena sudah bilang bilingual lalu tidak peduli mahasiswa."},
+{cat:"KELAS",zh:"因為沈老師的課，可能沒辦法百分之百完全說中文，因為有國際學生。",id:"Karena kelas Shen Laoshi, mungkin tidak bisa 100% berbicara Mandarin, karena ada mahasiswa internasional."},
+{cat:"KELAS",zh:"我課堂的時間可能就變成切一半，要去克服我的國際學生。",id:"Waktu mengajar saya mungkin jadi terbagi dua, untuk mengakomodasi mahasiswa internasional saya."},
+{cat:"KELAS",zh:"臺灣的學生對我來講，也是最重要的，但是我們也是不能說我都全部講中文然後我不理他們。",id:"Mahasiswa Taiwan bagi saya juga yang paling penting, tapi kita tidak bisa hanya bicara Mandarin terus tidak peduli mereka."},
+{cat:"KELAS",zh:"如果你有什麼想法或是什麼，可以私信我或是可以在臉書的群組講都無所謂。",id:"Kalau kamu punya pikiran atau apapun, bisa DM saya atau bicara di grup Facebook, tidak masalah."},
+{cat:"KELAS",zh:"我比較希望用臉書，因為 Line 的群組你通常換手機除非你備份，否則就沒有了。",id:"Saya lebih suka pakai Facebook, karena grup Line kalau ganti HP tanpa backup biasanya hilang."},
+{cat:"KELAS",zh:"我的群組從我已經在教書22年了。",id:"Grup saya sudah ada sejak saya mengajar selama 22 tahun."},
 {cat:"KELAS",zh:"雖然我外表看不太清楚，其實我應該是你們阿公阿媽級的。",id:"Walaupun penampilan saya tidak terlalu kelihatan tua, sebenarnya saya sudah level kakek nenek kalian."},
-{cat:"KELAS",zh:"我比較希望你們叫老師姐姐，不要叫我大嬸也不要叫我婆婆或是阿嬤。",id:"Saya lebih suka kalian panggil 'kakak guru', jangan panggil saya 'tante' atau 'nenek'."},
+{cat:"KELAS",zh:"我沒有去整形喔，但是我有打玻尿酸，這是一定有的，就是維持至少看起來就是不要太老。",id:"Saya tidak operasi plastik ya, tapi saya suntik filler, itu pasti ada, supaya setidaknya tidak kelihatan terlalu tua."},
+{cat:"KELAS",zh:"我比較希望你們叫老師姐姐，不要叫我大嬸，也不要叫我婆婆或是阿嬤。",id:"Saya lebih suka kalian panggil 'kakak guru', jangan panggil saya 'tante' atau 'nenek'."},
+{cat:"KELAS",zh:"老師賺的錢不會因為有國際學生就有加價，我就是居民價，因為我只是員工。",id:"Gaji guru tidak naik karena ada mahasiswa internasional, saya tetap gaji standar, karena saya hanya karyawan."},
 {cat:"KELAS",zh:"因為我們有外籍生，所以我上課的時間跟進度就會有一點沒辦法很迅速。",id:"Karena ada mahasiswa asing, waktu mengajar dan kemajuan kelas tidak bisa terlalu cepat."},
+{cat:"KELAS",zh:"在這邊請同學先原諒我，就說我可能有一半不講中文。",id:"Di sini tolong teman-teman memaafkan saya dulu, karena mungkin setengahnya tidak saya sampaikan dalam bahasa Mandarin."},
 {cat:"KELAS",zh:"我的 quality 絕對不會差，但是我的進度就很慢。",id:"Kualitas saya pasti tidak akan buruk, tapi kemajuannya akan lambat."},
+{cat:"KELAS",zh:"均一價，只收到保真的，吃到飽，那你說知識是什麼？沒知識啊。",id:"Harga seragam, bayar pas dan dapat semua yang ada, kamu tanya ilmunya apa? Ya tidak ada bayar lebihnya."},
 {cat:"KELAS",zh:"如果是三節課，我不會三節課全部上完，因為那個是沒有效果的。",id:"Kalau ada tiga sesi, saya tidak akan mengajar penuh tiga sesi karena itu tidak efektif."},
 {cat:"KELAS",zh:"剩下你們可以在這裡自由討論或是做作業都是可以的。",id:"Sisanya kalian bisa bebas diskusi atau mengerjakan tugas di sini."},
+{cat:"KELAS",zh:"你甚至可以在課堂上做 PPT 或者做別人提報的時候自己再做簡報也可以。",id:"Kamu bahkan bisa mengerjakan PPT di kelas atau waktu orang lain presentasi kamu buat slidenya sendiri juga boleh."},
+{cat:"KELAS",zh:"我都是講重點，那剩下你們可以在這裡自由討論，或是做作業都是可以的。",id:"Saya selalu menyampaikan poinnya saja, sisanya kalian bisa bebas diskusi atau mengerjakan tugas di sini."},
 {cat:"KELAS",zh:"我希望大家可以接受，如果不能接受，也請你先跟我講。",id:"Saya harap semua bisa menerima, kalau tidak bisa tolong beritahu saya dulu."},
 {cat:"KELAS",zh:"任何問題都歡迎，只要是課堂上都非常歡迎跟我詢問。",id:"Pertanyaan apapun diterima, selama di kelas sangat welcome untuk bertanya kepada saya."},
 {cat:"KELAS",zh:"大家都是 Z 世代的人，我們就是不要太做作，就是自然就好，自然最重要。",id:"Semua adalah generasi Z, jangan terlalu dibuat-buat, yang natural saja, natural itu yang paling penting."},
-{cat:"KELAS",zh:"到期中呢，我希望大家能夠做自己專業的自我介紹。",id:"Sampai UTS, saya harap semua bisa membuat perkenalan diri yang profesional."},
-{cat:"KELAS",zh:"你不要覺得說你抱著以前大學的心態，你就是來這邊上課，然後就坐著像 NPC 一樣。",id:"Jangan berpikir dengan mentalitas kuliah S1 dulu, duduk di sini seperti NPC saja."},
+{cat:"KELAS",zh:"到期中呢，我希望大家能夠做自己專業的自我介紹。",id:"Sampai UTS, saya harap semua bisa membuat perkenalan diri sesuai latar belakang profesional masing-masing."},
+{cat:"KELAS",zh:"你不要覺得說你抱著以前大學的心態，你就是來這邊上課，然後就坐著像 NPC 一樣。",id:"Jangan berpikir dengan mentalitas kuliah S1 dulu, datang lalu duduk seperti NPC saja."},
 {cat:"KELAS",zh:"今年你們應該是人數最少的，這就告訴我們是一個趨勢。",id:"Tahun ini kalian seharusnya yang paling sedikit jumlahnya, ini menunjukkan suatu tren."},
-// TESIS
-{cat:"TESIS",zh:"設計研究方法必修就是你可以任選3個你喜歡的，你覺得你可能會用到的。",id:"Metode Penelitian Desain yang wajib adalah kamu bisa pilih 3 yang kamu suka, yang kamu kira mungkin akan kamu pakai."},
-{cat:"TESIS",zh:"我並沒有說不能用 AI，但是你一定要自己看過去，因為你在寫論文的時候。",id:"Saya tidak bilang tidak boleh pakai AI, tapi kamu harus melihatnya sendiri dulu, karena waktu menulis tesis."},
+{cat:"KELAS",zh:"雖然所不會倒，但是念書越來越少人想來，想來骨科大的也相對越來越少。",id:"Walaupun jurusan tidak akan bubar, tapi semakin sedikit orang yang mau kuliah, yang mau ke NUE juga semakin berkurang."},
+{cat:"KELAS",zh:"我們先學期就做了一個蠻好的 project，所以你們學長很高興認識不同的人然後去溝通。",id:"Semester lalu kami sudah buat project yang cukup bagus, jadi kakak tingkatmu senang mengenal orang berbeda lalu berkomunikasi."},
+{cat:"KELAS",zh:"我會看課堂的人數去調說要怎麼做，比較客製化。",id:"Saya akan melihat jumlah orang di kelas lalu menyesuaikan caranya, lebih disesuaikan secara personal."},
+{cat:"KELAS",zh:"因為我們人少，就是還是有優點，可以比較好好認識每個人。",id:"Karena kita sedikit orang, itu masih ada kelebihannya, bisa lebih mengenal satu sama lain dengan baik."},
+{cat:"KELAS",zh:"開學第一週，我不能來的時候，我趕緊叫晏喜跟嘉軒還有建良來 support 一下。",id:"Minggu pertama kuliah, waktu saya tidak bisa datang, saya cepat-cepat minta Yanxi, Jiaxuan, dan Jianliang untuk support."},
+{cat:"KELAS",zh:"通常到期中考過後，自我介紹過後，到年底會比較熟一點。",id:"Biasanya setelah melewati UTS, setelah perkenalan diri, menjelang akhir tahun akan lebih akrab."},
+{cat:"KELAS",zh:"因為他們不是歐美的，他們跟我們文化差不多，大家會比較東方，比較害羞一點。",id:"Karena mereka bukan orang Barat, budaya mereka mirip kita, semua lebih ke budaya Timur, lebih pemalu sedikit."},
+{cat:"KELAS",zh:"老師每年都要經歷過這樣一次，每年9月都是這樣，要開始大家都 NPC 好久。",id:"Guru setiap tahun harus melewati ini sekali, setiap September selalu begini, mulai dengan semua orang ber-NPC dulu lama."},
+{cat:"KELAS",zh:"沈老師的課中間不休息，你要自己上洗手間就自己去可不可以。",id:"Kelas Shen Laoshi tidak ada istirahat di tengah, kalau mau ke toilet pergi sendiri saja boleh tidak."},
+{cat:"KELAS",zh:"只要你來，你才有辦法跟我互動；你不來，我也沒辦法跟你互動。",id:"Selama kamu datang, baru bisa berinteraksi dengan saya; kalau tidak datang, saya juga tidak bisa berinteraksi dengan kamu."},
+{cat:"KELAS",zh:"我是喜歡直接面對面的溝通，如果有什麼問題，請你直接跟我講。",id:"Saya suka komunikasi langsung tatap muka, kalau ada masalah tolong langsung bicara ke saya."},
+{cat:"KELAS",zh:"本班只有7、8個同學，所以請你直接跟我講好不好。",id:"Kelas ini hanya 7-8 mahasiswa, jadi tolong langsung bicara ke saya ya."},
+{cat:"KELAS",zh:"你要告訴我你的需求，我能夠幫助你；而你沒有告訴我的需求，我也不明白。",id:"Kamu harus beritahu kebutuhanmu, saya bisa membantumu; kalau kamu tidak beritahu kebutuhanmu saya juga tidak mengerti."},
+{cat:"KELAS",zh:"只要是在我課堂以內，我可以幫助你，我一定會負責到底。",id:"Selama masih dalam cakupan kelas saya, saya bisa membantumu, saya pasti akan bertanggung jawab sampai selesai."},
+{cat:"KELAS",zh:"碩一上跟碩一下，只要你上我的課，我就會負責，但是你不能叫我負責你的論文，這是不可能的。",id:"S2 semester 1 dan 2, selama kamu ikut kelas saya, saya akan bertanggung jawab, tapi kamu tidak bisa minta saya tanggung jawab atas tesismu, itu tidak mungkin."},
+{cat:"KELAS",zh:"我沒有被埋怨過或者怎麼樣，所以我希望繼續 carry on 這樣的傳統。",id:"Saya tidak pernah dikeluhkan atau apapun, jadi saya harap bisa terus lanjutkan tradisi seperti ini."},
+{cat:"KELAS",zh:"如果我可能答非所問或者怎樣，就是有的時候切換的時候有一點秀逗，請同學一定要點醒老師。",id:"Kalau saya mungkin menjawab tidak sesuai pertanyaan atau bagaimana, kadang waktu berganti bahasa ada sedikit kacau, tolong mahasiswa ingatkan guru."},
+{cat:"KELAS",zh:"你不用不好意思跟我講，我覺得不好意思一定要跟我講，如果我可能說錯了。",id:"Jangan sungkan untuk bilang ke saya, saya rasa harus bilang ke saya kalau mungkin saya salah bicara."},
+// ── TESIS ──
+{cat:"TESIS",zh:"設計研究方法必修就是你可以任選3個你喜歡的，你覺得你可能會用到的。",id:"Wajib Metode Penelitian Desain adalah kamu bisa pilih 3 yang kamu suka, yang kamu kira mungkin akan kamu pakai."},
+{cat:"TESIS",zh:"我已經帶了歷屆學長解了範本給你看，同學，我知道同學一定要看範本。",id:"Saya sudah bawa contoh dari kakak tingkat semua angkatan untuk kalian lihat, karena saya tahu mahasiswa pasti harus lihat contoh."},
+{cat:"TESIS",zh:"我並沒有說不能用 AI，但是你一定要自己看過去，因為你在寫論文的時候你還是會用到的。",id:"Saya tidak bilang tidak boleh pakai AI, tapi kamu harus melihatnya sendiri dulu, karena waktu menulis tesis kamu masih akan memakainya."},
+{cat:"TESIS",zh:"你把這本書吃透或者怎樣，但是我覺得你還是要自己問過一遍。",id:"Kamu habiskan buku ini atau bagaimana, tapi saya rasa kamu tetap harus menanyai dirimu sendiri dulu."},
 {cat:"TESIS",zh:"沒有什麼題目是好做也沒有什麼題目是不能做的，重點你想專注在什麼地方。",id:"Tidak ada topik yang mudah dikerjakan dan tidak ada topik yang tidak bisa dikerjakan, intinya kamu mau fokus di mana."},
-{cat:"TESIS",zh:"題目不用急，一定會改的，甚至改到一年以後、一年半之後都會改。",id:"Judul tidak perlu terburu-buru, pasti akan berubah, bahkan sampai setahun kemudian, setahun setengah kemudian pun akan berubah."},
+{cat:"TESIS",zh:"題目不用急，一定會改的，甚至改到一年以後、一年半之後都會改。",id:"Judul tidak perlu terburu-buru, pasti akan berubah, bahkan sampai setahun atau setahun setengah kemudian pun masih akan berubah."},
 {cat:"TESIS",zh:"你要看範本，因為叫你自己做，你也不知道要怎麼做。",id:"Kamu perlu melihat contoh, karena kalau disuruh buat sendiri kamu juga tidak tahu harus bagaimana."},
-{cat:"TESIS",zh:"我希望你至少選3種然後去比較它的優缺點。",id:"Saya harap kamu pilih minimal 3 jenis lalu bandingkan kelebihan dan kekurangannya."},
+{cat:"TESIS",zh:"我希望你至少選3種然後去比較它的優缺點，了解一下他要怎麼樣。",id:"Saya harap kamu pilih minimal 3 jenis lalu bandingkan kelebihan dan kekurangannya, pahami bagaimana cara kerjanya."},
 {cat:"TESIS",zh:"整理資料不在於多，在於你自己能夠看清楚多少。",id:"Mengorganisir data bukan soal banyaknya, tapi soal seberapa jelas kamu bisa memahaminya."},
-{cat:"TESIS",zh:"你到最後你還是可能會用到問卷的方式。",id:"Pada akhirnya kamu masih mungkin menggunakan metode kuesioner."},
-{cat:"TESIS",zh:"你一定要多閱讀，你沒有多閱讀你絕對問題有限。",id:"Kamu harus banyak membaca, kalau tidak banyak membaca pertanyaan-pertanyaanmu pasti terbatas."},
-{cat:"TESIS",zh:"論文寫不出來不是因為上了沈老師的課，你論文馬上就寫出來，沒有這種事的。",id:"Tidak bisa menulis tesis bukan karena sudah ikut kelas saya lalu langsung bisa nulis, tidak ada yang seperti itu."},
-{cat:"TESIS",zh:"我可以告訴你方法，可是你自己要去做，時間管理是你的不是我的。",id:"Saya bisa beritahu caranya, tapi kamu sendiri yang harus melakukannya, manajemen waktu adalah milikmu bukan milikku."},
-{cat:"TESIS",zh:"大部分都拖到2到3年，準時2年以內畢業很少。",id:"Kebanyakan molor sampai 2 sampai 3 tahun, sangat jarang yang selesai tepat waktu dalam 2 tahun."},
-{cat:"TESIS",zh:"你同一時間進來不一定同一時間出得去，所以是你自己時間管理的問題。",id:"Masuk bersamaan tidak berarti keluar bersamaan, itu masalah manajemen waktu kamu sendiri."},
+{cat:"TESIS",zh:"你到最後你還是可能會用到問卷的方式，所以我希望你自己幫同學找跟設計最相關的。",id:"Pada akhirnya kamu masih mungkin menggunakan metode kuesioner, jadi saya harap kamu sendiri cari yang paling relevan dengan desain."},
+{cat:"TESIS",zh:"你一定要多閱讀，你沒有多閱讀，你絕對問題有限。",id:"Kamu harus banyak membaca, kalau tidak banyak membaca pertanyaan-pertanyaanmu pasti terbatas."},
+{cat:"TESIS",zh:"論文寫不出來不是因為上了沈老師的課你論文馬上就寫出來，沒有這種事的。",id:"Tidak bisa menulis tesis bukan karena sudah ikut kelas saya lalu langsung bisa nulis tesis, tidak ada yang seperti itu."},
+{cat:"TESIS",zh:"我可以告訴你方法，可是你自己要去做，時間管理是你的，不是我的。",id:"Saya bisa beritahu caranya, tapi kamu sendiri yang harus melakukannya, manajemen waktu adalah milikmu, bukan milikku."},
+{cat:"TESIS",zh:"大部分都拖到2到3年，準時2年以內畢業很少。",id:"Kebanyakan molor sampai 2-3 tahun, sangat jarang yang selesai tepat waktu dalam 2 tahun."},
+{cat:"TESIS",zh:"你同一時間進來，不一定同一時間出得去，所以是你自己時間管理的問題。",id:"Masuk bersamaan tidak berarti keluar bersamaan, itu masalah manajemen waktu kamu sendiri."},
 {cat:"TESIS",zh:"做創作呢，你可能要有一個展演或者是參加一個比賽的證明。",id:"Untuk karya kreatif, kamu mungkin perlu bukti pertunjukan atau mengikuti kompetisi."},
-{cat:"TESIS",zh:"做論文的可能要參加某個研討會去發表，你要有這樣的資格門檻才可以提出口考。",id:"Untuk penulisan tesis mungkin perlu ikut seminar untuk presentasi, kamu butuh kualifikasi seperti itu baru bisa mengajukan ujian lisan."},
+{cat:"TESIS",zh:"做論文的可能要參加某個研討會去發表，你要有這樣的資格門檻才可以提出口考。",id:"Untuk penulisan tesis perlu ikut seminar untuk presentasi, kamu butuh kualifikasi seperti itu baru bisa mengajukan ujian lisan."},
 {cat:"TESIS",zh:"不要急著找老師，每一個老師都去談談看，哪一個跟你的理念比較合適。",id:"Jangan terburu-buru mencari dosen pembimbing, coba ngobrol dengan setiap dosen dulu, mana yang paling cocok dengan ide kamu."},
-// ADMINISTRASI
+{cat:"TESIS",zh:"你本來選了 A，後來又覺得不合適，就再換了 B，就是會耽誤了一些時間。",id:"Kamu awalnya pilih A, lalu merasa tidak cocok, lalu ganti ke B, itu akan membuang waktu."},
+{cat:"TESIS",zh:"除非已經有老師拉你，你覺得還不錯，不然我都鼓勵同學不要太急著找老師。",id:"Kecuali sudah ada dosen yang mengajak kamu dan kamu rasa oke, kalau tidak saya selalu anjurkan mahasiswa jangan terburu cari pembimbing."},
+{cat:"TESIS",zh:"每一個老師都去談談看，哪一個跟你的坐的方向比較契合，你再去選。",id:"Coba ngobrol dengan setiap dosen dulu, mana yang arah penelitiannya lebih cocok dengan kamu, baru kamu pilih."},
+{cat:"TESIS",zh:"比較懶惰的，你要找能夠盯住的、穩定的老師，因為你自己的狀況你最清楚。",id:"Yang agak malas, kamu perlu cari dosen yang bisa mengawasi dan konsisten, karena kamu paling tahu kondisimu sendiri."},
+{cat:"TESIS",zh:"像嘉軒，他就是很認真，他就是要2210個月畢業，他已經知道自己要做什麼，只是需要老師去跑一下流程。",id:"Seperti Jiaxuan, dia sangat serius, dia ingin lulus 22 bulan, dia sudah tahu mau buat apa, hanya butuh dosen untuk menjalankan prosedurnya."},
+{cat:"TESIS",zh:"目前你一定沒有什麼特定想法，可是通常都會延續大學專題的方向或者之前的工作方向。",id:"Sekarang kamu pasti belum punya ide khusus, tapi biasanya melanjutkan arah proyek skripsi atau arah kerja sebelumnya."},
+{cat:"TESIS",zh:"很多人說我要做 AR，好看了很多，AI 看多了，他不知道做什麼，然後說絕對不要做 AI。",id:"Banyak yang bilang mau buat AR, sudah lihat banyak, terlalu banyak lihat AI, lalu tidak tahu mau buat apa, terus bilang pasti tidak mau buat AI."},
+{cat:"TESIS",zh:"沒有什麼題目是好做的，也沒有什麼題目是不能做的，重點你想 shift 在什麼地方。",id:"Tidak ada topik yang mudah, juga tidak ada topik yang tidak bisa dikerjakan, intinya kamu mau fokus di mana."},
+{cat:"TESIS",zh:"你要多看，你沒有多看，你絕對問題有限。",id:"Kamu harus banyak melihat, kalau tidak banyak melihat, pertanyaan-pertanyaanmu pasti terbatas."},
+{cat:"TESIS",zh:"你可以問 AI，但是重點就是你要弄懂，你不懂是沒有用的。",id:"Kamu bisa tanya AI, tapi intinya kamu harus mengerti, kalau tidak mengerti tidak ada gunanya."},
+{cat:"TESIS",zh:"老師跳得太快，請你也跟我講好，請你也跟我講喔。",id:"Kalau guru terlalu cepat, tolong beritahu saya ya, tolong beritahu saya ya."},
+{cat:"TESIS",zh:"嘉軒是非常認真的同學，上學期畢業，終於，還蠻辛苦的，他是直升的，沒有工作經驗。",id:"Jiaxuan adalah mahasiswa yang sangat serius, semester lalu lulus, akhirnya, cukup berat perjuangannya, dia langsung lanjut S2, tidak punya pengalaman kerja."},
+{cat:"TESIS",zh:"整理資料不在於多，在於你自己能夠看清楚多少。好，當然，看的那一本可能很難懂。",id:"Mengorganisir data bukan soal banyaknya, tapi seberapa jelas kamu bisa memahaminya. Dan tentu, buku yang dibaca mungkin sulit dipahami."},
+{cat:"TESIS",zh:"你要縫你不懂是沒有用的，你可能會以為你懂了，但是自己整理資料，有沒有可能自己還是會忘記的。",id:"Kalau kamu tidak mengerti tidak ada gunanya, kamu mungkin pikir sudah mengerti, tapi mengorganisir data sendiri, ada kemungkinan kamu masih bisa lupa."},
+{cat:"TESIS",zh:"你要縫你不懂是沒有用的，所以你一定要花時間下去想。",id:"Kalau kamu hanya hafal tanpa mengerti tidak ada gunanya, jadi kamu harus luangkan waktu untuk benar-benar memikirkannya."},
+{cat:"TESIS",zh:"準時2年內畢業是指畢業在2年以內，因為他是本來就很清楚，要做什麼，而且他做事非常認真。",id:"Lulus tepat waktu dalam 2 tahun artinya selesai sebelum 2 tahun, karena dia memang sudah sangat jelas mau buat apa, dan dia sangat serius dalam mengerjakan."},
+{cat:"TESIS",zh:"大家最常用的就那幾個：問卷調查法、訪談法、焦點團體法，同學選的都差不多。",id:"Yang paling sering dipakai semua orang hanya beberapa: survei kuesioner, wawancara, focus group discussion, pilihan mahasiswa hampir sama."},
+{cat:"TESIS",zh:"如果每個人選的或多或少一樣，到學期末的時候，每個人提報一遍，這本書是不是就等於用完了。",id:"Kalau semua orang pilih yang kurang lebih sama, di akhir semester, setiap orang presentasi sekali, bukunya jadi seolah sudah habis dipelajari."},
+{cat:"TESIS",zh:"有些人喜歡用圖案，有些人不喜歡用圖案，他跟我講說老師我真的認真看了很久哦，那整理資料不在於多。",id:"Ada yang suka pakai gambar, ada yang tidak suka pakai gambar, dia bilang guru saya benar-benar baca lama lho, nah mengorganisir data bukan soal banyaknya."},
+{cat:"TESIS",zh:"以後有機會，因為他要跟老師去福岡11月去福岡發表，因為剛好我也要去。",id:"Ke depan ada kesempatan, karena dia akan ikut guru ke Fukuoka November untuk presentasi, kebetulan saya juga mau pergi."},
+// ── ADMINISTRASI ──
 {cat:"ADMIN",zh:"東西寫出來了，一定要上傳到圖書館，圖書館會幫你做一個論文原創性的比對系統。",id:"Setelah selesai ditulis, harus diunggah ke perpustakaan, perpustakaan akan membantu cek sistem keaslian tesis."},
-{cat:"ADMIN",zh:"如果36%是太高，一般是要13以下會比較好。",id:"Kalau 36% itu terlalu tinggi, umumnya di bawah 13% lebih baik."},
-{cat:"ADMIN",zh:"研究倫理就是6個小時，你可以上臺灣學術倫理教育資源，免費的，但是你要註冊。",id:"Etika penelitian itu 6 jam, kamu bisa ikut di sumber pendidikan etika akademik Taiwan, gratis tapi harus daftar."},
-{cat:"ADMIN",zh:"論文比對系統在67月大塞車，你口考完之後還要再上傳繳交一些文件。",id:"Sistem pembandingan tesis di bulan 6-7 sangat macet, setelah ujian lisan kamu masih harus unggah dan serahkan beberapa dokumen."},
+{cat:"ADMIN",zh:"如果36%是太高，一般是要13以下會比較好，就是說你有沒有跟人家的論文相似。",id:"Kalau 36% itu terlalu tinggi, umumnya di bawah 13% lebih baik, artinya apakah tesismu mirip dengan tesis orang lain."},
+{cat:"ADMIN",zh:"研究倫理就是6個小時，你可以上臺灣學術倫理教育資源，免費的，但是你要註冊。",id:"Etika penelitian itu 6 jam, bisa ikut di sumber pendidikan etika akademik Taiwan, gratis tapi harus daftar."},
+{cat:"ADMIN",zh:"他會給你一張數位的證明，你要這個你才可以提出口考。",id:"Mereka akan memberi kamu sertifikat digital, kamu butuh ini baru bisa mengajukan ujian lisan."},
+{cat:"ADMIN",zh:"論文比對系統在6、7月大塞車，你口考完之後還要再上傳繳交一些文件。",id:"Sistem pembandingan tesis di bulan 6-7 sangat macet, setelah ujian lisan kamu masih harus unggah dan serahkan beberapa dokumen."},
 {cat:"ADMIN",zh:"假設你全部弄完，731以前就可以順利拿到畢業證書。",id:"Asumsi kamu selesaikan semuanya, sebelum 31 Juli kamu bisa terima ijazah dengan lancar."},
+{cat:"ADMIN",zh:"如果有任何一個步驟沒有完成，那你就是要到8、9月才有辦法拿到畢業證書。",id:"Kalau ada salah satu langkah yang belum selesai, kamu baru bisa dapat ijazah di bulan 8-9."},
 {cat:"ADMIN",zh:"口考完成之後，你要自己去跑，不管你女朋友、家人，大部分都自己弄。",id:"Setelah ujian lisan selesai, kamu harus urus sendiri, tidak peduli pacar atau keluarga, sebagian besar urus sendiri."},
 {cat:"ADMIN",zh:"論文摘要跟關鍵詞，都是要英文的版本，不是只有中文的，要附在那一本碩論的最後。",id:"Abstrak tesis dan kata kunci harus ada versi bahasa Inggrisnya, tidak cukup hanya Mandarin, harus dilampirkan di akhir tesis."},
-{cat:"ADMIN",zh:"碩生在11月底就要確定指導老師，系上會告訴班代。",id:"Mahasiswa S2 harus konfirmasi dosen pembimbing di akhir November, departemen akan beritahu ketua kelas."},
+{cat:"ADMIN",zh:"這個 template 都有在系網的上面，你要 download 最新的。",id:"Template ini semua ada di website jurusan, kamu harus download yang terbaru."},
+{cat:"ADMIN",zh:"碩生在11月底就要確定指導老師，系上會告訴班代，然後班代通知同學。",id:"Mahasiswa S2 harus konfirmasi dosen pembimbing di akhir November, departemen akan beritahu ketua kelas, lalu ketua kelas kasih tahu mahasiswa."},
 {cat:"ADMIN",zh:"我只是一個授課老師，你的選課系統跟我沒關係，我的系統也進不去。",id:"Saya hanya dosen pengajar, sistem pemilihan mata kuliah kamu tidak ada hubungannya dengan saya, saya juga tidak bisa masuk sistemnya."},
 {cat:"ADMIN",zh:"你的15000元不是都到我口袋裡，那是繳給教務處的。",id:"15.000 NT kamu tidak masuk semua ke kantong saya, itu dibayarkan ke Bagian Akademik."},
-// NASIHAT
+{cat:"ADMIN",zh:"我只是一個企業下的員工，所以你的學費不知道我口袋，我怎麼幫你發畢業證書？",id:"Saya hanya karyawan di bawah institusi, jadi biaya kuliahmu tidak masuk kantong saya, bagaimana saya bisa kasih kamu ijazah?"},
+{cat:"ADMIN",zh:"加退學，那個步驟我不可能幫你加，我沒有辦法進入那個系統，我也不是學生身份。",id:"Tambah atau drop mata kuliah, prosedur itu tidak mungkin saya lakukan untuk kamu, saya tidak bisa masuk sistem itu, saya juga bukan dengan status mahasiswa."},
+{cat:"ADMIN",zh:"你的畢業，這些要繳交：原創性比對、研究倫理證書、口考成績，還有論文。這些東西要自己跑，不是系上幫你弄。",id:"Kelulusanmu, hal-hal yang harus diserahkan: uji keaslian, sertifikat etika penelitian, nilai ujian lisan, dan tesis. Semua ini harus kamu urus sendiri, bukan departemen yang urus."},
+{cat:"ADMIN",zh:"你在投考的時候你不用布置嗎？你叫我布置嗎？我不可能幫你布置啊，那個都不用時間嗎？",id:"Waktu ujian kamu tidak perlu atur ruangan? Kamu minta saya atur? Saya tidak mungkin atur untuk kamu, itu tidak butuh waktu?"},
+{cat:"ADMIN",zh:"你要邀我當口委，我也不見得有時間，你不能說你要的老師一定要在你想要的時間來。",id:"Kamu mau undang saya jadi penguji, saya belum tentu ada waktu, kamu tidak bisa bilang dosen yang kamu mau harus datang di waktu yang kamu inginkan."},
+{cat:"ADMIN",zh:"56月是我的忘記好，那個就是我的口考忘記，7月我通常就不做。",id:"Bulan 5-6 itu jadwal ujian lisan saya yang sudah penuh, bulan 7 saya biasanya tidak terima lagi."},
+{cat:"ADMIN",zh:"太趕我也暑假，我有別的行程，所以我通常對我來講，56月是我的忘記好。",id:"Terlalu terburu-buru dan saya juga liburan musim panas, ada jadwal lain, jadi biasanya bagi saya bulan 5-6 itu sudah penuh."},
+{cat:"ADMIN",zh:"你既然講了這個學費進來，你投資的這兩年，你的確要把自己搞畢業。",id:"Karena kamu sudah bayar biaya kuliah dan masuk, investasi 2 tahun ini, kamu memang harus bisa wisudakan dirimu sendiri."},
+{cat:"ADMIN",zh:"你還有學倫喔，這個法規應該會有再更改一點點，可是大部分不會離太遠。",id:"Kamu masih ada etika penelitian ya, peraturan ini mungkin akan sedikit berubah, tapi kebanyakan tidak akan jauh berbeda."},
+{cat:"ADMIN",zh:"你要去正式繳交之前，你可能3、4月就要送了，所以不知道同學你還有學倫哦。",id:"Sebelum kamu menyerahkan secara resmi, mungkin bulan 3-4 sudah harus dikirim, jadi tidak tahu mahasiswa apakah kamu masih punya etika penelitian ya."},
+{cat:"ADMIN",zh:"口考的時候你的錄影，還有你在口考的時候，如果要布置場地那都是你自己要準備的。",id:"Saat ujian lisan rekaman videonya, dan saat ujian lisan, kalau perlu tata ruangan itu semua yang harus kamu siapkan sendiri."},
+{cat:"ADMIN",zh:"我只能告訴你 know how，但是執行的人是你，你了解嗎？",id:"Saya hanya bisa memberitahu cara-caranya, tapi yang mengerjakan adalah kamu, kamu mengerti?"},
+// ── NASIHAT ──
 {cat:"NASIHAT",zh:"你要想想看你為什麼要投資這2年，這2年不見得能夠準時畢業。",id:"Pikirkan mengapa kamu mau investasikan 2 tahun ini, 2 tahun belum tentu bisa lulus tepat waktu."},
 {cat:"NASIHAT",zh:"你同樣花2年，你自己去工作，因為你們學費不便宜。",id:"Untuk 2 tahun yang sama kamu bisa kerja, karena biaya kuliah kalian tidak murah."},
 {cat:"NASIHAT",zh:"你來這裡一定有某種的原因，你是要來圓夢的還是當跳板還是怎麼樣的。",id:"Kamu pasti punya alasan tertentu untuk ke sini, apakah untuk mewujudkan mimpi, jembatan karir, atau apa."},
@@ -258,17 +262,35 @@ var V=[
 {cat:"NASIHAT",zh:"假設你到人生地不熟的地方，你要怎麼運用你的專業，你要怎麼賺錢。",id:"Misalkan kamu ke tempat yang asing, bagaimana kamu memanfaatkan keahlianmu, bagaimana kamu menghasilkan uang."},
 {cat:"NASIHAT",zh:"我雖然不會講越南話，那至少我可以去教中文，我可以去教英文，開補習班也可以。",id:"Walaupun saya tidak bisa bahasa Vietnam, setidaknya saya bisa mengajar Mandarin, mengajar Inggris, buka bimbel juga bisa."},
 {cat:"NASIHAT",zh:"不要覺得越南落後，那個全部都是工作機會啊，我們是已經過度發展。",id:"Jangan pikir Vietnam terbelakang, itu semua adalah peluang kerja, kita sudah terlalu jenuh berkembang."},
-{cat:"NASIHAT",zh:"我們要學會跟國際人士相處，因為我們的人口真的沒辦法。",id:"Kita harus belajar bergaul dengan orang internasional, karena jumlah penduduk kita memang tidak mencukupi."},
+{cat:"NASIHAT",zh:"胡志明市、峴港、那個全部都是工作機會啊，我們臺灣是已經過度發展，然後少子化。",id:"Ho Chi Minh City, Da Nang, itu semua peluang kerja, Taiwan kita sudah terlalu jenuh berkembang, dan populasi terus menurun."},
+{cat:"NASIHAT",zh:"你輪得到嗎？每個人都想卡好的位置，但是輪得到你們嗎？",id:"Apa kamu bisa dapat giliran? Semua orang mau rebut posisi bagus, tapi apa giliran kamu akan datang?"},
+{cat:"NASIHAT",zh:"我們要學會跟國際人士相處，因為我們的人口真的沒辦法，那些基礎的工作一定會有人來做。",id:"Kita harus belajar bergaul dengan orang internasional, karena jumlah penduduk kita memang tidak cukup, pekerjaan-pekerjaan dasar itu pasti akan ada yang datang mengisi."},
+{cat:"NASIHAT",zh:"就像我們到東南亞去工作被公司派遣那樣，所以我們一定要學會跟國際的人相處。",id:"Seperti kita pergi bekerja ke Asia Tenggara dikirim oleh perusahaan, jadi kita harus belajar bergaul dengan orang internasional."},
 {cat:"NASIHAT",zh:"臺灣相對的安全，但是任何事情都有可能發生，自己也要小心。",id:"Taiwan relatif aman, tapi hal apapun bisa terjadi, kamu juga harus berhati-hati."},
-{cat:"NASIHAT",zh:"你要把大學生的心態拿來做碩論，碩論是要自己付出的，要勤勞一點。",id:"Kamu tidak boleh pakai mentalitas mahasiswa S1 untuk mengerjakan tesis S2, tesis harus dikerjakan sendiri, harus lebih rajin."},
+{cat:"NASIHAT",zh:"你要把大學生的心態拿來做碩論，碩論是要自己付出的，要勤勞一點，不是永遠坐在背後聽。",id:"Kamu tidak boleh pakai mentalitas mahasiswa S1 untuk tesis S2, tesis harus dikerjakan sendiri, harus lebih rajin, bukan selalu duduk di belakang saja mendengarkan."},
 {cat:"NASIHAT",zh:"你不能說啊，我怪老師，怨天怨地，就不會怨自己，那個都是個人的因素。",id:"Kamu tidak bisa menyalahkan dosen, menyalahkan ini itu, tapi tidak salahkan diri sendiri, itu semua faktor pribadi."},
+{cat:"NASIHAT",zh:"時間是你的還是我的？我沒有擦啊，你就是要配合我在這22年。",id:"Waktu itu punyamu atau punyaku? Saya tidak yang minta, kamu yang memilih menemani saya dalam 22 tahun ini."},
 {cat:"NASIHAT",zh:"碩論是你這一生可能最後一次念書的機會，如果你不想念博士的話，你就好好的珍惜。",id:"Tesis S2 mungkin adalah kesempatan belajar terakhirmu seumur hidup, kalau tidak mau lanjut S3, manfaatkan dengan baik."},
-{cat:"NASIHAT",zh:"AI 對我來講只是一個工具，你能夠掌握什麼，你能掌握什麼。",id:"AI bagi saya hanya sebuah alat, apa yang bisa kamu kuasai, apa yang bisa kamu pegang."},
-{cat:"NASIHAT",zh:"我覺得不要太讀取，就是要明理一點，不要太清，然後那個不好，要不了解啊。",id:"Menurut saya jangan terlalu pasif, harus lebih bijak, jangan terlalu naif, dan jangan sampai tidak paham."},
-{cat:"NASIHAT",zh:"我是喜歡直接面對面的溝通，如果有什麼問題，請你直接跟我講。",id:"Saya suka komunikasi langsung tatap muka, kalau ada masalah tolong langsung bicara ke saya."},
-{cat:"NASIHAT",zh:"你要告訴我你的需求，我能夠幫助你；而你沒有告訴我的需求，我也不明白。",id:"Kamu harus beritahu kebutuhanmu, saya bisa membantumu; kalau kamu tidak beritahu kebutuhanmu saya juga tidak mengerti."},
-{cat:"NASIHAT",zh:"隻要是在我課堂以內，我可以幫助你，我一定會負責到底。",id:"Selama masih dalam cakupan kelasmu, saya bisa membantumu, saya pasti akan bertanggung jawab sampai selesai."},
-{cat:"NASIHAT",zh:"現在才是開始哦，放輕鬆，你要覺得你自己的強項是什麼。",id:"Ini baru awal, santai saja, kamu perlu tahu apa kelebihan dirimu sendiri."},
+{cat:"NASIHAT",zh:"AI 對我來講只是一個工具，我不會因為 AI 走投無路，因為我還有其他能力。",id:"AI bagi saya hanya sebuah alat, saya tidak akan terdesak karena AI, karena saya masih punya kemampuan lain."},
+{cat:"NASIHAT",zh:"就算臺灣的學校關了，我也可以去別的學校教書，我不排除去越南，只要能夠講英語就可以去。",id:"Walaupun sekolah di Taiwan tutup, saya bisa pergi mengajar di sekolah lain, saya tidak menutup kemungkinan ke Vietnam, selama bisa berbicara bahasa Inggris bisa pergi."},
+{cat:"NASIHAT",zh:"你不要覺得他皮膚比我們黑，他們就比我們落後，臺灣不見得是好的環境。",id:"Jangan pikir karena kulitnya lebih gelap dari kita, mereka lebih terbelakang dari kita, Taiwan belum tentu lingkungan yang bagus."},
+{cat:"NASIHAT",zh:"臺灣不見得是好的環境，地震啊、斷電、缺水，一大堆問題對不對。",id:"Taiwan belum tentu lingkungan yang bagus, gempa, mati lampu, kekurangan air, banyak masalah kan."},
+{cat:"NASIHAT",zh:"我會鼓勵同學多看多走，認識一點，我覺得也蠻不錯的。",id:"Saya akan dorong mahasiswa untuk banyak melihat dan berjalan, mengenal sedikit lebih banyak, saya rasa itu cukup bagus."},
+{cat:"NASIHAT",zh:"你自己最實在，真的，不要想別人，老師也好，同學誰誰誰也好，你自己最實在。",id:"Dirimu sendiri yang paling nyata, benar-benar, jangan pikirkan orang lain, guru ataupun teman siapapun, dirimu sendiri yang paling nyata."},
+{cat:"NASIHAT",zh:"我可能不是完美的機器人，我可能也會犯錯誤，可能速度不夠快，講話可能沒辦法讓你理解。",id:"Saya mungkin bukan mesin yang sempurna, saya mungkin juga akan membuat kesalahan, mungkin kecepatan tidak cukup, bicara mungkin tidak bisa membuatmu mengerti."},
+{cat:"NASIHAT",zh:"那你心裡也跟我講，我願意聽，但是就是你要讓我知道你的難處在哪。",id:"Nah itu ceritakan juga ke saya, saya mau mendengarkan, tapi kamu harus beri tahu saya di mana kesulitanmu."},
+{cat:"NASIHAT",zh:"作文你沒有看文章你就寫得出來嗎？你覺得不可能啊，你要多閱讀才寫得出來啊。",id:"Karangan tanpa membaca artikel kamu bisa menulis? Menurutmu tidak mungkin kan, kamu harus banyak membaca baru bisa menulis."},
+{cat:"NASIHAT",zh:"Reset 好自己的心情，不要永遠只想當 NPC，你要把大學生的心態放下。",id:"Reset suasana hatimu, jangan selalu hanya mau jadi NPC, kamu harus melepaskan mentalitas mahasiswa S1."},
+{cat:"NASIHAT",zh:"碩論是要自己付出的，要勤勞一點，不是永遠坐在背後哦，那聽一聽哦。",id:"Tesis S2 harus dikerjakan sendiri, harus lebih rajin, bukan selalu duduk di belakang saja, dengar-dengarin ya."},
+{cat:"NASIHAT",zh:"我跟你講，你絕對寫不出來，所以你要想清楚，你到底為什麼要念碩士。",id:"Saya bilang ke kamu, kamu pasti tidak akan bisa menulis, jadi kamu harus pikir jelas, sebenarnya kenapa kamu mau ambil S2."},
+{cat:"NASIHAT",zh:"你有沒有辦法做設計相關的東西，在跟同學講一下，因為 homework 的工作一定要落實。",id:"Bisakah kamu membuat sesuatu yang berkaitan dengan desain, ingatkan teman-teman juga, karena pekerjaan rumah harus benar-benar dilaksanakan."},
+{cat:"NASIHAT",zh:"你要不要去做長照、殯葬，那也是蠻神聖的一個工作，你願不願意？",id:"Apakah kamu mau kerja di perawatan lansia, pemakaman, itu juga pekerjaan yang cukup mulia, maukah kamu?"},
+{cat:"NASIHAT",zh:"那些基礎的工作是要做的，我們要學會對，不要鄙視就是說國際的人士來臺灣工作。",id:"Pekerjaan-pekerjaan dasar itu harus ada yang mengerjakan, kita harus belajar menghargai, jangan meremehkan orang internasional yang datang bekerja ke Taiwan."},
+{cat:"NASIHAT",zh:"現在才是開始哦，放輕鬆，你要覺得你自己的強項是什麼先把它做起來。",id:"Ini baru awal, santai saja, kamu perlu tahu apa kelebihan dirimu sendiri, mulai dari situ dulu."},
+{cat:"NASIHAT",zh:"你上我的課應該是感覺像三溫暖，就是老師跟你講一些很恐怖的，然後又說摸摸，你不用擔心。",id:"Ikut kelas saya harusnya terasa seperti sauna, guru bicara hal-hal yang menakutkan, lalu bilang tenang saja, tidak perlu khawatir."},
+{cat:"NASIHAT",zh:"準時2年畢業的，歷屆學長姐大概只有一兩個，大部分都是3年。",id:"Yang lulus tepat waktu 2 tahun, dari semua angkatan kakak tingkat hanya sekitar satu dua orang, kebanyakan 3 tahun."},
+{cat:"NASIHAT",zh:"你要不要念博士也可以，但是我比較建議就是說，他再想想，因為念博士也是個蠻長遠的。",id:"Mau lanjut S3 juga bisa, tapi saya lebih sarankan untuk dipikir ulang dulu, karena ambil S3 itu cukup panjang jalannya."},
+{cat:"NASIHAT",zh:"你碩士出去，你覺得幾萬塊，你可以接受？這樣問答，你覺得4萬塊以下你可以接受舉手。",id:"Kamu lulus S2 keluar, menurutmu berapa puluh ribu, kamu bisa terima? Tanya jawab seperti ini, menurutmu di bawah 40 ribu kamu bisa terima angkat tangan."},
 ];
 
 var CAT_CFG={
@@ -304,7 +326,6 @@ function showCard(){
   document.getElementById("cn").textContent="#"+(idx+1);
   var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
   document.getElementById("zh-disp").textContent=c.zh;
-  document.getElementById("ans-py").textContent=c.py||"";
   document.getElementById("ans-id").textContent=c.id;
   document.getElementById("ans").style.display="none";
   document.getElementById("tap").style.display="";
@@ -356,11 +377,10 @@ function showResult(){
       d.innerHTML="<span class='ri-zh'>"+v.zh.substring(0,20)+"…</span>"+score;
       rl.appendChild(d);
     });
+    document.getElementById("rlw").style.display="";
   }
-  document.getElementById("rlw").style.display="";
 }
 ronde=1;fullRestart();
 </script>
 </body>
 </html>
-
