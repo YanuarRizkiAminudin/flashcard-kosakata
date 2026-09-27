@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yanuar 的自我介紹 — 詞彙練習</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.zh-word{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;font-size:52px;line-height:1.2;}
+.zh-phrase{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;font-size:28px;line-height:1.4;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;text-align:center;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;}
+.ans-py{font-size:18px;font-weight:700;color:#7c3aed;margin-bottom:8px;}
+.ans-id{font-size:15px;font-weight:600;color:#1a1814;line-height:1.6;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:"Noto Serif TC",serif;font-size:15px;color:#1a1814;min-width:50px;}
+.ri-id{font-size:11px;color:#7c3aed;margin-left:auto;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+.script-box{background:#f8f5ff;border:1px solid #e0d4ff;border-radius:14px;padding:12px 16px;margin-bottom:12px;font-family:"Noto Serif TC",serif;font-size:14px;color:#1a1814;line-height:1.9;text-align:right;direction:ltr;}
+.script-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#7c3aed;margin-bottom:6px;font-family:"DM Sans",sans-serif;text-align:left;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🎤 Yanuar 的自我介紹 — 詞彙練習</h1>
+  <div class="sub" id="sub-lbl">Per kata · Ketuk untuk arti</div>
+  <div class="script-label">📜 Teks Asli</div>
+  <div class="script-box">
+    大家好，我叫 Yanuar。<br>
+    我來自印尼，目前就讀於瑪琅國立理工學院資訊工程系。<br>
+    最近，我開始對設計產生興趣。<br>
+    我也不太確定為什麼，但我真的很喜歡做設計。<br>
+    我也做過一些網站和數位產品相關的專案。<br>
+    透過這些專案，我發現自己很喜歡設計的過程。<br>
+    我對這門課很有興趣，因為我想學習更多設計研究。<br>
+    我也很高興可以認識來自不同國家的人。<br>
+    我很期待和大家一起學習。謝謝。
+  </div>
+  <div class="filters">
+
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb" onclick="setCat('KATA_KERJA')">🔵 Kata Kerja</button>
+    <button class="fb" onclick="setCat('KATA_BENDA')">🟡 Kata Benda</button>
+    <button class="fb" onclick="setCat('KATA_SIFAT')">🔴 Kata Sifat</button>
+    <button class="fb" onclick="setCat('KETERANGAN')">🟣 Keterangan</button>
+    <button class="fb" onclick="setCat('POLA')">📐 Pola</button>
+    <button class="fb" onclick="setCat('NAMA_TEMPAT')">📍 Nama Tempat</button>
+
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kata</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Hafal</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div id="zh-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk arti</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">PINYIN</div>
+        <div class="ans-py" id="ans-py"></div>
+        <div class="atag">🇮🇩 Artinya</div>
+        <div class="ans-id" id="ans-id"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😵</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Hafal</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Hafal</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🏆</div>
+      <div class="res-title">厲害！全部都會了！</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi lagi</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+{cat:"SALAM",zh:"大家好",py:"dà jiā hǎo",id:"Halo semua"},
+{cat:"KATA_GANTI",zh:"我",py:"wǒ",id:"saya / aku"},
+{cat:"KATA_KERJA",zh:"叫",py:"jiào",id:"dipanggil / bernama"},
+{cat:"KATA_KERJA",zh:"來自",py:"lái zì",id:"berasal dari"},
+{cat:"NAMA_TEMPAT",zh:"印尼",py:"yìn ní",id:"Indonesia"},
+{cat:"KETERANGAN",zh:"目前",py:"mù qián",id:"saat ini / sekarang"},
+{cat:"KATA_KERJA",zh:"就讀",py:"jiù dú",id:"sedang belajar / kuliah di"},
+{cat:"KATA_DEPAN",zh:"於",py:"yú",id:"di / pada (formal)"},
+{cat:"NAMA_TEMPAT",zh:"瑪琅",py:"mǎ láng",id:"Malang"},
+{cat:"KATA_SIFAT",zh:"國立",py:"guó lì",id:"negeri / nasional"},
+{cat:"KATA_BENDA",zh:"理工學院",py:"lǐ gōng xué yuàn",id:"institut teknologi"},
+{cat:"KATA_BENDA",zh:"資訊",py:"zī xùn",id:"informasi / informatika"},
+{cat:"KATA_BENDA",zh:"工程",py:"gōng chéng",id:"teknik / engineering"},
+{cat:"KATA_BENDA",zh:"系",py:"xì",id:"jurusan / departemen"},
+{cat:"KATA_BENDA",zh:"資訊工程系",py:"zī xùn gōng chéng xì",id:"jurusan teknik informatika"},
+{cat:"KETERANGAN",zh:"最近",py:"zuì jìn",id:"belakangan ini / baru-baru ini"},
+{cat:"KATA_KERJA",zh:"開始",py:"kāi shǐ",id:"mulai"},
+{cat:"KATA_DEPAN",zh:"對",py:"duì",id:"terhadap / kepada"},
+{cat:"KATA_BENDA",zh:"設計",py:"shè jì",id:"desain"},
+{cat:"KATA_KERJA",zh:"產生",py:"chǎn shēng",id:"menghasilkan / timbul / muncul"},
+{cat:"KATA_BENDA",zh:"興趣",py:"xìng qù",id:"minat / ketertarikan"},
+{cat:"POLA",zh:"對…產生興趣",py:"duì… chǎnshēng xìngqù",id:"menjadi tertarik pada…"},
+{cat:"KATA_SAMBUNG",zh:"也",py:"yě",id:"juga"},
+{cat:"KETERANGAN",zh:"不太",py:"bù tài",id:"tidak terlalu / kurang"},
+{cat:"KATA_SIFAT",zh:"確定",py:"què dìng",id:"yakin / pasti"},
+{cat:"KATA_TANYA",zh:"為什麼",py:"wèi shén me",id:"kenapa / mengapa"},
+{cat:"KATA_SAMBUNG",zh:"但",py:"dàn",id:"tapi / namun"},
+{cat:"KETERANGAN",zh:"真的",py:"zhēn de",id:"sungguh / benar-benar"},
+{cat:"KETERANGAN",zh:"很",py:"hěn",id:"sangat"},
+{cat:"KATA_KERJA",zh:"喜歡",py:"xǐ huān",id:"suka / menyukai"},
+{cat:"KATA_KERJA",zh:"做",py:"zuò",id:"melakukan / membuat"},
+{cat:"KATA_KERJA",zh:"做過",py:"zuò guò",id:"pernah melakukan / sudah pernah buat"},
+{cat:"KATA_BILANGAN",zh:"一些",py:"yī xiē",id:"beberapa / sejumlah"},
+{cat:"KATA_BENDA",zh:"網站",py:"wǎng zhàn",id:"website / situs web"},
+{cat:"KATA_SAMBUNG",zh:"和",py:"hé",id:"dan"},
+{cat:"KATA_SIFAT",zh:"數位",py:"shù wèi",id:"digital"},
+{cat:"KATA_BENDA",zh:"產品",py:"chǎn pǐn",id:"produk"},
+{cat:"KATA_SIFAT",zh:"相關",py:"xiāng guān",id:"berkaitan / terkait"},
+{cat:"PARTIKEL",zh:"的",py:"de",id:"partikel kepemilikan / yang"},
+{cat:"KATA_BENDA",zh:"專案",py:"zhuān àn",id:"proyek"},
+{cat:"KATA_BENDA",zh:"數位產品",py:"shù wèi chǎn pǐn",id:"produk digital"},
+{cat:"KATA_DEPAN",zh:"透過",py:"tòu guò",id:"melalui / lewat"},
+{cat:"KATA_TUNJUK",zh:"這些",py:"zhè xiē",id:"ini / yang ini (jamak)"},
+{cat:"KATA_KERJA",zh:"發現",py:"fā xiàn",id:"menemukan / menyadari"},
+{cat:"KATA_GANTI",zh:"自己",py:"zì jǐ",id:"diri sendiri"},
+{cat:"KATA_BENDA",zh:"過程",py:"guò chéng",id:"proses"},
+{cat:"KATA_BENDA",zh:"設計的過程",py:"shè jì de guò chéng",id:"proses desain"},
+{cat:"KATA_BENDA",zh:"這門課",py:"zhè mén kè",id:"mata kuliah ini"},
+{cat:"KATA_SATUAN",zh:"門",py:"mén",id:"penghitung untuk mata kuliah"},
+{cat:"KATA_BENDA",zh:"課",py:"kè",id:"kelas / mata kuliah / pelajaran"},
+{cat:"KATA_SAMBUNG",zh:"因為",py:"yīn wèi",id:"karena"},
+{cat:"KATA_KERJA",zh:"想",py:"xiǎng",id:"ingin / mau"},
+{cat:"KATA_KERJA",zh:"學習",py:"xué xí",id:"belajar / mempelajari"},
+{cat:"KETERANGAN",zh:"更多",py:"gèng duō",id:"lebih banyak"},
+{cat:"KATA_BENDA",zh:"研究",py:"yán jiū",id:"penelitian / riset"},
+{cat:"KATA_BENDA",zh:"設計研究",py:"shè jì yán jiū",id:"riset desain / design research"},
+{cat:"KATA_SIFAT",zh:"高興",py:"gāo xìng",id:"senang / gembira"},
+{cat:"KATA_BANTU",zh:"可以",py:"kě yǐ",id:"bisa / boleh"},
+{cat:"KATA_KERJA",zh:"認識",py:"rèn shí",id:"mengenal / berkenalan"},
+{cat:"KATA_SIFAT",zh:"不同",py:"bù tóng",id:"berbeda / berlainan"},
+{cat:"KATA_BENDA",zh:"國家",py:"guó jiā",id:"negara"},
+{cat:"KATA_BENDA",zh:"人",py:"rén",id:"orang / manusia"},
+{cat:"FRASA",zh:"來自不同國家的人",py:"lái zì bù tóng guó jiā de rén",id:"orang-orang dari berbagai negara"},
+{cat:"KATA_KERJA",zh:"期待",py:"qī dài",id:"menantikan / berharap"},
+{cat:"KATA_GANTI",zh:"大家",py:"dà jiā",id:"semua orang / kalian semua"},
+{cat:"KETERANGAN",zh:"一起",py:"yì qǐ",id:"bersama / bersama-sama"},
+{cat:"SALAM",zh:"謝謝",py:"xiè xiè",id:"terima kasih"},
+{cat:"POLA",zh:"就讀於…系",py:"jiùdú yú… xì",id:"kuliah di jurusan…"},
+{cat:"POLA",zh:"對…有興趣",py:"duì… yǒu xìngqù",id:"tertarik pada / berminat pada…"},
+{cat:"POLA",zh:"很有興趣",py:"hěn yǒu xìng qù",id:"sangat tertarik / sangat berminat"},
+{cat:"POLA",zh:"我來自",py:"wǒ lái zì",id:"saya berasal dari"},
+{cat:"POLA",zh:"我叫",py:"wǒ jiào",id:"nama saya adalah / saya dipanggil"},
+{cat:"POLA",zh:"我很期待",py:"wǒ hěn qī dài",id:"saya sangat menantikan"},
+{cat:"FRASA",zh:"和大家一起",py:"hé dà jiā yì qǐ",id:"bersama semua orang"},
+{cat:"POLA",zh:"產生了興趣",py:"chǎn shēng le xìng qù",id:"menjadi tertarik (sudah terjadi)"}
+];
+var CAT_CFG={
+  SALAM:{label:"Salam",bg:"#f3e8ff",fg:"#7c3aed",acc:"linear-gradient(90deg,#7c3aed,#2563eb)"},
+  KATA_GANTI:{label:"Kata Ganti",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  KATA_KERJA:{label:"Kata Kerja",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  KATA_BENDA:{label:"Kata Benda",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#059669)"},
+  KATA_SIFAT:{label:"Kata Sifat",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  KETERANGAN:{label:"Keterangan",bg:"#fae8ff",fg:"#86198f",acc:"linear-gradient(90deg,#a21caf,#7c3aed)"},
+  KATA_DEPAN:{label:"Kata Depan",bg:"#e0f2fe",fg:"#0369a1",acc:"linear-gradient(90deg,#0284c7,#059669)"},
+  KATA_SAMBUNG:{label:"Kata Sambung",bg:"#fff7ed",fg:"#c2410c",acc:"linear-gradient(90deg,#ea580c,#d97706)"},
+  PARTIKEL:{label:"Partikel",bg:"#f0fdf4",fg:"#15803d",acc:"linear-gradient(90deg,#16a34a,#059669)"},
+  KATA_TANYA:{label:"Kata Tanya",bg:"#fdf4ff",fg:"#7e22ce",acc:"linear-gradient(90deg,#9333ea,#2563eb)"},
+  KATA_BANTU:{label:"Kata Bantu",bg:"#f0f9ff",fg:"#0369a1",acc:"linear-gradient(90deg,#0ea5e9,#7c3aed)"},
+  KATA_TUNJUK:{label:"Kata Tunjuk",bg:"#fef9c3",fg:"#854d0e",acc:"linear-gradient(90deg,#ca8a04,#059669)"},
+  KATA_SATUAN:{label:"Kata Satuan",bg:"#fdf2f8",fg:"#9d174d",acc:"linear-gradient(90deg,#db2777,#dc2626)"},
+  KATA_BILANGAN:{label:"Kata Bilangan",bg:"#f0fdf4",fg:"#166534",acc:"linear-gradient(90deg,#15803d,#059669)"},
+  NAMA_TEMPAT:{label:"Nama Tempat",bg:"#eff6ff",fg:"#1e40af",acc:"linear-gradient(90deg,#1d4ed8,#7c3aed)"},
+  POLA:{label:"Pola Kalimat",bg:"#fff1f2",fg:"#be123c",acc:"linear-gradient(90deg,#e11d48,#d97706)"},
+  FRASA:{label:"Frasa",bg:"#f8fafc",fg:"#475569",acc:"linear-gradient(90deg,#64748b,#2563eb)"}
+};
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kata";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||{label:c.cat,bg:"#f3e8ff",fg:"#7c3aed",acc:"linear-gradient(90deg,#7c3aed,#2563eb)"};
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  var zhEl=document.getElementById("zh-disp");
+  var isLong=c.zh.length>4;
+  zhEl.className=isLong?"zh-phrase":"zh-word";
+  zhEl.textContent=c.zh;
+  document.getElementById("ans-py").textContent=c.py||"";
+  document.getElementById("ans-id").textContent=c.id;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kata";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🏆":pct>=70?"🌟":pct>=50?"💪":"😤";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir semua hafal! "+toRev.length+" kata tersisa.":pct>=70?"Bagus! "+toRev.length+" kata perlu diulang.":"Semangat! "+toRev.length+" kata menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" 🔁 "+toRev.length+" kata";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-zh'>"+v.zh+"</span><span class='ri-id'>"+v.id.substring(0,20)+"</span>"+score;
+      rl.appendChild(d);
+    });
+    document.getElementById("rlw").style.display="";
+  }
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
