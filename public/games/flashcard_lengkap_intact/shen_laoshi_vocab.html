@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沈老師的課 — Per Kata</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-KELAS.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-TESIS.on{background:#059669;border-color:#059669;}
+.fb.c-ADMIN.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-NASIHAT.on{background:#d97706;border-color:#d97706;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:185px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.zh-front{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;line-height:1.55;font-size:16px;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-id{font-size:14px;font-weight:600;color:#1a1814;text-align:center;line-height:1.7;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:"Noto Serif TC",serif;font-size:13px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🏫 沈老師的課 — Kosakata Per Kata</h1>
+  <div class="sub" id="sub-lbl">Per kata · ketuk untuk arti & pinyin</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb c-KELAS" onclick="setCat('KELAS')">📚 Kelas</button>
+    <button class="fb c-TESIS" onclick="setCat('TESIS')">📝 Tesis</button>
+    <button class="fb c-ADMIN" onclick="setCat('ADMIN')">📋 Administrasi</button>
+    <button class="fb c-NASIHAT" onclick="setCat('NASIHAT')">💡 Nasihat</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="zh-front" id="zh-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk terjemahan</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">PINYIN</div>
+        <div id="ans-py" style="font-size:14px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:8px;line-height:1.6;"></div>
+        <div class="atag">🇮🇩 Indonesia</div>
+        <div class="ans-id" id="ans-id"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+{cat:"KELAS",zh:"他",py:"tā",id:"dia (laki-laki)"},
+{cat:"KELAS",zh:"你",py:"nǐ",id:"kamu"},
+{cat:"KELAS",zh:"做",py:"zuò",id:"membuat / melakukan"},
+{cat:"KELAS",zh:"呢",py:"ne",id:"partikel pertanyaan lanjut"},
+{cat:"TESIS",zh:"哦",py:"ó",id:"oh (realisasi)"},
+{cat:"KELAS",zh:"啊",py:"a",id:"partikel penegas"},
+{cat:"TESIS",zh:"問",py:"wèn",id:"bertanya"},
+{cat:"KELAS",zh:"喔",py:"ō",id:"oh (penegas)"},
+{cat:"ADMIN",zh:"嗎",py:"ma",id:"partikel tanya ya/tidak"},
+{cat:"TESIS",zh:"多",py:"duō",id:"banyak"},
+{cat:"KELAS",zh:"大",py:"dà",id:"besar"},
+{cat:"KELAS",zh:"太",py:"tài",id:"terlalu"},
+{cat:"KELAS",zh:"好",py:"hǎo",id:"baik / bagus"},
+{cat:"TESIS",zh:"寫",py:"xiě",id:"menulis"},
+{cat:"KELAS",zh:"對",py:"duì",id:"betul / terhadap"},
+{cat:"ADMIN",zh:"幫",py:"bāng",id:"membantu"},
+{cat:"KELAS",zh:"年",py:"nián",id:"tahun"},
+{cat:"KELAS",zh:"忙",py:"máng",id:"sibuk"},
+{cat:"NASIHAT",zh:"快",py:"kuài",id:"cepat"},
+{cat:"NASIHAT",zh:"念",py:"niàn",id:"membaca / kuliah"},
+{cat:"KELAS",zh:"想",py:"xiǎng",id:"ingin / berpikir"},
+{cat:"KELAS",zh:"我",py:"wǒ",id:"saya / aku"},
+{cat:"TESIS",zh:"找",py:"zhǎo",id:"mencari"},
+{cat:"KELAS",zh:"書",py:"shū",id:"buku"},
+{cat:"KELAS",zh:"月",py:"yuè",id:"bulan"},
+{cat:"KELAS",zh:"用",py:"yòng",id:"memakai / menggunakan"},
+{cat:"NASIHAT",zh:"能",py:"néng",id:"mampu / bisa"},
+{cat:"KELAS",zh:"要",py:"yào",id:"mau / harus / perlu"},
+{cat:"KELAS",zh:"說",py:"shuō",id:"berkata / mengatakan"},
+{cat:"KELAS",zh:"課",py:"kè",id:"kelas / mata kuliah"},
+{cat:"KELAS",zh:"請",py:"qǐng",id:"tolong / silakan"},
+{cat:"KELAS",zh:"講",py:"jiǎng",id:"berbicara / menjelaskan"},
+{cat:"KELAS",zh:"一定",py:"yī dìng",id:"pasti / tentu"},
+{cat:"ADMIN",zh:"不管",py:"bù guǎn",id:"tidak peduli / apapun"},
+{cat:"KELAS",zh:"中文",py:"zhōng wén",id:"bahasa Mandarin"},
+{cat:"TESIS",zh:"之前",py:"zhī qián",id:"sebelumnya"},
+{cat:"TESIS",zh:"了解",py:"le jiě",id:"memahami"},
+{cat:"KELAS",zh:"介紹",py:"jiè shào",id:"memperkenalkan / menjelaskan"},
+{cat:"KELAS",zh:"以前",py:"yǐ qián",id:"dulu / sebelumnya"},
+{cat:"KELAS",zh:"但是",py:"dàn shì",id:"tapi / tetapi"},
+{cat:"KELAS",zh:"你們",py:"nǐ men",id:"kalian"},
+{cat:"NASIHAT",zh:"其他",py:"qí tā",id:"lainnya / yang lain"},
+{cat:"KELAS",zh:"其實",py:"qí shí",id:"sebenarnya"},
+{cat:"TESIS",zh:"分享",py:"fēn xiǎng",id:"berbagi / membagikan"},
+{cat:"KELAS",zh:"切換",py:"qiè huàn",id:"beralih / berganti"},
+{cat:"NASIHAT",zh:"博士",py:"bó shì",id:"S3 / doktor"},
+{cat:"TESIS",zh:"口考",py:"kǒu kǎo",id:"ujian lisan / sidang"},
+{cat:"KELAS",zh:"可以",py:"kě yǐ",id:"bisa / boleh"},
+{cat:"KELAS",zh:"可能",py:"kě néng",id:"mungkin"},
+{cat:"KELAS",zh:"同學",py:"tóng xué",id:"teman sekelas"},
+{cat:"KELAS",zh:"告訴",py:"gào sù",id:"memberitahu"},
+{cat:"NASIHAT",zh:"回本",py:"huí běn",id:"balik modal"},
+{cat:"KELAS",zh:"因為",py:"yīn wèi",id:"karena"},
+{cat:"NASIHAT",zh:"國際",py:"guó jì",id:"internasional"},
+{cat:"NASIHAT",zh:"圓夢",py:"yuán mèng",id:"mewujudkan mimpi"},
+{cat:"KELAS",zh:"大家",py:"dà jiā",id:"semua orang"},
+{cat:"KELAS",zh:"如果",py:"rú guǒ",id:"jika / kalau"},
+{cat:"ADMIN",zh:"學分",py:"xué fēn",id:"SKS / kredit"},
+{cat:"ADMIN",zh:"學姐",py:"xué jiě",id:"kakak tingkat (perempuan)"},
+{cat:"KELAS",zh:"學生",py:"xué shēng",id:"mahasiswa / murid"},
+{cat:"ADMIN",zh:"學費",py:"xué fèi",id:"biaya kuliah / uang kuliah"},
+{cat:"KELAS",zh:"學長",py:"xué zhǎng",id:"kakak tingkat (laki)"},
+{cat:"ADMIN",zh:"完成",py:"wán chéng",id:"menyelesaikan / selesai"},
+{cat:"KELAS",zh:"希望",py:"xī wàng",id:"berharap / semoga"},
+{cat:"TESIS",zh:"必修",py:"bì xiū",id:"mata kuliah wajib"},
+{cat:"KELAS",zh:"念書",py:"niàn shū",id:"belajar / kuliah"},
+{cat:"KELAS",zh:"我們",py:"wǒ men",id:"kita / kami"},
+{cat:"KELAS",zh:"所以",py:"suǒ yǐ",id:"jadi / oleh karena itu"},
+{cat:"ADMIN",zh:"投資",py:"tóu zī",id:"investasi"},
+{cat:"KELAS",zh:"提報",py:"tí bào",id:"presentasi / melaporkan"},
+{cat:"NASIHAT",zh:"擔心",py:"dān xīn",id:"khawatir"},
+{cat:"KELAS",zh:"文化",py:"wén huà",id:"budaya"},
+{cat:"TESIS",zh:"方法",py:"fāng fǎ",id:"metode / cara"},
+{cat:"KELAS",zh:"明白",py:"míng bái",id:"paham / mengerti"},
+{cat:"TESIS",zh:"期末",py:"qī mò",id:"UAS / akhir semester"},
+{cat:"KELAS",zh:"正常",py:"zhèng cháng",id:"normal / wajar"},
+{cat:"TESIS",zh:"比對",py:"bǐ duì",id:"perbandingan / cek kemiripan"},
+{cat:"KELAS",zh:"比較",py:"bǐ jiào",id:"relatif / lebih / dibandingkan"},
+{cat:"KELAS",zh:"清楚",py:"qīng chǔ",id:"jelas"},
+{cat:"ADMIN",zh:"準備",py:"zhǔn bèi",id:"mempersiapkan / siap"},
+{cat:"KELAS",zh:"溝通",py:"gōu tōng",id:"berkomunikasi"},
+{cat:"NASIHAT",zh:"現在",py:"xiàn zài",id:"sekarang"},
+{cat:"TESIS",zh:"畢業",py:"bì yè",id:"lulus / wisuda"},
+{cat:"TESIS",zh:"當然",py:"dāng rán",id:"tentu saja"},
+{cat:"TESIS",zh:"發表",py:"fā biǎo",id:"mempresentasikan / menerbitkan"},
+{cat:"KELAS",zh:"真的",py:"zhēn de",id:"benar-benar / sungguh"},
+{cat:"TESIS",zh:"知道",py:"zhī dào",id:"tahu / mengetahui"},
+{cat:"TESIS",zh:"研究",py:"yán jiū",id:"penelitian / riset"},
+{cat:"NASIHAT",zh:"碩士",py:"shuò shì",id:"S2 / master"},
+{cat:"ADMIN",zh:"確定",py:"què dìng",id:"memastikan / yakin"},
+{cat:"KELAS",zh:"禮拜",py:"lǐ bài",id:"minggu / hari dalam minggu"},
+{cat:"KELAS",zh:"第一",py:"dì yī",id:"pertama"},
+{cat:"KELAS",zh:"第二",py:"dì èr",id:"kedua"},
+{cat:"TESIS",zh:"管理",py:"guǎn lǐ",id:"mengelola / manajemen"},
+{cat:"ADMIN",zh:"系上",py:"xì shàng",id:"pihak jurusan"},
+{cat:"ADMIN",zh:"練習",py:"liàn xí",id:"latihan / berlatih"},
+{cat:"ADMIN",zh:"繳交",py:"jiǎo jiāo",id:"menyerahkan / mengumpulkan"},
+{cat:"KELAS",zh:"繼續",py:"jì xù",id:"melanjutkan / terus"},
+{cat:"KELAS",zh:"群組",py:"qún zǔ",id:"grup"},
+{cat:"KELAS",zh:"老師",py:"lǎo shī",id:"dosen / guru"},
+{cat:"KELAS",zh:"臉書",py:"liǎn shū",id:"Facebook"},
+{cat:"KELAS",zh:"自己",py:"zì jǐ",id:"diri sendiri"},
+{cat:"ADMIN",zh:"英文",py:"yīng wén",id:"bahasa Inggris"},
+{cat:"KELAS",zh:"補課",py:"bǔ kè",id:"mengganti jam pelajaran"},
+{cat:"KELAS",zh:"覺得",py:"jué dé",id:"merasa / berpikir"},
+{cat:"KELAS",zh:"討論",py:"tǎo lùn",id:"diskusi / mendiskusikan"},
+{cat:"TESIS",zh:"設計",py:"shè jì",id:"desain"},
+{cat:"TESIS",zh:"認真",py:"rèn zhēn",id:"serius / tekun"},
+{cat:"KELAS",zh:"認識",py:"rèn shí",id:"mengenal / berkenalan"},
+{cat:"NASIHAT",zh:"語言",py:"yǔ yán",id:"bahasa"},
+{cat:"KELAS",zh:"論文",py:"lùn wén",id:"tesis / skripsi"},
+{cat:"NASIHAT",zh:"越南",py:"yuè nán",id:"Vietnam"},
+{cat:"KELAS",zh:"趨勢",py:"qū shì",id:"tren"},
+{cat:"NASIHAT",zh:"跳板",py:"tiào bǎn",id:"batu loncatan / jembatan"},
+{cat:"KELAS",zh:"進度",py:"jìn dù",id:"kemajuan / progress"},
+{cat:"TESIS",zh:"選擇",py:"xuǎn zé",id:"memilih / pilihan"},
+{cat:"KELAS",zh:"重要",py:"zhòng yào",id:"penting"},
+{cat:"KELAS",zh:"開始",py:"kāi shǐ",id:"mulai / memulai"},
+{cat:"KELAS",zh:"開學",py:"kāi xué",id:"awal semester / masuk kuliah"},
+{cat:"KELAS",zh:"除非",py:"chú fēi",id:"kecuali"},
+{cat:"KELAS",zh:"雖然",py:"suī rán",id:"walaupun / meskipun"},
+{cat:"TESIS",zh:"需要",py:"xū yào",id:"membutuhkan / perlu"},
+{cat:"KELAS",zh:"非常",py:"fēi cháng",id:"sangat"},
+{cat:"TESIS",zh:"上學期",py:"shàng xué qī",id:"semester lalu"},
+{cat:"KELAS",zh:"國際生",py:"guó jì shēng",id:"mahasiswa internasional"},
+{cat:"ADMIN",zh:"圖書館",py:"tú shū guǎn",id:"perpustakaan"},
+{cat:"KELAS",zh:"基本上",py:"jī běn shàng",id:"pada dasarnya"},
+{cat:"ADMIN",zh:"教務處",py:"jiào wù chù",id:"bagian akademik"},
+{cat:"KELAS",zh:"面對面",py:"miàn duì miàn",id:"tatap muka / langsung berhadapan"}
+];
+
+var CAT_CFG={
+  KELAS:{label:"📚 Kelas",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  TESIS:{label:"📝 Tesis",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  ADMIN:{label:"📋 Administrasi",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  NASIHAT:{label:"💡 Nasihat",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#059669)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kalimat";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.KELAS;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  var zhEl=document.getElementById("zh-disp");
+  zhEl.textContent=c.zh;
+  zhEl.style.fontSize=c.zh.length<=2?"52px":c.zh.length<=4?"36px":"22px";
+  zhEl.style.fontFamily='"Noto Serif TC",serif';
+  zhEl.style.fontWeight="700";
+  document.getElementById("ans-py").textContent=c.py||"";
+  document.getElementById("ans-id").textContent=c.id;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-zh'>"+v.zh.substring(0,20)+"…</span>"+score;
+      rl.appendChild(d);
+    });
+    document.getElementById("rlw").style.display="";
+  }
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
+

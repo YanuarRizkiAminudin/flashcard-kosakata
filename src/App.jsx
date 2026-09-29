@@ -30,6 +30,7 @@ function App() {
       <Route path="/game/taiwan-university" element={<GamePage file="flashcard_lengkap_intact/taiwan_university.html" title="台灣大學生 — University Life in Taiwan" />} />
       <Route path="/game/shen-laoshi-class" element={<GamePage file="flashcard_lengkap_intact/shen_laoshi_class.html" title="沈老師的課 — 設計研究方法" />} />
       <Route path="/game/shen-laoshi-per-kalimat" element={<GamePage file="flashcard_lengkap_intact/shen_laoshi_per_kalimat.html" title="沈老師的課 — Per Kalimat" />} />
+      <Route path="/game/shen-laoshi-vocab" element={<GamePage file="flashcard_lengkap_intact/shen_laoshi_vocab.html" title="沈老師的課 — Kosakata Per Kata" />} />
       <Route path="/game/shen-laoshi-short" element={<GamePage file="flashcard_lengkap_intact/shen_laoshi_short.html" title="沈老師的課 — Per Kalimat Pendek" />} />
       <Route path="/game/shen-laoshi-english" element={<GamePage file="flashcard_lengkap_intact/shen_laoshi_english.html" title="Prof. Shen's Class — English Session" />} />
       <Route path="/game/yanuar-self-intro" element={<GamePage file="flashcard_lengkap_intact/yanuar_self_intro.html" title="Yanuar 的自我介紹 — 詞彙練習" />} />
