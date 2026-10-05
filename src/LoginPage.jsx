@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 // ⚠️ GANTI PASSWORD DI BAWAH INI
 // Jangan share file ini ke siapapun
-const CORRECT_PASSWORD = 'GANTI_DENGAN_PASSWORDMU'
+const CORRECT_PASSWORD = 'tapa ijin nggak ridho'
 
 export default function LoginPage({ onLogin }) {
   const [input, setInput] = useState('')
@@ -49,6 +49,23 @@ export default function LoginPage({ onLogin }) {
           </div>
           <div style={{ fontSize: '13px', color: '#8a8478', marginTop: '4px' }}>
             Masukkan password untuk melanjutkan
+          </div>
+        </div>
+
+        <div style={{
+          background: '#fff1f2',
+          border: '1px solid #fca5a5',
+          borderRadius: '10px',
+          padding: '10px 14px',
+          marginBottom: '1.2rem',
+          textAlign: 'center'
+        }}>
+          <div style={{ fontSize: '13px', fontWeight: 700, color: '#dc2626', marginBottom: '2px' }}>
+            ⚠️ Tanpa Izin = Haram
+          </div>
+          <div style={{ fontSize: '12px', color: '#b91c1c', lineHeight: 1.5 }}>
+            <strong>Flashcard Kosakata</strong> adalah milik pribadi.<br />
+            Penggunaan tanpa izin pemilik tidak diperbolehkan.
           </div>
         </div>
 
