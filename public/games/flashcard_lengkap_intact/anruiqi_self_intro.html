@@ -1,0 +1,404 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>安睿祺 — 自我介紹簡報練習</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+.fb.c-KELAS.on{background:#2563eb;border-color:#2563eb;}
+.fb.c-TESIS.on{background:#059669;border-color:#059669;}
+.fb.c-ADMIN.on{background:#dc2626;border-color:#dc2626;}
+.fb.c-NASIHAT.on{background:#d97706;border-color:#d97706;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:185px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.7rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+.zh-front{font-family:"Noto Serif TC",serif;font-weight:700;color:#1a1814;text-align:center;line-height:1.55;font-size:16px;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-id{font-size:14px;font-weight:600;color:#1a1814;text-align:center;line-height:1.7;}
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:"Noto Serif TC",serif;font-size:13px;color:#1a1814;flex:1;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;margin-left:6px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🎤 安睿祺 — 自我介紹簡報練習</h1>
+  <div class="sub" id="sub-lbl">Ketuk untuk terjemahan Indonesia</div>
+  <div class="filters">
+    <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
+    <button class="fb" onclick="setCat('PEMBUKAAN')">👋 Pembukaan</button>
+    <button class="fb" onclick="setCat('IDENTITAS')">🎓 Identitas</button>
+    <button class="fb" onclick="setCat('PERJALANAN')">📅 Perjalanan</button>
+    <button class="fb" onclick="setCat('TEKNOLOGI')">💻 Teknologi</button>
+    <button class="fb" onclick="setCat('PROYEK')">🛠 Proyek</button>
+    <button class="fb" onclick="setCat('DESAIN')">🎨 Desain</button>
+    <button class="fb" onclick="setCat('MANDARIN')">🀄 Mandarin</button>
+    <button class="fb" onclick="setCat('NFU')">🏫 NFU</button>
+    <button class="fb" onclick="setCat('KEPRIBADIAN')">🙋 Kepribadian</button>
+    <button class="fb" onclick="setCat('RENCANA')">🎯 Rencana</button>
+    <button class="fb" onclick="setCat('PENYELAMAT')">🆘 Penyelamat</button>
+  </div>
+  <div id="qv">
+    <div class="topbar"><span class="badge" id="rb">Ronde 1</span><span class="ctr" id="ctr">1/--</span></div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">-- kartu</span></div>
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <div class="zh-front" id="zh-disp"></div>
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk terjemahan</div>
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag">PINYIN</div>
+        <div id="ans-py" style="font-size:14px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:8px;line-height:1.6;"></div>
+        <div class="atag">🇮🇩 Indonesia</div>
+        <div class="ans-id" id="ans-id"></div>
+      </div>
+    </div>
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😓</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Selesai</span></button>
+    </div>
+  </div>
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2"></div>
+      <div class="res-title" id="rt"></div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div id="rlw" style="display:none">
+        <div class="rlist-wrap">
+          <div class="rlist-ttl">Perlu diulang 📌</div>
+          <div class="rlist" id="rl"></div>
+        </div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()"></button>
+      <button class="btnbig btn-ghost" onclick="fullRestart()">🔄 Mulai dari awal</button>
+    </div>
+  </div>
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:64px;margin-bottom:.8rem">🎉</div>
+      <div class="res-title">Selesai!</div>
+      <button class="btnbig btn-purple" onclick="fullRestart()">🔄 Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+<script>
+var V=[
+{cat:"PEMBUKAAN",zh:"老師好，各位同學大家好。",py:"lǎo shī hǎo, gè wèi tóng xué dà jiā hǎo.",id:"Halo Bapak/Ibu Dosen, halo teman-teman semua."}
+{cat:"PEMBUKAAN",zh:"謝謝大家今天願意聽我的自我介紹。",py:"xiè xiè dà jiā jīn tiān yuàn yì tīng wǒ de zì wǒ jiè shào.",id:"Terima kasih semua sudah mau mendengarkan perkenalan diri saya hari ini."}
+{cat:"PEMBUKAAN",zh:"我叫安睿祺，我的印尼名字是 Yanuar Rizki Aminudin。",py:"wǒ jiào ān ruìqí, wǒ de yìn ní míng zì shì Yanuar Rizki Aminudin.",id:"Nama saya An Ruiqi, nama Indonesia saya adalah Yanuar Rizki Aminudin."}
+{cat:"PEMBUKAAN",zh:"大家可以叫我安睿祺，也可以叫我 Yanuar。",py:"dà jiā kě yǐ jiào wǒ ān ruìqí, yě kě yǐ jiào wǒ Yanuar.",id:"Kalian bisa memanggil saya An Ruiqi, atau bisa juga memanggil saya Yanuar."}
+{cat:"PEMBUKAAN",zh:"我來自印尼，現在很高興有機會在臺灣和大家一起學習。",py:"wǒ lái zì yìn ní, xiànzài hěn gāo xìng yǒu jī huì zài tái wān hé dà jiā yī qǐ xué xí.",id:"Saya berasal dari Indonesia, sekarang sangat senang punya kesempatan belajar bersama semua di Taiwan."}
+{cat:"PEMBUKAAN",zh:"今天我想分享的，不只是我讀什麼科系。",py:"jīn tiān wǒ xiǎng fēn xiǎng de, bù zhǐ shì wǒ dú shén me kē xì.",id:"Apa yang ingin saya bagikan hari ini bukan hanya soal jurusan saya."}
+{cat:"PEMBUKAAN",zh:"我也想介紹自己的學習過程、曾經參與的專題、為什麼對設計有興趣，以及來臺灣以後想學到什麼。",py:"wǒ yě xiǎng jiè shào zì jǐ de xué xí guò chéng, céngjīng cān yǔ de zhuān tí, wèishén me duì shè jì yǒu xìng qù, yǐ jí lái tái wān yǐ hòu xiǎng xué dào shén me.",id:"Saya juga ingin memperkenalkan proses belajar saya, proyek yang pernah diikuti, kenapa tertarik pada desain, dan apa yang ingin dipelajari setelah datang ke Taiwan."}
+{cat:"PEMBUKAAN",zh:"我的中文還在學習中，所以我會盡量使用簡單的句子，也可能會說得比較慢。",py:"wǒ de zhōng wén hái zài xué xí zhōng, suǒ yǐ wǒ huì jǐn liàng shǐ yòng jiǎn dān de jù zǐ, yě kě néng huì shuō dé bǐ jiào màn.",id:"Mandarin saya masih dalam proses belajar, jadi saya akan berusaha menggunakan kalimat sederhana dan mungkin akan bicara agak lambat."}
+{cat:"PEMBUKAAN",zh:"如果有些地方說得不清楚，請大家多多包涵。",py:"rú guǒ yǒu xiē dì fāng shuō dé bù qīng chǔ, qǐng dà jiā duō duō bāo hán.",id:"Kalau ada bagian yang kurang jelas, mohon pengertian dari semua."}
+{cat:"PEMBUKAAN",zh:"我今天不是想表現得很完美，只是希望把自己的想法真誠地分享給大家。",py:"wǒ jīn tiān bù shì xiǎng biǎo xiàn dé hěn wán měi, zhǐ shì xī wàng bǎ zì jǐ de xiǎng fǎ zhēn chéng de fēn xiǎng gěi dà jiā.",id:"Hari ini saya tidak berusaha tampil sempurna, hanya ingin berbagi pikiran saya dengan tulus kepada semua."}
+{cat:"PEMBUKAAN",zh:"對我來說，來到新的國家、使用新的語言和大家交流，本身就是一種很重要的練習。",py:"duì wǒ lái shuō, lái dào xīn de guó jiā, shǐ yòng xīn de yǔ yán hé dà jiā jiāo liú, běnshēn jiù shì yī zhǒng hěn zhòng yào de liàn xí.",id:"Bagi saya, datang ke negara baru, berkomunikasi dengan bahasa baru, itu sendiri sudah merupakan latihan yang sangat penting."}
+{cat:"PEMBUKAAN",zh:"即使我有一點緊張，我也很珍惜這個機會。",py:"jí shǐ wǒ yǒu yī diǎn jǐn zhāng, wǒ yě hěn zhēn xī zhè gè jī huì.",id:"Walaupun saya sedikit gugup, saya sangat menghargai kesempatan ini."}
+{cat:"IDENTITAS",zh:"我來自印尼東爪哇的普羅博林戈。",py:"wǒ lái zì yìn ní dōng zhǎo wā de pǔ luó bó lín gē.",id:"Saya berasal dari Probolinggo, Jawa Timur, Indonesia."}
+{cat:"IDENTITAS",zh:"來臺灣以後，我有機會接觸不同的文化，也開始學習如何在新的環境中生活。",py:"lái tái wān yǐ hòu, wǒ yǒu jī huì jiē chù bù tóng de wén huà, yě kāi shǐ xué xí rú hé zài xīn de huán jìng zhōng shēng huó.",id:"Setelah datang ke Taiwan, saya mendapat kesempatan bersentuhan dengan budaya berbeda dan mulai belajar cara hidup di lingkungan baru."}
+{cat:"IDENTITAS",zh:"我原本在印尼的 Politeknik Negeri Malang，也就是 Polinema，讀四年制資訊工程。",py:"wǒ yuán běn zài yìn ní de Politeknik Negeri Malang, yě jiù shì Polinema, dú sì nián zhì zī xùn gōng chéng.",id:"Saya awalnya kuliah D-IV Teknik Informatika di Politeknik Negeri Malang, yaitu Polinema, Indonesia."}
+{cat:"IDENTITAS",zh:"我從 2023 年開始在那裡學習。",py:"wǒ cóng 2023 nián kāi shǐ zài nà lǐ xué xí.",id:"Saya mulai belajar di sana sejak tahun 2023."}
+{cat:"IDENTITAS",zh:"資訊工程的課程讓我接觸到程式設計、資料庫、網站、行動應用程式和一些系統開發。",py:"zī xùn gōng chéng de kè chéng ràng wǒ jiē chù dào chéng shì shè jì, zī liào kù, wǎng zhàn, xíng dòng yīng yòng chéng shì hé yī xiē xì tǒng kāi fā.",id:"Kurikulum teknik informatika membuat saya bersentuhan dengan pemrograman, database, website, aplikasi mobile, dan beberapa pengembangan sistem."}
+{cat:"IDENTITAS",zh:"現在，我參加在國立虎尾科技大學的短期實習與學習計畫，接觸多媒體設計的學習環境。",py:"xiànzài, wǒ cān jiā zài guó lì hǔ wěi kē jì dà xué de duǎn qī shí xí yǔ xué xí jì huà, jiē chù duō méi tǐ shè jì de xué xí huán jìng.",id:"Sekarang saya mengikuti program magang dan pembelajaran jangka pendek di National Formosa University, bersentuhan dengan lingkungan belajar Multimedia Design."}
+{cat:"IDENTITAS",zh:"雖然我原本的科系是資訊工程，但我發現技術和設計之間有很多關係。",py:"suī rán wǒ yuán běn de kē xì shì zī xùn gōng chéng, dàn wǒ fāxiàn jì shù hé shè jì zhī jiān yǒu hěn duō guān xì.",id:"Walaupun jurusan asal saya adalah Teknik Informatika, saya menemukan ada banyak hubungan antara teknologi dan desain."}
+{cat:"IDENTITAS",zh:"我想把以前學過的技術，和互動設計、視覺溝通連接起來。",py:"wǒ xiǎng bǎ yǐ qián xué guò de jì shù, hé hù dòng shè jì, shì jué gōu tōng lián jiē qǐ lái.",id:"Saya ingin menghubungkan teknologi yang sudah dipelajari sebelumnya dengan interaction design dan visual communication."}
+{cat:"IDENTITAS",zh:"如果有人問我現在最重視什麼，我會說是學習新的方法，還有改善自己的溝通能力。",py:"rú guǒ yǒu rén wèn wǒ xiànzài zuì zhòng shì shén me, wǒ huì shuō shì xué xí xīn de fāng fǎ, hái yǒu gǎi shàn zì jǐ de gōu tōng néng lì.",id:"Kalau ada yang tanya apa yang paling saya prioritaskan sekarang, saya akan bilang belajar metode baru dan meningkatkan kemampuan komunikasi."}
+{cat:"PERJALANAN",zh:"2023 年，我開始在 Polinema 讀資訊工程。",py:"2023 nián, wǒ kāi shǐ zài Polinema dú zī xùn gōng chéng.",id:"Tahun 2023, saya mulai kuliah Teknik Informatika di Polinema."}
+{cat:"PERJALANAN",zh:"那時候最重要的是建立基礎，例如如何寫程式、如何理解資料，以及一個網站或系統是怎麼運作的。",py:"nà shí hòu zuì zhòng yào de shì jiàn lì jī chǔ, lì rú rú hé xiě chéng shì, rú hé lǐ jiě zī liào, yǐ jí yī gè wǎng zhàn huò xì tǒng shì zěn me yùn zuò de.",id:"Saat itu yang paling penting adalah membangun fondasi, seperti cara menulis kode, cara memahami data, dan bagaimana website atau sistem bekerja."}
+{cat:"PERJALANAN",zh:"到了 2024 年，我開始接觸需要多人合作的專題。",py:"dào le 2024 nián, wǒ kāi shǐ jiē chù xū yào duō rén hé zuò de zhuān tí.",id:"Memasuki tahun 2024, saya mulai bersentuhan dengan proyek yang membutuhkan kerja sama banyak orang."}
+{cat:"PERJALANAN",zh:"我參與過學生資料相關的系統設計，也開始使用 Figma 製作介面。",py:"wǒ cān yǔ guò xué shēng zī liào xiāng guān de xì tǒng shè jì, yě kāi shǐ shǐ yòng Figma zhì zuò jiè miàn.",id:"Saya pernah terlibat dalam desain sistem terkait data mahasiswa dan mulai menggunakan Figma untuk membuat antarmuka."}
+{cat:"PERJALANAN",zh:"那段經驗讓我第一次比較認真地思考：使用者打開這個畫面時，會先看到什麼，又應該怎麼操作。",py:"nà duàn jīng yàn ràng wǒ dì yī cì bǐ jiào rèn zhēn de sī kǎo: shǐ yòng zhě dǎ kāi zhè gè huà miàn shí, huì xiān kàn dào shén me, yòu yīng gāi zěn me cāo zuò.",id:"Pengalaman itu membuat saya untuk pertama kalinya benar-benar berpikir: ketika pengguna membuka layar ini, apa yang pertama mereka lihat, dan bagaimana seharusnya mereka beroperasi."}
+{cat:"PERJALANAN",zh:"2025 年，我接觸了更多不同的領域，包括 Laravel 網站開發、天氣影像辨識，以及中文學習。",py:"2025 nián, wǒ jiē chù le gèng duō bù tóng de lǐng yù, bāo kuò Laravel wǎng zhàn kāi fā, tiān qì yǐng xiàng biàn shí, yǐ jí zhōng wén xué xí.",id:"Tahun 2025, saya bersentuhan dengan lebih banyak bidang berbeda, termasuk pengembangan website Laravel, pengenalan citra cuaca, dan belajar Mandarin."}
+{cat:"PERJALANAN",zh:"網站需要反覆修改，影像辨識需要整理資料，學語言也需要每天累積。",py:"wǎng zhàn xū yào fǎn fù xiū gǎi, yǐng xiàng biàn shí xū yào zhěng lǐ zī liào, xué yǔ yán yě xū yào měi tiān lèi jī.",id:"Website butuh revisi berulang, pengenalan citra butuh pengolahan data, belajar bahasa juga butuh akumulasi setiap hari."}
+{cat:"PERJALANAN",zh:"2026 年，我參與智慧交通燈和即時監控介面的專題，也開始在臺灣學習。",py:"2026 nián, wǒ cān yǔ zhìhuì jiāo tōng dēng hé jí shí jiān kòng jiè miàn de zhuān tí, yě kāi shǐ zài tái wān xué xí.",id:"Tahun 2026, saya ikut proyek smart traffic light dan antarmuka monitoring real-time, juga mulai belajar di Taiwan."}
+{cat:"PERJALANAN",zh:"我不是突然就決定喜歡設計，而是在不同的專題中慢慢發現，自己很在意使用者能不能理解畫面、順利完成任務。",py:"wǒ bù shì tū rán jiù juédìng xǐ huān shè jì, ér shì zài bù tóng de zhuān tí zhōng màn màn fāxiàn, zì jǐ hěn zài yì shǐ yòng zhě néng bù néng lǐ jiě huà miàn, shùn lì wán chéng rèn wù.",id:"Saya tidak tiba-tiba memutuskan suka desain, tapi perlahan menemukan di berbagai proyek bahwa saya sangat peduli apakah pengguna bisa memahami layar dan menyelesaikan tugas dengan lancar."}
+{cat:"PERJALANAN",zh:"我覺得自己的學習過程是一個逐漸連接不同領域的過程。",py:"wǒ jué dé zì jǐ de xué xí guò chéng shì yī gè zhú jiàn lián jiē bù tóng lǐng yù de guò chéng.",id:"Saya merasa perjalanan belajar saya adalah proses yang secara bertahap menghubungkan berbagai bidang."}
+{cat:"TEKNOLOGI",zh:"第一個是網站與前端開發。",py:"dì yī gè shì wǎng zhàn yǔ qián duān kāi fā.",id:"Yang pertama adalah pengembangan website dan frontend."}
+{cat:"TEKNOLOGI",zh:"我學過 HTML、CSS、JavaScript，也接觸過 React、TypeScript 和 Laravel。",py:"wǒ xué guò HTML, CSS, JavaScript, yě jiē chù guò React, TypeScript hé Laravel.",id:"Saya sudah belajar HTML, CSS, JavaScript, juga pernah bersentuhan dengan React, TypeScript, dan Laravel."}
+{cat:"TEKNOLOGI",zh:"我喜歡把比較複雜的資訊整理成畫面，再讓這些畫面和實際功能連接。",py:"wǒ xǐ huān bǎ bǐ jiào fù zá de zī xùn zhěng lǐ chéng huà miàn, zài ràng zhè xiē huà miàn hé shí jì gōng néng lián jiē.",id:"Saya suka mengatur informasi yang cukup kompleks menjadi tampilan layar, lalu menghubungkan tampilan itu dengan fungsi nyata."}
+{cat:"TEKNOLOGI",zh:"第二個是行動應用程式和介面設計。",py:"dì èr gè shì xíng dòng yīng yòng chéng shì hé jiè miàn shè jì.",id:"Yang kedua adalah aplikasi mobile dan desain antarmuka."}
+{cat:"TEKNOLOGI",zh:"我接觸過 Flutter，也常使用 Figma 來整理畫面、操作流程和原型。",py:"wǒ jiē chù guò Flutter, yě cháng shǐ yòng Figma lái zhěng lǐ huà miàn, cāo zuò liú chéng hé yuán xíng.",id:"Saya pernah bersentuhan dengan Flutter, juga sering menggunakan Figma untuk mengatur tampilan, alur operasi, dan prototype."}
+{cat:"TEKNOLOGI",zh:"做完功能不代表使用者一定知道怎麼使用，所以按鈕的位置、文字的說法和操作順序都很重要。",py:"zuò wán gōng néng bù dài biǎo shǐ yòng zhě yī dìng zhī dào zěn me shǐ yòng, suǒ yǐ àn niǔ de wèi zhì, wén zì de shuō fǎ hé cāo zuò shùn xù dōu hěn zhòng yào.",id:"Selesai membuat fungsi tidak berarti pengguna pasti tahu cara menggunakannya, jadi posisi tombol, cara penulisan teks, dan urutan operasi semuanya sangat penting."}
+{cat:"TEKNOLOGI",zh:"第三個是人工智慧和影像處理。",py:"dì sān gè shì rén gōng zhìhuì hé yǐng xiàng chù lǐ.",id:"Yang ketiga adalah kecerdasan buatan dan pemrosesan citra."}
+{cat:"TEKNOLOGI",zh:"我曾在專題中使用 OpenCV，整理影像特徵，也接觸 KNN 和 XGBoost 等模型。",py:"wǒ céng zài zhuān tí zhōng shǐ yòng OpenCV, zhěng lǐ yǐng xiàng tè zhǐ, yě jiē chù KNN hé XGBoost děng mó xíng.",id:"Saya pernah menggunakan OpenCV dalam proyek untuk mengekstrak fitur citra, juga bersentuhan dengan model seperti KNN dan XGBoost."}
+{cat:"TEKNOLOGI",zh:"人工智慧不只是按下一個按鈕就得到答案，前面還有很多資料準備、測試和結果檢查的工作。",py:"rén gōng zhìhuì bù zhǐ shì àn xià yī gè àn niǔ jiù dé dào dá àn, qián miàn hái yǒu hěn duō zī liào zhǔn bèi, cè shì hé jié guǒ jiǎn chá de gōng zuò.",id:"AI bukan hanya menekan satu tombol lalu dapat jawaban, di depannya masih banyak pekerjaan persiapan data, pengujian, dan pemeriksaan hasil."}
+{cat:"TEKNOLOGI",zh:"第四個是物聯網和即時系統。",py:"dì sì gè shì wùlián wǎng hé jí shí xì tǒng.",id:"Yang keempat adalah IoT dan sistem real-time."}
+{cat:"TEKNOLOGI",zh:"我曾接觸 ESP8266、Arduino、感測器、MQTT 和 Firebase，讓硬體的資料顯示到網頁上。",py:"wǒ céng jiē chù ESP8266, Arduino, gǎn cè qì, MQTT hé Firebase, ràng yìng tǐ de zī liào xiǎn shì dào wǎng yè shàng.",id:"Saya pernah bersentuhan dengan ESP8266, Arduino, sensor, MQTT, dan Firebase, untuk menampilkan data hardware ke halaman web."}
+{cat:"TEKNOLOGI",zh:"這四個領域對我來說不是互相競爭的選擇，而是可以合作的工具。",py:"zhè sì gè lǐng yù duì wǒ lái shuō bù shì hù xiāng jìng zhēng de xuǎn zé, ér shì kě yǐ hé zuò de gōng jù.",id:"Keempat bidang ini bagi saya bukan pilihan yang saling bersaing, melainkan alat yang bisa bekerja sama."}
+{cat:"TEKNOLOGI",zh:"我現在最有興趣的是它們交會的地方：一個技術系統要怎麼被設計成更清楚、更好用的產品。",py:"wǒ xiànzài zuì yǒu xìng qù de shì tā men jiāo huì de dì fāng: yī gè jì shù xì tǒng yào zěn me bèi shè jì chéng gèng qīng chǔ, gèng hǎo yòng de chǎn pǐn.",id:"Yang paling saya minati sekarang adalah titik pertemuannya: bagaimana sistem teknologi dirancang menjadi produk yang lebih jelas dan lebih mudah digunakan."}
+{cat:"PROYEK",zh:"第一個想介紹的團隊專題是 SAN SIGMA，也就是學生成就紀錄系統。",py:"dì yī gè xiǎng jiè shào de tuán duì zhuān tí shì SAN SIGMA, yě jiù shì xué shēng chéng jiù jì lù xì tǒng.",id:"Proyek tim pertama yang ingin saya perkenalkan adalah SAN SIGMA, yaitu sistem pencatatan prestasi mahasiswa."}
+{cat:"PROYEK",zh:"這個系統的目的是幫助學校整理與管理學生的成就資料。",py:"zhè gè xì tǒng de mù dì shì bāng zhù xué xiào zhěng lǐ yǔ guǎn lǐ xué shēng de chéng jiù zī liào.",id:"Tujuan sistem ini adalah membantu sekolah mengorganisir dan mengelola data prestasi mahasiswa."}
+{cat:"PROYEK",zh:"在這個專題裡，我主要參與使用者介面設計。",py:"zài zhè gè zhuān tí lǐ, wǒ zhǔ yào cān yǔ shǐ yòng zhě jiè miàn shè jì.",id:"Dalam proyek ini, saya terutama terlibat dalam desain antarmuka pengguna."}
+{cat:"PROYEK",zh:"我先思考不同角色需要做的事情，再整理操作流程與畫面架構，使用 Figma 製作從初步線框圖到較完整的介面原型。",py:"wǒ xiān sī kǎo bù tóng jiǎo sè xū yào zuò de shì qíng, zài zhěng lǐ cāo zuò liú chéng yǔ huà miàn jià gòu, shǐ yòng Figma zhì zuò cóng chū bù xiàn kuàng tú dào jiào wán zhěng de jiè miàn yuán xíng.",id:"Saya pertama memikirkan apa yang perlu dilakukan setiap peran berbeda, lalu mengatur alur operasi dan struktur layar, menggunakan Figma membuat dari wireframe awal hingga prototype antarmuka yang lebih lengkap."}
+{cat:"PROYEK",zh:"這個專題讓我明白，一個介面不應該只追求看起來漂亮。",py:"zhè gè zhuān tí ràng wǒ míng bái, yī gè jiè miàn bù yīng gāi zhǐ zhuī qiú kàn qǐ lái piào liàng.",id:"Proyek ini membuat saya memahami, sebuah antarmuka tidak boleh hanya mengejar tampilan yang cantik."}
+{cat:"PROYEK",zh:"老師可能更需要快速查看學生的資料，學生可能更需要知道自己的紀錄有沒有成功送出。",py:"lǎo shī kě néng gèng xū yào kuài sù chá kàn xué shēng de zī liào, xué shēng kě néng gèng xū yào zhī dào zì jǐ de jì lù yǒu méi yǒu chéng gōng sòng chū.",id:"Dosen mungkin lebih butuh melihat data mahasiswa dengan cepat, mahasiswa mungkin lebih butuh tahu apakah catatannya sudah berhasil dikirim."}
+{cat:"PROYEK",zh:"在團隊合作中，設計也需要和開發配合。",py:"zài tuán duì hé zuò zhōng, shè jì yě xū yào hé kāi fā pèi hé.",id:"Dalam kerja tim, desain juga perlu berkoordinasi dengan pengembangan."}
+{cat:"PROYEK",zh:"SAN SIGMA 是開始認真理解資訊架構的一個經驗。",py:"SAN SIGMA shì kāi shǐ rèn zhēn lǐ jiě zī xùn jià gòu de yī gè jīng yàn.",id:"SAN SIGMA adalah pengalaman yang menjadi awal saya benar-benar memahami arsitektur informasi."}
+{cat:"PROYEK",zh:"第二個專題是 SIMAgang，一個實習推薦網站。",py:"dì èr gè zhuān tí shì SIMAgang, yī gè shí xí tuī jiàn wǎng zhàn.",id:"Proyek kedua adalah SIMAgang, sebuah website rekomendasi magang."}
+{cat:"PROYEK",zh:"在這個專題裡，我主要接觸網頁前端、畫面設計和使用者流程。",py:"zài zhè gè zhuān tí lǐ, wǒ zhǔ yào jiē chù wǎng yè qián duān, huà miàn shè jì hé shǐ yòng zhě liú chéng.",id:"Dalam proyek ini, saya terutama bersentuhan dengan frontend web, desain layar, dan alur pengguna."}
+{cat:"PROYEK",zh:"我們使用 Laravel、PHP、HTML、CSS 和 JavaScript 等技術。",py:"wǒ men shǐ yòng Laravel, PHP, HTML, CSS hé JavaScript děng jì shù.",id:"Kami menggunakan teknologi seperti Laravel, PHP, HTML, CSS, dan JavaScript."}
+{cat:"PROYEK",zh:"我參與把 Figma 裡的設計稿做成真正可以在瀏覽器使用的網頁，也注意不同螢幕大小時，畫面能不能正常顯示。",py:"wǒ cān yǔ bǎ Figma lǐ de shè jì gǎo zuò chéng zhēn zhèng kě yǐ zài liú lǎn qì shǐ yòng de wǎng yè, yě zhù yì bù tóng yíng mù dà xiǎo shí, huà miàn néng bù néng zhèng cháng xiǎn shì.",id:"Saya terlibat mengubah desain di Figma menjadi halaman web yang benar-benar bisa digunakan di browser, juga memperhatikan apakah tampilan bisa ditampilkan normal di berbagai ukuran layar."}
+{cat:"PROYEK",zh:"團隊也使用 GitHub 來管理程式修改。",py:"tuán duì yě shǐ yòng GitHub lái guǎn lǐ chéng shì xiū gǎi.",id:"Tim juga menggunakan GitHub untuk mengelola perubahan kode."}
+{cat:"PROYEK",zh:"在這個專題中，我開始明白整個團隊的程式和資料需要互相配合。",py:"zài zhè gè zhuān tí zhōng, wǒ kāi shǐ míng bái zhěng gè tuán duì de chéng shì hé zī liào xū yào hù xiāng pèi hé.",id:"Dalam proyek ini, saya mulai memahami bahwa kode dan data seluruh tim perlu saling berkoordinasi."}
+{cat:"PROYEK",zh:"這次經驗讓我更清楚自己喜歡的工作方式：不只想畫介面，也想了解它背後的技術限制。",py:"zhè cì jīng yàn ràng wǒ gèng qīng chǔ zì jǐ xǐ huān de gōng zuò fāng shì: wǒ bù zhǐ xiǎng huà jiè miàn, yě xiǎng le jiě tā bèi hòu de jì shù xiàn zhì.",id:"Pengalaman ini membuat saya lebih jelas tentang cara kerja yang saya sukai: tidak hanya ingin membuat desain antarmuka, tapi juga ingin memahami keterbatasan teknologi di baliknya."}
+{cat:"PROYEK",zh:"接下來這個專題叫做 Weather Recognition，也就是天氣影像辨識。",py:"jiē xià lái zhè gè zhuān tí jiào zuò Weather Recognition, yě jiù shì tiān qì yǐng xiàng biàn shí.",id:"Proyek berikutnya disebut Weather Recognition, yaitu pengenalan citra cuaca."}
+{cat:"PROYEK",zh:"我們希望讓使用者可以透過手機圖片或相機，提供一張天氣影像，再由系統分析圖片的特徵，顯示可能的天氣分類結果。",py:"wǒ men xī wàng ràng shǐ yòng zhě kě yǐ tòu guò shǒu jī tú piàn huò xiāng jī, tí gōng yī zhāng tiān qì yǐng xiàng, zài yóu xì tǒng fēn xī tú piàn de tè zhǐ, xiǎn shì kě néng de tiān qì fēn lèi jié guǒ.",id:"Kami ingin pengguna bisa memberikan gambar cuaca melalui foto HP atau kamera, lalu sistem menganalisis fitur gambar dan menampilkan hasil klasifikasi cuaca yang mungkin."}
+{cat:"PROYEK",zh:"在團隊裡，我主要參與影像前處理和特徵擷取，也參與應用程式前端與歷史紀錄相關功能的整理。",py:"zài tuán duì lǐ, wǒ zhǔ yào cān yǔ yǐng xiàng qián chù lǐ hé tè zhǐ xié qǔ, yě cān yǔ yīng yòng chéng shì qián duān yǔ lì shǐ jì lù xiāng guān gōng néng de zhěng lǐ.",id:"Dalam tim, saya terutama terlibat dalam preprocessing citra dan ekstraksi fitur, juga terlibat dalam pengaturan frontend aplikasi dan fungsi terkait riwayat."}
+{cat:"PROYEK",zh:"我們接觸到 HSV 顏色特徵、GLCM 與 LBP 紋理特徵，也比較 KNN 和 XGBoost 等機器學習模型。",py:"wǒ men jiē chù dào HSV yán sè tè zhǐ, GLCM yǔ LBP wén lǐ tè zhǐ, yě bǐ jiào KNN hé XGBoost děng jī qì xué xí mó xíng.",id:"Kami bersentuhan dengan fitur warna HSV, fitur tekstur GLCM dan LBP, juga membandingkan model machine learning seperti KNN dan XGBoost."}
+{cat:"PROYEK",zh:"模型訓練與完整應用是團隊共同完成的。",py:"mó xíng xùn liàn yǔ wán zhěng yīng yòng shì tuán duì gòng tóng wán chéng de.",id:"Pelatihan model dan aplikasi lengkap diselesaikan bersama oleh tim."}
+{cat:"PROYEK",zh:"即使模型可以產生結果，如果畫面太難懂，使用者仍然可能不知道結果代表什麼。",py:"jí shǐ mó xíng kě yǐ chǎn shēng jié guǒ, rú guǒ huà miàn tài nán dǒng, shǐ yòng zhě réng rán kě néng bù zhī dào jié guǒ dài biǎo shén me.",id:"Walaupun model bisa menghasilkan hasil, kalau tampilan terlalu sulit dipahami, pengguna tetap mungkin tidak tahu apa arti hasilnya."}
+{cat:"PROYEK",zh:"另一個我想介紹的專題是 Smart Traffic Light，也就是智慧交通燈和即時交通監控系統。",py:"lìng yī gè wǒ xiǎng jiè shào de zhuān tí shì Smart Traffic Light, yě jiù shì zhìhuì jiāo tōng dēng hé jí shí jiāo tōng jiān kòng xì tǒng.",id:"Proyek lain yang ingin saya perkenalkan adalah Smart Traffic Light, yaitu lampu lalu lintas pintar dan sistem monitoring lalu lintas real-time."}
+{cat:"PROYEK",zh:"這是一個正在發展中的團隊專題。",py:"zhè shì yī gè zhèng zài fāzhǎn zhōng de tuán duì zhuān tí.",id:"Ini adalah proyek tim yang masih dalam pengembangan."}
+{cat:"PROYEK",zh:"在這個四人團隊中，我參與 React 和 TypeScript 網頁儀表板的製作。",py:"zài zhè gè sì rén tuán duì zhōng, wǒ cān yǔ React hé TypeScript wǎng yè yí biǎo bǎn de zhì zuò.",id:"Dalam tim empat orang ini, saya terlibat dalam pembuatan dashboard web dengan React dan TypeScript."}
+{cat:"PROYEK",zh:"我們需要把感測器的資料，透過 MQTT 和 Firebase 等流程送到系統，再在網頁上顯示不同車道的資訊、燈號狀態以及一些即時圖表。",py:"wǒ men xū yào bǎ gǎn cè qì de zī liào, tòu guò MQTT hé Firebase děng liú chéng sòng dào xì tǒng, zài zài wǎng yè shàng xiǎn shì bù tóng chē dào de zī xùn, dēng hào zhuàng tài yǐ jí yī xiē jí shí tú biǎo.",id:"Kami perlu mengirim data sensor melalui alur seperti MQTT dan Firebase ke sistem, lalu menampilkan informasi berbagai jalur, status lampu, dan beberapa grafik real-time di halaman web."}
+{cat:"PROYEK",zh:"這個專題也接觸到數位孿生的概念。",py:"zhè gè zhuān tí yě jiē chù dào shùwèi luán shēng de gài niàn.",id:"Proyek ini juga bersentuhan dengan konsep digital twin."}
+{cat:"PROYEK",zh:"當實體交通燈的狀態改變時，使用者也希望在網頁上看到相對應的變化。",py:"dāng shí tǐ jiāo tōng dēng de zhuàng tài gǎibiàn shí, shǐ yòng zhě yě xī wàng zài wǎng yè shàng kàn dào xiāng duì yīng de biàn huà.",id:"Ketika status lampu lalu lintas fisik berubah, pengguna juga ingin melihat perubahan yang sesuai di halaman web."}
+{cat:"PROYEK",zh:"透過這個經驗，我更確定自己對互動系統有興趣。",py:"tòu guò zhè gè jīng yàn, wǒ gèng quèdìng zì jǐ duì hù dòng xì tǒng yǒu xìng qù.",id:"Melalui pengalaman ini, saya semakin yakin bahwa saya tertarik pada sistem interaktif."}
+{cat:"DESAIN",zh:"以前，我在學程式的時候，常常會先想功能能不能完成。",py:"yǐ qián, wǒ zài xué chéng shì de shí hòu, cháng cháng huì xiān xiǎng gōng néng néng bù néng wán chéng.",id:"Dulu, ketika belajar pemrograman, saya sering pertama kali memikirkan apakah fungsi bisa diselesaikan."}
+{cat:"DESAIN",zh:"功能可以正常運作，和使用者可以順利使用，是兩件不同的事情。",py:"gōng néng kě yǐ zhèng cháng yùn zuò, hé shǐ yòng zhě kě yǐ shùn lì shǐ yòng, shì liǎng jiàn bù tóng de shì qíng.",id:"Fungsi yang berjalan normal, dan pengguna bisa menggunakannya dengan lancar, adalah dua hal yang berbeda."}
+{cat:"DESAIN",zh:"有時候一個網站沒有技術錯誤，使用者卻還是找不到想要的功能。",py:"yǒu shí hòu yī gè wǎng zhàn méi yǒu jì shù cuò wù, shǐ yòng zhě què hái shì zhǎo bù dào xiǎng yào de gōng néng.",id:"Kadang sebuah website tidak ada kesalahan teknis, tapi pengguna tetap tidak bisa menemukan fungsi yang diinginkan."}
+{cat:"DESAIN",zh:"我曾經使用 Figma 來整理介面，也會開始問自己一些問題。",py:"wǒ céngjīng shǐ yòng Figma lái zhěng lǐ jiè miàn, yě huì kāi shǐ wèn zì jǐ yī xiē wèn tí.",id:"Saya pernah menggunakan Figma untuk mengatur antarmuka, dan mulai mengajukan pertanyaan kepada diri sendiri."}
+{cat:"DESAIN",zh:"這個畫面最重要的資訊是什麼？",py:"zhè gè huà miàn zuì zhòng yào de zī xùn shì shén me?",id:"Apa informasi terpenting di layar ini?"}
+{cat:"DESAIN",zh:"第一次使用的人知道下一步要做什麼嗎？",py:"dì yī cì shǐ yòng de rén zhī dào xià yī bù yào zuò shén me ma?",id:"Apakah orang yang pertama kali menggunakan tahu apa langkah berikutnya?"}
+{cat:"DESAIN",zh:"如果操作成功或失敗，系統有沒有清楚告訴使用者？",py:"rú guǒ cāo zuò chéng gōng huò shī bài, xì tǒng yǒu méi yǒu qīng chǔ gào sù shǐ yòng zhě?",id:"Kalau operasi berhasil atau gagal, apakah sistem sudah dengan jelas memberitahu pengguna?"}
+{cat:"DESAIN",zh:"設計不能只靠自己的喜好。",py:"shè jì bù néng zhǐ kào zì jǐ de xǐ hǎo.",id:"Desain tidak boleh hanya mengandalkan selera pribadi."}
+{cat:"DESAIN",zh:"自己覺得好看，不代表所有人都覺得容易使用。",py:"zì jǐ jué dé hǎo kàn, bù dài biǎo suǒ yǒu rén dōu jué dé róng yì shǐ yòng.",id:"Merasa bagus sendiri tidak berarti semua orang merasa mudah digunakan."}
+{cat:"DESAIN",zh:"我喜歡的是設計可以把技術和人連在一起。",py:"wǒ xǐ huān de shì shè jì kě yǐ bǎ jì shù hé rén lián zài yī qǐ.",id:"Yang saya sukai adalah desain bisa menghubungkan teknologi dengan manusia."}
+{cat:"DESAIN",zh:"當一個系統變得更容易理解時，我會覺得前面花時間做的技術工作，才真正有機會幫助使用者。",py:"dāng yī gè xì tǒng biàn dé gèng róng yì lǐ jiě shí, wǒ huì jué dé qián miàn huā shí jiān zuò de jì shù gōng zuò, cái zhēn zhèng yǒu jī huì bāng zhù shǐ yòng zhě.",id:"Ketika sebuah sistem menjadi lebih mudah dipahami, saya merasa pekerjaan teknis yang sudah dilakukan sebelumnya baru benar-benar punya kesempatan membantu pengguna."}
+{cat:"ORGANISASI",zh:"除了課堂上的專題，我也參與過學校以外的練習。",py:"chú le kè táng shàng de zhuān tí, wǒ yě cān yǔ guò xué xiào yǐ wài de liàn xí.",id:"Selain proyek di dalam kelas, saya juga pernah terlibat dalam latihan di luar sekolah."}
+{cat:"ORGANISASI",zh:"我曾製作活動海報、節日的社群貼文，也協助安排要發布的內容。",py:"wǒ céng zhì zuò huódòng hǎi bào, jié rì de shèqún tiē wén, yě xié zhù ān pái yào fābù de nèi róng.",id:"Saya pernah membuat poster acara, postingan media sosial hari raya, juga membantu mengatur konten yang akan dipublikasikan."}
+{cat:"ORGANISASI",zh:"在做宣傳設計時，我不只需要考慮自己喜歡的風格，也要考慮活動的主題、發布的時間，以及其他人能不能一眼看懂資訊。",py:"zài zuò xuān chuán shè jì shí, wǒ bù zhǐ xū yào kǎo lǜ zì jǐ xǐ huān de fēng gé, yě yào kǎo lǜ huódòng de zhǔ tí, fābù de shí jiān, yǐ jí qí tā rén néng bù néng yī yǎn kàn dǒng zī xùn.",id:"Saat membuat desain promosi, saya tidak hanya perlu mempertimbangkan gaya yang saya suka, tapi juga tema acara, waktu publikasi, dan apakah orang lain bisa langsung memahami informasinya."}
+{cat:"ORGANISASI",zh:"我也做過一個小小的個人作品，就是中文單字 Flashcard 網站。",py:"wǒ yě zuò guò yī gè xiǎo xiǎo de gè rén zuò pǐn, jiù shì zhōng wén dān zì Flashcard wǎng zhàn.",id:"Saya juga pernah membuat sebuah karya pribadi kecil, yaitu website Flashcard kosakata Mandarin."}
+{cat:"ORGANISASI",zh:"因為我自己正在準備中文學習，需要常常複習詞彙，所以我用 React 做了一個可以反覆練習單字的工具。",py:"yīn wèi wǒ zì jǐ zhèng zài zhǔn bèi zhōng wén xué xí, xū yào cháng cháng fù xí cí huì, suǒ yǐ wǒ yòng React zuò le yī gè kě yǐ fǎn fù liàn xí dān zì de gōng jù.",id:"Karena saya sendiri sedang mempersiapkan belajar Mandarin dan perlu sering mengulang kosakata, maka saya membuat alat untuk berlatih kata-kata berulang kali menggunakan React."}
+{cat:"ORGANISASI",zh:"這個網站不是什麼很大的產品，但它是從自己的需求開始的。",py:"zhè gè wǎng zhàn bù shì shén me hěn dà de chǎn pǐn, dàn tā shì cóng zì jǐ de xū qiú kāi shǐ de.",id:"Website ini bukan produk yang besar, tapi ia dimulai dari kebutuhan sendiri."}
+{cat:"ORGANISASI",zh:"我覺得課堂以外的活動很有價值，因為可以從不同角度練習。",py:"wǒ jué dé kè táng yǐ wài de huódòng hěn yǒu jià zhí, yīn wèi kě yǐ cóng bù tóng jiǎo dù liàn xí.",id:"Saya merasa kegiatan di luar kelas sangat berharga, karena bisa berlatih dari sudut pandang yang berbeda."}
+{cat:"MANDARIN",zh:"對我來說，中文不是一個很容易的語言。",py:"duì wǒ lái shuō, zhōng wén bù shì yī gè hěn róng yì de yǔ yán.",id:"Bagi saya, Mandarin bukan bahasa yang mudah."}
+{cat:"MANDARIN",zh:"聲調、漢字和句子的使用方式，都需要慢慢熟悉。",py:"shēng diào, hàn zì hé jù zǐ de shǐ yòng fāng shì, dōu xū yào màn màn shú xī.",id:"Nada, karakter Han, dan cara penggunaan kalimat, semuanya butuh waktu untuk terbiasa."}
+{cat:"MANDARIN",zh:"我曾經參加 TOCFL 測驗，我的聽力紀錄是 A2，閱讀紀錄是 A1。",py:"wǒ céngjīng cān jiā TOCFL cè yàn, wǒ de tīng lì jì lù shì A2, yuè dú jì lù shì A1.",id:"Saya pernah mengikuti ujian TOCFL, catatan listening saya A2, catatan membaca A1."}
+{cat:"MANDARIN",zh:"對我來說，這些成績只代表當時的學習階段，不代表我已經能很流利地說中文。",py:"duì wǒ lái shuō, zhè xiē chéng jī zhǐ dài biǎo dāng shí de xué xí jiē duàn, bù dài biǎo wǒ yǐ jīng néng hěn liú lì de shuō zhōng wén.",id:"Bagi saya, nilai-nilai itu hanya mewakili tahap belajar saat itu, bukan berarti saya sudah bisa berbicara Mandarin dengan lancar."}
+{cat:"MANDARIN",zh:"我學中文的原因，不只是想通過考試。",py:"wǒ xué zhōng wén de yuán yīn, bù zhǐ shì xiǎng tōng guò kǎo shì.",id:"Alasan saya belajar Mandarin bukan hanya untuk lulus ujian."}
+{cat:"MANDARIN",zh:"我希望能聽懂老師的說明，和同學討論專題，也希望自己在臺灣生活時，可以越來越自然地表達。",py:"wǒ xī wàng néng tīng dǒng lǎo shī de shuō míng, hé tóng xué tǎo lùn zhuān tí, yě xī wàng zì jǐ zài tái wān shēng huó shí, kě yǐ yuè lái yuè zì rán de biǎo dá.",id:"Saya berharap bisa memahami penjelasan dosen, berdiskusi proyek dengan teman, dan berharap saat hidup di Taiwan bisa berekspresi dengan semakin natural."}
+{cat:"MANDARIN",zh:"為了幫助自己複習，我也做過中文單字卡的小網站。",py:"wèi le bāng zhù zì jǐ fù xí, wǒ yě zuò guò zhōng wén dān zì kǎ de xiǎo wǎng zhàn.",id:"Untuk membantu diri sendiri mengulang, saya juga pernah membuat website kartu kosakata Mandarin kecil."}
+{cat:"MANDARIN",zh:"我希望用反覆練習的方式，讓常用詞彙慢慢變得比較熟悉。",py:"wǒ xī wàng yòng fǎn fù liàn xí de fāng shì, ràng cháng yòng cí huì màn màn biàn dé bǐ jiào shú xī.",id:"Saya berharap dengan cara berlatih berulang-ulang, kosakata yang sering dipakai perlahan menjadi lebih familiar."}
+{cat:"MANDARIN",zh:"我不要求自己一下子說得很快，而是希望一次比一次更清楚。",py:"wǒ bù yāo qiú zì jǐ yī xià zǐ shuō dé hěn kuài, ér shì xī wàng yī cì bǐ yī cì gèng qīng chǔ.",id:"Saya tidak memaksakan diri untuk langsung bicara cepat, melainkan berharap setiap kali lebih jelas dari sebelumnya."}
+{cat:"NFU",zh:"我對互動媒體、介面設計、視覺溝通、設計研究，以及 AR 和 XR 的應用都有興趣。",py:"wǒ duì hù dòng méi tǐ, jiè miàn shè jì, shì jué gōu tōng, shè jì yán jiū, yǐ jí AR hé XR de yīng yòng dōu yǒu xìng qù.",id:"Saya tertarik pada interactive media, interface design, visual communication, design research, serta aplikasi AR dan XR."}
+{cat:"NFU",zh:"我來這裡不是因為自己已經很懂，而是希望能看到更多方法，聽聽老師和同學不同的想法。",py:"wǒ lái zhè lǐ bù shì yīn wèi zì jǐ yǐ jīng hěn dǒng, ér shì xī wàng néng kàn dào gèng duō fāng fǎ, tīng tīng lǎo shī hé tóng xué bù tóng de xiǎng fǎ.",id:"Saya datang ke sini bukan karena sudah sangat menguasai, tapi berharap bisa melihat lebih banyak metode dan mendengar berbagai pemikiran dosen dan teman."}
+{cat:"NFU",zh:"我也希望學會更完整的工作過程。",py:"wǒ yě xī wàng xué huì gèng wán zhěng de gōng zuò guò chéng.",id:"Saya juga berharap bisa mempelajari proses kerja yang lebih lengkap."}
+{cat:"NFU",zh:"除了做出原型，我想了解如何先定義問題、怎麼收集資訊、如何和使用者確認需求，以及完成後應該怎麼測試與改進。",py:"chú le zuò chū yuán xíng, wǒ xiǎng le jiě rú hé xiān dìng yì wèn tí, zěn me shōu jí zī xùn, rú hé hé shǐ yòng zhě quèrèn xū qiú, yǐ jí wán chéng hòu yīng gāi zěn me cè shì yǔ gǎi jìn.",id:"Selain membuat prototype, saya ingin memahami cara mendefinisikan masalah lebih dulu, cara mengumpulkan informasi, cara mengkonfirmasi kebutuhan dengan pengguna, dan cara menguji serta memperbaiki setelah selesai."}
+{cat:"NFU",zh:"來臺灣也是練習跨文化溝通的機會。",py:"lái tái wān yě shì liàn xí kuà wén huà gōu tōng de jī huì.",id:"Datang ke Taiwan juga merupakan kesempatan berlatih komunikasi lintas budaya."}
+{cat:"KELAS",zh:"在這門課裡，我最想學的是如何使用研究方法，讓設計有比較清楚的理由。",py:"zài zhè mén kè lǐ, wǒ zuì xiǎng xué de shì rú hé shǐ yòng yán jiū fāng fǎ, ràng shè jì yǒu bǐ jiào qīng chǔ de lǐ yóu.",id:"Dalam kelas ini, yang paling ingin saya pelajari adalah cara menggunakan metode penelitian agar desain punya alasan yang lebih jelas."}
+{cat:"KELAS",zh:"以前做專題的時候，我有時候會先想像一個畫面，覺得應該這樣做。",py:"yǐ qián zuò zhuān tí de shí hòu, wǒ yǒu shí hòu huì xiān xiǎng xiàng yī gè huà miàn, jué dé yīng gāi zhè yàng zuò.",id:"Dulu saat mengerjakan proyek, saya kadang pertama kali membayangkan sebuah tampilan dan merasa seharusnya dibuat begini."}
+{cat:"KELAS",zh:"但現在我想知道，怎麼確認這個想法真的適合使用者。",py:"dàn xiànzài wǒ xiǎng zhī dào, zěn me quèrèn zhè gè xiǎng fǎ zhēn de shì hé shǐ yòng zhě.",id:"Tapi sekarang saya ingin tahu cara mengkonfirmasi bahwa ide ini benar-benar cocok untuk pengguna."}
+{cat:"KELAS",zh:"第一步，我想練習觀察問題。",py:"dì yī bù, wǒ xiǎng liàn xí guān chá wèn tí.",id:"Langkah pertama, saya ingin berlatih mengamati masalah."}
+{cat:"KELAS",zh:"先了解問題，可能比急著做出漂亮的畫面更重要。",py:"xiān le jiě wèn tí, kě néng bǐ jí zhù zuò chū piào liàng de huà miàn gèng zhòng yào.",id:"Memahami masalah lebih dulu mungkin lebih penting dari terburu-buru membuat tampilan yang indah."}
+{cat:"KELAS",zh:"第二步，我想學會收集和整理資訊。",py:"dì èr bù, wǒ xiǎng xué huì shōu jí hé zhěng lǐ zī xùn.",id:"Langkah kedua, saya ingin belajar mengumpulkan dan mengatur informasi."}
+{cat:"KELAS",zh:"我希望不只是聽完方法的名字，而是能在專題裡真的練習，了解每個方法可以回答什麼問題。",py:"wǒ xī wàng bù zhǐ shì tīng wán fāng fǎ de míng zì, ér shì néng zài zhuān tí lǐ zhēn de liàn xí, le jiě měi gè fāng fǎ kě yǐ huí dá shén me wèn tí.",id:"Saya berharap bukan hanya mendengar nama metodenya, tapi bisa benar-benar berlatih di proyek dan memahami pertanyaan apa yang bisa dijawab setiap metode."}
+{cat:"KELAS",zh:"好的設計不是第一次就一定正確，而是願意透過證據一次一次改善。",py:"hǎo de shè jì bù shì dì yī cì jiù yī dìng zhèng què, ér shì yuàn yì tòu guò zhèng jù yī cì yī cì gǎi shàn.",id:"Desain yang baik bukan yang pasti benar pada percobaan pertama, melainkan yang mau terus diperbaiki berdasarkan bukti."}
+{cat:"KELAS",zh:"如果這門課結束時，我能從原本常說的「我覺得」進步到「我觀察到什麼，所以我決定這樣做」，那對我來說就是很重要的收穫。",py:"rú guǒ zhè mén kè jié shù shí, wǒ néng cóng yuán běn cháng shuō de 'wǒ jué dé' jìn bù dào 'wǒ guān chá dào shén me, suǒ yǐ wǒ juédìng zhè yàng zuò', nà duì wǒ lái shuō jiù shì hěn zhòng yào de shōu huò.",id:"Kalau di akhir kelas ini saya bisa maju dari yang biasa berkata 'saya merasa' menjadi 'saya mengamati ini, jadi saya memutuskan begini', itu bagi saya adalah pencapaian yang sangat penting."}
+{cat:"KEPRIBADIAN",zh:"我不是一個一開始就很擅長在大家面前說話的人。",py:"wǒ bù shì yī gè yī kāi shǐ jiù hěn shàn zhǎng zài dà jiā miàn qián shuō huà de rén.",id:"Saya bukan orang yang dari awal sudah pandai berbicara di depan semua orang."}
+{cat:"KEPRIBADIAN",zh:"特別是在正式場合，或者需要用中文馬上回答問題的時候，我有時候會緊張，也會需要一點時間整理自己的想法。",py:"tè bié shì zài zhèng shì chǎng hé, huò zhě xū yào yòng zhōng wén mǎ shàng huí dá wèn tí de shí hòu, wǒ yǒu shí hòu huì jǐn zhāng, yě huì xū yào yī diǎn shí jiān zhěng lǐ zì jǐ de xiǎng fǎ.",id:"Terutama di situasi formal, atau ketika perlu langsung menjawab pertanyaan dengan Mandarin, saya kadang gugup dan butuh sedikit waktu untuk mengatur pikiran."}
+{cat:"KEPRIBADIAN",zh:"不過，我願意為重要的事情做準備。",py:"bù guò, wǒ yuàn yì wèi zhòng yào de shì qíng zuò zhǔn bèi.",id:"Namun, saya mau mempersiapkan diri untuk hal-hal yang penting."}
+{cat:"KEPRIBADIAN",zh:"如果遇到不熟悉的工作，我通常會先確認目標，再把任務分成比較小的部分，讓自己知道應該從哪一步開始。",py:"rú guǒ yù dào bù shú xī de gōng zuò, wǒ tōng cháng huì xiān quèrèn mùbiāo, zài bǎ rèn wù fēn chéng bǐ jiào xiǎo de bù fēn, ràng zì jǐ zhī dào yīng gāi cóng nǎ yī bù kāi shǐ.",id:"Kalau menghadapi pekerjaan yang tidak familiar, saya biasanya pertama mengkonfirmasi tujuan, lalu membagi tugas menjadi bagian-bagian yang lebih kecil agar tahu harus mulai dari langkah mana."}
+{cat:"KEPRIBADIAN",zh:"在團隊專題中，我發現溝通很重要。",py:"zài tuán duì zhuān tí zhōng, wǒ fāxiàn gōu tōng hěn zhòng yào.",id:"Dalam proyek tim, saya menemukan komunikasi sangat penting."}
+{cat:"KEPRIBADIAN",zh:"老師曾經提醒我，要做自己。",py:"lǎo shī céngjīng tí xǐng wǒ, yào zuò zì jǐ.",id:"Dosen pernah mengingatkan saya untuk menjadi diri sendiri."}
+{cat:"KEPRIBADIAN",zh:"做自己不是拒絕改變，而是誠實面對現在的能力，同時願意一步一步進步。",py:"zuò zì jǐ bù shì jù jué gǎibiàn, ér shì chéng shí miàn duì xiànzài de néng lì, tóng shí yuàn yì yī bù yī bù jìn bù.",id:"Menjadi diri sendiri bukan menolak perubahan, melainkan menghadapi kemampuan saat ini dengan jujur, sambil mau maju selangkah demi selangkah."}
+{cat:"KEPRIBADIAN",zh:"如果今天我說得比較慢，也希望大家能理解我正在努力練習。",py:"rú guǒ jīn tiān wǒ shuō dé bǐ jiào màn, yě xī wàng dà jiā néng lǐ jiě wǒ zhèng zài nǔ lì liàn xí.",id:"Kalau hari ini saya bicara agak lambat, saya harap semua bisa memaklumi bahwa saya sedang berusaha berlatih."}
+{cat:"RENCANA",zh:"我的近期目標是把在臺灣的實習與學習計畫完成好，也完成印尼學校的學業。",py:"wǒ de jìn qī mùbiāo shì bǎ zài tái wān de shí xí yǔ xué xí jì huà wán chéng hǎo, yě wán chéng yìn ní xué xiào de xué yè.",id:"Target jangka dekat saya adalah menyelesaikan program magang dan pembelajaran di Taiwan dengan baik, juga menyelesaikan studi di kampus Indonesia."}
+{cat:"RENCANA",zh:"在完成一個作品的時候，我不只希望最後有一個可以展示的畫面，也希望能夠清楚說明整個過程。",py:"zài wán chéng yī gè zuò pǐn de shí hòu, wǒ bù zhǐ xī wàng zuì hòu yǒu yī gè kě yǐ zhǎn shì de huà miàn, yě xī wàng néng gòu qīng chǔ shuō míng zhěng gè guò chéng.",id:"Saat menyelesaikan sebuah karya, saya tidak hanya berharap ada tampilan akhir yang bisa ditunjukkan, tapi juga bisa menjelaskan keseluruhan prosesnya dengan jelas."}
+{cat:"RENCANA",zh:"中期來說，我想繼續加強互動設計和人機互動方面的能力。",py:"zhōng qī lái shuō, wǒ xiǎng jìxù jiā qiáng hù dòng shè jì hé rén jī hù dòng fāng miàn de néng lì.",id:"Untuk jangka menengah, saya ingin terus memperkuat kemampuan di bidang interaction design dan HCI."}
+{cat:"RENCANA",zh:"如果未來有合適的機會，我也希望能在臺灣繼續進修多媒體或相關領域，學習更完整的研究方法。",py:"rú guǒ wèilái yǒu hé shì de jī huì, wǒ yě xī wàng néng zài tái wān jìxù jìn xiū duō méi tǐ huò xiāngguān lǐng yù, xué xí gèng wán zhěng de yán jiū fāng fǎ.",id:"Kalau di masa depan ada kesempatan yang tepat, saya juga berharap bisa melanjutkan studi multimedia atau bidang terkait di Taiwan, mempelajari metode penelitian yang lebih lengkap."}
+{cat:"RENCANA",zh:"我不認為未來一定會完全照著現在的計畫走。",py:"wǒ bù rèn wèi wèilái yī dìng huì wán quán zhào zhù xiànzài de jì huà zǒu.",id:"Saya tidak berpikir masa depan pasti akan sepenuhnya mengikuti rencana sekarang."}
+{cat:"RENCANA",zh:"只要每天累積一點點，我相信自己可以慢慢找到最適合的道路。",py:"zhǐ yào měi tiān lèi jī yī diǎn diǎn, wǒ xiāngxìn zì jǐ kě yǐ màn màn zhǎodào zuì shì hé de dào lù.",id:"Selama setiap hari mengumpulkan sedikit demi sedikit, saya percaya bisa perlahan menemukan jalan yang paling cocok."}
+{cat:"PENUTUP",zh:"以上就是我的自我介紹。",py:"yǐ shàng jiù shì wǒ de zì wǒ jiè shào.",id:"Itulah perkenalan diri saya."}
+{cat:"PENUTUP",zh:"今天我跟大家分享了自己的基本資料、在印尼的學習經驗、幾個曾經參與的團隊專題，以及為什麼想來臺灣學習設計。",py:"jīn tiān wǒ gēn dà jiā fēn xiǎng le zì jǐ de jī běn zī liào, zài yìn ní de xué xí jīng yàn, jǐ gè céngjīng cān yǔ de tuán duì zhuān tí, yǐ jí wèishén me xiǎng lái tái wān xué xí shè jì.",id:"Hari ini saya berbagi dengan semua tentang data dasar saya, pengalaman belajar di Indonesia, beberapa proyek tim yang pernah diikuti, dan kenapa ingin belajar desain di Taiwan."}
+{cat:"PENUTUP",zh:"我很高興有機會來到國立虎尾科技大學，和老師、同學一起學習。",py:"wǒ hěn gāo xìng yǒu jī huì lái dào guó lì hǔ wěi kē jì dà xué, hé lǎo shī, tóng xué yī qǐ xué xí.",id:"Saya sangat senang punya kesempatan datang ke National Formosa University dan belajar bersama dosen dan teman-teman."}
+{cat:"PENUTUP",zh:"如果大家有問題，歡迎直接問我。",py:"rú guǒ dà jiā yǒu wèn tí, huān yíng zhí jiē wèn wǒ.",id:"Kalau semua punya pertanyaan, silakan langsung tanya saya."}
+{cat:"PENUTUP",zh:"如果我沒有馬上回答，不一定是我不想回答，有時候只是我需要一點時間把中文句子整理好。",py:"rú guǒ wǒ méi yǒu mǎ shàng huí dá, bù yī dìng shì wǒ bù xiǎng huí dá, yǒu shí hòu zhǐ shì wǒ xū yào yī diǎn shí jiān bǎ zhōng wén jù zǐ zhěng lǐ hǎo.",id:"Kalau saya tidak langsung menjawab, belum tentu saya tidak mau menjawab, kadang hanya butuh sedikit waktu untuk mengatur kalimat Mandarinnya."}
+{cat:"PENUTUP",zh:"用文字交流的時候，我通常可以把想法說得更清楚。",py:"yòng wén zì jiāo liú de shí hòu, wǒ tōng cháng kě yǐ bǎ xiǎng fǎ shuō dé gèng qīng chǔ.",id:"Saat berkomunikasi lewat teks, saya biasanya bisa menyampaikan pikiran dengan lebih jelas."}
+{cat:"PENUTUP",zh:"希望接下來的時間，我們可以互相幫助、互相學習，一起進步。",py:"xī wàng jiē xià lái de shí jiān, wǒ men kě yǐ hù xiāng bāng zhù, hù xiāng xué xí, yī qǐ jìn bù.",id:"Semoga ke depan kita bisa saling membantu, saling belajar, dan maju bersama."}
+{cat:"PENUTUP",zh:"謝謝大家。",py:"xiè xiè dà jiā.",id:"Terima kasih semua."}
+{cat:"PENYELAMAT",zh:"不好意思，我剛剛沒有聽清楚。可以請您再說一次嗎？",py:"bù hǎo yì sī, wǒ gāng gāng méi yǒu tīng qīng chǔ. kě yǐ qǐng nín zài shuō yī cì ma?",id:"Maaf, saya tadi tidak mendengar dengan jelas. Bisakah minta Anda mengatakannya sekali lagi?"}
+{cat:"PENYELAMAT",zh:"不好意思，我的中文還在學習。可以請您說慢一點嗎？",py:"bù hǎo yì sī, wǒ de zhōng wén hái zài xué xí. kě yǐ qǐng nín shuō màn yī diǎn ma?",id:"Maaf, Mandarin saya masih dalam proses belajar. Bisakah minta Anda bicara lebih pelan?"}
+{cat:"PENYELAMAT",zh:"這個問題很好。請給我一點時間想一想。",py:"zhè gè wèn tí hěn hǎo. qǐng gěi wǒ yī diǎn shí jiān xiǎng yī xiǎng.",id:"Pertanyaan ini sangat bagus. Tolong beri saya sedikit waktu untuk memikirkannya."}
+{cat:"PENYELAMAT",zh:"不好意思，這個部分我現在還不太確定。我想再確認一下資料。",py:"bù hǎo yì sī, zhè gè bù fēn wǒ xiànzài hái bù tài quèdìng. wǒ xiǎng zài quèrèn yī xià zī liào.",id:"Maaf, bagian ini saya sekarang masih kurang yakin. Saya ingin mengkonfirmasi datanya sekali lagi."}
+{cat:"PENYELAMAT",zh:"我換一個比較簡單的方式說明。",py:"wǒ huàn yī gè bǐ jiào jiǎn dān de fāng shì shuō míng.",id:"Saya ganti dengan cara yang lebih sederhana untuk menjelaskan."}
+{cat:"PENYELAMAT",zh:"不好意思，我想確認一下。您的意思是問這個專題的設計流程嗎？",py:"bù hǎo yì sī, wǒ xiǎng quèrèn yī xià. nín de yì sī shì wèn zhè gè zhuān tí de shè jì liú chéng ma?",id:"Maaf, saya ingin mengkonfirmasi. Maksud Anda bertanya tentang alur desain proyek ini?"}
+{cat:"PENYELAMAT",zh:"這裡我想請大家看一下投影片上的流程。",py:"zhè lǐ wǒ xiǎng qǐng dà jiā kàn yī xià tóu yǐng piàn shàng de liú chéng.",id:"Di sini saya ingin meminta semua melihat alur di slide."}
+{cat:"PENYELAMAT",zh:"以上是我目前的理解。如果有不清楚的地方，請告訴我。",py:"yǐ shàng shì wǒ mùqián de lǐ jiě. rú guǒ yǒu bù qīng chǔ de dì fāng, qǐng gào sù wǒ.",id:"Itulah pemahaman saya saat ini. Kalau ada yang kurang jelas, tolong beritahu saya."}
+];
+
+var CAT_CFG={
+  PEMBUKAAN:{label:"Pembukaan",bg:"#f3e8ff",fg:"#7c3aed",acc:"linear-gradient(90deg,#7c3aed,#2563eb)"},
+  IDENTITAS:{label:"Identitas",bg:"#dbeafe",fg:"#1d4ed8",acc:"linear-gradient(90deg,#2563eb,#7c3aed)"},
+  PERJALANAN:{label:"Perjalanan",bg:"#d1fae5",fg:"#065f46",acc:"linear-gradient(90deg,#059669,#2563eb)"},
+  TEKNOLOGI:{label:"Teknologi",bg:"#fef3c7",fg:"#92400e",acc:"linear-gradient(90deg,#d97706,#059669)"},
+  PROYEK:{label:"Proyek",bg:"#fee2e2",fg:"#b91c1c",acc:"linear-gradient(90deg,#dc2626,#d97706)"},
+  DESAIN:{label:"Desain",bg:"#fae8ff",fg:"#86198f",acc:"linear-gradient(90deg,#a21caf,#7c3aed)"},
+  ORGANISASI:{label:"Organisasi",bg:"#e0f2fe",fg:"#0369a1",acc:"linear-gradient(90deg,#0284c7,#059669)"},
+  MANDARIN:{label:"Mandarin",bg:"#fff7ed",fg:"#c2410c",acc:"linear-gradient(90deg,#ea580c,#d97706)"},
+  NFU:{label:"NFU",bg:"#f0fdf4",fg:"#15803d",acc:"linear-gradient(90deg,#16a34a,#059669)"},
+  KELAS:{label:"Kelas",bg:"#fdf4ff",fg:"#7e22ce",acc:"linear-gradient(90deg,#9333ea,#2563eb)"},
+  KEPRIBADIAN:{label:"Kepribadian",bg:"#f0f9ff",fg:"#0369a1",acc:"linear-gradient(90deg,#0ea5e9,#7c3aed)"},
+  RENCANA:{label:"Rencana",bg:"#fef9c3",fg:"#854d0e",acc:"linear-gradient(90deg,#ca8a04,#059669)"},
+  PENUTUP:{label:"Penutup",bg:"#f0fdf4",fg:"#166534",acc:"linear-gradient(90deg,#15803d,#059669)"},
+  PENYELAMAT:{label:"Penyelamat",bg:"#fff1f2",fg:"#be123c",acc:"linear-gradient(90deg,#e11d48,#d97706)"}
+};
+
+var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=b[i];b[i]=b[j];b[j]=x;}return b;}
+function setCat(c){
+  curCat=c;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  document.querySelectorAll(".fb").forEach(function(b){if(b.getAttribute("onclick")==="setCat('"+c+"')")b.classList.add("on");});
+  ronde=1;fullRestart();
+}
+function getFiltered(){return curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});}
+function fullRestart(){
+  var src=getFiltered();deck=shuffle(src);
+  cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" kalimat";
+  document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+function nextRonde(){ronde++;deck=shuffle(toRev);cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];document.getElementById("qv").style.display="";document.getElementById("rv").style.display="none";document.getElementById("rb").textContent="Ronde "+ronde;upStats();showCard();}
+function showCard(){
+  rev=false;var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.KELAS;
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+  document.getElementById("zh-disp").textContent=c.zh;
+  document.getElementById("ans-py").textContent=c.py||"";
+  document.getElementById("ans-id").textContent=c.id;
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+function upStats(){document.getElementById("sp").textContent=cp;document.getElementById("sh").textContent=ch;document.getElementById("sb").textContent=cbv;}
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;document.getElementById("rh").textContent=ch;document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🎉":pct>=70?"😊":pct>=50?"😐":"💪";
+  document.getElementById("rt").textContent="Ronde "+ronde+" selesai!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" kartu tersisa.":pct>=70?"Bagus! "+toRev.length+" kartu perlu diulang.":"Semangat! "+toRev.length+" kartu menunggumu.";
+  document.getElementById("nb").textContent="Lanjut Ronde "+(ronde+1)+" → "+toRev.length+" kartu";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return (b._b||0)-(a._b||0);});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
+      d.innerHTML="<span class='ri-zh'>"+v.zh.substring(0,20)+"…</span>"+score;
+      rl.appendChild(d);
+    });
+    document.getElementById("rlw").style.display="";
+  }
+}
+ronde=1;fullRestart();
+</script>
+</body>
+</html>
+
