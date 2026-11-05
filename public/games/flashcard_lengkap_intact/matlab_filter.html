@@ -91,7 +91,7 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
     <input type="radio" name="mode" id="m-front" value="front" checked>
     <label for="m-front">💻 Awal → Tebak Lanjutan</label>
     <input type="radio" name="mode" id="m-back" value="back">
-    <label for="m-back">🔁 Akhir → Tebak Awal</label>
+    <label for="m-back">🔁 Kode Lengkap → Tebak Fungsi</label>
   </div>
 
   <div class="filters">
@@ -276,17 +276,13 @@ function showCard(){
     document.getElementById("ans-desc-wrap").style.display="none";
     document.getElementById("ans-code").textContent=c.code;
   } else {
-    // Mode back: tampilkan akhir kode, tebak awal
-    var tail = c.code.length > c.hint.length ? c.code.slice(-(c.code.length - c.hint.length)).trim() : c.code;
-    // Ambil bagian akhir saja (setelah hint)
-    var tailPart = c.code.replace(c.hint, '').trim();
-    if(!tailPart) tailPart = c.code;
-    document.getElementById("front-code").innerHTML='<span class="dots">··· </span>'+tailPart;
+    // Mode back: tampilkan KODE LENGKAP, tebak fungsi
+    document.getElementById("front-code").innerHTML=c.code;
     document.getElementById("front-code").style.display="";
     document.getElementById("front-desc").style.display="none";
-    document.getElementById("ans-code-wrap").style.display="";
-    document.getElementById("ans-desc-wrap").style.display="none";
-    document.getElementById("ans-code").textContent=c.code;
+    document.getElementById("ans-code-wrap").style.display="none";
+    document.getElementById("ans-desc-wrap").style.display="";
+    document.getElementById("ans-desc").textContent=c.desc;
   }
 
   var noteEl=document.getElementById("ans-note");
