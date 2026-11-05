@@ -11,7 +11,7 @@ body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;displa
 #app{width:100%;max-width:540px;}
 h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
 .sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
-.mode-sw{display:flex;background:#fff;border:1px solid #e8e4dc;border-radius:99px;padding:3px;gap:2px;margin-bottom:10px;}
+.mode-sw{display:none;}
 .mode-sw label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:99px;color:#8a8478;transition:all .2s;user-select:none;}
 .mode-sw input[type=radio]{display:none;}
 .mode-sw input[type=radio]:checked+label{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.3);}
@@ -85,14 +85,6 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 <div id="app">
   <h1>💻 MATLAB — Image Filter Flashcard</h1>
   <div class="sub" id="sub-lbl">Lihat awal kode → tebak sisanya</div>
-
-  <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8a8478;text-align:center;margin-bottom:5px;">MODE</div>
-  <div class="mode-sw">
-    <input type="radio" name="mode" id="m-code" value="code" checked>
-    <label for="m-code">💻 Awal Kode → Tebak Lanjutan</label>
-    <input type="radio" name="mode" id="m-desc" value="desc">
-    <label for="m-desc">📖 Fungsi → Tebak Kode</label>
-  </div>
 
   <div class="filters">
     <button class="fb on" onclick="setCat('ALL')">🗂 Semua</button>
@@ -220,7 +212,7 @@ var CAT_CFG={
 
 var curCat="ALL",deck=[],idx=0,ronde=1,cp=0,ch=0,cbv=0,rev=false,toRev=[];
 
-function getMode(){return document.querySelector('input[name="mode"]:checked').value;}
+function getMode(){return "code";}
 
 function setCat(c){
   curCat=c;
@@ -355,9 +347,7 @@ function showResult(){
   }
 }
 
-document.querySelectorAll('input[name="mode"]').forEach(function(r){
-  r.addEventListener("change",function(){if(!rev)showCard();});
-});
+
 
 ronde=1;fullRestart();
 </script>
