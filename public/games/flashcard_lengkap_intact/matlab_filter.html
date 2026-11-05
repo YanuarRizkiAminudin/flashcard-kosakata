@@ -91,7 +91,7 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
     <input type="radio" name="mode" id="m-front" value="front" checked>
     <label for="m-front">💻 Awal → Tebak Lanjutan</label>
     <input type="radio" name="mode" id="m-back" value="back">
-    <label for="m-back">🔁 Kode Lengkap → Tebak Fungsi</label>
+    <label for="m-back">🔁 Akhir Kode → Tebak Awal</label>
   </div>
 
   <div class="filters">
@@ -179,34 +179,35 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 // desc: penjelasan fungsi
 // note: catatan
 var V=[
-{order:1,cat:"INIT",hint:"clear;",code:"clear; clc; close all;",desc:"Bersihkan workspace, command window, dan tutup semua figure.",note:"Selalu dijalankan pertama untuk mulai bersih."},
-{order:2,cat:"INIT",hint:"img = imread(",code:"img = imread('cameraman.tif');",desc:"Baca file gambar 'cameraman.tif' ke variabel img.",note:"imread() membaca citra dari file."},
-{order:3,cat:"INIT",hint:"if size(img,3)",code:"if size(img,3) == 3\n    img = rgb2gray(img);\nend",desc:"Jika gambar berwarna (3 channel RGB), konversi ke grayscale.",note:"size(img,3)==3 cek apakah ada 3 channel warna."},
-{order:4,cat:"INIT",hint:"I = double(",code:"I = double(img);",desc:"Konversi matriks citra dari uint8 ke tipe double untuk perhitungan.",note:"Konvolusi butuh tipe double, bukan integer."},
-{order:5,cat:"INIT",hint:"[r, c] = size(",code:"[r, c] = size(I);",desc:"Ambil jumlah baris (r) dan kolom (c) dari citra.",note:"r = rows (tinggi), c = cols (lebar)."},
-{order:6,cat:"INIT",hint:"P = I([1 1:r r],",code:"P = I([1 1:r r], [1 1:c c]);",desc:"Padding citra dengan replikasi piksel tepi (pad 1 piksel semua sisi).",note:"Agar hasil konvolusi same-size dengan citra asli."},
-{order:7,cat:"INIT",hint:"figure; imshow(img);",code:"figure; imshow(img); title('Original Image');",desc:"Tampilkan citra asli di figure baru dengan judul.",note:"imshow() tampilkan, title() beri judul."},
-{order:8,cat:"LOWPASS",hint:"lowpass = ones(3)",code:"lowpass = ones(3) / 9;",desc:"Buat kernel low-pass 3×3: semua elemen bernilai 1/9 (rata-rata).",note:"Jumlah semua elemen = 1 → filter averaging."},
-{order:9,cat:"LOWPASS",hint:"blurImg = conv2(P,",code:"blurImg = conv2(P, rot90(lowpass,2), 'valid');",desc:"Konvolusi citra padded P dengan kernel low-pass, ambil bagian 'valid'.",note:"rot90(k,2) = rotasi 180°. 'valid' = output same-size dengan I."},
-{order:10,cat:"LOWPASS",hint:"figure; imshow(uint8(blurImg));",code:"figure; imshow(uint8(blurImg)); title('Blur Image (Low-pass 3x3)');",desc:"Tampilkan hasil blur. uint8() konversi ke 0-255 untuk imshow.",note:"Low-pass = menghaluskan gambar / mengurangi noise."},
-{order:11,cat:"HIGHPASS",hint:"highpass = [-1 -1 -1;",code:"highpass = [-1 -1 -1; -1 9 -1; -1 -1 -1];",desc:"Kernel high-pass 3×3 untuk sharpening — pusat 9, sekitar -1.",note:"Memperkuat perbedaan antar piksel → tepi lebih tajam."},
-{order:12,cat:"HIGHPASS",hint:"sharpImg = conv2(P,",code:"sharpImg = conv2(P, rot90(highpass,2), 'valid');",desc:"Konvolusi citra dengan kernel high-pass untuk menghasilkan gambar tajam.",note:"Hasilnya bisa negatif atau >255, perlu di-clip."},
-{order:13,cat:"HIGHPASS",hint:"sharpImg = min(max(",code:"sharpImg = min(max(sharpImg, 0), 255);",desc:"Clip nilai piksel agar tetap dalam rentang 0–255.",note:"max(x,0) hilangkan negatif. min(x,255) batasi atas 255."},
-{order:14,cat:"HIGHPASS",hint:"figure; imshow(uint8(sharpImg));",code:"figure; imshow(uint8(sharpImg)); title('Sharpening Image (High-pass 3x3)');",desc:"Tampilkan hasil sharpening.",note:"High-pass = mempertajam tepi gambar."},
-{order:15,cat:"MEDIAN",hint:"medImg = zeros(",code:"medImg = zeros(r, c);",desc:"Buat matriks output kosong berukuran r×c untuk median filter.",note:"zeros() membuat matriks nol."},
-{order:16,cat:"MEDIAN",hint:"for i = 1:r",code:"for i = 1:r\n    for j = 1:c",desc:"Loop nested untuk iterasi setiap piksel (baris i, kolom j).",note:"Median/Mode filter tidak bisa vectorized, butuh loop."},
-{order:17,cat:"MEDIAN",hint:"w = P(i:i+2,",code:"w = P(i:i+2, j:j+2);",desc:"Ambil window 3×3 dari citra padded P di posisi (i,j).",note:"i:i+2 = 3 baris, j:j+2 = 3 kolom."},
-{order:18,cat:"MEDIAN",hint:"medImg(i,j) = median(",code:"medImg(i,j) = median(w(:));",desc:"Hitung median dari semua 9 piksel window, simpan ke output.",note:"w(:) ubah window 3×3 jadi vektor 9 elemen. median() ambil nilai tengah."},
-{order:19,cat:"MEDIAN",hint:"figure; imshow(uint8(medImg));",code:"figure; imshow(uint8(medImg)); title('Median Image (3x3)');",desc:"Tampilkan hasil median filter.",note:"Efektif untuk menghilangkan salt-and-pepper noise."},
-{order:20,cat:"MODE",hint:"modeImg = zeros(",code:"modeImg = zeros(r, c);",desc:"Buat matriks output kosong untuk mode filter.",note:"Sama seperti inisialisasi median filter."},
-{order:21,cat:"MODE",hint:"modeImg(i,j) = mode(",code:"modeImg(i,j) = mode(w(:));",desc:"Hitung mode (nilai paling sering muncul) dari window 3×3.",note:"mode() = nilai dengan frekuensi tertinggi di window."},
-{order:22,cat:"MODE",hint:"figure; imshow(uint8(modeImg));",code:"figure; imshow(uint8(modeImg)); title('Mode Image (3x3)');",desc:"Tampilkan hasil mode filter.",note:"Mode filter menjaga nilai dominan di setiap area."},
-{order:23,cat:"EDGE",hint:"sobelX = [-1 0 1;",code:"sobelX = [-1 0 1; -2 0 2; -1 0 1];",desc:"Kernel Sobel arah horizontal — mendeteksi tepi vertikal.",note:"sobelX mendeteksi perubahan intensitas arah kiri-kanan."},
-{order:24,cat:"EDGE",hint:"sobelY = [-1 -2 -1;",code:"sobelY = [-1 -2 -1; 0 0 0; 1 2 1];",desc:"Kernel Sobel arah vertikal — mendeteksi tepi horizontal.",note:"sobelY mendeteksi perubahan intensitas arah atas-bawah."},
-{order:25,cat:"EDGE",hint:"Gx = conv2(P, rot90(sobelX,",code:"Gx = conv2(P, rot90(sobelX,2), 'valid');",desc:"Hitung gradien horizontal Gx dengan konvolusi kernel sobelX.",note:"Gx = respons tepi arah X."},
-{order:26,cat:"EDGE",hint:"Gy = conv2(P, rot90(sobelY,",code:"Gy = conv2(P, rot90(sobelY,2), 'valid');",desc:"Hitung gradien vertikal Gy dengan konvolusi kernel sobelY.",note:"Gy = respons tepi arah Y."},
-{order:27,cat:"EDGE",hint:"edgeImg = min(sqrt(",code:"edgeImg = min(sqrt(Gx.^2 + Gy.^2), 255);",desc:"Magnitudo gradien = √(Gx² + Gy²), clip ke maksimum 255.",note:"Gx.^2 = kuadrat element-wise. min() clip nilai atas."},
-{order:28,cat:"EDGE",hint:"figure; imshow(uint8(edgeImg));",code:"figure; imshow(uint8(edgeImg)); title('Edge Detection Image (Sobel 3x3)');",desc:"Tampilkan hasil deteksi tepi Sobel.",note:"Tepi terang = area perubahan intensitas tajam."},
+{order:1,tail:"close all;",cat:"INIT",hint:"clear;",code:"clear; clc; close all;",desc:"Bersihkan workspace, command window, dan tutup semua figure.",note:"Selalu dijalankan pertama untuk mulai bersih."},
+{order:2,tail:"\'cameraman.tif\');",cat:"INIT",hint:"img = imread(",code:"img = imread('cameraman.tif');",desc:"Baca file gambar 'cameraman.tif' ke variabel img.",note:"imread() membaca citra dari file."},
+{order:3,tail:"rgb2gray(img);
+end",cat:"INIT",hint:"if size(img,3)",code:"if size(img,3) == 3\n    img = rgb2gray(img);\nend",desc:"Jika gambar berwarna (3 channel RGB), konversi ke grayscale.",note:"size(img,3)==3 cek apakah ada 3 channel warna."},
+{order:4,tail:"double(img);",cat:"INIT",hint:"I = double(",code:"I = double(img);",desc:"Konversi matriks citra dari uint8 ke tipe double untuk perhitungan.",note:"Konvolusi butuh tipe double, bukan integer."},
+{order:5,tail:"size(I);",cat:"INIT",hint:"[r, c] = size(",code:"[r, c] = size(I);",desc:"Ambil jumlah baris (r) dan kolom (c) dari citra.",note:"r = rows (tinggi), c = cols (lebar)."},
+{order:6,tail:"[1 1:c c]);",cat:"INIT",hint:"P = I([1 1:r r],",code:"P = I([1 1:r r], [1 1:c c]);",desc:"Padding citra dengan replikasi piksel tepi (pad 1 piksel semua sisi).",note:"Agar hasil konvolusi same-size dengan citra asli."},
+{order:7,tail:"title(\'Original Image\');",cat:"INIT",hint:"figure; imshow(img);",code:"figure; imshow(img); title('Original Image');",desc:"Tampilkan citra asli di figure baru dengan judul.",note:"imshow() tampilkan, title() beri judul."},
+{order:8,tail:"ones(3) / 9;",cat:"LOWPASS",hint:"lowpass = ones(3)",code:"lowpass = ones(3) / 9;",desc:"Buat kernel low-pass 3×3: semua elemen bernilai 1/9 (rata-rata).",note:"Jumlah semua elemen = 1 → filter averaging."},
+{order:9,tail:"rot90(lowpass,2), \'valid\');",cat:"LOWPASS",hint:"blurImg = conv2(P,",code:"blurImg = conv2(P, rot90(lowpass,2), 'valid');",desc:"Konvolusi citra padded P dengan kernel low-pass, ambil bagian 'valid'.",note:"rot90(k,2) = rotasi 180°. 'valid' = output same-size dengan I."},
+{order:10,tail:"title(\'Blur Image (Low-pass 3x3)\');",cat:"LOWPASS",hint:"figure; imshow(uint8(blurImg));",code:"figure; imshow(uint8(blurImg)); title('Blur Image (Low-pass 3x3)');",desc:"Tampilkan hasil blur. uint8() konversi ke 0-255 untuk imshow.",note:"Low-pass = menghaluskan gambar / mengurangi noise."},
+{order:11,tail:"-1 -1 -1; -1 9 -1; -1 -1 -1];",cat:"HIGHPASS",hint:"highpass = [-1 -1 -1;",code:"highpass = [-1 -1 -1; -1 9 -1; -1 -1 -1];",desc:"Kernel high-pass 3×3 untuk sharpening — pusat 9, sekitar -1.",note:"Memperkuat perbedaan antar piksel → tepi lebih tajam."},
+{order:12,tail:"rot90(highpass,2), \'valid\');",cat:"HIGHPASS",hint:"sharpImg = conv2(P,",code:"sharpImg = conv2(P, rot90(highpass,2), 'valid');",desc:"Konvolusi citra dengan kernel high-pass untuk menghasilkan gambar tajam.",note:"Hasilnya bisa negatif atau >255, perlu di-clip."},
+{order:13,tail:"min(max(sharpImg, 0), 255);",cat:"HIGHPASS",hint:"sharpImg = min(max(",code:"sharpImg = min(max(sharpImg, 0), 255);",desc:"Clip nilai piksel agar tetap dalam rentang 0–255.",note:"max(x,0) hilangkan negatif. min(x,255) batasi atas 255."},
+{order:14,tail:"title(\'Sharpening Image (High-pass 3x3)\');",cat:"HIGHPASS",hint:"figure; imshow(uint8(sharpImg));",code:"figure; imshow(uint8(sharpImg)); title('Sharpening Image (High-pass 3x3)');",desc:"Tampilkan hasil sharpening.",note:"High-pass = mempertajam tepi gambar."},
+{order:15,tail:"zeros(r, c);",cat:"MEDIAN",hint:"medImg = zeros(",code:"medImg = zeros(r, c);",desc:"Buat matriks output kosong berukuran r×c untuk median filter.",note:"zeros() membuat matriks nol."},
+{order:16,tail:"for j = 1:c",cat:"MEDIAN",hint:"for i = 1:r",code:"for i = 1:r\n    for j = 1:c",desc:"Loop nested untuk iterasi setiap piksel (baris i, kolom j).",note:"Median/Mode filter tidak bisa vectorized, butuh loop."},
+{order:17,tail:"P(i:i+2, j:j+2);",cat:"MEDIAN",hint:"w = P(i:i+2,",code:"w = P(i:i+2, j:j+2);",desc:"Ambil window 3×3 dari citra padded P di posisi (i,j).",note:"i:i+2 = 3 baris, j:j+2 = 3 kolom."},
+{order:18,tail:"median(w(:));",cat:"MEDIAN",hint:"medImg(i,j) = median(",code:"medImg(i,j) = median(w(:));",desc:"Hitung median dari semua 9 piksel window, simpan ke output.",note:"w(:) ubah window 3×3 jadi vektor 9 elemen. median() ambil nilai tengah."},
+{order:19,tail:"title(\'Median Image (3x3)\');",cat:"MEDIAN",hint:"figure; imshow(uint8(medImg));",code:"figure; imshow(uint8(medImg)); title('Median Image (3x3)');",desc:"Tampilkan hasil median filter.",note:"Efektif untuk menghilangkan salt-and-pepper noise."},
+{order:20,tail:"zeros(r, c);",cat:"MODE",hint:"modeImg = zeros(",code:"modeImg = zeros(r, c);",desc:"Buat matriks output kosong untuk mode filter.",note:"Sama seperti inisialisasi median filter."},
+{order:21,tail:"mode(w(:));",cat:"MODE",hint:"modeImg(i,j) = mode(",code:"modeImg(i,j) = mode(w(:));",desc:"Hitung mode (nilai paling sering muncul) dari window 3×3.",note:"mode() = nilai dengan frekuensi tertinggi di window."},
+{order:22,tail:"title(\'Mode Image (3x3)\');",cat:"MODE",hint:"figure; imshow(uint8(modeImg));",code:"figure; imshow(uint8(modeImg)); title('Mode Image (3x3)');",desc:"Tampilkan hasil mode filter.",note:"Mode filter menjaga nilai dominan di setiap area."},
+{order:23,tail:"-1 0 1; -2 0 2; -1 0 1];",cat:"EDGE",hint:"sobelX = [-1 0 1;",code:"sobelX = [-1 0 1; -2 0 2; -1 0 1];",desc:"Kernel Sobel arah horizontal — mendeteksi tepi vertikal.",note:"sobelX mendeteksi perubahan intensitas arah kiri-kanan."},
+{order:24,tail:"-1 -2 -1; 0 0 0; 1 2 1];",cat:"EDGE",hint:"sobelY = [-1 -2 -1;",code:"sobelY = [-1 -2 -1; 0 0 0; 1 2 1];",desc:"Kernel Sobel arah vertikal — mendeteksi tepi horizontal.",note:"sobelY mendeteksi perubahan intensitas arah atas-bawah."},
+{order:25,tail:"rot90(sobelX,2), \'valid\');",cat:"EDGE",hint:"Gx = conv2(P, rot90(sobelX,",code:"Gx = conv2(P, rot90(sobelX,2), 'valid');",desc:"Hitung gradien horizontal Gx dengan konvolusi kernel sobelX.",note:"Gx = respons tepi arah X."},
+{order:26,tail:"rot90(sobelY,2), \'valid\');",cat:"EDGE",hint:"Gy = conv2(P, rot90(sobelY,",code:"Gy = conv2(P, rot90(sobelY,2), 'valid');",desc:"Hitung gradien vertikal Gy dengan konvolusi kernel sobelY.",note:"Gy = respons tepi arah Y."},
+{order:27,tail:"min(sqrt(Gx.^2 + Gy.^2), 255);",cat:"EDGE",hint:"edgeImg = min(sqrt(",code:"edgeImg = min(sqrt(Gx.^2 + Gy.^2), 255);",desc:"Magnitudo gradien = √(Gx² + Gy²), clip ke maksimum 255.",note:"Gx.^2 = kuadrat element-wise. min() clip nilai atas."},
+{order:28,tail:"title(\'Edge Detection Image (Sobel 3x3)\');",cat:"EDGE",hint:"figure; imshow(uint8(edgeImg));",code:"figure; imshow(uint8(edgeImg)); title('Edge Detection Image (Sobel 3x3)');",desc:"Tampilkan hasil deteksi tepi Sobel.",note:"Tepi terang = area perubahan intensitas tajam."},
 ];
 
 var CAT_CFG={
@@ -276,13 +277,13 @@ function showCard(){
     document.getElementById("ans-desc-wrap").style.display="none";
     document.getElementById("ans-code").textContent=c.code;
   } else {
-    // Mode back: tampilkan KODE LENGKAP, tebak fungsi
-    document.getElementById("front-code").innerHTML=c.code;
+    // Mode back: tampilkan ··· + tail (akhir kode), tebak awal
+    document.getElementById("front-code").innerHTML='<span class="dots">··· </span>'+c.tail;
     document.getElementById("front-code").style.display="";
     document.getElementById("front-desc").style.display="none";
-    document.getElementById("ans-code-wrap").style.display="none";
-    document.getElementById("ans-desc-wrap").style.display="";
-    document.getElementById("ans-desc").textContent=c.desc;
+    document.getElementById("ans-code-wrap").style.display="";
+    document.getElementById("ans-desc-wrap").style.display="none";
+    document.getElementById("ans-code").textContent=c.code;
   }
 
   var noteEl=document.getElementById("ans-note");
