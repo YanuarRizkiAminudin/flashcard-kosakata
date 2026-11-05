@@ -39,7 +39,6 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 .card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
 .cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
 .line-badge{font-size:10px;font-weight:600;color:#2563eb;background:#eff6ff;border:1px solid #bfdbfe;border-radius:99px;padding:2px 8px;}
-/* Code blocks */
 .code-hint{font-family:"JetBrains Mono",monospace;font-size:16px;font-weight:600;color:#1a1814;text-align:center;background:#f8f5ff;border:1.5px solid #c4b5fd;border-radius:12px;padding:12px 16px;width:100%;line-height:1.8;}
 .code-hint .dots{color:#7c3aed;font-size:20px;letter-spacing:2px;}
 .tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
@@ -48,7 +47,6 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 .dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
 .atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:6px;text-align:center;}
 .code-full{font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:600;color:#1e40af;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:12px 16px;width:100%;white-space:pre-wrap;line-height:1.8;text-align:left;}
-.ans-desc{font-size:13px;color:#1a1814;text-align:center;line-height:1.7;margin-top:8px;}
 .ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:6px 12px;margin-top:8px;font-style:italic;text-align:center;}
 .btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
 .cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
@@ -89,9 +87,9 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
   <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8a8478;text-align:center;margin-bottom:5px;">MODE</div>
   <div class="mode-sw">
     <input type="radio" name="mode" id="m-front" value="front" checked>
-    <label for="m-front">💻 Hint → Tebak Kode</label>
+    <label for="m-front">💻 Awal → Tebak Lanjutan</label>
     <input type="radio" name="mode" id="m-back" value="back">
-    <label for="m-back">🔁 Kode → Tebak Fungsi</label>
+    <label for="m-back">🔁 Akhir → Tebak Awal</label>
   </div>
 
   <div class="filters">
@@ -119,21 +117,12 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
         <span class="line-badge" id="ob">Line 1</span>
         <span class="cat-badge" id="ctb"></span>
       </div>
-      <!-- Mode: kode → hint awal + ... -->
-      <div id="front-code" class="code-hint"></div>
-      <!-- Mode: desc → tampilkan fungsi -->
-      <div id="front-desc" style="display:none;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:#1e40af;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:12px;padding:12px 16px;width:100%;white-space:pre-wrap;line-height:1.8;text-align:left;"></div>
+      <div class="code-hint" id="front-code"></div>
       <div class="tap" id="tap"><span>👆</span>Ketuk untuk jawaban</div>
       <div class="ans" id="ans" style="display:none">
         <div class="dl"></div>
-        <div id="ans-code-wrap">
-          <div class="atag">✅ KODE LENGKAP</div>
-          <div class="code-full" id="ans-code"></div>
-        </div>
-        <div id="ans-desc-wrap" style="display:none">
-          <div class="atag">📖 FUNGSI</div>
-          <div class="ans-desc" id="ans-desc"></div>
-        </div>
+        <div class="atag">✅ KODE LENGKAP</div>
+        <div class="code-full" id="ans-code"></div>
         <div class="ans-note" id="ans-note" style="display:none"></div>
       </div>
     </div>
@@ -172,59 +161,36 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
     </div>
   </div>
 </div>
-
 <script>
-// hint: bagian awal kode yang ditampilkan (terpotong)
-// code: kode lengkap (muncul setelah klik)
-// desc: penjelasan fungsi
-// note: catatan
 var V=[
-{order:1,cat:"INIT",tail:"close all;",hint:"clear;",code:"clear; clc; close all;",desc:"Bersihkan workspace, command window, dan tutup semua figure.",note:"Selalu dijalankan pertama untuk mulai bersih."},
-{order:2,cat:"INIT",tail:"'cameraman.tif');",hint:"img = imread(",code:"img = imread('cameraman.tif');",desc:"Baca file gambar cameraman.tif ke variabel img.",note:"imread() membaca citra dari file."},
-{order:3,cat:"INIT",tail:"rgb2gray(img);\nend",hint:"if size(img,3)",code:"if size(img,3) == 3\n    img = rgb2gray(img);\nend",desc:"Jika gambar berwarna (3 channel RGB), konversi ke grayscale.",note:"size(img,3)==3 cek apakah ada 3 channel warna."},
-{order:4,cat:"INIT",tail:"double(img);",hint:"I = double(",code:"I = double(img);",desc:"Konversi matriks citra dari uint8 ke tipe double untuk perhitungan.",note:"Konvolusi butuh tipe double, bukan integer."},
-{order:5,cat:"INIT",tail:"size(I);",hint:"[r, c] = size(",code:"[r, c] = size(I);",desc:"Ambil jumlah baris (r) dan kolom (c) dari citra.",note:"r = rows (tinggi), c = cols (lebar)."},
-{order:6,cat:"INIT",tail:"[1 1:c c]);",hint:"P = I([1 1:r r],",code:"P = I([1 1:r r], [1 1:c c]);",desc:"Padding citra dengan replikasi piksel tepi (pad 1 piksel semua sisi).",note:"Agar hasil konvolusi same-size dengan citra asli."},
-{order:7,cat:"INIT",tail:"title('Original Image');",hint:"figure; imshow(img);",code:"figure; imshow(img); title('Original Image');",desc:"Tampilkan citra asli di figure baru dengan judul.",note:"imshow() tampilkan, title() beri judul."},
-{order:8,cat:"LOWPASS",tail:"ones(3) / 9;",hint:"lowpass = ones(3)",code:"lowpass = ones(3) / 9;",desc:"Buat kernel low-pass 3x3: semua elemen bernilai 1/9 (rata-rata).",note:"Jumlah semua elemen = 1, filter averaging."},
-{order:9,cat:"LOWPASS",tail:"rot90(lowpass,2), 'valid');",hint:"blurImg = conv2(P,",code:"blurImg = conv2(P, rot90(lowpass,2), 'valid');",desc:"Konvolusi citra padded P dengan kernel low-pass, ambil bagian valid.",note:"rot90(k,2) = rotasi 180 derajat. valid = output same-size dengan I."},
-{order:10,cat:"LOWPASS",tail:"title('Blur Image (Low-pass 3x3)');",hint:"figure; imshow(uint8(blurImg));",code:"figure; imshow(uint8(blurImg)); title('Blur Image (Low-pass 3x3)');",desc:"Tampilkan hasil blur. uint8() konversi ke 0-255 untuk imshow.",note:"Low-pass = menghaluskan gambar / mengurangi noise."},
-{order:11,cat:"HIGHPASS",tail:"-1 -1; -1 9 -1; -1 -1 -1];",hint:"highpass = [-1 -1 -1;",code:"highpass = [-1 -1 -1; -1 9 -1; -1 -1 -1];",desc:"Kernel high-pass 3x3 untuk sharpening: pusat 9, sekitar -1.",note:"Memperkuat perbedaan antar piksel, tepi lebih tajam."},
-{order:12,cat:"HIGHPASS",tail:"rot90(highpass,2), 'valid');",hint:"sharpImg = conv2(P,",code:"sharpImg = conv2(P, rot90(highpass,2), 'valid');",desc:"Konvolusi citra dengan kernel high-pass untuk gambar tajam.",note:"Hasilnya bisa negatif atau lebih dari 255, perlu di-clip."},
-{order:13,cat:"HIGHPASS",tail:"min(max(sharpImg, 0), 255);",hint:"sharpImg = min(max(",code:"sharpImg = min(max(sharpImg, 0), 255);",desc:"Clip nilai piksel agar tetap dalam rentang 0-255.",note:"max(x,0) hilangkan negatif. min(x,255) batasi atas 255."},
-{order:14,cat:"HIGHPASS",tail:"title('Sharpening Image (High-pass 3x3)');",hint:"figure; imshow(uint8(sharpImg));",code:"figure; imshow(uint8(sharpImg)); title('Sharpening Image (High-pass 3x3)');",desc:"Tampilkan hasil sharpening.",note:"High-pass = mempertajam tepi gambar."},
-{order:15,cat:"MEDIAN",tail:"zeros(r, c);",hint:"medImg = zeros(",code:"medImg = zeros(r, c);",desc:"Buat matriks output kosong berukuran r x c untuk median filter.",note:"zeros() membuat matriks nol."},
-{order:16,cat:"MEDIAN",tail:"for j = 1:c",hint:"for i = 1:r",code:"for i = 1:r\n    for j = 1:c",desc:"Loop nested untuk iterasi setiap piksel (baris i, kolom j).",note:"Median/Mode filter tidak bisa vectorized, butuh loop."},
-{order:17,cat:"MEDIAN",tail:"P(i:i+2, j:j+2);",hint:"w = P(i:i+2,",code:"w = P(i:i+2, j:j+2);",desc:"Ambil window 3x3 dari citra padded P di posisi (i,j).",note:"i:i+2 = 3 baris, j:j+2 = 3 kolom."},
-{order:18,cat:"MEDIAN",tail:"median(w(:));",hint:"medImg(i,j) = median(",code:"medImg(i,j) = median(w(:));",desc:"Hitung median dari semua 9 piksel window, simpan ke output.",note:"w(:) ubah window 3x3 jadi vektor 9 elemen. median() ambil nilai tengah."},
-{order:19,cat:"MEDIAN",tail:"title('Median Image (3x3)');",hint:"figure; imshow(uint8(medImg));",code:"figure; imshow(uint8(medImg)); title('Median Image (3x3)');",desc:"Tampilkan hasil median filter.",note:"Efektif untuk menghilangkan salt-and-pepper noise."},
-{order:20,cat:"MODE",tail:"zeros(r, c);",hint:"modeImg = zeros(",code:"modeImg = zeros(r, c);",desc:"Buat matriks output kosong untuk mode filter.",note:"Sama seperti inisialisasi median filter."},
-{order:21,cat:"MODE",tail:"mode(w(:));",hint:"modeImg(i,j) = mode(",code:"modeImg(i,j) = mode(w(:));",desc:"Hitung mode (nilai paling sering muncul) dari window 3x3.",note:"mode() = nilai dengan frekuensi tertinggi di window."},
-{order:22,cat:"MODE",tail:"title('Mode Image (3x3)');",hint:"figure; imshow(uint8(modeImg));",code:"figure; imshow(uint8(modeImg)); title('Mode Image (3x3)');",desc:"Tampilkan hasil mode filter.",note:"Mode filter menjaga nilai dominan di setiap area."},
-{order:23,cat:"EDGE",tail:"-1 0 1; -2 0 2; -1 0 1];",hint:"sobelX = [-1 0 1;",code:"sobelX = [-1 0 1; -2 0 2; -1 0 1];",desc:"Kernel Sobel arah horizontal, mendeteksi tepi vertikal.",note:"sobelX mendeteksi perubahan intensitas arah kiri-kanan."},
-{order:24,cat:"EDGE",tail:"-1 -2 -1; 0 0 0; 1 2 1];",hint:"sobelY = [-1 -2 -1;",code:"sobelY = [-1 -2 -1; 0 0 0; 1 2 1];",desc:"Kernel Sobel arah vertikal, mendeteksi tepi horizontal.",note:"sobelY mendeteksi perubahan intensitas arah atas-bawah."},
-{order:25,cat:"EDGE",tail:"rot90(sobelX,2), 'valid');",hint:"Gx = conv2(P, rot90(sobelX,",code:"Gx = conv2(P, rot90(sobelX,2), 'valid');",desc:"Hitung gradien horizontal Gx dengan konvolusi kernel sobelX.",note:"Gx = respons tepi arah X."},
-{order:26,cat:"EDGE",tail:"rot90(sobelY,2), 'valid');",hint:"Gy = conv2(P, rot90(sobelY,",code:"Gy = conv2(P, rot90(sobelY,2), 'valid');",desc:"Hitung gradien vertikal Gy dengan konvolusi kernel sobelY.",note:"Gy = respons tepi arah Y."},
-{order:27,cat:"EDGE",tail:"min(sqrt(Gx.^2 + Gy.^2), 255);",hint:"edgeImg = min(sqrt(",code:"edgeImg = min(sqrt(Gx.^2 + Gy.^2), 255);",desc:"Magnitudo gradien = akar(Gx2 + Gy2), clip ke maksimum 255.",note:"Gx.^2 = kuadrat element-wise. min() clip nilai atas."},
-{order:28,cat:"EDGE",tail:"title('Edge Detection Image (Sobel 3x3)');",hint:"figure; imshow(uint8(edgeImg));",code:"figure; imshow(uint8(edgeImg)); title('Edge Detection Image (Sobel 3x3)');",desc:"Tampilkan hasil deteksi tepi Sobel.",note:"Tepi terang = area perubahan intensitas tajam."},
-];",cat:"HIGHPASS",hint:"highpass = [-1 -1 -1;",code:"highpass = [-1 -1 -1; -1 9 -1; -1 -1 -1];",desc:"Kernel high-pass 3×3 untuk sharpening — pusat 9, sekitar -1.",note:"Memperkuat perbedaan antar piksel → tepi lebih tajam."},
-{order:12,tail:"rot90(highpass,2), \'valid\');",cat:"HIGHPASS",hint:"sharpImg = conv2(P,",code:"sharpImg = conv2(P, rot90(highpass,2), 'valid');",desc:"Konvolusi citra dengan kernel high-pass untuk menghasilkan gambar tajam.",note:"Hasilnya bisa negatif atau >255, perlu di-clip."},
-{order:13,tail:"min(max(sharpImg, 0), 255);",cat:"HIGHPASS",hint:"sharpImg = min(max(",code:"sharpImg = min(max(sharpImg, 0), 255);",desc:"Clip nilai piksel agar tetap dalam rentang 0–255.",note:"max(x,0) hilangkan negatif. min(x,255) batasi atas 255."},
-{order:14,tail:"title(\'Sharpening Image (High-pass 3x3)\');",cat:"HIGHPASS",hint:"figure; imshow(uint8(sharpImg));",code:"figure; imshow(uint8(sharpImg)); title('Sharpening Image (High-pass 3x3)');",desc:"Tampilkan hasil sharpening.",note:"High-pass = mempertajam tepi gambar."},
-{order:15,tail:"zeros(r, c);",cat:"MEDIAN",hint:"medImg = zeros(",code:"medImg = zeros(r, c);",desc:"Buat matriks output kosong berukuran r×c untuk median filter.",note:"zeros() membuat matriks nol."},
-{order:16,tail:"for j = 1:c",cat:"MEDIAN",hint:"for i = 1:r",code:"for i = 1:r\n    for j = 1:c",desc:"Loop nested untuk iterasi setiap piksel (baris i, kolom j).",note:"Median/Mode filter tidak bisa vectorized, butuh loop."},
-{order:17,tail:"P(i:i+2, j:j+2);",cat:"MEDIAN",hint:"w = P(i:i+2,",code:"w = P(i:i+2, j:j+2);",desc:"Ambil window 3×3 dari citra padded P di posisi (i,j).",note:"i:i+2 = 3 baris, j:j+2 = 3 kolom."},
-{order:18,tail:"median(w(:));",cat:"MEDIAN",hint:"medImg(i,j) = median(",code:"medImg(i,j) = median(w(:));",desc:"Hitung median dari semua 9 piksel window, simpan ke output.",note:"w(:) ubah window 3×3 jadi vektor 9 elemen. median() ambil nilai tengah."},
-{order:19,tail:"title(\'Median Image (3x3)\');",cat:"MEDIAN",hint:"figure; imshow(uint8(medImg));",code:"figure; imshow(uint8(medImg)); title('Median Image (3x3)');",desc:"Tampilkan hasil median filter.",note:"Efektif untuk menghilangkan salt-and-pepper noise."},
-{order:20,tail:"zeros(r, c);",cat:"MODE",hint:"modeImg = zeros(",code:"modeImg = zeros(r, c);",desc:"Buat matriks output kosong untuk mode filter.",note:"Sama seperti inisialisasi median filter."},
-{order:21,tail:"mode(w(:));",cat:"MODE",hint:"modeImg(i,j) = mode(",code:"modeImg(i,j) = mode(w(:));",desc:"Hitung mode (nilai paling sering muncul) dari window 3×3.",note:"mode() = nilai dengan frekuensi tertinggi di window."},
-{order:22,tail:"title(\'Mode Image (3x3)\');",cat:"MODE",hint:"figure; imshow(uint8(modeImg));",code:"figure; imshow(uint8(modeImg)); title('Mode Image (3x3)');",desc:"Tampilkan hasil mode filter.",note:"Mode filter menjaga nilai dominan di setiap area."},
-{order:23,tail:"-1 0 1; -2 0 2; -1 0 1];",cat:"EDGE",hint:"sobelX = [-1 0 1;",code:"sobelX = [-1 0 1; -2 0 2; -1 0 1];",desc:"Kernel Sobel arah horizontal — mendeteksi tepi vertikal.",note:"sobelX mendeteksi perubahan intensitas arah kiri-kanan."},
-{order:24,tail:"-1 -2 -1; 0 0 0; 1 2 1];",cat:"EDGE",hint:"sobelY = [-1 -2 -1;",code:"sobelY = [-1 -2 -1; 0 0 0; 1 2 1];",desc:"Kernel Sobel arah vertikal — mendeteksi tepi horizontal.",note:"sobelY mendeteksi perubahan intensitas arah atas-bawah."},
-{order:25,tail:"rot90(sobelX,2), \'valid\');",cat:"EDGE",hint:"Gx = conv2(P, rot90(sobelX,",code:"Gx = conv2(P, rot90(sobelX,2), 'valid');",desc:"Hitung gradien horizontal Gx dengan konvolusi kernel sobelX.",note:"Gx = respons tepi arah X."},
-{order:26,tail:"rot90(sobelY,2), \'valid\');",cat:"EDGE",hint:"Gy = conv2(P, rot90(sobelY,",code:"Gy = conv2(P, rot90(sobelY,2), 'valid');",desc:"Hitung gradien vertikal Gy dengan konvolusi kernel sobelY.",note:"Gy = respons tepi arah Y."},
-{order:27,tail:"min(sqrt(Gx.^2 + Gy.^2), 255);",cat:"EDGE",hint:"edgeImg = min(sqrt(",code:"edgeImg = min(sqrt(Gx.^2 + Gy.^2), 255);",desc:"Magnitudo gradien = √(Gx² + Gy²), clip ke maksimum 255.",note:"Gx.^2 = kuadrat element-wise. min() clip nilai atas."},
-{order:28,tail:"title(\'Edge Detection Image (Sobel 3x3)\');",cat:"EDGE",hint:"figure; imshow(uint8(edgeImg));",code:"figure; imshow(uint8(edgeImg)); title('Edge Detection Image (Sobel 3x3)');",desc:"Tampilkan hasil deteksi tepi Sobel.",note:"Tepi terang = area perubahan intensitas tajam."},
+{o:1,cat:"INIT",h:"clear;",t:"close all;",code:"clear; clc; close all;",note:"Selalu dijalankan pertama untuk mulai bersih."},
+{o:2,cat:"INIT",h:"img = imread(",t:"'cameraman.tif');",code:"img = imread('cameraman.tif');",note:"imread() membaca citra dari file."},
+{o:3,cat:"INIT",h:"if size(img,3) == 3",t:"rgb2gray(img);\nend",code:"if size(img,3) == 3\n    img = rgb2gray(img);\nend",note:"size(img,3)==3 cek apakah ada 3 channel warna."},
+{o:4,cat:"INIT",h:"I = double(",t:"double(img);",code:"I = double(img);",note:"Konvolusi butuh tipe double, bukan integer."},
+{o:5,cat:"INIT",h:"[r, c] =",t:"size(I);",code:"[r, c] = size(I);",note:"r = rows (tinggi), c = cols (lebar)."},
+{o:6,cat:"INIT",h:"P = I([1 1:r r],",t:"[1 1:c c]);",code:"P = I([1 1:r r], [1 1:c c]);",note:"Padding replikasi piksel tepi agar konvolusi same-size."},
+{o:7,cat:"INIT",h:"figure; imshow(img);",t:"title('Original Image');",code:"figure; imshow(img); title('Original Image');",note:"imshow() tampilkan, title() beri judul."},
+{o:8,cat:"LOWPASS",h:"lowpass =",t:"ones(3) / 9;",code:"lowpass = ones(3) / 9;",note:"Jumlah semua elemen = 1 → filter rata-rata (averaging)."},
+{o:9,cat:"LOWPASS",h:"blurImg = conv2(P,",t:"rot90(lowpass,2), 'valid');",code:"blurImg = conv2(P, rot90(lowpass,2), 'valid');",note:"rot90(k,2) = rotasi 180°. 'valid' = output same-size dengan I."},
+{o:10,cat:"LOWPASS",h:"figure; imshow(uint8(blurImg));",t:"title('Blur Image (Low-pass 3x3)');",code:"figure; imshow(uint8(blurImg)); title('Blur Image (Low-pass 3x3)');",note:"Low-pass = menghaluskan gambar / mengurangi noise."},
+{o:11,cat:"HIGHPASS",h:"highpass = [-1 -1 -1;",t:"-1 9 -1; -1 -1 -1];",code:"highpass = [-1 -1 -1; -1 9 -1; -1 -1 -1];",note:"Pusat 9, sekitar -1. Memperkuat perbedaan antar piksel."},
+{o:12,cat:"HIGHPASS",h:"sharpImg = conv2(P,",t:"rot90(highpass,2), 'valid');",code:"sharpImg = conv2(P, rot90(highpass,2), 'valid');",note:"Hasilnya bisa negatif atau >255, perlu di-clip."},
+{o:13,cat:"HIGHPASS",h:"sharpImg = min(",t:"max(sharpImg, 0), 255);",code:"sharpImg = min(max(sharpImg, 0), 255);",note:"max(x,0) hilangkan negatif. min(x,255) batasi atas 255."},
+{o:14,cat:"HIGHPASS",h:"figure; imshow(uint8(sharpImg));",t:"title('Sharpening Image (High-pass 3x3)');",code:"figure; imshow(uint8(sharpImg)); title('Sharpening Image (High-pass 3x3)');",note:"High-pass = mempertajam tepi gambar."},
+{o:15,cat:"MEDIAN",h:"medImg =",t:"zeros(r, c);",code:"medImg = zeros(r, c);",note:"zeros() membuat matriks nol berukuran r x c."},
+{o:16,cat:"MEDIAN",h:"for i = 1:r",t:"for j = 1:c",code:"for i = 1:r\n    for j = 1:c",note:"Loop nested iterasi setiap piksel (baris i, kolom j)."},
+{o:17,cat:"MEDIAN",h:"w = P(",t:"i:i+2, j:j+2);",code:"w = P(i:i+2, j:j+2);",note:"Ambil window 3x3 dari citra padded di posisi (i,j)."},
+{o:18,cat:"MEDIAN",h:"medImg(i,j) =",t:"median(w(:));",code:"medImg(i,j) = median(w(:));",note:"w(:) ubah 3x3 jadi vektor 9 elemen. median() nilai tengah."},
+{o:19,cat:"MEDIAN",h:"figure; imshow(uint8(medImg));",t:"title('Median Image (3x3)');",code:"figure; imshow(uint8(medImg)); title('Median Image (3x3)');",note:"Efektif untuk menghilangkan salt-and-pepper noise."},
+{o:20,cat:"MODE",h:"modeImg =",t:"zeros(r, c);",code:"modeImg = zeros(r, c);",note:"Sama seperti inisialisasi median filter."},
+{o:21,cat:"MODE",h:"modeImg(i,j) =",t:"mode(w(:));",code:"modeImg(i,j) = mode(w(:));",note:"mode() = nilai dengan frekuensi tertinggi di window."},
+{o:22,cat:"MODE",h:"figure; imshow(uint8(modeImg));",t:"title('Mode Image (3x3)');",code:"figure; imshow(uint8(modeImg)); title('Mode Image (3x3)');",note:"Mode filter menjaga nilai dominan di setiap area."},
+{o:23,cat:"EDGE",h:"sobelX = [-1 0 1;",t:"-2 0 2; -1 0 1];",code:"sobelX = [-1 0 1; -2 0 2; -1 0 1];",note:"sobelX deteksi perubahan intensitas arah kiri-kanan."},
+{o:24,cat:"EDGE",h:"sobelY = [-1 -2 -1;",t:"0 0 0; 1 2 1];",code:"sobelY = [-1 -2 -1; 0 0 0; 1 2 1];",note:"sobelY deteksi perubahan intensitas arah atas-bawah."},
+{o:25,cat:"EDGE",h:"Gx = conv2(P,",t:"rot90(sobelX,2), 'valid');",code:"Gx = conv2(P, rot90(sobelX,2), 'valid');",note:"Gx = respons tepi arah X."},
+{o:26,cat:"EDGE",h:"Gy = conv2(P,",t:"rot90(sobelY,2), 'valid');",code:"Gy = conv2(P, rot90(sobelY,2), 'valid');",note:"Gy = respons tepi arah Y."},
+{o:27,cat:"EDGE",h:"edgeImg = min(",t:"sqrt(Gx.^2 + Gy.^2), 255);",code:"edgeImg = min(sqrt(Gx.^2 + Gy.^2), 255);",note:"Gx.^2 = kuadrat element-wise. min() clip nilai atas 255."},
+{o:28,cat:"EDGE",h:"figure; imshow(uint8(edgeImg));",t:"title('Edge Detection Image (Sobel 3x3)');",code:"figure; imshow(uint8(edgeImg)); title('Edge Detection Image (Sobel 3x3)');",note:"Tepi terang = area perubahan intensitas tajam."},
 ];
 
 var CAT_CFG={
@@ -249,14 +215,15 @@ function setCat(c){
 
 function getFiltered(){
   var arr=curCat==="ALL"?V.slice():V.filter(function(c){return c.cat===curCat;});
-  arr.sort(function(a,b){return a.order-b.order;});
+  arr.sort(function(a,b){return a.o-b.o;});
   return arr;
 }
 
 function fullRestart(){
   deck=getFiltered();
   cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
-  document.getElementById("sub-lbl").textContent=(curCat==="ALL"?"Semua":CAT_CFG[curCat].label)+" · "+deck.length+" baris";
+  var lbl=curCat==="ALL"?"Semua":CAT_CFG[curCat]?CAT_CFG[curCat].label:curCat;
+  document.getElementById("sub-lbl").textContent=lbl+" · "+deck.length+" baris";
   document.getElementById("qv").style.display="";
   document.getElementById("rv").style.display="none";
   document.getElementById("fv3").style.display="none";
@@ -266,7 +233,7 @@ function fullRestart(){
 
 function nextRonde(){
   ronde++;
-  deck=toRev.slice();deck.sort(function(a,b){return a.order-b.order;});
+  deck=toRev.slice();deck.sort(function(a,b){return a.o-b.o;});
   cp=0;ch=0;cbv=0;idx=0;rev=false;toRev=[];
   document.getElementById("qv").style.display="";
   document.getElementById("rv").style.display="none";
@@ -281,28 +248,18 @@ function showCard(){
   var mode=getMode();
   document.getElementById("card").style.setProperty("--acc",cfg.acc);
   document.getElementById("cn").textContent="#"+(idx+1);
-  document.getElementById("ob").textContent="Line "+c.order;
+  document.getElementById("ob").textContent="Line "+c.o;
   var ctb=document.getElementById("ctb");
   ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
 
+  var fc=document.getElementById("front-code");
   if(mode==="front"){
-    // Depan: hint + ...
-    document.getElementById("front-code").innerHTML=c.hint+'<span class="dots"> ···</span>';
-    document.getElementById("front-code").style.display="";
-    document.getElementById("front-desc").style.display="none";
-    document.getElementById("ans-code-wrap").style.display="";
-    document.getElementById("ans-desc-wrap").style.display="none";
-    document.getElementById("ans-code").textContent=c.code;
+    fc.innerHTML=c.h+'<span class="dots"> ···</span>';
   } else {
-    // Mode back: tampilkan kode lengkap di depan, tebak fungsinya
-    document.getElementById("front-code").style.display="none";
-    document.getElementById("front-desc").style.display="";
-    document.getElementById("front-desc").textContent=c.code;
-    document.getElementById("ans-code-wrap").style.display="none";
-    document.getElementById("ans-desc-wrap").style.display="";
-    document.getElementById("ans-desc").textContent=c.desc;
+    fc.innerHTML='<span class="dots">··· </span>'+c.t;
   }
 
+  document.getElementById("ans-code").textContent=c.code;
   var noteEl=document.getElementById("ans-note");
   if(c.note){noteEl.textContent="💡 "+c.note;noteEl.style.display="";}
   else{noteEl.style.display="none";}
@@ -312,8 +269,7 @@ function showCard(){
   document.getElementById("ba").style.display="none";
   document.getElementById("card").className="card";
   document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
-  var pct=Math.round(idx/deck.length*100);
-  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pb").style.width=Math.round(idx/deck.length*100)+"%";
   document.getElementById("pl").textContent=idx+" selesai";
   document.getElementById("pr").textContent=deck.length+" kartu";
 }
@@ -357,21 +313,19 @@ function showResult(){
   document.getElementById("nb").textContent="Ulangi "+toRev.length+" baris yang belum";
   var rl=document.getElementById("rl");rl.innerHTML="";
   var belumList=toRev.filter(function(v){return (v._b||0)>0;});
-  belumList.sort(function(a,b){return a.order-b.order;});
+  belumList.sort(function(a,b){return a.o-b.o;});
   if(belumList.length===0){
     rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
   } else {
     belumList.forEach(function(v){
       var d=document.createElement("div");d.className="ri";
       var score="<span class='ri-score'>✗"+(v._b||0)+"</span>";
-      d.innerHTML="<span class='ri-code'>"+v.hint+" ···</span>"+score;
+      d.innerHTML="<span class='ri-code'>"+v.h+" ···</span>"+score;
       rl.appendChild(d);
     });
     document.getElementById("rlw").style.display="";
   }
 }
-
-
 
 document.querySelectorAll('input[name="mode"]').forEach(function(r){
   r.addEventListener("change",function(){if(!rev)showCard();});
