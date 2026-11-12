@@ -373,13 +373,27 @@ function setFilter(f){
   restartAll();
 }
 
+function shuffle(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var tmp=a[i];a[i]=a[j];a[j]=tmp;
+  }
+  return a;
+}
+
 function buildDeck(source){
-  if(activeFilter==="ALL") return source.slice();
-  var map={KONSONAN:["KONSONAN_BIBIR","KONSONAN_LIDAH","KONSONAN_PANGKAL","KONSONAN_LANGIT","KONSONAN_LENGKUNG","KONSONAN_GIGI"],
-           VOKAL:["VOKAL_MEDIAL","VOKAL_FINAL"],
-           NADA:["NADA"]};
-  var cats=map[activeFilter]||[];
-  return source.filter(function(c){return cats.indexOf(c.cat)!==-1;});
+  var base;
+  if(activeFilter==="ALL"){
+    base=source.slice();
+  } else {
+    var map={KONSONAN:["KONSONAN_BIBIR","KONSONAN_LIDAH","KONSONAN_PANGKAL","KONSONAN_LANGIT","KONSONAN_LENGKUNG","KONSONAN_GIGI"],
+             VOKAL:["VOKAL_MEDIAL","VOKAL_FINAL"],
+             NADA:["NADA"]};
+    var cats=map[activeFilter]||[];
+    base=source.filter(function(c){return cats.indexOf(c.cat)!==-1;});
+  }
+  return shuffle(base);
 }
 
 function restartAll(){
@@ -417,17 +431,28 @@ function showCard(){
     document.getElementById("front-sym").style.display="";
     document.getElementById("front-back").style.display="none";
     document.getElementById("sym-display").textContent=c.sym;
-    document.getElementById("sym-hint").textContent=c.cat.startsWith("NADA")?"Tanda Nada":"Bopomofo";
+    // Nada: tampilkan lebih besar + label tombol keyboard sebagai hint
+    if(c.cat==="NADA"){
+      document.getElementById("sym-display").style.fontSize="100px";
+      document.getElementById("sym-hint").textContent="Tanda Nada — tombol keyboard?";
+    } else {
+      document.getElementById("sym-display").style.fontSize="80px";
+      document.getElementById("sym-hint").textContent="Bopomofo — bunyi apa?";
+    }
     // Jawaban: bunyi/pinyin
     document.getElementById("ans-label").textContent="🔊 BUNYI & INFO";
     document.getElementById("ans-sym").textContent=c.sym+" — "+c.romaji;
-    document.getElementById("ans-romaji").textContent="Pinyin: "+c.pinyin;
+    document.getElementById("ans-romaji").textContent=c.cat==="NADA"?"Keyboard: "+c.key.replace("Tombol: ",""):"Pinyin: "+c.pinyin;
     document.getElementById("ans-key").innerHTML=c.key+' — <span>'+c.key.replace("鍵盤: ","").replace("Tombol: ","")+'</span>';
   } else {
     // Bunyi di depan → tebak simbol
     document.getElementById("front-sym").style.display="none";
     document.getElementById("front-back").style.display="";
-    document.getElementById("back-hint-text").textContent=c.romaji+" ("+c.pinyin+")";
+    if(c.cat==="NADA"){
+      document.getElementById("back-hint-text").textContent=c.romaji;
+    } else {
+      document.getElementById("back-hint-text").textContent=c.romaji+" ("+c.pinyin+")";
+    }
     // Jawaban: simbol
     document.getElementById("ans-label").textContent="✅ SIMBOL";
     document.getElementById("ans-sym").textContent=c.sym;
