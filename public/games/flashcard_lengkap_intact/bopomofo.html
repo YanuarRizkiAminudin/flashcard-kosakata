@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bopomofo 注音符號 — Flashcard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+.mode-sw{display:flex;background:#fff;border:1px solid #e8e4dc;border-radius:99px;padding:3px;gap:2px;margin-bottom:10px;}
+.mode-sw label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:99px;color:#8a8478;transition:all .2s;user-select:none;}
+.mode-sw input[type=radio]{display:none;}
+.mode-sw input[type=radio]:checked+label{background:linear-gradient(135deg,#dc2626,#f59e0b);color:#fff;box-shadow:0 2px 8px rgba(220,38,38,.3);}
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#dc2626;color:#dc2626;}
+.fb.on{background:#dc2626;color:#fff;border-color:#dc2626;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#fef2f2;color:#dc2626;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#dc2626,#f59e0b);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+/* Card */
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(220,38,38,.08);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#dc2626,#f59e0b));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(220,38,38,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.8rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+/* Symbol display */
+.sym-big{font-family:"Noto Sans TC",sans-serif;font-size:80px;font-weight:700;color:#1a1814;text-align:center;line-height:1;margin-bottom:.3rem;letter-spacing:2px;}
+.sym-hint{font-size:14px;color:#8a8478;text-align:center;margin-top:.4rem;}
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+/* Answer */
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:6px;text-align:center;}
+.ans-box{background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px;padding:12px 16px;width:100%;text-align:center;}
+.ans-pinyin{font-size:22px;font-weight:700;color:#dc2626;margin-bottom:4px;font-family:"Noto Sans TC",sans-serif;}
+.ans-romaji{font-size:14px;color:#1a1814;font-weight:600;margin-bottom:4px;}
+.ans-key{font-size:12px;color:#8a8478;}
+.ans-key span{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:2px 8px;font-family:monospace;font-weight:700;color:#374151;}
+.ans-desc{font-size:12px;color:#6b7280;margin-top:8px;line-height:1.6;text-align:left;}
+.ans-example{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:12px;color:#92400e;}
+.ans-example .ex-sym{font-family:"Noto Sans TC",sans-serif;font-size:16px;font-weight:700;margin-right:6px;}
+.ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:6px 12px;margin-top:8px;font-style:italic;text-align:center;}
+/* Mode back — tampil pinyin di depan */
+.front-pinyin{font-size:28px;font-weight:700;color:#1a1814;text-align:center;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px;padding:14px 20px;width:100%;}
+/* Buttons */
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+/* Result */
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:200px;overflow-y:auto;}
+.ri{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-sym{font-family:"Noto Sans TC",sans-serif;font-size:20px;font-weight:700;color:#dc2626;min-width:30px;}
+.ri-info{flex:1;font-size:12px;color:#374151;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-red{background:linear-gradient(135deg,#dc2626,#f59e0b);color:#fff;box-shadow:0 3px 10px rgba(220,38,38,.25);}
+.btn-red:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#fef2f2;}
+.final{text-align:center;padding:2.5rem 0;}
+.ans-desc{font-size:12px;color:#6b7280;margin-top:8px;line-height:1.6;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>注音符號 Bopomofo</h1>
+  <p class="sub">Sistem fonetik Taiwan — 21 Konsonan · 16 Vokal · 5 Nada</p>
+
+  <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8a8478;text-align:center;margin-bottom:5px;">MODE</div>
+  <div class="mode-sw">
+    <input type="radio" name="mode" id="m-front" value="front" checked>
+    <label for="m-front">🔤 Simbol → Tebak Bunyi</label>
+    <input type="radio" name="mode" id="m-back" value="back">
+    <label for="m-back">🔁 Bunyi → Tebak Simbol</label>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="fb on" onclick="setFilter('ALL')">Semua</button>
+    <button class="fb" onclick="setFilter('KONSONAN')">Konsonan</button>
+    <button class="fb" onclick="setFilter('VOKAL')">Vokal</button>
+    <button class="fb" onclick="setFilter('NADA')">Nada</button>
+  </div>
+
+  <div id="qv">
+    <div class="topbar">
+      <span class="badge" id="cn">#1</span>
+      <span class="ctr" id="ctr">1/42</span>
+    </div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">42 kartu</span></div>
+
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>● <span id="sp">0</span> Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>● <span id="sh">0</span> Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>● <span id="sb">0</span> Belum</div>
+    </div>
+
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn2">#1</span>
+        <span class="cat-badge" id="ctb">Konsonan</span>
+      </div>
+      <!-- Mode depan: simbol besar -->
+      <div id="front-sym">
+        <div class="sym-big" id="sym-display"></div>
+        <div class="sym-hint" id="sym-hint"></div>
+      </div>
+      <!-- Mode balik: pinyin/romaji di depan, tebak simbol -->
+      <div id="front-back" style="display:none">
+        <div class="front-pinyin" id="back-hint-text"></div>
+      </div>
+
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk jawaban</div>
+
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <div class="atag" id="ans-label">📖 JAWABAN</div>
+        <div class="ans-box">
+          <div class="ans-pinyin" id="ans-sym"></div>
+          <div class="ans-romaji" id="ans-romaji"></div>
+          <div class="ans-key" id="ans-key"></div>
+        </div>
+        <div class="ans-desc" id="ans-desc" style="display:none"></div>
+        <div class="ans-example" id="ans-example" style="display:none"></div>
+        <div class="ans-note" id="ans-note" style="display:none"></div>
+      </div>
+    </div>
+
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😵</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Lanjut</span></button>
+    </div>
+  </div>
+
+  <!-- Hasil ronde -->
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2">🌟</div>
+      <div class="res-title" id="rt">Selesai Ronde 1!</div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div class="rlist-wrap" id="rlw" style="display:none">
+        <div class="rlist-ttl">Yang perlu diulang</div>
+        <div class="rlist" id="rl"></div>
+      </div>
+      <button class="btnbig btn-red" id="nb" onclick="nextRonde()">Ulangi yang belum</button>
+      <button class="btnbig btn-ghost" onclick="restartAll()">Mulai dari awal</button>
+    </div>
+  </div>
+
+  <!-- Selesai semua -->
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:60px;margin-bottom:1rem;">🏆</div>
+      <div style="font-size:22px;font-weight:700;color:#1a1814;margin-bottom:.5rem;">Sempurna!</div>
+      <div style="font-size:14px;color:#8a8478;margin-bottom:1.5rem;">Kamu hafal semua simbol Bopomofo!</div>
+      <button class="btnbig btn-red" onclick="restartAll()">Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA KARTU
+// ============================================================
+var CAT_CFG = {
+  KONSONAN_BIBIR:   {label:"Bibir",      bg:"#fef2f2",fg:"#dc2626",acc:"linear-gradient(90deg,#dc2626,#f87171)"},
+  KONSONAN_LIDAH:   {label:"Ujung Lidah",bg:"#fff7ed",fg:"#ea580c",acc:"linear-gradient(90deg,#ea580c,#fb923c)"},
+  KONSONAN_PANGKAL: {label:"Pangkal Lidah",bg:"#fefce8",fg:"#ca8a04",acc:"linear-gradient(90deg,#ca8a04,#facc15)"},
+  KONSONAN_LANGIT:  {label:"Langit-langit",bg:"#f0fdf4",fg:"#16a34a",acc:"linear-gradient(90deg,#16a34a,#4ade80)"},
+  KONSONAN_LENGKUNG:{label:"Lidah Melengkung",bg:"#eff6ff",fg:"#2563eb",acc:"linear-gradient(90deg,#2563eb,#60a5fa)"},
+  KONSONAN_GIGI:    {label:"Gigi",       bg:"#fdf4ff",fg:"#9333ea",acc:"linear-gradient(90deg,#9333ea,#c084fc)"},
+  VOKAL_MEDIAL:     {label:"Vokal Tengah",bg:"#ecfeff",fg:"#0891b2",acc:"linear-gradient(90deg,#0891b2,#22d3ee)"},
+  VOKAL_FINAL:      {label:"Vokal Akhir",bg:"#f0fdf4",fg:"#059669",acc:"linear-gradient(90deg,#059669,#34d399)"},
+  NADA:             {label:"Nada",       bg:"#fdf2f8",fg:"#c026d3",acc:"linear-gradient(90deg,#c026d3,#e879f9)"},
+};
+
+var V = [
+  // ── KONSONAN BIBIR ──────────────────────────────────────────
+  {order:1, cat:"KONSONAN_BIBIR", sym:"ㄅ", romaji:"b", pinyin:"b",
+   key:"鍵盤: 1", desc:"Konsonan bilabial tak bersuara. Seperti 'b' dalam 'babi' tapi sedikit lebih keras.",
+   example:"ㄅㄚ (bā) = ayah 爸", note:"Kelompok Bibir — sisi kiri keyboard"},
+  {order:2, cat:"KONSONAN_BIBIR", sym:"ㄆ", romaji:"p", pinyin:"p",
+   key:"鍵盤: q", desc:"Konsonan bilabial beraspirasi. Seperti 'p' disertai hembusan napas kuat.",
+   example:"ㄆㄚ (pā) = merangkak 爬", note:"Kelompok Bibir"},
+  {order:3, cat:"KONSONAN_BIBIR", sym:"ㄇ", romaji:"m", pinyin:"m",
+   key:"鍵盤: a", desc:"Konsonan nasal bilabial. Sama persis dengan 'm' dalam bahasa Indonesia.",
+   example:"ㄇㄚ (mā) = ibu 媽", note:"Kelompok Bibir"},
+  {order:4, cat:"KONSONAN_BIBIR", sym:"ㄈ", romaji:"f", pinyin:"f",
+   key:"鍵盤: z", desc:"Konsonan frikatif labiodental. Sama dengan 'f' dalam bahasa Indonesia.",
+   example:"ㄈㄢ (fān) = terbalik 翻", note:"Kelompok Bibir"},
+
+  // ── KONSONAN UJUNG LIDAH ─────────────────────────────────────
+  {order:5, cat:"KONSONAN_LIDAH", sym:"ㄉ", romaji:"d", pinyin:"d",
+   key:"鍵盤: 2", desc:"Konsonan dental/alveolar tak bersuara. Seperti 'd' tapi tidak bergetar.",
+   example:"ㄉㄚ (dā) = menjawab 答", note:"Kelompok Ujung Lidah"},
+  {order:6, cat:"KONSONAN_LIDAH", sym:"ㄊ", romaji:"t", pinyin:"t",
+   key:"鍵盤: w", desc:"Konsonan alveolar beraspirasi. Seperti 't' disertai hembusan napas.",
+   example:"ㄊㄚ (tā) = dia 他", note:"Kelompok Ujung Lidah"},
+  {order:7, cat:"KONSONAN_LIDAH", sym:"ㄋ", romaji:"n", pinyin:"n",
+   key:"鍵盤: s", desc:"Konsonan nasal alveolar. Sama dengan 'n' dalam bahasa Indonesia.",
+   example:"ㄋㄚ (nā) = itu 那", note:"Kelompok Ujung Lidah"},
+  {order:8, cat:"KONSONAN_LIDAH", sym:"ㄌ", romaji:"l", pinyin:"l",
+   key:"鍵盤: x", desc:"Konsonan lateral alveolar. Sama dengan 'l' dalam bahasa Indonesia.",
+   example:"ㄌㄚ (lā) = tarik 拉", note:"Kelompok Ujung Lidah"},
+
+  // ── KONSONAN PANGKAL LIDAH ───────────────────────────────────
+  {order:9, cat:"KONSONAN_PANGKAL", sym:"ㄍ", romaji:"g", pinyin:"g",
+   key:"鍵盤: e", desc:"Konsonan velar tak bersuara. Seperti 'g' tapi tidak bergetar.",
+   example:"ㄍㄜ (gē) = kakak laki 哥", note:"Kelompok Pangkal Lidah"},
+  {order:10, cat:"KONSONAN_PANGKAL", sym:"ㄎ", romaji:"k", pinyin:"k",
+   key:"鍵盤: d", desc:"Konsonan velar beraspirasi. Seperti 'k' dengan hembusan napas.",
+   example:"ㄎㄜ (kē) = ilmu 科", note:"Kelompok Pangkal Lidah"},
+  {order:11, cat:"KONSONAN_PANGKAL", sym:"ㄏ", romaji:"h", pinyin:"h",
+   key:"鍵盤: c", desc:"Konsonan frikatif velar. Seperti 'h' tapi lebih dari tenggorokan.",
+   example:"ㄏㄜ (hē) = minum 喝", note:"Kelompok Pangkal Lidah"},
+
+  // ── KONSONAN LANGIT-LANGIT ───────────────────────────────────
+  {order:12, cat:"KONSONAN_LANGIT", sym:"ㄐ", romaji:"j", pinyin:"j",
+   key:"鍵盤: r", desc:"Konsonan palatal tak bersuara. Mirip 'j' tapi lebih ke langit-langit keras.",
+   example:"ㄐㄧ (jī) = ayam 雞", note:"Kelompok Langit-langit — hanya dengan ㄧ ㄨ ㄩ"},
+  {order:13, cat:"KONSONAN_LANGIT", sym:"ㄑ", romaji:"q", pinyin:"q",
+   key:"鍵盤: f", desc:"Konsonan palatal beraspirasi. Seperti 'ch' tapi ke arah langit-langit.",
+   example:"ㄑㄧ (qī) = tujuh 七", note:"Kelompok Langit-langit"},
+  {order:14, cat:"KONSONAN_LANGIT", sym:"ㄒ", romaji:"x", pinyin:"x",
+   key:"鍵盤: v", desc:"Konsonan frikatif palatal. Mirip 'sy' atau 'sh' ke langit-langit.",
+   example:"ㄒㄧ (xī) = barat 西", note:"Kelompok Langit-langit"},
+
+  // ── KONSONAN LIDAH MELENGKUNG ────────────────────────────────
+  {order:15, cat:"KONSONAN_LENGKUNG", sym:"ㄓ", romaji:"zh", pinyin:"zh",
+   key:"鍵盤: 5", desc:"Konsonan retroflex tak bersuara. Seperti 'j' dengan ujung lidah melengkung ke atas.",
+   example:"ㄓㄜ (zhè) = ini 這", note:"Kelompok Lidah Melengkung — ujung lidah ke atas"},
+  {order:16, cat:"KONSONAN_LENGKUNG", sym:"ㄔ", romaji:"ch", pinyin:"ch",
+   key:"鍵盤: y", desc:"Konsonan retroflex beraspirasi. Seperti 'ch' dengan lidah melengkung.",
+   example:"ㄔ (chī) = makan 吃", note:"Kelompok Lidah Melengkung"},
+  {order:17, cat:"KONSONAN_LENGKUNG", sym:"ㄕ", romaji:"sh", pinyin:"sh",
+   key:"鍵盤: h", desc:"Frikatif retroflex. Seperti 'sh' dengan ujung lidah ke atas.",
+   example:"ㄕㄤ (shàng) = atas 上", note:"Kelompok Lidah Melengkung"},
+  {order:18, cat:"KONSONAN_LENGKUNG", sym:"ㄖ", romaji:"r", pinyin:"r",
+   key:"鍵盤: j", desc:"Konsonan retroflex bersuara. Bunyi unik — seperti 'r' dengan lidah melengkung.",
+   example:"ㄖㄣ (rén) = orang 人", note:"Kelompok Lidah Melengkung"},
+
+  // ── KONSONAN GIGI ────────────────────────────────────────────
+  {order:19, cat:"KONSONAN_GIGI", sym:"ㄗ", romaji:"z", pinyin:"z",
+   key:"鍵盤: 6", desc:"Afrikat alveolar tak bersuara. Seperti 'dz' yang berdesis.",
+   example:"ㄗㄞ (zài) = di/ada 在", note:"Kelompok Gigi"},
+  {order:20, cat:"KONSONAN_GIGI", sym:"ㄘ", romaji:"c", pinyin:"c",
+   key:"鍵盤: k", desc:"Afrikat alveolar beraspirasi. Seperti 'ts' dengan hembusan napas.",
+   example:"ㄘㄞ (cài) = sayuran 菜", note:"Kelompok Gigi"},
+  {order:21, cat:"KONSONAN_GIGI", sym:"ㄙ", romaji:"s", pinyin:"s",
+   key:"鍵盤: l", desc:"Frikatif alveolar tak bersuara. Sama dengan 's' dalam bahasa Indonesia.",
+   example:"ㄙㄢ (sān) = tiga 三", note:"Kelompok Gigi"},
+
+  // ── VOKAL TENGAH (MEDIALS) ───────────────────────────────────
+  {order:22, cat:"VOKAL_MEDIAL", sym:"ㄧ", romaji:"i / y", pinyin:"i",
+   key:"鍵盤: u", desc:"Vokal tinggi depan tak bundar. Seperti 'i' dalam 'ikan'. Bisa berdiri sendiri sebagai 'yi'.",
+   example:"ㄧ (yī) = satu 一", note:"Vokal Tengah — bisa jadi awal kata (y-)"},
+  {order:23, cat:"VOKAL_MEDIAL", sym:"ㄨ", romaji:"u / w", pinyin:"u",
+   key:"鍵盤: i", desc:"Vokal tinggi belakang bundar. Seperti 'u' dalam 'uang'. Bisa jadi 'wu' di awal kata.",
+   example:"ㄨ (wú) = tidak ada 無", note:"Vokal Tengah — bisa jadi awal kata (w-)"},
+  {order:24, cat:"VOKAL_MEDIAL", sym:"ㄩ", romaji:"ü / yu", pinyin:"ü",
+   key:"鍵盤: o (ü)", desc:"Vokal tinggi depan bundar. Seperti 'ü' Jerman — bibir 'u' tapi lidah 'i'.",
+   example:"ㄩ (yú) = ikan 魚", note:"Vokal Tengah — bisa jadi awal kata (yu-)"},
+
+  // ── VOKAL AKHIR (FINALS) ─────────────────────────────────────
+  {order:25, cat:"VOKAL_FINAL", sym:"ㄚ", romaji:"a", pinyin:"a",
+   key:"鍵盤: 8", desc:"Vokal rendah tengah. Seperti 'a' dalam 'apa', mulut terbuka lebar.",
+   example:"ㄇㄚ (māma) = mama 媽媽", note:"Vokal Akhir paling dasar"},
+  {order:26, cat:"VOKAL_FINAL", sym:"ㄛ", romaji:"o", pinyin:"o",
+   key:"鍵盤: 9", desc:"Vokal pertengahan belakang bundar. Seperti 'o' dalam 'bola'.",
+   example:"ㄛ (ō) = oh! 哦", note:"Vokal Akhir"},
+  {order:27, cat:"VOKAL_FINAL", sym:"ㄜ", romaji:"e", pinyin:"e",
+   key:"鍵盤: 0 (ê)", desc:"Vokal pertengahan tidak bundar. Bunyi netral seperti 'e' di akhir kata Inggris 'the'.",
+   example:"ㄏㄜ (hē) = minum 喝", note:"Vokal Akhir"},
+  {order:28, cat:"VOKAL_FINAL", sym:"ㄝ", romaji:"ê", pinyin:"ê",
+   key:"鍵盤: - (jarang)", desc:"Vokal depan pertengahan. Seperti 'e' dalam 'bed'. Jarang berdiri sendiri.",
+   example:"ㄒㄧㄝ (xiè) = terima kasih 謝", note:"Muncul dalam kombinasi -ie"},
+  {order:29, cat:"VOKAL_FINAL", sym:"ㄞ", romaji:"ai", pinyin:"ai",
+   key:"鍵盤: m", desc:"Diftong a+i. Seperti 'ai' dalam 'bagai'.",
+   example:"ㄞ (āi) = aduh 哀", note:"Vokal Akhir diftong"},
+  {order:30, cat:"VOKAL_FINAL", sym:"ㄟ", romaji:"ei", pinyin:"ei",
+   key:"鍵盤: n", desc:"Diftong e+i. Seperti 'ei' dalam 'rei'.",
+   example:"ㄏㄟ (hēi) = hitam 黑", note:"Vokal Akhir diftong"},
+  {order:31, cat:"VOKAL_FINAL", sym:"ㄠ", romaji:"ao", pinyin:"ao",
+   key:"鍵盤: p (ao)", desc:"Diftong a+o. Seperti 'ao' dalam 'mao'.",
+   example:"ㄏㄠ (hǎo) = baik/bagus 好", note:"Vokal Akhir diftong"},
+  {order:32, cat:"VOKAL_FINAL", sym:"ㄡ", romaji:"ou", pinyin:"ou",
+   key:"鍵盤: b (ou)", desc:"Diftong o+u. Seperti 'ou' dalam 'oud'.",
+   example:"ㄡ (ōu) = Eropa 歐", note:"Vokal Akhir diftong"},
+  {order:33, cat:"VOKAL_FINAL", sym:"ㄢ", romaji:"an", pinyin:"an",
+   key:"鍵盤: t", desc:"Vokal + nasal. Seperti 'an' dalam 'angan'.",
+   example:"ㄢ (ān) = damai 安", note:"Vokal Akhir + nasal"},
+  {order:34, cat:"VOKAL_FINAL", sym:"ㄣ", romaji:"en", pinyin:"en",
+   key:"鍵盤: g", desc:"Vokal netral + nasal n. Bunyi 'ên' yang tertahan di hidung.",
+   example:"ㄣ (ēn) = belas kasih 恩", note:"Vokal Akhir + nasal"},
+  {order:35, cat:"VOKAL_FINAL", sym:"ㄤ", romaji:"ang", pinyin:"ang",
+   key:"鍵盤: r (ang)", desc:"Vokal a + nasal ng. Seperti 'ang' dalam 'biang'.",
+   example:"ㄤ (āng) = kotor 骯", note:"Vokal Akhir + nasal ng"},
+  {order:36, cat:"VOKAL_FINAL", sym:"ㄥ", romaji:"eng", pinyin:"eng",
+   key:"鍵盤: o... (eng)", desc:"Vokal + nasal ng. Seperti akhiran '-eng'.",
+   example:"ㄥ (ēng) = suara berdengung", note:"Vokal Akhir + nasal ng"},
+  {order:37, cat:"VOKAL_FINAL", sym:"ㄦ", romaji:"er", pinyin:"er",
+   key:"鍵盤: ; (er)", desc:"Vokal silabik r. Seperti 'er' dalam aksen Amerika — lidah melengkung.",
+   example:"ㄦ (ér) = anak 兒", note:"Vokal Akhir — bunyi unik r-colored"},
+
+  // ── TANDA NADA ───────────────────────────────────────────────
+  {order:38, cat:"NADA", sym:"ˉ", romaji:"Nada 1 — Datar", pinyin:"1st tone",
+   key:"Tombol: Spasi", desc:"Nada datar tinggi. Seperti nada panjang yang stabil, tidak naik tidak turun.",
+   example:"ㄇㄚ (mā) = ibu 媽 — suara rata seperti melengking datar", note:"Paling mudah — suara tinggi stabil"},
+  {order:39, cat:"NADA", sym:"ˊ", romaji:"Nada 2 — Naik", pinyin:"2nd tone",
+   key:"Tombol: 6", desc:"Nada naik. Seperti intonasi bertanya 'apa?'.",
+   example:"ㄇㄚˊ (má) = rami/kebas 麻 — suara naik", note:"Bayangkan kamu bertanya dengan cepat"},
+  {order:40, cat:"NADA", sym:"ˇ", romaji:"Nada 3 — Turun-Naik", pinyin:"3rd tone",
+   key:"Tombol: 3", desc:"Nada turun lalu naik. Suara paling unik — turun dulu baru naik.",
+   example:"ㄇㄚˇ (mǎ) = kuda 馬 — suara melengkung V", note:"Bayangkan suara 'hmm?' yang ragu"},
+  {order:41, cat:"NADA", sym:"ˋ", romaji:"Nada 4 — Turun", pinyin:"4th tone",
+   key:"Tombol: 4", desc:"Nada turun tajam. Seperti nada tegas atau marah.",
+   example:"ㄇㄚˋ (mà) = memaki 罵 — suara turun tajam", note:"Bayangkan nada tegas: 'tidak!'"},
+  {order:42, cat:"NADA", sym:"˙", romaji:"Nada Netral — Ringan", pinyin:"neutral tone",
+   key:"Tombol: 7", desc:"Nada ringan/netral. Tanpa nada khusus, diucapkan pendek dan ringan.",
+   example:"ㄇㄚ˙ (ma) = partikel tanya 嗎 — tanpa nada", note:"Muncul di partikel dan suku kata lemah"},
+];
+
+// ============================================================
+// LOGIKA GAME
+// ============================================================
+var deck=[], idx=0, cp=0, ch=0, cbv=0, toRev=[], ronde=1, rev=false, activeFilter="ALL";
+
+function getMode(){return document.querySelector('input[name="mode"]:checked').value;}
+
+function setFilter(f){
+  activeFilter=f;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  event.target.classList.add("on");
+  restartAll();
+}
+
+function buildDeck(source){
+  if(activeFilter==="ALL") return source.slice();
+  var map={KONSONAN:["KONSONAN_BIBIR","KONSONAN_LIDAH","KONSONAN_PANGKAL","KONSONAN_LANGIT","KONSONAN_LENGKUNG","KONSONAN_GIGI"],
+           VOKAL:["VOKAL_MEDIAL","VOKAL_FINAL"],
+           NADA:["NADA"]};
+  var cats=map[activeFilter]||[];
+  return source.filter(function(c){return cats.indexOf(c.cat)!==-1;});
+}
+
+function restartAll(){
+  cp=0;ch=0;cbv=0;toRev=[];ronde=1;idx=0;
+  V.forEach(function(c){delete c._h;delete c._b;});
+  deck=buildDeck(V);
+  document.getElementById("qv").style.display="";
+  document.getElementById("rv").style.display="none";
+  document.getElementById("fv3").style.display="none";
+  upStats();showCard();
+}
+
+function nextRonde(){
+  ronde++;
+  deck=toRev.slice();toRev=[];idx=0;
+  document.getElementById("rv").style.display="none";
+  document.getElementById("qv").style.display="";
+  document.getElementById("rb") && (document.getElementById("rb").textContent="Step "+ronde);
+  upStats();showCard();
+}
+
+function showCard(){
+  rev=false;
+  var c=deck[idx];
+  var cfg=CAT_CFG[c.cat]||CAT_CFG.NADA;
+  var mode=getMode();
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  document.getElementById("cn2").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");
+  ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+
+  if(mode==="front"){
+    // Simbol besar → tebak bunyi
+    document.getElementById("front-sym").style.display="";
+    document.getElementById("front-back").style.display="none";
+    document.getElementById("sym-display").textContent=c.sym;
+    document.getElementById("sym-hint").textContent=c.cat.startsWith("NADA")?"Tanda Nada":"Bopomofo";
+    // Jawaban: bunyi/pinyin
+    document.getElementById("ans-label").textContent="🔊 BUNYI & INFO";
+    document.getElementById("ans-sym").textContent=c.sym+" — "+c.romaji;
+    document.getElementById("ans-romaji").textContent="Pinyin: "+c.pinyin;
+    document.getElementById("ans-key").innerHTML=c.key+' — <span>'+c.key.replace("鍵盤: ","").replace("Tombol: ","")+'</span>';
+  } else {
+    // Bunyi di depan → tebak simbol
+    document.getElementById("front-sym").style.display="none";
+    document.getElementById("front-back").style.display="";
+    document.getElementById("back-hint-text").textContent=c.romaji+" ("+c.pinyin+")";
+    // Jawaban: simbol
+    document.getElementById("ans-label").textContent="✅ SIMBOL";
+    document.getElementById("ans-sym").textContent=c.sym;
+    document.getElementById("ans-romaji").textContent=c.romaji;
+    document.getElementById("ans-key").innerHTML=c.key+' — <span>'+c.key.replace("鍵盤: ","").replace("Tombol: ","")+'</span>';
+  }
+
+  var descEl=document.getElementById("ans-desc");
+  if(c.desc){descEl.textContent=c.desc;descEl.style.display="";}
+  else{descEl.style.display="none";}
+
+  var exEl=document.getElementById("ans-example");
+  if(c.example){
+    exEl.innerHTML='<span class="ex-sym">📝</span>'+c.example;
+    exEl.style.display="";
+  } else {exEl.style.display="none";}
+
+  var noteEl=document.getElementById("ans-note");
+  if(c.note){noteEl.textContent="💡 "+c.note;noteEl.style.display="";}
+  else{noteEl.style.display="none";}
+
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+
+function upStats(){
+  document.getElementById("sp").textContent=cp;
+  document.getElementById("sh").textContent=ch;
+  document.getElementById("sb").textContent=cbv;
+}
+
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;
+  document.getElementById("rh").textContent=ch;
+  document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🏆":pct>=70?"🌟":pct>=50?"💪":"😤";
+  document.getElementById("rt").textContent="Selesai Ronde "+ronde+"!";
+  document.getElementById("rs").textContent=pct>=90?"Hampir sempurna! "+toRev.length+" simbol tersisa.":pct>=70?"Bagus! "+toRev.length+" simbol perlu diulang.":"Semangat! "+toRev.length+" simbol menunggumu.";
+  document.getElementById("nb").textContent="Ulangi "+toRev.length+" simbol yang belum";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  belumList.sort(function(a,b){return a.order-b.order;});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      d.innerHTML="<span class='ri-sym'>"+v.sym+"</span><span class='ri-info'>"+v.romaji+" — "+v.pinyin+"</span><span class='ri-score'>✗"+(v._b||0)+"</span>";
+      rl.appendChild(d);
+    });
+    document.getElementById("rlw").style.display="";
+  }
+}
+
+document.querySelectorAll('input[name="mode"]').forEach(function(r){
+  r.addEventListener("change",function(){if(!rev)showCard();});
+});
+
+// Init
+restartAll();
+</script>
+</body>
+</html>
