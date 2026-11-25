@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>安睿祺 — 自我介紹 Kalimat per Kalimat</title>
+<title>安睿祺 — 自我介紹 Kosakata</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -49,10 +49,11 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 .card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
 .cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
 
-/* Front: kalimat Mandarin */
-.zh-front{font-family:"Noto Serif TC",serif;font-size:18px;font-weight:700;color:#1a1814;text-align:center;line-height:1.75;width:100%;}
+/* Front: kata Mandarin besar */
+.zh-front{font-family:"Noto Serif TC",serif;font-size:52px;font-weight:700;color:#1a1814;text-align:center;line-height:1.3;width:100%;letter-spacing:4px;}
+.zh-hint{font-size:12px;color:#b0a8c4;text-align:center;margin-top:6px;}
 /* Front mode balik: Indonesia */
-.id-front{font-size:15px;font-weight:600;color:#1a1814;text-align:center;line-height:1.7;width:100%;background:#f3e8ff;border:1.5px solid #c4b5fd;border-radius:12px;padding:12px 14px;}
+.id-front{font-size:16px;font-weight:600;color:#1a1814;text-align:center;line-height:1.7;width:100%;background:#f3e8ff;border:1.5px solid #c4b5fd;border-radius:12px;padding:12px 14px;}
 
 .tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
 
@@ -103,30 +104,32 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 <body>
 <div id="app">
   <h1>🎤 安睿祺 — 自我介紹</h1>
-  <p class="sub">Hafal kalimat per kalimat · ketuk untuk terjemahan</p>
+  <p class="sub">Hafal kosakata perkenalan · satu kartu = satu kata</p>
 
   <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8a8478;text-align:center;margin-bottom:5px;">MODE</div>
   <div class="mode-sw">
     <input type="radio" name="mode" id="m-zh" value="zh" checked>
-    <label for="m-zh">🀄 Mandarin → Tebak Arti</label>
+    <label for="m-zh">🀄 Kata → Tebak Arti</label>
     <input type="radio" name="mode" id="m-id" value="id">
-    <label for="m-id">🇮🇩 Indonesia → Tebak Mandarin</label>
+    <label for="m-id">🇮🇩 Arti → Tebak Kata</label>
   </div>
 
   <div class="filters" id="filters">
     <button class="fb on" onclick="setFilter('ALL',this)">Semua</button>
-    <button class="fb" onclick="setFilter('PEMBUKAAN',this)">👋 Pembukaan</button>
+    <button class="fb" onclick="setFilter('SAPAAN',this)">👋 Sapaan</button>
+    <button class="fb" onclick="setFilter('IDENTITAS',this)">🙋 Identitas</button>
     <button class="fb" onclick="setFilter('KARYA',this)">🛠 Karya</button>
-    <button class="fb" onclick="setFilter('PENUTUP',this)">🎯 Penutup</button>
+    <button class="fb" onclick="setFilter('KATA_KERJA',this)">⚡ Kata Kerja</button>
+    <button class="fb" onclick="setFilter('KATA_HUBUNG',this)">🔗 Kata Hubung</button>
   </div>
 
   <div id="qv">
     <div class="topbar">
       <span class="badge" id="rb">Ronde 1</span>
-      <span class="ctr" id="ctr">1/9</span>
+      <span class="ctr" id="ctr">1/31</span>
     </div>
     <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
-    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">9 kartu</span></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">31 kartu</span></div>
 
     <div class="pills">
       <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
@@ -139,9 +142,12 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
         <span class="card-num" id="cn">#1</span>
         <span class="cat-badge" id="ctb"></span>
       </div>
-      <!-- Mode ZH: tampil kalimat Mandarin -->
-      <div class="zh-front" id="front-zh"></div>
-      <!-- Mode ID: tampil kalimat Indonesia -->
+      <!-- Mode ZH: tampil kata Mandarin besar -->
+      <div id="front-zh">
+        <div class="zh-front" id="zh-disp"></div>
+        <div class="zh-hint">Kata Mandarin — artinya?</div>
+      </div>
+      <!-- Mode ID: tampil arti Indonesia -->
       <div class="id-front" id="front-id" style="display:none"></div>
 
       <div class="tap" id="tap"><span>👆</span>Ketuk untuk jawaban</div>
@@ -198,7 +204,7 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
     <div class="final">
       <div style="font-size:60px;margin-bottom:1rem;">🏆</div>
       <div style="font-size:22px;font-weight:700;color:#1a1814;margin-bottom:.5rem;">Hafal semua!</div>
-      <div style="font-size:14px;color:#8a8478;margin-bottom:1.5rem;">Semua kalimat perkenalan sudah kamu kuasai 💪</div>
+      <div style="font-size:14px;color:#8a8478;margin-bottom:1.5rem;">Semua kosakata perkenalan sudah kamu kuasai 💪</div>
       <button class="btnbig btn-purple" onclick="restartAll()">Ulangi dari awal</button>
     </div>
   </div>
@@ -209,66 +215,57 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
 // WARNA PER KATEGORI
 // ============================================================
 var CAT_CFG = {
-  PEMBUKAAN: {label:"👋 Pembukaan", bg:"#f3e8ff", fg:"#7c3aed", acc:"linear-gradient(90deg,#7c3aed,#a855f7)"},
-  KARYA:     {label:"🛠 Karya",     bg:"#eff6ff", fg:"#2563eb", acc:"linear-gradient(90deg,#2563eb,#60a5fa)"},
-  PENUTUP:   {label:"🎯 Penutup",   bg:"#f0fdf4", fg:"#16a34a", acc:"linear-gradient(90deg,#16a34a,#4ade80)"},
+  SAPAAN:      {label:"👋 Sapaan",      bg:"#f3e8ff", fg:"#7c3aed", acc:"linear-gradient(90deg,#7c3aed,#a855f7)"},
+  IDENTITAS:   {label:"🙋 Identitas",   bg:"#eff6ff", fg:"#2563eb", acc:"linear-gradient(90deg,#2563eb,#60a5fa)"},
+  KARYA:       {label:"🛠 Karya",       bg:"#fef3e2", fg:"#d97706", acc:"linear-gradient(90deg,#d97706,#fbbf24)"},
+  KATA_KERJA:  {label:"⚡ Kata Kerja",  bg:"#f0fdf4", fg:"#16a34a", acc:"linear-gradient(90deg,#16a34a,#4ade80)"},
+  KATA_HUBUNG: {label:"🔗 Kata Hubung", bg:"#fff1f2", fg:"#dc2626", acc:"linear-gradient(90deg,#dc2626,#f87171)"},
 };
 
 // ============================================================
-// DATA KARTU — satu kartu = satu kalimat
+// DATA KARTU — satu kartu = satu kata / frasa
 // ============================================================
 var V = [
-  // ── PEMBUKAAN ────────────────────────────────────────────────
-  {
-    order: 1,
-    cat: "PEMBUKAAN",
-    zh: "老師好、同學們好。",
-    py: "Lǎoshī hǎo, tóngxuémen hǎo.",
-    id: "Selamat pagi Bu Guru, selamat pagi teman-teman.",
-    note: "Sapaan formal di kelas Taiwan — 老師 (lǎoshī) = guru, 同學們 (tóngxuémen) = teman-teman sekelas"
-  },
-  {
-    order: 2,
-    cat: "PEMBUKAAN",
-    zh: "我是安睿祺，來自印尼。",
-    py: "Wǒ shì Ān Ruìqí, láizì Yìnní.",
-    id: "Saya adalah An Ruiqi, berasal dari Indonesia.",
-    note: "來自 (láizì) = berasal dari · 印尼 (Yìnní) = Indonesia"
-  },
-  {
-    order: 3,
-    cat: "PEMBUKAAN",
-    zh: "今天我想用自己參與過的專題和做過的網站，讓大家更了解我。",
-    py: "Jīntiān wǒ xiǎng yòng zìjǐ cānyù guò de zhuāntí hé zuò guò de wǎngzhàn, ràng dàjiā gèng liǎojiě wǒ.",
-    id: "Hari ini saya ingin menggunakan proyek dan website yang pernah saya buat, agar kalian lebih mengenal saya.",
-    note: "參與過 (cānyù guò) = pernah berpartisipasi · 專題 (zhuāntí) = proyek · 網站 (wǎngzhàn) = website · 讓 (ràng) = membuat/agar"
-  },
+  // ── SAPAAN ───────────────────────────────────────────────────
+  {order:1,  cat:"SAPAAN",    zh:"老師",   py:"lǎoshī",    id:"guru",                  note:"老 (lǎo) = tua/senior · 師 (shī) = guru/pengajar"},
+  {order:2,  cat:"SAPAAN",    zh:"同學們", py:"tóngxuémen",id:"teman-teman sekelas",   note:"同學 (tóngxué) = teman sekelas · 們 (-men) = akhiran jamak"},
+  {order:3,  cat:"SAPAAN",    zh:"好",     py:"hǎo",        id:"baik / halo",           note:"Nada 3 (ˇ) · dipakai untuk sapaan: 老師好 = Halo Bu Guru"},
+
+  // ── IDENTITAS ────────────────────────────────────────────────
+  {order:4,  cat:"IDENTITAS", zh:"我",     py:"wǒ",         id:"saya / aku",            note:"Nada 3 (ˇ)"},
+  {order:5,  cat:"IDENTITAS", zh:"是",     py:"shì",        id:"adalah / iya",          note:"Kata kerja 'to be' Mandarin · Nada 4 (ˋ)"},
+  {order:6,  cat:"IDENTITAS", zh:"安睿祺", py:"Ān Ruìqí",   id:"An Ruiqi (nama)",       note:"安 = damai · 睿 = bijaksana · 祺 = keberuntungan"},
+  {order:7,  cat:"IDENTITAS", zh:"來自",   py:"láizì",      id:"berasal dari",          note:"來 (lái) = datang · 自 (zì) = dari/diri sendiri"},
+  {order:8,  cat:"IDENTITAS", zh:"印尼",   py:"Yìnní",      id:"Indonesia",             note:"Singkatan dari 印度尼西亞 (Yìndùníxīyà)"},
+  {order:9,  cat:"IDENTITAS", zh:"今天",   py:"jīntiān",    id:"hari ini",              note:"今 (jīn) = sekarang · 天 (tiān) = hari/langit"},
+  {order:10, cat:"IDENTITAS", zh:"大家",   py:"dàjiā",      id:"semua orang / kalian",  note:"大 (dà) = besar · 家 (jiā) = keluarga/rumah"},
+
   // ── KARYA ────────────────────────────────────────────────────
-  {
-    order: 4,
-    cat: "KARYA",
-    zh: "這些作品有些是跟同學一起完成的，",
-    py: "Zhèxiē zuòpǐn yǒuxiē shì gēn tóngxué yīqǐ wánchéng de,",
-    id: "Beberapa karya ini diselesaikan bersama teman-teman,",
-    note: "作品 (zuòpǐn) = karya · 有些 (yǒuxiē) = beberapa · 跟…一起 (gēn…yīqǐ) = bersama dengan · 完成 (wánchéng) = menyelesaikan"
-  },
-  {
-    order: 5,
-    cat: "KARYA",
-    zh: "有些是為了解決我自己的問題。",
-    py: "Yǒuxiē shì wèile jiějué wǒ zìjǐ de wèntí.",
-    id: "dan beberapa lagi dibuat untuk menyelesaikan masalah saya sendiri.",
-    note: "為了 (wèile) = demi/untuk · 解決 (jiějué) = menyelesaikan · 問題 (wèntí) = masalah"
-  },
-  // ── PENUTUP ──────────────────────────────────────────────────
-  {
-    order: 6,
-    cat: "PENUTUP",
-    zh: "謝謝大家的聆聽。",
-    py: "Xièxiè dàjiā de língtīng.",
-    id: "Terima kasih atas perhatian kalian semua.",
-    note: "聆聽 (língtīng) = mendengarkan dengan seksama (lebih formal dari 聽)"
-  },
+  {order:11, cat:"KARYA",     zh:"專題",   py:"zhuāntí",    id:"proyek / tugas khusus", note:"專 (zhuān) = khusus · 題 (tí) = topik/judul"},
+  {order:12, cat:"KARYA",     zh:"網站",   py:"wǎngzhàn",   id:"website",               note:"網 (wǎng) = jaringan/net · 站 (zhàn) = stasiun/tempat berdiri"},
+  {order:13, cat:"KARYA",     zh:"作品",   py:"zuòpǐn",     id:"karya / hasil kerja",   note:"作 (zuò) = membuat · 品 (pǐn) = produk/kualitas"},
+  {order:14, cat:"KARYA",     zh:"問題",   py:"wèntí",      id:"masalah / pertanyaan",  note:"問 (wèn) = bertanya · 題 (tí) = topik · nada BERBEDA dari 專題"},
+  {order:15, cat:"KARYA",     zh:"自己",   py:"zìjǐ",       id:"diri sendiri",          note:"自 (zì) = diri · 己 (jǐ) = sendiri"},
+
+  // ── KATA KERJA ───────────────────────────────────────────────
+  {order:16, cat:"KATA_KERJA", zh:"想",    py:"xiǎng",      id:"ingin / mau / rindu",   note:"Nada 3 · konteks kalimat ini = 'ingin'"},
+  {order:17, cat:"KATA_KERJA", zh:"用",    py:"yòng",       id:"menggunakan / pakai",   note:"Nada 4 (ˋ)"},
+  {order:18, cat:"KATA_KERJA", zh:"參與",  py:"cānyù",      id:"berpartisipasi / ikut", note:"參 (cān) = bergabung · 與 (yù) = dengan/bersama"},
+  {order:19, cat:"KATA_KERJA", zh:"了解",  py:"liǎojiě",    id:"memahami / mengenal",   note:"了 (liǎo) = selesai/jelas · 解 (jiě) = memecahkan/mengerti"},
+  {order:20, cat:"KATA_KERJA", zh:"完成",  py:"wánchéng",   id:"menyelesaikan",         note:"完 (wán) = selesai/penuh · 成 (chéng) = berhasil/menjadi"},
+  {order:21, cat:"KATA_KERJA", zh:"解決",  py:"jiějué",     id:"mengatasi / memecahkan",note:"解 (jiě) = membuka/memecah · 決 (jué) = memutuskan"},
+  {order:22, cat:"KATA_KERJA", zh:"讓",    py:"ràng",       id:"membuat / mempersilakan / biar", note:"Nada 4 · 讓大家了解 = biar semua orang mengenal"},
+  {order:23, cat:"KATA_KERJA", zh:"做",    py:"zuò",        id:"membuat / melakukan",   note:"Nada 4 · 做網站 = membuat website"},
+
+  // ── KATA HUBUNG & PARTIKEL ───────────────────────────────────
+  {order:24, cat:"KATA_HUBUNG", zh:"和",   py:"hé",         id:"dan",                   note:"Menghubungkan dua kata benda: 專題和網站 = proyek dan website"},
+  {order:25, cat:"KATA_HUBUNG", zh:"有些", py:"yǒuxiē",     id:"beberapa / ada yang",   note:"有 (yǒu) = ada · 些 (xiē) = beberapa · dipakai dua kali untuk kontras"},
+  {order:26, cat:"KATA_HUBUNG", zh:"跟",   py:"gēn",        id:"dengan / bersama",      note:"跟…一起 = bersama dengan…"},
+  {order:27, cat:"KATA_HUBUNG", zh:"一起", py:"yīqǐ",       id:"bersama-sama",          note:"一 (yī) = satu · 起 (qǐ) = bangkit/mulai · 跟同學一起 = bersama teman sekelas"},
+  {order:28, cat:"KATA_HUBUNG", zh:"為了", py:"wèile",      id:"demi / untuk (tujuan)", note:"為 (wèi) = demi · 了 (le) partikel · 為了解決 = demi mengatasi"},
+  {order:29, cat:"KATA_HUBUNG", zh:"更",   py:"gèng",       id:"lebih / semakin",       note:"Nada 4 · 更了解 = lebih mengenal"},
+  {order:30, cat:"KATA_HUBUNG", zh:"過",   py:"guò",        id:"pernah (pengalaman)",   note:"Partikel aspek — 參與過 = pernah ikut · 做過 = pernah buat"},
+  {order:31, cat:"KATA_HUBUNG", zh:"的",   py:"de",         id:"partikel milik / yang", note:"Partikel paling sering muncul · 我自己的問題 = masalah saya sendiri"},
 ];
 
 // ============================================================
@@ -330,9 +327,9 @@ function showCard(){
   ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
 
   if(mode==="zh"){
-    document.getElementById("front-zh").textContent=c.zh;
     document.getElementById("front-zh").style.display="";
     document.getElementById("front-id").style.display="none";
+    document.getElementById("zh-disp").textContent=c.zh;
     document.getElementById("ans-zh-wrap").style.display="";
     document.getElementById("ans-id-wrap").style.display="none";
     document.getElementById("ans-py").textContent=c.py;
@@ -398,10 +395,10 @@ function showResult(){
   document.getElementById("ri2").textContent=pct>=90?"🏆":pct>=70?"🌟":pct>=50?"💪":"😤";
   document.getElementById("rt").textContent="Selesai Ronde "+ronde+"!";
   document.getElementById("rs").textContent=
-    pct>=90?"Hampir sempurna! "+toRev.length+" kalimat tersisa.":
-    pct>=70?"Bagus! "+toRev.length+" kalimat perlu diulang.":
-    "Semangat! "+toRev.length+" kalimat menunggumu.";
-  document.getElementById("nb").textContent="Ulangi "+toRev.length+" kalimat yang belum";
+    pct>=90?"Hampir sempurna! "+toRev.length+" kata tersisa.":
+    pct>=70?"Bagus! "+toRev.length+" kata perlu diulang.":
+    "Semangat! "+toRev.length+" kata menunggumu.";
+  document.getElementById("nb").textContent="Ulangi "+toRev.length+" kata yang belum";
   var rl=document.getElementById("rl");rl.innerHTML="";
   var belumList=toRev.filter(function(v){return (v._b||0)>0;});
   if(belumList.length===0){
