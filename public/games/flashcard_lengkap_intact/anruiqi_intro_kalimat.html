@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>安睿祺 — 自我介紹 Kalimat per Kalimat</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#eef2f7;font-family:"DM Sans",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;}
+#app{width:100%;max-width:540px;}
+h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:3px;}
+.sub{font-size:12px;color:#8a8478;text-align:center;margin-bottom:10px;}
+
+/* Mode switch */
+.mode-sw{display:flex;background:#fff;border:1px solid #e8e4dc;border-radius:99px;padding:3px;gap:2px;margin-bottom:10px;}
+.mode-sw label{flex:1;text-align:center;font-size:11px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:99px;color:#8a8478;transition:all .2s;user-select:none;}
+.mode-sw input[type=radio]{display:none;}
+.mode-sw input[type=radio]:checked+label{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.3);}
+
+/* Filters */
+.filters{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px;}
+.fb{padding:5px 12px;border-radius:99px;border:1px solid #e8e4dc;background:#fff;color:#8a8478;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:#7c3aed;color:#7c3aed;}
+.fb.on{background:#7c3aed;color:#fff;border-color:#7c3aed;}
+
+/* Top bar */
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 11px;border-radius:99px;background:#f3e8ff;color:#7c3aed;}
+.ctr{font-size:13px;color:#8a8478;}
+.pbar-bg{height:4px;background:#e8e4dc;border-radius:99px;margin-bottom:.4rem;}
+.pbar{height:4px;background:linear-gradient(90deg,#7c3aed,#2563eb);border-radius:99px;transition:width .4s;}
+.plabels{display:flex;justify-content:space-between;font-size:11px;color:#8a8478;margin-bottom:.7rem;}
+
+/* Pills */
+.pills{display:flex;gap:6px;margin-bottom:.8rem;}
+.pill{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 4px;border-radius:99px;border:1px solid;font-size:12px;font-weight:500;}
+.pl-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.pl-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.pl-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+.dp{background:#15803d;}.dh{background:#a05c00;}.db{background:#dc2626;}
+
+/* Card */
+.card{background:#fff;border:1px solid #e8e4dc;border-radius:20px;box-shadow:0 4px 20px rgba(124,58,237,.08);min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.6rem 1.4rem;margin-bottom:.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc,linear-gradient(90deg,#7c3aed,#2563eb));}
+.card:hover:not(.done){transform:translateY(-2px);box-shadow:0 8px 28px rgba(124,58,237,.15);}
+.card-badges{display:flex;gap:6px;margin-bottom:.8rem;flex-wrap:wrap;justify-content:center;}
+.card-num{font-size:10px;font-weight:600;color:#a0aec0;background:#f7f8fa;border:1px solid #e8e4dc;border-radius:99px;padding:2px 8px;}
+.cat-badge{font-size:10px;font-weight:700;border-radius:99px;padding:2px 10px;}
+
+/* Front: kalimat Mandarin */
+.zh-front{font-family:"Noto Serif TC",serif;font-size:18px;font-weight:700;color:#1a1814;text-align:center;line-height:1.75;width:100%;}
+/* Front mode balik: Indonesia */
+.id-front{font-size:15px;font-weight:600;color:#1a1814;text-align:center;line-height:1.7;width:100%;background:#f3e8ff;border:1.5px solid #c4b5fd;border-radius:12px;padding:12px 14px;}
+
+.tap{font-size:12px;color:#b0a8c4;margin-top:1rem;display:flex;align-items:center;gap:5px;}
+
+/* Answer */
+.ans{margin-top:.8rem;width:100%;animation:fup .25s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dl{width:36px;height:1px;background:#e8e4dc;margin:0 auto .7rem;}
+.atag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0a8c4;margin-bottom:4px;text-align:center;}
+.ans-py{font-size:13px;font-weight:700;color:#7c3aed;text-align:center;margin-bottom:8px;line-height:1.7;}
+.ans-id{font-size:14px;font-weight:600;color:#1a1814;text-align:center;line-height:1.75;}
+.ans-zh{font-family:"Noto Serif TC",serif;font-size:17px;font-weight:700;color:#1a1814;text-align:center;line-height:1.75;background:#f8f5ff;border:1.5px solid #c4b5fd;border-radius:12px;padding:12px 14px;width:100%;}
+.ans-note{font-size:11px;color:#a05c00;background:#fef3e2;border-radius:8px;padding:6px 12px;margin-top:8px;font-style:italic;text-align:center;}
+
+/* Buttons */
+.btnrow{display:flex;gap:7px;margin-bottom:.7rem;}
+.cb{flex:1;padding:10px 5px;border-radius:13px;border:1.5px solid;font-family:"DM Sans",sans-serif;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .14s;}
+.cb-ico{font-size:17px;}.cb-sub{font-size:9px;font-weight:500;opacity:.7;}
+.cb-p{background:#f0fdf4;border-color:#86efac;color:#15803d;}.cb-p:hover{background:#dcfce7;}
+.cb-h{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}.cb-h:hover{background:#fde8c2;}
+.cb-b{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}.cb-b:hover{background:#fee2e2;}
+
+/* Result */
+.res{text-align:center;padding:.8rem 0;}
+.res-ico{font-size:52px;margin-bottom:.7rem;}
+.res-title{font-size:20px;font-weight:700;color:#1a1814;margin-bottom:.3rem;}
+.res-sub{font-size:13px;color:#8a8478;margin-bottom:1.2rem;line-height:1.6;}
+.srow{display:flex;gap:7px;margin-bottom:1.2rem;}
+.sbox{flex:1;padding:10px 5px;border-radius:13px;border:1px solid;text-align:center;}
+.sn{font-size:22px;font-weight:700;}.sl{font-size:10px;margin-top:2px;font-weight:500;}
+.sbp{background:#f0fdf4;border-color:#86efac;color:#15803d;}
+.sbh{background:#fef3e2;border-color:#f5c97a;color:#a05c00;}
+.sbb{background:#fff1f2;border-color:#fca5a5;color:#dc2626;}
+.rlist-wrap{text-align:left;margin-bottom:1rem;}
+.rlist-ttl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a8478;margin-bottom:6px;}
+.rlist{border:1px solid #e8e4dc;border-radius:13px;overflow:hidden;max-height:220px;overflow-y:auto;}
+.ri{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-bottom:1px solid #f0f0f0;background:#fff;}
+.ri:last-child{border-bottom:none;}
+.ri-zh{font-family:"Noto Serif TC",serif;font-size:13px;color:#1a1814;flex:1;line-height:1.6;}
+.ri-score{font-size:10px;font-weight:700;border-radius:99px;padding:2px 7px;flex-shrink:0;background:#fff1f2;color:#dc2626;}
+.btnbig{width:100%;padding:13px;border-radius:13px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:8px;border:none;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.25);}
+.btn-purple:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1.5px solid #e8e4dc!important;color:#8a8478;}
+.btn-ghost:hover{background:#f5f3ff;}
+.final{text-align:center;padding:2.5rem 0;}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>🎤 安睿祺 — 自我介紹</h1>
+  <p class="sub">Hafal kalimat per kalimat · ketuk untuk terjemahan</p>
+
+  <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#8a8478;text-align:center;margin-bottom:5px;">MODE</div>
+  <div class="mode-sw">
+    <input type="radio" name="mode" id="m-zh" value="zh" checked>
+    <label for="m-zh">🀄 Mandarin → Tebak Arti</label>
+    <input type="radio" name="mode" id="m-id" value="id">
+    <label for="m-id">🇮🇩 Indonesia → Tebak Mandarin</label>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="fb on" onclick="setFilter('ALL',this)">Semua</button>
+    <button class="fb" onclick="setFilter('PEMBUKAAN',this)">👋 Pembukaan</button>
+    <button class="fb" onclick="setFilter('KARYA',this)">🛠 Karya</button>
+    <button class="fb" onclick="setFilter('PENUTUP',this)">🎯 Penutup</button>
+  </div>
+
+  <div id="qv">
+    <div class="topbar">
+      <span class="badge" id="rb">Ronde 1</span>
+      <span class="ctr" id="ctr">1/9</span>
+    </div>
+    <div class="pbar-bg"><div class="pbar" id="pb" style="width:0%"></div></div>
+    <div class="plabels"><span id="pl">0 selesai</span><span id="pr">9 kartu</span></div>
+
+    <div class="pills">
+      <div class="pill pl-p"><span class="dot dp"></span>&nbsp;<span id="sp">0</span>&nbsp;Paham</div>
+      <div class="pill pl-h"><span class="dot dh"></span>&nbsp;<span id="sh">0</span>&nbsp;Hampir</div>
+      <div class="pill pl-b"><span class="dot db"></span>&nbsp;<span id="sb">0</span>&nbsp;Belum</div>
+    </div>
+
+    <div class="card" id="card" onclick="reveal()">
+      <div class="card-badges">
+        <span class="card-num" id="cn">#1</span>
+        <span class="cat-badge" id="ctb"></span>
+      </div>
+      <!-- Mode ZH: tampil kalimat Mandarin -->
+      <div class="zh-front" id="front-zh"></div>
+      <!-- Mode ID: tampil kalimat Indonesia -->
+      <div class="id-front" id="front-id" style="display:none"></div>
+
+      <div class="tap" id="tap"><span>👆</span>Ketuk untuk jawaban</div>
+
+      <div class="ans" id="ans" style="display:none">
+        <div class="dl"></div>
+        <!-- Mode ZH: reveal pinyin + terjemahan -->
+        <div id="ans-zh-wrap">
+          <div class="atag">PINYIN</div>
+          <div class="ans-py" id="ans-py"></div>
+          <div class="atag">🇮🇩 Artinya</div>
+          <div class="ans-id" id="ans-id"></div>
+        </div>
+        <!-- Mode ID: reveal kalimat Mandarin -->
+        <div id="ans-id-wrap" style="display:none">
+          <div class="atag">🀄 Mandarin</div>
+          <div class="ans-zh" id="ans-zh-rev"></div>
+          <div class="atag" style="margin-top:8px">PINYIN</div>
+          <div class="ans-py" id="ans-py2"></div>
+        </div>
+        <div class="ans-note" id="ans-note" style="display:none"></div>
+      </div>
+    </div>
+
+    <div class="btnrow" id="ba" style="display:none">
+      <button class="cb cb-b" onclick="rate(0)"><span class="cb-ico">😵</span><span>Belum</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-h" onclick="rate(1)"><span class="cb-ico">🤔</span><span>Hampir</span><span class="cb-sub">Ulang</span></button>
+      <button class="cb cb-p" onclick="rate(2)"><span class="cb-ico">✅</span><span>Paham</span><span class="cb-sub">Lanjut</span></button>
+    </div>
+  </div>
+
+  <!-- Hasil ronde -->
+  <div id="rv" style="display:none">
+    <div class="res">
+      <div class="res-ico" id="ri2">🌟</div>
+      <div class="res-title" id="rt">Selesai Ronde 1!</div>
+      <div class="res-sub" id="rs"></div>
+      <div class="srow">
+        <div class="sbox sbp"><div class="sn" id="rp">0</div><div class="sl">Paham</div></div>
+        <div class="sbox sbh"><div class="sn" id="rh">0</div><div class="sl">Hampir</div></div>
+        <div class="sbox sbb"><div class="sn" id="rbb">0</div><div class="sl">Belum</div></div>
+      </div>
+      <div class="rlist-wrap" id="rlw" style="display:none">
+        <div class="rlist-ttl">Yang perlu diulang</div>
+        <div class="rlist" id="rl"></div>
+      </div>
+      <button class="btnbig btn-purple" id="nb" onclick="nextRonde()">Ulangi yang belum</button>
+      <button class="btnbig btn-ghost" onclick="restartAll()">Mulai dari awal</button>
+    </div>
+  </div>
+
+  <!-- Selesai semua -->
+  <div id="fv3" style="display:none">
+    <div class="final">
+      <div style="font-size:60px;margin-bottom:1rem;">🏆</div>
+      <div style="font-size:22px;font-weight:700;color:#1a1814;margin-bottom:.5rem;">Hafal semua!</div>
+      <div style="font-size:14px;color:#8a8478;margin-bottom:1.5rem;">Semua kalimat perkenalan sudah kamu kuasai 💪</div>
+      <button class="btnbig btn-purple" onclick="restartAll()">Ulangi dari awal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// WARNA PER KATEGORI
+// ============================================================
+var CAT_CFG = {
+  PEMBUKAAN: {label:"👋 Pembukaan", bg:"#f3e8ff", fg:"#7c3aed", acc:"linear-gradient(90deg,#7c3aed,#a855f7)"},
+  KARYA:     {label:"🛠 Karya",     bg:"#eff6ff", fg:"#2563eb", acc:"linear-gradient(90deg,#2563eb,#60a5fa)"},
+  PENUTUP:   {label:"🎯 Penutup",   bg:"#f0fdf4", fg:"#16a34a", acc:"linear-gradient(90deg,#16a34a,#4ade80)"},
+};
+
+// ============================================================
+// DATA KARTU — satu kartu = satu kalimat
+// ============================================================
+var V = [
+  // ── PEMBUKAAN ────────────────────────────────────────────────
+  {
+    order: 1,
+    cat: "PEMBUKAAN",
+    zh: "老師好、同學們好。",
+    py: "Lǎoshī hǎo, tóngxuémen hǎo.",
+    id: "Selamat pagi Bu Guru, selamat pagi teman-teman.",
+    note: "Sapaan formal di kelas Taiwan — 老師 (lǎoshī) = guru, 同學們 (tóngxuémen) = teman-teman sekelas"
+  },
+  {
+    order: 2,
+    cat: "PEMBUKAAN",
+    zh: "我是安睿祺，來自印尼。",
+    py: "Wǒ shì Ān Ruìqí, láizì Yìnní.",
+    id: "Saya adalah An Ruiqi, berasal dari Indonesia.",
+    note: "來自 (láizì) = berasal dari · 印尼 (Yìnní) = Indonesia"
+  },
+  {
+    order: 3,
+    cat: "PEMBUKAAN",
+    zh: "今天我想用自己參與過的專題和做過的網站，讓大家更了解我。",
+    py: "Jīntiān wǒ xiǎng yòng zìjǐ cānyù guò de zhuāntí hé zuò guò de wǎngzhàn, ràng dàjiā gèng liǎojiě wǒ.",
+    id: "Hari ini saya ingin menggunakan proyek dan website yang pernah saya buat, agar kalian lebih mengenal saya.",
+    note: "參與過 (cānyù guò) = pernah berpartisipasi · 專題 (zhuāntí) = proyek · 網站 (wǎngzhàn) = website · 讓 (ràng) = membuat/agar"
+  },
+  // ── KARYA ────────────────────────────────────────────────────
+  {
+    order: 4,
+    cat: "KARYA",
+    zh: "這些作品有些是跟同學一起完成的，",
+    py: "Zhèxiē zuòpǐn yǒuxiē shì gēn tóngxué yīqǐ wánchéng de,",
+    id: "Beberapa karya ini diselesaikan bersama teman-teman,",
+    note: "作品 (zuòpǐn) = karya · 有些 (yǒuxiē) = beberapa · 跟…一起 (gēn…yīqǐ) = bersama dengan · 完成 (wánchéng) = menyelesaikan"
+  },
+  {
+    order: 5,
+    cat: "KARYA",
+    zh: "有些是為了解決我自己的問題。",
+    py: "Yǒuxiē shì wèile jiějué wǒ zìjǐ de wèntí.",
+    id: "dan beberapa lagi dibuat untuk menyelesaikan masalah saya sendiri.",
+    note: "為了 (wèile) = demi/untuk · 解決 (jiějué) = menyelesaikan · 問題 (wèntí) = masalah"
+  },
+  // ── PENUTUP ──────────────────────────────────────────────────
+  {
+    order: 6,
+    cat: "PENUTUP",
+    zh: "謝謝大家的聆聽。",
+    py: "Xièxiè dàjiā de língtīng.",
+    id: "Terima kasih atas perhatian kalian semua.",
+    note: "聆聽 (língtīng) = mendengarkan dengan seksama (lebih formal dari 聽)"
+  },
+];
+
+// ============================================================
+// LOGIKA GAME
+// ============================================================
+var deck=[], idx=0, cp=0, ch=0, cbv=0, toRev=[], ronde=1, rev=false, activeFilter="ALL";
+
+function getMode(){ return document.querySelector('input[name="mode"]:checked').value; }
+
+function shuffle(arr){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=a[i];a[i]=a[j];a[j]=t;
+  }
+  return a;
+}
+
+function setFilter(f, btn){
+  activeFilter=f;
+  document.querySelectorAll(".fb").forEach(function(b){b.classList.remove("on");});
+  btn.classList.add("on");
+  restartAll();
+}
+
+function buildDeck(source){
+  var base = activeFilter==="ALL" ? source.slice() : source.filter(function(c){return c.cat===activeFilter;});
+  return shuffle(base);
+}
+
+function restartAll(){
+  cp=0;ch=0;cbv=0;toRev=[];ronde=1;idx=0;
+  V.forEach(function(c){delete c._h;delete c._b;});
+  deck=buildDeck(V);
+  document.getElementById("qv").style.display="";
+  document.getElementById("rv").style.display="none";
+  document.getElementById("fv3").style.display="none";
+  document.getElementById("rb").textContent="Ronde 1";
+  upStats();showCard();
+}
+
+function nextRonde(){
+  ronde++;
+  deck=shuffle(toRev.slice());toRev=[];idx=0;
+  document.getElementById("rv").style.display="none";
+  document.getElementById("qv").style.display="";
+  document.getElementById("rb").textContent="Ronde "+ronde;
+  upStats();showCard();
+}
+
+function showCard(){
+  rev=false;
+  var c=deck[idx];
+  var cfg=CAT_CFG[c.cat];
+  var mode=getMode();
+  document.getElementById("card").style.setProperty("--acc",cfg.acc);
+  document.getElementById("cn").textContent="#"+(idx+1);
+  var ctb=document.getElementById("ctb");
+  ctb.textContent=cfg.label;ctb.style.background=cfg.bg;ctb.style.color=cfg.fg;
+
+  if(mode==="zh"){
+    document.getElementById("front-zh").textContent=c.zh;
+    document.getElementById("front-zh").style.display="";
+    document.getElementById("front-id").style.display="none";
+    document.getElementById("ans-zh-wrap").style.display="";
+    document.getElementById("ans-id-wrap").style.display="none";
+    document.getElementById("ans-py").textContent=c.py;
+    document.getElementById("ans-id").textContent=c.id;
+  } else {
+    document.getElementById("front-id").textContent=c.id;
+    document.getElementById("front-id").style.display="";
+    document.getElementById("front-zh").style.display="none";
+    document.getElementById("ans-zh-wrap").style.display="none";
+    document.getElementById("ans-id-wrap").style.display="";
+    document.getElementById("ans-zh-rev").textContent=c.zh;
+    document.getElementById("ans-py2").textContent=c.py;
+  }
+
+  var noteEl=document.getElementById("ans-note");
+  if(c.note){noteEl.textContent="💡 "+c.note;noteEl.style.display="";}
+  else{noteEl.style.display="none";}
+
+  document.getElementById("ans").style.display="none";
+  document.getElementById("tap").style.display="";
+  document.getElementById("ba").style.display="none";
+  document.getElementById("card").className="card";
+  document.getElementById("ctr").textContent=(idx+1)+"/"+deck.length;
+  var pct=Math.round(idx/deck.length*100);
+  document.getElementById("pb").style.width=pct+"%";
+  document.getElementById("pl").textContent=idx+" selesai";
+  document.getElementById("pr").textContent=deck.length+" kartu";
+}
+
+function reveal(){
+  if(rev)return;rev=true;
+  document.getElementById("ans").style.display="";
+  document.getElementById("tap").style.display="none";
+  document.getElementById("ba").style.display="";
+  document.getElementById("card").className="card done";
+}
+
+function rate(r){
+  var c=deck[idx];
+  if(r===2)cp++;
+  else if(r===1){ch++;c._h=(c._h||0)+1;toRev.push(c);}
+  else{cbv++;c._b=(c._b||0)+1;toRev.push(c);}
+  upStats();idx++;
+  if(idx>=deck.length){showResult();return;}
+  showCard();
+}
+
+function upStats(){
+  document.getElementById("sp").textContent=cp;
+  document.getElementById("sh").textContent=ch;
+  document.getElementById("sb").textContent=cbv;
+}
+
+function showResult(){
+  document.getElementById("pb").style.width="100%";
+  document.getElementById("qv").style.display="none";
+  if(toRev.length===0){document.getElementById("fv3").style.display="";return;}
+  document.getElementById("rv").style.display="";
+  document.getElementById("rp").textContent=cp;
+  document.getElementById("rh").textContent=ch;
+  document.getElementById("rbb").textContent=cbv;
+  var pct=Math.round(cp/deck.length*100);
+  document.getElementById("ri2").textContent=pct>=90?"🏆":pct>=70?"🌟":pct>=50?"💪":"😤";
+  document.getElementById("rt").textContent="Selesai Ronde "+ronde+"!";
+  document.getElementById("rs").textContent=
+    pct>=90?"Hampir sempurna! "+toRev.length+" kalimat tersisa.":
+    pct>=70?"Bagus! "+toRev.length+" kalimat perlu diulang.":
+    "Semangat! "+toRev.length+" kalimat menunggumu.";
+  document.getElementById("nb").textContent="Ulangi "+toRev.length+" kalimat yang belum";
+  var rl=document.getElementById("rl");rl.innerHTML="";
+  var belumList=toRev.filter(function(v){return (v._b||0)>0;});
+  if(belumList.length===0){
+    rl.innerHTML="<div style='padding:10px 12px;font-size:12px;color:#8a8478;text-align:center'>Tidak ada yang sulit 🎉</div>";
+  } else {
+    belumList.forEach(function(v){
+      var d=document.createElement("div");d.className="ri";
+      d.innerHTML="<span class='ri-zh'>"+v.zh+"</span><span class='ri-score'>✗"+(v._b||0)+"</span>";
+      rl.appendChild(d);
+    });
+    document.getElementById("rlw").style.display="";
+  }
+}
+
+document.querySelectorAll('input[name="mode"]').forEach(function(r){
+  r.addEventListener("change",function(){if(!rev)showCard();});
+});
+
+restartAll();
+</script>
+</body>
+</html>
