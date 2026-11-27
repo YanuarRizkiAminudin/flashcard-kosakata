@@ -109,6 +109,23 @@ h1{font-size:15px;font-weight:700;color:#1a1814;text-align:center;margin-bottom:
     <button class="fb" onclick="setFilter('L8',this)">L8</button>
     <button class="fb" onclick="setFilter('L9',this)">L9</button>
     <button class="fb" onclick="setFilter('L10',this)">L10</button>
+    <button class="fb" onclick="setFilter('CL',this)">📢 Kelas</button>
+    <button class="fb" onclick="setFilter('NUM',this)">🔢 Angka</button>
+    <button class="fb" onclick="setFilter('DAY',this)">📅 Hari</button>
+    <button class="fb" onclick="setFilter('MON',this)">🗓 Bulan</button>
+    <button class="fb" onclick="setFilter('CTY',this)">🌏 Negara</button>
+    <button class="fb" onclick="setFilter('FAM',this)">👨‍👩‍👧 Keluarga</button>
+    <button class="fb" onclick="setFilter('JOB',this)">💼 Profesi</button>
+    <button class="fb" onclick="setFilter('ACT',this)">🏃 Aktivitas</button>
+    <button class="fb" onclick="setFilter('PLC',this)">📍 Tempat</button>
+    <button class="fb" onclick="setFilter('QW',this)">❓ Kata Tanya</button>
+    <button class="fb" onclick="setFilter('ADJ',this)">✨ Kata Sifat</button>
+    <button class="fb" onclick="setFilter('ADV',this)">⚡ Kata Ket.</button>
+    <button class="fb" onclick="setFilter('GRM',this)">🔗 Tata Bahasa</button>
+    <button class="fb" onclick="setFilter('AUX',this)">🎯 Kata Kerja Bantu</button>
+    <button class="fb" onclick="setFilter('PHR',this)">💬 Frasa</button>
+    <button class="fb" onclick="setFilter('OBJ',this)">📦 Benda</button>
+    <button class="fb" onclick="setFilter('VRB',this)">▶ Kata Kerja</button>
   </div>
 
   <div id="qv">
@@ -202,6 +219,23 @@ var LCFG = {
   L8:  {label:"L8 · 生日快樂",        bg:"#fdf2f8",fg:"#c026d3",acc:"linear-gradient(90deg,#c026d3,#e879f9)"},
   L9:  {label:"L9 · 星期五有時間",     bg:"#ecfeff",fg:"#0891b2",acc:"linear-gradient(90deg,#0891b2,#22d3ee)"},
   L10: {label:"L10 · 學華語難不難",    bg:"#f0fdf4",fg:"#059669",acc:"linear-gradient(90deg,#059669,#34d399)"},
+  CL:  {label:"📢 Kelas",             bg:"#fefce8",fg:"#b45309",acc:"linear-gradient(90deg,#b45309,#f59e0b)"},
+  NUM: {label:"🔢 Angka",             bg:"#f0fdf4",fg:"#15803d",acc:"linear-gradient(90deg,#15803d,#4ade80)"},
+  DAY: {label:"📅 Hari & Waktu",      bg:"#eff6ff",fg:"#1d4ed8",acc:"linear-gradient(90deg,#1d4ed8,#60a5fa)"},
+  MON: {label:"🗓 Bulan & Tanggal",   bg:"#fdf4ff",fg:"#7e22ce",acc:"linear-gradient(90deg,#7e22ce,#c084fc)"},
+  CTY: {label:"🌏 Negara",            bg:"#ecfeff",fg:"#0e7490",acc:"linear-gradient(90deg,#0e7490,#22d3ee)"},
+  FAM: {label:"👨‍👩‍👧 Keluarga",         bg:"#fef3e2",fg:"#c2410c",acc:"linear-gradient(90deg,#c2410c,#fb923c)"},
+  JOB: {label:"💼 Profesi",           bg:"#f0fdf4",fg:"#166534",acc:"linear-gradient(90deg,#166534,#86efac)"},
+  ACT: {label:"🏃 Aktivitas",         bg:"#fff7ed",fg:"#9a3412",acc:"linear-gradient(90deg,#9a3412,#fb923c)"},
+  PLC: {label:"📍 Tempat",            bg:"#f0f9ff",fg:"#0369a1",acc:"linear-gradient(90deg,#0369a1,#38bdf8)"},
+  QW:  {label:"❓ Kata Tanya",        bg:"#fdf2f8",fg:"#86198f",acc:"linear-gradient(90deg,#86198f,#e879f9)"},
+  ADJ: {label:"✨ Kata Sifat",        bg:"#fefce8",fg:"#854d0e",acc:"linear-gradient(90deg,#854d0e,#fde047)"},
+  ADV: {label:"⚡ Kata Keterangan",   bg:"#f1f5f9",fg:"#334155",acc:"linear-gradient(90deg,#334155,#94a3b8)"},
+  GRM: {label:"🔗 Tata Bahasa",       bg:"#fef2f2",fg:"#991b1b",acc:"linear-gradient(90deg,#991b1b,#fca5a5)"},
+  AUX: {label:"🎯 Kata Kerja Bantu",  bg:"#f5f3ff",fg:"#4c1d95",acc:"linear-gradient(90deg,#4c1d95,#a78bfa)"},
+  PHR: {label:"💬 Frasa Berguna",     bg:"#f0fdfa",fg:"#115e59",acc:"linear-gradient(90deg,#115e59,#5eead4)"},
+  OBJ: {label:"📦 Benda & Barang",    bg:"#fffbeb",fg:"#92400e",acc:"linear-gradient(90deg,#92400e,#fcd34d)"},
+  VRB: {label:"▶ Kata Kerja",         bg:"#eff6ff",fg:"#1e3a8a",acc:"linear-gradient(90deg,#1e3a8a,#93c5fd)"},
 };
 
 // ============================================================
@@ -209,6 +243,28 @@ var LCFG = {
 // format: {l, zh, py, pos, id, note}
 // ============================================================
 var V = [
+// ─────────────────────────────────────────────────────────
+// CLASSROOM EXPRESSIONS 課堂用語
+// ─────────────────────────────────────────────────────────
+{l:"CL",zh:"你好",           py:"Nǐ hǎo",             pos:"",   id:"Halo / Selamat pagi"},
+{l:"CL",zh:"大家好",         py:"Dàjiā hǎo",           pos:"",   id:"Halo semuanya"},
+{l:"CL",zh:"你們好",         py:"Nǐmen hǎo",           pos:"",   id:"Halo kalian semua"},
+{l:"CL",zh:"老師好",         py:"Lǎoshī hǎo",          pos:"",   id:"Halo Bu/Pak Guru"},
+{l:"CL",zh:"開始上課",       py:"Kāishǐ shàngkè",      pos:"",   id:"Mari mulai kelas"},
+{l:"CL",zh:"請跟我念",       py:"Qǐng gēn wǒ niàn",    pos:"",   id:"Tolong ulangi setelah saya"},
+{l:"CL",zh:"請你念",         py:"Qǐng nǐ niàn",        pos:"",   id:"Tolong kamu baca keras"},
+{l:"CL",zh:"請你說",         py:"Qǐng nǐ shuō",        pos:"",   id:"Tolong kamu ucapkan"},
+{l:"CL",zh:"大家一起說",     py:"Dàjiā yīqǐ shuō",     pos:"",   id:"Semua bilang bersama"},
+{l:"CL",zh:"我不懂",         py:"Wǒ bù dǒng",          pos:"",   id:"Saya tidak mengerti"},
+{l:"CL",zh:"有問題嗎",       py:"Yǒu wèntí ma?",       pos:"",   id:"Ada pertanyaan?"},
+{l:"CL",zh:"我有問題",       py:"Wǒ yǒu wèntí",        pos:"",   id:"Saya punya pertanyaan"},
+{l:"CL",zh:"請舉手",         py:"Qǐng jǔshǒu",         pos:"",   id:"Tolong angkat tangan"},
+{l:"CL",zh:"下課",           py:"Xià kè",              pos:"",   id:"Kelas selesai / bubaran"},
+{l:"CL",zh:"謝謝",           py:"Xièxie",              pos:"",   id:"Terima kasih"},
+{l:"CL",zh:"不客氣",         py:"Bú kèqi",             pos:"",   id:"Sama-sama"},
+{l:"CL",zh:"這是什麼",       py:"Zhè shì shénme?",     pos:"",   id:"Ini apa?"},
+{l:"CL",zh:"請再說一遍",     py:"Qǐng zài shuō yībiàn",pos:"",   id:"Tolong ulangi sekali lagi"},
+{l:"CL",zh:"再見",           py:"Zàijiàn",             pos:"",   id:"Sampai jumpa"},
   // ══════════════════════════════════════════════════════════
   // LESSON 1 — 您好 Hello!
   // ══════════════════════════════════════════════════════════
@@ -476,6 +532,379 @@ var V = [
   {l:"L10",zh:"做飯",  py:"zuòfàn",     pos:"",      id:"memasak"},
   {l:"L10",zh:"快",    py:"kuài",       pos:"Vs",    id:"cepat"},
   {l:"L10",zh:"貴",    py:"guì",        pos:"Vs",    id:"mahal"},
+
+// ─────────────────────────────────────────────────────────
+// ANGKA 數字 0–100 (semua)
+// ─────────────────────────────────────────────────────────
+{l:"NUM",zh:"零",   py:"líng",    pos:"Num", id:"nol (0)"},
+{l:"NUM",zh:"一",   py:"yī",      pos:"Num", id:"satu (1)"},
+{l:"NUM",zh:"二",   py:"èr",      pos:"Num", id:"dua (2) — untuk berhitung"},
+{l:"NUM",zh:"三",   py:"sān",     pos:"Num", id:"tiga (3)"},
+{l:"NUM",zh:"四",   py:"sì",      pos:"Num", id:"empat (4)"},
+{l:"NUM",zh:"五",   py:"wǔ",      pos:"Num", id:"lima (5)"},
+{l:"NUM",zh:"六",   py:"liù",     pos:"Num", id:"enam (6)"},
+{l:"NUM",zh:"七",   py:"qī",      pos:"Num", id:"tujuh (7)"},
+{l:"NUM",zh:"八",   py:"bā",      pos:"Num", id:"delapan (8)"},
+{l:"NUM",zh:"九",   py:"jiǔ",     pos:"Num", id:"sembilan (9)"},
+{l:"NUM",zh:"十",   py:"shí",     pos:"Num", id:"sepuluh (10)"},
+{l:"NUM",zh:"十一", py:"shíyī",   pos:"Num", id:"sebelas (11)"},
+{l:"NUM",zh:"十二", py:"shí'èr",  pos:"Num", id:"dua belas (12)"},
+{l:"NUM",zh:"十三", py:"shísān",  pos:"Num", id:"tiga belas (13)"},
+{l:"NUM",zh:"十四", py:"shísì",   pos:"Num", id:"empat belas (14)"},
+{l:"NUM",zh:"十五", py:"shíwǔ",   pos:"Num", id:"lima belas (15)"},
+{l:"NUM",zh:"十六", py:"shíliù",  pos:"Num", id:"enam belas (16)"},
+{l:"NUM",zh:"十七", py:"shíqī",   pos:"Num", id:"tujuh belas (17)"},
+{l:"NUM",zh:"十八", py:"shíbā",   pos:"Num", id:"delapan belas (18)"},
+{l:"NUM",zh:"十九", py:"shíjiǔ",  pos:"Num", id:"sembilan belas (19)"},
+{l:"NUM",zh:"二十", py:"èrshí",   pos:"Num", id:"dua puluh (20)"},
+{l:"NUM",zh:"二十一",py:"èrshíyī",pos:"Num", id:"dua puluh satu (21)"},
+{l:"NUM",zh:"三十", py:"sānshí",  pos:"Num", id:"tiga puluh (30)"},
+{l:"NUM",zh:"四十", py:"sìshí",   pos:"Num", id:"empat puluh (40)"},
+{l:"NUM",zh:"五十", py:"wǔshí",   pos:"Num", id:"lima puluh (50)"},
+{l:"NUM",zh:"六十", py:"liùshí",  pos:"Num", id:"enam puluh (60)"},
+{l:"NUM",zh:"七十", py:"qīshí",   pos:"Num", id:"tujuh puluh (70)"},
+{l:"NUM",zh:"八十", py:"bāshí",   pos:"Num", id:"delapan puluh (80)"},
+{l:"NUM",zh:"九十", py:"jiǔshí",  pos:"Num", id:"sembilan puluh (90)"},
+{l:"NUM",zh:"一百", py:"yībǎi",   pos:"Num", id:"seratus (100)"},
+{l:"NUM",zh:"兩個", py:"liǎng ge",pos:"",    id:"dua (+ kata bantu bilangan)"},
+{l:"NUM",zh:"幾個", py:"jǐ ge",   pos:"",    id:"berapa (+ kata bantu bilangan)"},
+{l:"NUM",zh:"多少", py:"duōshǎo", pos:"QPr", id:"berapa banyak / berapa harganya"},
+
+// ─────────────────────────────────────────────────────────
+// HARI / 星期
+// ─────────────────────────────────────────────────────────
+{l:"DAY",zh:"星期一", py:"xīngqīyī",   pos:"N", id:"Senin"},
+{l:"DAY",zh:"星期二", py:"xīngqī'èr",  pos:"N", id:"Selasa"},
+{l:"DAY",zh:"星期三", py:"xīngqīsān",  pos:"N", id:"Rabu"},
+{l:"DAY",zh:"星期四", py:"xīngqīsì",   pos:"N", id:"Kamis"},
+{l:"DAY",zh:"星期五", py:"xīngqīwǔ",   pos:"N", id:"Jumat"},
+{l:"DAY",zh:"星期六", py:"xīngqīliù",  pos:"N", id:"Sabtu"},
+{l:"DAY",zh:"星期天", py:"xīngqītiān", pos:"N", id:"Minggu"},
+{l:"DAY",zh:"禮拜一", py:"lǐbàiyī",    pos:"N", id:"Senin (alternatif)"},
+{l:"DAY",zh:"禮拜六", py:"lǐbàiliù",   pos:"N", id:"Sabtu (alternatif)"},
+{l:"DAY",zh:"禮拜天", py:"lǐbàitiān",  pos:"N", id:"Minggu (alternatif)"},
+{l:"DAY",zh:"週末",   py:"zhōumò",     pos:"N", id:"akhir pekan"},
+{l:"DAY",zh:"今天",   py:"jīntiān",    pos:"N", id:"hari ini"},
+{l:"DAY",zh:"明天",   py:"míngtiān",   pos:"N", id:"besok"},
+{l:"DAY",zh:"每天",   py:"měitiān",    pos:"N", id:"setiap hari"},
+{l:"DAY",zh:"今年",   py:"jīnnián",    pos:"N", id:"tahun ini"},
+{l:"DAY",zh:"現在",   py:"xiànzài",    pos:"N", id:"sekarang"},
+{l:"DAY",zh:"上午",   py:"shàngwǔ",    pos:"N", id:"pagi hari (sebelum siang)"},
+{l:"DAY",zh:"下午",   py:"xiàwǔ",      pos:"N", id:"sore hari"},
+{l:"DAY",zh:"晚上",   py:"wǎnshàng",   pos:"N", id:"malam hari"},
+{l:"DAY",zh:"今年",   py:"jīnnián",    pos:"N", id:"tahun ini"},
+
+// ─────────────────────────────────────────────────────────
+// BULAN 月份
+// ─────────────────────────────────────────────────────────
+{l:"MON",zh:"一月",   py:"yīyuè",      pos:"N", id:"Januari"},
+{l:"MON",zh:"二月",   py:"èryuè",      pos:"N", id:"Februari"},
+{l:"MON",zh:"三月",   py:"sānyuè",     pos:"N", id:"Maret"},
+{l:"MON",zh:"四月",   py:"sìyuè",      pos:"N", id:"April"},
+{l:"MON",zh:"五月",   py:"wǔyuè",      pos:"N", id:"Mei"},
+{l:"MON",zh:"六月",   py:"liùyuè",     pos:"N", id:"Juni"},
+{l:"MON",zh:"七月",   py:"qīyuè",      pos:"N", id:"Juli"},
+{l:"MON",zh:"八月",   py:"bāyuè",      pos:"N", id:"Agustus"},
+{l:"MON",zh:"九月",   py:"jiǔyuè",     pos:"N", id:"September"},
+{l:"MON",zh:"十月",   py:"shíyuè",     pos:"N", id:"Oktober"},
+{l:"MON",zh:"十一月", py:"shíyīyuè",   pos:"N", id:"November"},
+{l:"MON",zh:"十二月", py:"shí'èryuè",  pos:"N", id:"Desember"},
+{l:"MON",zh:"月",     py:"yuè",        pos:"N", id:"bulan"},
+{l:"MON",zh:"號",     py:"hào",        pos:"N", id:"tanggal (percakapan)"},
+{l:"MON",zh:"日",     py:"rì",         pos:"N", id:"tanggal (tulisan formal)"},
+{l:"MON",zh:"年",     py:"nián",       pos:"N", id:"tahun"},
+
+// ─────────────────────────────────────────────────────────
+// NEGARA 國家
+// ─────────────────────────────────────────────────────────
+{l:"CTY",zh:"美國",   py:"Měiguó",     pos:"N", id:"Amerika Serikat"},
+{l:"CTY",zh:"臺灣",   py:"Táiwān",     pos:"N", id:"Taiwan"},
+{l:"CTY",zh:"法國",   py:"Fǎguó",      pos:"N", id:"Prancis"},
+{l:"CTY",zh:"德國",   py:"Déguó",      pos:"N", id:"Jerman"},
+{l:"CTY",zh:"英國",   py:"Yīngguó",    pos:"N", id:"Inggris"},
+{l:"CTY",zh:"日本",   py:"Rìběn",      pos:"N", id:"Jepang"},
+{l:"CTY",zh:"韓國",   py:"Hánguó",     pos:"N", id:"Korea Selatan"},
+{l:"CTY",zh:"中國",   py:"Zhōngguó",   pos:"N", id:"Tiongkok / China"},
+{l:"CTY",zh:"加拿大", py:"Jiānádà",    pos:"N", id:"Kanada"},
+{l:"CTY",zh:"墨西哥", py:"Mòxīgē",     pos:"N", id:"Meksiko"},
+{l:"CTY",zh:"巴西",   py:"Bāxī",       pos:"N", id:"Brasil"},
+{l:"CTY",zh:"泰國",   py:"Tàiguó",     pos:"N", id:"Thailand"},
+{l:"CTY",zh:"印尼",   py:"Yìnní",      pos:"N", id:"Indonesia"},
+{l:"CTY",zh:"臺北",   py:"Táiběi",     pos:"N", id:"Taipei"},
+{l:"CTY",zh:"加州",   py:"Jiāzhōu",    pos:"N", id:"California"},
+{l:"CTY",zh:"哪國人", py:"nǎ guó rén", pos:"",  id:"orang dari negara mana?"},
+{l:"CTY",zh:"美國人", py:"Měiguó rén", pos:"",  id:"orang Amerika"},
+{l:"CTY",zh:"臺灣人", py:"Táiwān rén", pos:"",  id:"orang Taiwan"},
+{l:"CTY",zh:"法國人", py:"Fǎguó rén",  pos:"",  id:"orang Prancis"},
+{l:"CTY",zh:"中國人", py:"Zhōngguó rén",pos:"", id:"orang Tiongkok"},
+
+// ─────────────────────────────────────────────────────────
+// PROFESI 職業
+// ─────────────────────────────────────────────────────────
+{l:"JOB",zh:"老師",   py:"lǎoshī",     pos:"N", id:"guru"},
+{l:"JOB",zh:"學生",   py:"xuéshēng",   pos:"N", id:"murid, pelajar"},
+{l:"JOB",zh:"工程師", py:"gōngchéngshī",pos:"N",id:"insinyur, teknisi"},
+{l:"JOB",zh:"廚師",   py:"chúshī",     pos:"N", id:"koki, juru masak"},
+{l:"JOB",zh:"服務員", py:"fúwùyuán",   pos:"N", id:"pelayan (restoran/toko)"},
+{l:"JOB",zh:"醫生",   py:"yīshēng",    pos:"N", id:"dokter"},
+{l:"JOB",zh:"護士",   py:"hùshi",      pos:"N", id:"perawat"},
+{l:"JOB",zh:"律師",   py:"lǜshī",      pos:"N", id:"pengacara"},
+{l:"JOB",zh:"軍人",   py:"jūnrén",     pos:"N", id:"tentara, prajurit"},
+{l:"JOB",zh:"商人",   py:"shāngrén",   pos:"N", id:"pedagang, pengusaha"},
+{l:"JOB",zh:"農人",   py:"nóngrén",    pos:"N", id:"petani"},
+{l:"JOB",zh:"退休了", py:"tuìxiū le",  pos:"",  id:"sudah pensiun"},
+{l:"JOB",zh:"工作",   py:"gōngzuò",    pos:"V/N",id:"bekerja; pekerjaan"},
+{l:"JOB",zh:"在哪裡工作",py:"zài nǎlǐ gōngzuò",pos:"",id:"bekerja di mana?"},
+{l:"JOB",zh:"大學",   py:"dàxué",      pos:"N", id:"universitas"},
+{l:"JOB",zh:"小學",   py:"xiǎoxué",    pos:"N", id:"sekolah dasar (SD)"},
+{l:"JOB",zh:"銀行",   py:"yínháng",    pos:"N", id:"bank"},
+{l:"JOB",zh:"公司",   py:"gōngsī",     pos:"N", id:"perusahaan"},
+{l:"JOB",zh:"辦公室", py:"bàngōngshì", pos:"N", id:"kantor"},
+
+// ─────────────────────────────────────────────────────────
+// KELUARGA 家庭
+// ─────────────────────────────────────────────────────────
+{l:"FAM",zh:"爸爸",   py:"bàba",       pos:"N", id:"ayah, papa"},
+{l:"FAM",zh:"媽媽",   py:"māma",       pos:"N", id:"ibu, mama"},
+{l:"FAM",zh:"哥哥",   py:"gēge",       pos:"N", id:"kakak laki-laki"},
+{l:"FAM",zh:"姊姊",   py:"jiějie",     pos:"N", id:"kakak perempuan"},
+{l:"FAM",zh:"弟弟",   py:"dìdi",       pos:"N", id:"adik laki-laki"},
+{l:"FAM",zh:"妹妹",   py:"mèimei",     pos:"N", id:"adik perempuan"},
+{l:"FAM",zh:"先生",   py:"xiānshēng",  pos:"N", id:"suami; Tuan (Mr.)"},
+{l:"FAM",zh:"太太",   py:"tàitai",     pos:"N", id:"istri; Nyonya (Mrs.)"},
+{l:"FAM",zh:"兒子",   py:"érzi",       pos:"N", id:"anak laki-laki"},
+{l:"FAM",zh:"女兒",   py:"nǚ'ér",      pos:"N", id:"anak perempuan"},
+{l:"FAM",zh:"孩子",   py:"háizi",      pos:"N", id:"anak"},
+{l:"FAM",zh:"小孩",   py:"xiǎohái",    pos:"N", id:"anak kecil"},
+{l:"FAM",zh:"父母",   py:"fùmǔ",       pos:"N", id:"orang tua (ayah dan ibu)"},
+{l:"FAM",zh:"大哥",   py:"dàgē",       pos:"N", id:"kakak laki-laki tertua"},
+{l:"FAM",zh:"兄弟姊妹",py:"xiōngdì jiěmèi",pos:"N",id:"saudara kandung"},
+{l:"FAM",zh:"爺爺",   py:"yéye",       pos:"N", id:"kakek (dari ayah)"},
+{l:"FAM",zh:"奶奶",   py:"nǎinai",     pos:"N", id:"nenek (dari ayah)"},
+{l:"FAM",zh:"外公",   py:"wàigōng",    pos:"N", id:"kakek (dari ibu)"},
+{l:"FAM",zh:"外婆",   py:"wàipó",      pos:"N", id:"nenek (dari ibu)"},
+{l:"FAM",zh:"伯伯",   py:"bóbo",       pos:"N", id:"paman (kakak ayah)"},
+{l:"FAM",zh:"叔叔",   py:"shūshu",     pos:"N", id:"paman (adik ayah)"},
+{l:"FAM",zh:"姑姑",   py:"gūgu",       pos:"N", id:"bibi (saudara perempuan ayah)"},
+{l:"FAM",zh:"舅舅",   py:"jiùjiu",     pos:"N", id:"paman (saudara laki ibu)"},
+{l:"FAM",zh:"阿姨",   py:"āyí",        pos:"N", id:"bibi (saudara perempuan ibu)"},
+{l:"FAM",zh:"堂妹",   py:"táng mèi",   pos:"N", id:"sepupu perempuan lebih muda (dari paman ayah)"},
+{l:"FAM",zh:"表妹",   py:"biǎo mèi",   pos:"N", id:"sepupu perempuan lebih muda (dari paman/bibi ibu)"},
+
+// ─────────────────────────────────────────────────────────
+// AKTIVITAS & HOBI 活動
+// ─────────────────────────────────────────────────────────
+{l:"ACT",zh:"跑步",   py:"pǎobù",      pos:"",  id:"berlari, jogging"},
+{l:"ACT",zh:"唱歌",   py:"chànggē",    pos:"",  id:"menyanyi"},
+{l:"ACT",zh:"跳舞",   py:"tiàowǔ",     pos:"",  id:"menari"},
+{l:"ACT",zh:"打網球", py:"dǎ wǎngqiú", pos:"",  id:"bermain tenis"},
+{l:"ACT",zh:"打籃球", py:"dǎ lánqiú",  pos:"",  id:"bermain basket"},
+{l:"ACT",zh:"踢足球", py:"tī zúqiú",   pos:"",  id:"bermain sepak bola"},
+{l:"ACT",zh:"看書",   py:"kàn shū",    pos:"",  id:"membaca buku"},
+{l:"ACT",zh:"看電視", py:"kàn diànshì",pos:"",  id:"menonton TV"},
+{l:"ACT",zh:"看電影", py:"kàn diànyǐng",pos:"", id:"menonton film"},
+{l:"ACT",zh:"聽音樂", py:"tīng yīnyuè",pos:"",  id:"mendengarkan musik"},
+{l:"ACT",zh:"念書",   py:"niànshū",    pos:"",  id:"belajar, sekolah"},
+{l:"ACT",zh:"做飯",   py:"zuòfàn",     pos:"",  id:"memasak"},
+{l:"ACT",zh:"吃飯",   py:"chīfàn",     pos:"",  id:"makan"},
+{l:"ACT",zh:"喝咖啡", py:"hē kāfēi",   pos:"",  id:"minum kopi"},
+{l:"ACT",zh:"打電話", py:"dǎ diànhuà", pos:"",  id:"menelepon"},
+{l:"ACT",zh:"練習說話",py:"liànxí shuōhuà",pos:"",id:"berlatih berbicara"},
+{l:"ACT",zh:"聊天",   py:"liáotiān",   pos:"",  id:"ngobrol"},
+{l:"ACT",zh:"休息",   py:"xiūxi",      pos:"V", id:"istirahat"},
+{l:"ACT",zh:"工作",   py:"gōngzuò",    pos:"V", id:"bekerja"},
+{l:"ACT",zh:"上課",   py:"shàngkè",    pos:"V", id:"masuk kelas, belajar"},
+{l:"ACT",zh:"下課",   py:"xiàkè",      pos:"V", id:"selesai kelas, bubaran"},
+{l:"ACT",zh:"買東西", py:"mǎi dōngxi", pos:"",  id:"belanja, membeli barang"},
+{l:"ACT",zh:"去玩",   py:"qù wán",     pos:"",  id:"pergi bersenang-senang"},
+{l:"ACT",zh:"回家",   py:"huíjiā",     pos:"",  id:"pulang ke rumah"},
+{l:"ACT",zh:"說法文", py:"shuō Fǎwén", pos:"",  id:"berbicara bahasa Prancis"},
+{l:"ACT",zh:"說英文", py:"shuō Yīngwén",pos:"", id:"berbicara bahasa Inggris"},
+{l:"ACT",zh:"說華語", py:"shuō Huáyǔ", pos:"",  id:"berbicara bahasa Mandarin"},
+{l:"ACT",zh:"寫漢字", py:"xiě Hànzì",  pos:"",  id:"menulis karakter Tionghoa"},
+
+// ─────────────────────────────────────────────────────────
+// TEMPAT 地方
+// ─────────────────────────────────────────────────────────
+{l:"PLC",zh:"家",     py:"jiā",        pos:"N", id:"rumah, keluarga"},
+{l:"PLC",zh:"學校",   py:"xuéxiào",    pos:"N", id:"sekolah"},
+{l:"PLC",zh:"大學",   py:"dàxué",      pos:"N", id:"universitas"},
+{l:"PLC",zh:"小學",   py:"xiǎoxué",    pos:"N", id:"sekolah dasar"},
+{l:"PLC",zh:"公園",   py:"gōngyuán",   pos:"N", id:"taman (kota)"},
+{l:"PLC",zh:"國家公園",py:"guójiā gōngyuán",pos:"N",id:"taman nasional"},
+{l:"PLC",zh:"餐廳",   py:"cāntīng",    pos:"N", id:"restoran"},
+{l:"PLC",zh:"銀行",   py:"yínháng",    pos:"N", id:"bank"},
+{l:"PLC",zh:"公司",   py:"gōngsī",     pos:"N", id:"perusahaan"},
+{l:"PLC",zh:"辦公室", py:"bàngōngshì", pos:"N", id:"kantor"},
+{l:"PLC",zh:"迪士尼樂園",py:"Díshìní Lèyuán",pos:"N",id:"Disneyland"},
+{l:"PLC",zh:"在哪裡", py:"zài nǎlǐ",   pos:"",  id:"ada di mana? di mana?"},
+{l:"PLC",zh:"住在",   py:"zhù zài",    pos:"V", id:"tinggal di"},
+{l:"PLC",zh:"去",     py:"qù",         pos:"V", id:"pergi"},
+{l:"PLC",zh:"來",     py:"lái",        pos:"V", id:"datang"},
+{l:"PLC",zh:"回來",   py:"huílái",     pos:"V", id:"kembali, pulang"},
+
+// ─────────────────────────────────────────────────────────
+// KATA TANYA 疑問詞
+// ─────────────────────────────────────────────────────────
+{l:"QW",zh:"什麼",    py:"shénme",     pos:"QPr", id:"apa"},
+{l:"QW",zh:"哪裡",    py:"nǎlǐ",       pos:"QPr", id:"di mana"},
+{l:"QW",zh:"誰",      py:"shéi",       pos:"QPr", id:"siapa"},
+{l:"QW",zh:"哪",      py:"nǎ",         pos:"QPr", id:"yang mana"},
+{l:"QW",zh:"幾",      py:"jǐ",         pos:"QPr", id:"berapa (kurang dari 10)"},
+{l:"QW",zh:"多少",    py:"duōshǎo",    pos:"QPr", id:"berapa banyak"},
+{l:"QW",zh:"怎麼樣",  py:"zěnmeyàng",  pos:"",    id:"bagaimana? apa pendapatmu?"},
+{l:"QW",zh:"什麼時候",py:"shénme shíhou",pos:"",  id:"kapan"},
+{l:"QW",zh:"為什麼",  py:"wèishénme",  pos:"QPr", id:"mengapa, kenapa"},
+{l:"QW",zh:"幾點",    py:"jǐ diǎn",    pos:"",    id:"pukul berapa"},
+{l:"QW",zh:"幾月幾號",py:"jǐ yuè jǐ hào",pos:"", id:"tanggal berapa bulan berapa"},
+{l:"QW",zh:"幾歲",    py:"jǐ suì",     pos:"",    id:"berapa umurnya"},
+
+// ─────────────────────────────────────────────────────────
+// KATA SIFAT / KEADAAN 狀態動詞
+// ─────────────────────────────────────────────────────────
+{l:"ADJ",zh:"好",     py:"hǎo",        pos:"Vs",  id:"baik, bagus"},
+{l:"ADJ",zh:"忙",     py:"máng",       pos:"Vs",  id:"sibuk"},
+{l:"ADJ",zh:"累",     py:"lèi",        pos:"Vs",  id:"lelah, capek"},
+{l:"ADJ",zh:"高興",   py:"gāoxìng",    pos:"Vs",  id:"senang, gembira"},
+{l:"ADJ",zh:"快樂",   py:"kuàilè",     pos:"Vs",  id:"bahagia"},
+{l:"ADJ",zh:"難",     py:"nán",        pos:"Vs",  id:"sulit, susah"},
+{l:"ADJ",zh:"好吃",   py:"hǎochī",     pos:"Vs",  id:"enak, lezat"},
+{l:"ADJ",zh:"不錯",   py:"búcuò",      pos:"Vs",  id:"lumayan bagus"},
+{l:"ADJ",zh:"快",     py:"kuài",       pos:"Vs",  id:"cepat"},
+{l:"ADJ",zh:"貴",     py:"guì",        pos:"Vs",  id:"mahal"},
+{l:"ADJ",zh:"大",     py:"dà",         pos:"Vs",  id:"besar"},
+{l:"ADJ",zh:"小",     py:"xiǎo",       pos:"Vs",  id:"kecil"},
+{l:"ADJ",zh:"多",     py:"duō",        pos:"Vs",  id:"banyak"},
+{l:"ADJ",zh:"少",     py:"shǎo",       pos:"Vs",  id:"sedikit"},
+{l:"ADJ",zh:"好玩",   py:"hǎowán",     pos:"Vs",  id:"menyenangkan, asyik"},
+
+// ─────────────────────────────────────────────────────────
+// KATA KETERANGAN 副詞
+// ─────────────────────────────────────────────────────────
+{l:"ADV",zh:"很",     py:"hěn",        pos:"Adv", id:"sangat"},
+{l:"ADV",zh:"也",     py:"yě",         pos:"Adv", id:"juga"},
+{l:"ADV",zh:"都",     py:"dōu",        pos:"Adv", id:"semua, keduanya"},
+{l:"ADV",zh:"不",     py:"bù",         pos:"Adv", id:"tidak, bukan"},
+{l:"ADV",zh:"沒",     py:"méi",        pos:"Adv", id:"tidak (menegasikan 有)"},
+{l:"ADV",zh:"只",     py:"zhǐ",        pos:"Adv", id:"hanya, cuma"},
+{l:"ADV",zh:"還",     py:"hái",        pos:"Adv", id:"juga, selain itu, masih"},
+{l:"ADV",zh:"常常",   py:"chángcháng", pos:"Adv", id:"sering"},
+{l:"ADV",zh:"平常",   py:"píngcháng",  pos:"Adv", id:"biasanya"},
+{l:"ADV",zh:"一起",   py:"yīqǐ",       pos:"Adv", id:"bersama-sama"},
+{l:"ADV",zh:"最",     py:"zuì",        pos:"Adv", id:"paling (superlatif)"},
+{l:"ADV",zh:"差不多", py:"chàbuduō",   pos:"Adv", id:"kira-kira, kurang lebih"},
+{l:"ADV",zh:"有一點", py:"yǒu yīdiǎn", pos:"",    id:"sedikit, agak (nuansa negatif)"},
+{l:"ADV",zh:"太…了",  py:"tài…le",     pos:"",    id:"terlalu… (太好了 = luar biasa!)"},
+
+// ─────────────────────────────────────────────────────────
+// KATA HUBUNG & PARTIKEL 連接詞/助詞
+// ─────────────────────────────────────────────────────────
+{l:"GRM",zh:"的",     py:"de",         pos:"Ptc", id:"partikel kepemilikan (…punya…); modifikasi"},
+{l:"GRM",zh:"嗎",     py:"ma",         pos:"Ptc", id:"partikel pertanyaan ya/tidak"},
+{l:"GRM",zh:"呢",     py:"ne",         pos:"Ptc", id:"'kalau…?' (balik bertanya)"},
+{l:"GRM",zh:"吧",     py:"ba",         pos:"Ptc", id:"partikel saran/ajakan"},
+{l:"GRM",zh:"了",     py:"le",         pos:"Ptc", id:"partikel aspek (sudah/selesai)"},
+{l:"GRM",zh:"得",     py:"de",         pos:"Ptc", id:"penanda komplemen hasil (V得...)"},
+{l:"GRM",zh:"和",     py:"hé",         pos:"Conj",id:"dan (menghubungkan kata benda)"},
+{l:"GRM",zh:"可是",   py:"kěshì",      pos:"Conj",id:"tetapi, namun"},
+{l:"GRM",zh:"以後",   py:"yǐhòu",      pos:"N",   id:"setelah, sesudah (…以後)"},
+{l:"GRM",zh:"跟",     py:"gēn",        pos:"Prep",id:"dengan, bersama (跟…一起)"},
+{l:"GRM",zh:"在",     py:"zài",        pos:"Prep",id:"di (lokasi); sedang"},
+{l:"GRM",zh:"給",     py:"gěi",        pos:"Prep",id:"kepada, untuk"},
+{l:"GRM",zh:"這",     py:"zhè",        pos:"Det", id:"ini"},
+{l:"GRM",zh:"那",     py:"nà",         pos:"Det", id:"itu"},
+{l:"GRM",zh:"是…的",  py:"shì…de",     pos:"",    id:"pola penekanan waktu/tempat/cara"},
+
+// ─────────────────────────────────────────────────────────
+// KATA KERJA BANTU 助動詞
+// ─────────────────────────────────────────────────────────
+{l:"AUX",zh:"想",     py:"xiǎng",      pos:"Vaux",id:"ingin, mau"},
+{l:"AUX",zh:"要",     py:"yào",        pos:"Vaux",id:"mau, perlu, akan"},
+{l:"AUX",zh:"會",     py:"huì",        pos:"Vaux",id:"bisa, mampu (dari belajar)"},
+{l:"AUX",zh:"可以",   py:"kěyǐ",       pos:"Vaux",id:"boleh, bisa"},
+{l:"AUX",zh:"喜歡",   py:"xǐhuān",     pos:"V",   id:"suka, menyukai"},
+{l:"AUX",zh:"覺得",   py:"juéde",      pos:"V",   id:"merasa, berpendapat"},
+
+// ─────────────────────────────────────────────────────────
+// FRASA BERGUNA 實用短語
+// ─────────────────────────────────────────────────────────
+{l:"PHR",zh:"好久不見",    py:"hǎo jiǔ bù jiàn",  pos:"",id:"sudah lama tidak ketemu"},
+{l:"PHR",zh:"請問",        py:"qǐngwèn",           pos:"",id:"permisi, boleh saya tanya"},
+{l:"PHR",zh:"不客氣",      py:"bú kèqi",           pos:"",id:"sama-sama, tidak perlu sungkan"},
+{l:"PHR",zh:"沒問題",      py:"méi wèntí",         pos:"",id:"tidak masalah"},
+{l:"PHR",zh:"太好了",      py:"tài hǎo le",        pos:"",id:"luar biasa! bagus sekali!"},
+{l:"PHR",zh:"是啊",        py:"shì a",             pos:"",id:"iya betul, memang begitu"},
+{l:"PHR",zh:"好的",        py:"hǎo de",            pos:"",id:"baik, oke"},
+{l:"PHR",zh:"不行",        py:"bù xíng",           pos:"",id:"tidak bisa, tidak boleh"},
+{l:"PHR",zh:"沒關係",      py:"méi guānxi",        pos:"",id:"tidak apa-apa"},
+{l:"PHR",zh:"對不起",      py:"duìbuqǐ",           pos:"",id:"maaf"},
+{l:"PHR",zh:"怎麼樣",      py:"zěnmeyàng",         pos:"",id:"bagaimana? apa pendapatmu?"},
+{l:"PHR",zh:"好不好",      py:"hǎo bù hǎo",        pos:"",id:"oke tidak? bagaimana?"},
+{l:"PHR",zh:"可以嗎",      py:"kěyǐ ma",           pos:"",id:"boleh? bisa?"},
+{l:"PHR",zh:"有時間嗎",    py:"yǒu shíjiān ma",    pos:"",id:"ada waktu?"},
+{l:"PHR",zh:"什麼時候",    py:"shénme shíhou",     pos:"",id:"kapan"},
+{l:"PHR",zh:"高興認識你",  py:"gāoxìng rènshì nǐ", pos:"",id:"senang berkenalan dengan kamu"},
+{l:"PHR",zh:"我不懂",      py:"wǒ bù dǒng",        pos:"",id:"saya tidak mengerti"},
+{l:"PHR",zh:"請再說一遍",  py:"qǐng zài shuō yībiàn",pos:"",id:"tolong ulangi sekali lagi"},
+{l:"PHR",zh:"請說慢一點",  py:"qǐng shuō màn yīdiǎn",pos:"",id:"tolong bicara lebih pelan"},
+{l:"PHR",zh:"怎麼說",      py:"zěnme shuō",        pos:"",id:"bagaimana cara mengatakannya"},
+{l:"PHR",zh:"用中文說",    py:"yòng Zhōngwén shuō",pos:"",id:"katakan dalam bahasa Mandarin"},
+{l:"PHR",zh:"我不會說",    py:"wǒ bù huì shuō",    pos:"",id:"saya tidak bisa mengatakannya"},
+{l:"PHR",zh:"我知道",      py:"wǒ zhīdào",         pos:"",id:"saya tahu"},
+{l:"PHR",zh:"我不知道",    py:"wǒ bù zhīdào",      pos:"",id:"saya tidak tahu"},
+{l:"PHR",zh:"我喜歡",      py:"wǒ xǐhuān",         pos:"",id:"saya suka"},
+{l:"PHR",zh:"我不喜歡",    py:"wǒ bù xǐhuān",      pos:"",id:"saya tidak suka"},
+
+// ─────────────────────────────────────────────────────────
+// BARANG & BENDA 東西
+// ─────────────────────────────────────────────────────────
+{l:"OBJ",zh:"電腦",   py:"diànnǎo",    pos:"N", id:"komputer"},
+{l:"OBJ",zh:"手機",   py:"shǒujī",     pos:"N", id:"ponsel, HP"},
+{l:"OBJ",zh:"電話",   py:"diànhuà",    pos:"N", id:"telepon"},
+{l:"OBJ",zh:"電視",   py:"diànshì",    pos:"N", id:"televisi"},
+{l:"OBJ",zh:"咖啡",   py:"kāfēi",      pos:"N", id:"kopi"},
+{l:"OBJ",zh:"禮物",   py:"lǐwù",       pos:"N", id:"hadiah"},
+{l:"OBJ",zh:"運動鞋", py:"yùndòngxié", pos:"N", id:"sepatu olahraga"},
+{l:"OBJ",zh:"名字",   py:"míngzi",     pos:"N", id:"nama"},
+{l:"OBJ",zh:"號碼",   py:"hàomǎ",      pos:"N", id:"nomor"},
+{l:"OBJ",zh:"書",     py:"shū",        pos:"N", id:"buku"},
+{l:"OBJ",zh:"牛肉麵", py:"niúròumiàn", pos:"N", id:"mie daging sapi"},
+{l:"OBJ",zh:"大餐",   py:"dàcān",      pos:"N", id:"makan besar, makan mewah"},
+{l:"OBJ",zh:"音樂",   py:"yīnyuè",     pos:"N", id:"musik"},
+{l:"OBJ",zh:"網球",   py:"wǎngqiú",    pos:"N", id:"tenis (olahraga/bola tenis)"},
+
+// ─────────────────────────────────────────────────────────
+// KATA KERJA UTAMA 動詞
+// ─────────────────────────────────────────────────────────
+{l:"VRB",zh:"是",     py:"shì",        pos:"V",  id:"adalah (am, is, are)"},
+{l:"VRB",zh:"有",     py:"yǒu",        pos:"V",  id:"punya, ada"},
+{l:"VRB",zh:"沒有",   py:"méiyǒu",     pos:"V",  id:"tidak punya, tidak ada"},
+{l:"VRB",zh:"在",     py:"zài",        pos:"V",  id:"ada di, berada di"},
+{l:"VRB",zh:"住",     py:"zhù",        pos:"V",  id:"tinggal, berdiam"},
+{l:"VRB",zh:"叫",     py:"jiào",       pos:"V",  id:"bernama, dipanggil"},
+{l:"VRB",zh:"姓",     py:"xìng",       pos:"V",  id:"bermarga"},
+{l:"VRB",zh:"說",     py:"shuō",       pos:"V",  id:"berkata, bicara"},
+{l:"VRB",zh:"教",     py:"jiāo",       pos:"V",  id:"mengajar"},
+{l:"VRB",zh:"學",     py:"xué",        pos:"V",  id:"belajar"},
+{l:"VRB",zh:"吃",     py:"chī",        pos:"V",  id:"makan"},
+{l:"VRB",zh:"喝",     py:"hē",         pos:"V",  id:"minum"},
+{l:"VRB",zh:"買",     py:"mǎi",        pos:"V",  id:"membeli"},
+{l:"VRB",zh:"看",     py:"kàn",        pos:"V",  id:"melihat, menonton, membaca"},
+{l:"VRB",zh:"聽",     py:"tīng",       pos:"V",  id:"mendengarkan"},
+{l:"VRB",zh:"打",     py:"dǎ",         pos:"V",  id:"memukul; bermain (olahraga)"},
+{l:"VRB",zh:"做",     py:"zuò",        pos:"V",  id:"melakukan, membuat"},
+{l:"VRB",zh:"去",     py:"qù",         pos:"V",  id:"pergi"},
+{l:"VRB",zh:"來",     py:"lái",        pos:"V",  id:"datang"},
+{l:"VRB",zh:"回來",   py:"huílái",     pos:"V",  id:"kembali, pulang"},
+{l:"VRB",zh:"認識",   py:"rènshi",     pos:"V",  id:"mengenal, berkenalan"},
+{l:"VRB",zh:"知道",   py:"zhīdào",     pos:"V",  id:"tahu, mengetahui"},
+{l:"VRB",zh:"歡迎",   py:"huānyíng",   pos:"V",  id:"selamat datang"},
+{l:"VRB",zh:"祝",     py:"zhù",        pos:"V",  id:"mendoakan, mengucapkan selamat"},
+{l:"VRB",zh:"請",     py:"qǐng",       pos:"V",  id:"mempersilakan; mentraktir"},
+{l:"VRB",zh:"謝謝",   py:"xièxie",     pos:"V",  id:"terima kasih"},
+{l:"VRB",zh:"練習",   py:"liànxí",     pos:"V",  id:"berlatih"},
+{l:"VRB",zh:"見",     py:"jiàn",       pos:"V",  id:"bertemu, berjumpa"},
+
 ];
 
 // ============================================================
