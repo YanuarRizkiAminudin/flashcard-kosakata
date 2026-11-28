@@ -37,6 +37,9 @@ function App() {
       <Route path="/game/anruiqi-self-intro" element={<GamePage file="flashcard_lengkap_intact/anruiqi_self_intro.html" title="安睿祺 — 自我介紹簡報練習" />} />
       <Route path="/game/anruiqi-vocab" element={<GamePage file="flashcard_lengkap_intact/anruiqi_vocab.html" title="安睿祺 — 詞彙 Per Kata" />} />
       <Route path="/game/matlab-filter" element={<GamePage file="flashcard_lengkap_intact/matlab_filter.html" title="MATLAB Image Filter Flashcard" />} />
+      <Route path="/game/bopomofo" element={<GamePage file="flashcard_lengkap_intact/bopomofo.html" title="注音符號 Bopomofo — 42 Kartu" />} />
+      <Route path="/game/llm-vocab" element={<GamePage file="flashcard_lengkap_intact/llm_vocab.html" title="來！學華語 — 726 Kosakata" />} />
+      <Route path="/game/anruiqi-intro-kalimat" element={<GamePage file="flashcard_lengkap_intact/anruiqi_intro_kalimat.html" title="安睿祺 自我介紹 — Per Kata" />} />
       <Route path="/game/convenience-store" element={<GamePage file="flashcard_lengkap_intact/convenience_store.html" title="便利商店 — Percakapan Kasir Taiwan" />} />
       <Route path="/game/nfu-group-chat" element={<GamePage file="flashcard_lengkap_intact/nfu_group_chat.html" title="NFU Internship Group Chat" />} />
       <Route path="/game/discourse-markers" element={<GamePage file="flashcard_lengkap_intact/discourse_markers.html" title="Discourse Markers — Kata Penghubung" />} />
